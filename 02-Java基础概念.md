@@ -501,7 +501,7 @@ Java 中的基本数据类型，分为四类八种。如下方所示：
 
 #### 1.数据类型的使用
 
-整数类型和小数类型的取值范围大小关系：double > float > long > int > short > byte
+整数类型的取值范围大小关系：double > float > long > int > short > byte
 
 demo-project/demo/src/VariableDemo4.java
 
