@@ -1,12 +1,8 @@
 # Java 运算符
 
-## 一、Java 表达式
+**Java 运算符**：就是对常量或者变量进行操作的符号。
 
-Java 表达式：用运算符把常量或者变量连接起来的，符合 Java 语法的式子就是表达式。
-
-## 二、Java 运算符
-
-Java 运算符：就是对常量或者变量进行操作的符号。
+**Java 表达式**：用运算符把常量或者变量连接起来的，符合 Java 语法的式子就是表达式。
 
 ```java
 int a = 10;
@@ -17,11 +13,13 @@ int c = a + b;
 
 - `a + b` 这个整体就是表达式。其中 `+` 是**算术运算符**的一种，所以这个表达式也称之为**算术表达式**。
 
-### 1.Java 算数运算符
+## 一、Java 算数运算符
 
 Java 算数运算符，分为加（`+`）、减（`-`）、乘（`*`）、除（`/`）、取模（`%`）
 
-#### 1整数、小数与算数运算符
+### 1整数、小数的算数运算
+
+#### 1.整数的加（+）、减（-）、乘（*）
 
 整数的加（`+`）、减（`-`）、乘（`*`）算数表达式：
 
@@ -41,6 +39,8 @@ public class ArithmeticOperatorsDemo01 {
     }
 }
 ```
+
+#### 2.小数的加（+）、减（-）、乘（*）
 
 小数的加（`+`）、减（`-`）、乘（`*`）算数表达式：
 
@@ -65,7 +65,7 @@ public class ArithmeticOperatorsDemo01 {
 
 - 结论：小数直接参与运算，得到的结果有可能不精确（具体原因后续介绍）。
 
-整数的除（`/`）运算
+#### 3.整数的除（/）运算
 
 demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo01.java
 
@@ -84,7 +84,7 @@ public class ArithmeticOperatorsDemo01 {
 
 - 结论：整数相除结果只能得到整除。
 
-小数的除（`/`）运算
+#### 4.小数的除（/）运算
 
 demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo01.java
 
@@ -101,7 +101,7 @@ public class ArithmeticOperatorsDemo01 {
 
 - 结论：小数参与的除运算，结果也是小数；小数直接参与运算，得到的结果有可能不精确（具体原因后续介绍）。
 
-整数的取模（`%`）运算
+#### 5.整数的取模（%）运算
 
 demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo01.java
 
@@ -116,7 +116,7 @@ public class ArithmeticOperatorsDemo01 {
 }
 ```
 
-小数的取模（`%`）运算
+#### 6.小数的取模（%）运算
 
 demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo01.java
 
@@ -133,16 +133,16 @@ public class ArithmeticOperatorsDemo01 {
 
 - 结论：小数参与的取模运算，结果也是小数；小数直接参与运算，得到的结果有可能不精确（具体原因后续介绍）。
 
-取模运算的应用场景：
+> 取模运算的应用场景：
+>
+> - 判断一个数是否能被另一个数整除。
+> - 判断一个数是偶数还是奇数。
+> - 模拟斗地主游戏中，为三个玩家发牌，把每一张牌都定义一个序号，拿序号对 3 取模：
+>   - 如果结果为 1，就发给第一个玩家；
+>   - 如果结果为 2，就发给第二个玩家；
+>   - 如果结果为 3，就发给第三个玩家；
 
-- 判断一个数是否能被另一个数整除。
-- 判断一个数是偶数还是奇数。
-- 模拟斗地主游戏中，为三个玩家发牌，把每一张牌都定义一个序号，拿序号对 3 取模：
-  - 如果结果为 1，就发给第一个玩家；
-  - 如果结果为 2，就发给第二个玩家；
-  - 如果结果为 3，就发给第三个玩家；
-
-4.算数运算练习（一）
+### 3.算数运算练习
 
 练习一；需求：键盘录入一个三位数，将其拆分为个位、十位、百位后，打印在控制台
 
@@ -178,9 +178,9 @@ public class Test1 {
 }
 ```
 
-#### 2.加（+）运算符
+### 4.加（+）运算符详解
 
-##### 1.数字相加
+#### 1.数字加（+）运算
 
 数据类型不一样的数值，不能进行运算，需要转成一致的类型，才能运算。
 
@@ -189,7 +189,7 @@ public class Test1 {
 - **隐式转换**（也称**自动类型提升**）；表示取值范围小的数值，转为取值范围大的数值。
 - **强制转换**：表示取值范围大的数值，转为取值范围小的数值。
 
-###### 1.隐式转换
+##### 1.隐式转换
 
 **隐式转换**，是程序执行时，默认进行的。隐式转换的规则有两点：
 
@@ -271,7 +271,7 @@ public class ArithmeticOperatorsDemo02 {
 }
 ```
 
-###### 2.强制转换
+##### 2.强制转换
 
 如果要把一个取值范围大的数据类型的数值，赋值给另一个取值范围小的数据类型的标识符。是不允许直接操作的。
 
@@ -323,10 +323,154 @@ public class ArithmeticOperatorsDemo03 {
 
 - 结论：强制转换有可能会导致数据发生错误（数据的精度丢失）；byte 类型数值的取值范围是 `-128~127`。
 
-### 2.Java 赋值运算符
+#### 2.字符串（+）运算
 
-### 3.Java 关系运算符
+当 `+` 操作中出现字符串时，此时就是字符串的连接符，会将前后的数据进行拼接，并产生一个新的字符串。
 
-### 4.Java 逻辑运算符
+当连续进行 `+` 操作时，是从左到右逐个执行的。
 
-### 5.Java 三元运算符
+案例理解：
+
+案例一：将数字与字符串拼接。
+
+demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo04.java
+
+```java
+package com.kkcf.arithmetic_operators;
+
+public class ArithmeticOperatorsDemo04 {
+    public static void main(String[] args) {
+        System.out.println(1 + "abc" + 1); // 1abc1
+    }
+}
+```
+
+案例二：将数字相加后，再与字符串进行拼接。
+
+demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo04.java
+
+```java
+package com.kkcf.arithmetic_operators;
+
+public class ArithmeticOperatorsDemo04 {
+    public static void main(String[] args) {
+        System.out.println(1 + 2 + "abc" + 2 + 1); // 3abc21
+    }
+}
+```
+
+案例三：将小数，布尔值，字符与字符串拼接：
+
+demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo04.java
+
+```java
+package com.kkcf.arithmetic_operators;
+
+public class ArithmeticOperatorsDemo04 {
+    public static void main(String[] args) {
+        System.out.println(3.7 + "abc"); // 3.7abc
+
+        System.out.println("abc" + true); // abctrue
+
+        System.out.println('中' + "abc" + true); // 中abctrue
+    }
+}
+```
+
+#### 3.字符（+）运算
+
+我们知道，加（+）运算隐式转换的规则之一是：
+
+- `byte`、`short`、`char` 三种数据类型的值在运算的时候，都会直接先提升为 `int` 数据类型，然后再进行运算。
+
+字符（+）运算的规则：
+
+- 当（+）操作中出现了 char 字符类型的数值，会将字符数值转为计算机内置的 ASCII 码表中对应的数字，然后再进行计算。
+
+> 需要记住，在 ASCLL 码表中，`a` 对应 `97`，`A` 对应 `65`；
+
+案例理解：
+
+案例一，将数字 `1` 与字符 `'a'` 相加。
+
+demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo05.java
+
+```java
+package com.kkcf.arithmetic_operators;
+
+public class ArithmeticOperatorsDemo05 {
+    public static void main(String[] args) {
+        System.out.println(1 + 'a'); // 98
+    }
+}
+```
+
+- 结论：char 字符类型与数字相加，char 字符类型的数值，会隐式转为 int 类型。
+
+案例二：将数字 `'a'` 与字符串 `"abc"` 相加。
+
+demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo05.java
+
+```java
+package com.kkcf.arithmetic_operators;
+
+public class ArithmeticOperatorsDemo05 {
+    public static void main(String[] args) {
+        System.out.println('a' + "abc"); // aabc
+    }
+}
+```
+
+- 结论：char 字符类型与字符串类型相加，会应用字符串的拼接规则。
+
+## 二、Java 自增自减运算符
+
+自增自减运算符有两个：
+
+- `++`，表示自增运算符；
+  - `++` 放在变量的前面，称为前置自增运算符，比如：`++a`；
+  - `++` 放在变量的后面，称为后置自增运算符。 比如：`a++`。
+- `--`，表示自减运算符。
+  - `--` 放在变量的前面，称为前置自增运算符，比如：`--a`；
+  - `--` 放在变量的后面，称为后置自增运算符。 比如：`a--`。
+
+前缀自增/自减运算符，表示”先加/减后用“。
+
+后置自增/自减运算符，表示”先用后加/减“。
+
+案例理解：
+
+demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo06.java
+
+```java
+package com.kkcf.arithmetic_operators;
+
+public class ArithmeticOperatorsDemo06 {
+    public static void main(String[] args) {
+        int x = 10;
+        int y = x++;
+        int z = ++x;
+
+        System.out.println("x = " + x); // x = 12
+        System.out.println("y = " + y); // y = 10
+        System.out.println("z = " + z); // z = 12
+    }
+}
+```
+
+
+
+## 二、Java 赋值运算符
+
+
+
+## 三、Java 关系运算符
+
+
+
+## 四、Java 逻辑运算符
+
+
+
+## 五、Java 三元运算符
+
