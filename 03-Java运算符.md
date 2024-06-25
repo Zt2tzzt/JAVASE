@@ -458,13 +458,113 @@ public class ArithmeticOperatorsDemo06 {
 }
 ```
 
+自增/自减运算符的应用场景：
 
+某些情况下，变量需要进行加 1 或者减 1 的时候使用。
+
+- 比如：过生日多一岁，就用到了自增运算符。
+- 比如：购物车中，增加商品数量，也用到了自增或者自减运算符。
 
 ## 二、Java 赋值运算符
 
+Java 中的赋值运算符，有如下这些：
+
+| 符号 | 作用       | 说明                                  |
+| ---- | ---------- | ------------------------------------- |
+| =    | 赋值       | `int a = 10`，将 10 赋值给变量 `a`    |
+| +=   | 加后赋值   | `a += b`，将 a + b 的和，赋值给 `a`   |
+| -=   | 减后赋值   | `a -= b`，将 a - b 的差，赋值给 `a`   |
+| *=   | 乘后赋值   | `a *= b`，将 a * b 的积，赋值给 `a`   |
+| /=   | 除后赋值   | `a /= b`，将 a / b 的商，赋值给 `a`   |
+| %=   | 取模后赋值 | `a %= b`，将 a % b 的余数，赋值给 `a` |
+
+除了 `=` 赋值运算符以外，其它赋值运算符在赋值运算时，还包含了一个强制转换。
+
+demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo07.java
+
+```java
+package com.kkcf.arithmetic_operators;
+
+public class ArithmeticOperatorsDemo07 {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 20;
+
+        a += b; // 等同于 a = (int)(a + b)
+
+        System.out.println(a); // 30
+        System.out.println(b); // 20
+
+        short s = 1;
+
+        s += 1; // 等同于 s = (short)(s + 1)
+
+        System.out.println(s); // 2
+    }
+}
+```
+
+## 三、Java 关系运算符（比较运算符）
+
+Java 中的关系运算符，也成为比较运算符。本质上就是拿运算符左边与右边进行比较。
+
+| 符号 | 解释                                                         |
+| ---- | ------------------------------------------------------------ |
+| `==` | 就是判断左边跟右边是否相等，如果成立就是 `tru`，如果不成立就是 `false` |
+| `!=` | 就是判断左边跟右边是否不相等，如果成立就是 `tru`，如果不成立就是f alse |
+| `>`   | 就是判断左边是否大于右边，如果成立就是 `true`，如果不成立就是 `false` |
+| `>=`   | 就是判断左边是否大于等于右边，如果成立就是 `tru`，如果不成立就是 `false` |
+| `<`   | 就是判断左边是否小于右边，如果成立就是 `true`，如果不成立就是 `false` |
+| `<=`   | 就是判断左边是否小于等于右边，如果成立就是 `tru`，如果不成立就是 `false` |
+
+关系运算符的结构，都是布尔类型的，要么是 `true`，要么是 `false`。
+
+demo-project/base-code/day03/src/com/kkcf/Increment_decrement_operators/IncrementDecrementOperatorsDemo01.java
+
+```java
+package com.kkcf.Increment_decrement_operators;
+
+public class IncrementDecrementOperatorsDemo01 {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 10;
+        int c = 20;
+
+        System.out.println(a == b); // true
+        System.out.println(a == c); // false
+    }
+}
+```
+
+案例：你和你的约会对象，在餐厅约会，键盘录入两个整数，表示你和你约会对象衣服的时髦程度。如果你衣服的时髦成都大于你约会对象的时髦成都，表示约会成功，否则表示约会失败。
+
+demo-project/base-code/day03/src/com/kkcf/Increment_decrement_operators/IncrementDecrementOperatorsTest.java
+
+```java
+package com.kkcf.Increment_decrement_operators;
+
+import java.util.Scanner;
+
+public class IncrementDecrementOperatorsTest {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("请输入你的衣服时髦度：");
+        int me = sc.nextInt();
+
+        System.out.println("请输入你的约会对象的衣服时髦度：");
+        int girl = sc.nextInt();
+
+        sc.close();
+
+        boolean result = me > girl;
+
+        System.out.println("约会" + (result ? "成功" : "失败"));
+    }
+}
+```
 
 
-## 三、Java 关系运算符
 
 
 
