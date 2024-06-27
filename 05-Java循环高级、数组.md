@@ -231,3 +231,77 @@ public class Test02 {
 }
 ```
 
+案例理解：程序自动生成一个 1-100 之间的随机数，使用程序实现猜出这个数字是多少？
+
+> Java 已经写好了一个类 `Random`，用来生成随机数。使用步骤如下：
+>
+> 1.导包，必须写在类定义的上面。
+>
+> ```java
+> import java.util.Random;
+> ```
+>
+> 2.创建对象。
+>
+> ```java
+> Random r = new Random();
+> ```
+>
+> 3.生成随机数。
+>
+> ```java
+> int num = r.nextInt(随机数的范围)
+> ```
+>
+> 4.生成 0-99 范围内的随机数：
+>
+> ```java
+> int num = r.nextInt(100); // 0-99 包头不包尾，包左不包右
+> ```
+>
+> 5.生成任意范围（比如 7-15）内的随机数：
+>
+> 1. 先让这个范围头尾都减去一个值（7），使得这个范围从 0 开始；
+> 2. 范围尾部数字 +1（8 + 1 = 9）；
+> 3. 最终的结果，再加上第一步减去的值（7）
+>
+> ```java
+> int num = r.nextInt(9) + 7 // 7-15
+> ```
+
+demo-project/base-code/Day05/src/com/kkcf/loop_array/Test03.java
+
+```java
+package com.kkcf.loop_array;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Test03 {
+    public static void main(String[] args) {
+        // 生成随机数
+        Random r = new Random();
+        int num = r.nextInt(100) + 1; // 1-100
+
+        // 录入数字
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("请输入你猜的数字：");
+        int guessNum = sc.nextInt();
+
+        while (true) {
+            if (guessNum > num) {
+                System.out.println("猜大了");
+            } else if (guessNum < num) {
+                System.out.println("猜小了");
+            } else {
+                System.out.println("猜对了，数字是 " + guessNum);
+                break;
+            }
+
+            System.out.println("请输入你猜的数字：");
+            guessNum = sc.nextInt();
+        }
+    }
+}
+```
