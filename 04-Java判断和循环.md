@@ -65,7 +65,7 @@ A[方形] --> B(其它语句体)
     D --> F[结束]
 ```
 
-案例一：键盘录入一个数，表示女婿的酒量，如果女婿的酒量大于 2 斤，老丈人就搭理他，否则就不搭理他。
+案例一：键盘录入一个数，表示女婿的开的车的排面，如果女婿排面大于 8，去老丈人家可以先动筷，否则就不能先动筷。
 
 demo-project/base-code/Day04/src/com/kkcf/process_control/IfDemo1.java
 
@@ -78,13 +78,13 @@ public class IfDemo1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("请输入女婿的酒量：");
+        System.out.println("请输入女婿车的排面：");
         int wine = sc.nextInt();
 
         sc.close();
 
-        if (wine > 2) {
-            System.out.println("小伙子，不错哦！");
+        if (wine > 8) {
+            System.out.println("先动筷！");
         }
     }
 }
@@ -231,7 +231,7 @@ A[开始] --> B(其它语句体)
     I --> J
 ```
 
-案例理解：小明快要期末考试了，小明爸爸对他说，会根据他不同的考试成绩，送他不同的礼物，
+案例理解：小明快要期末考试了，小明爸爸会根据他不同的考试成绩，送他不同的礼物，
 
 demo-project/base-code/Day04/src/com/kkcf/process_control/IIfDemo04.java
 
@@ -242,7 +242,6 @@ import java.util.Scanner;
 
 public class IIfDemo04 {
     public static void main(String[] args) {
-
         Scanner sc = new Scanner(System.in);
 
         System.out.println("请输入小明的成绩");
@@ -299,7 +298,7 @@ switch 语句的格式说明：
 - 表达式，表示将要匹配的值，只能匹配 byte，short，int，char 类型的值，
   - JDK5 以后，可以是枚举类型的值；
   - JDK7 以后可以是 String 类型的值。
-- case 后面跟的值，只能是字面量，不能是变量，不能重复；用于和表达式的结果进行 `==` 比较。
+- case 后面跟的值，**只能是字面量，不能是变量**，不能重复；用于和表达式的结果进行 `==` 比较。
 - break 表示中断、结束的意思，用来结束 switch 语句。
 - default 表示所有情况都不匹配的时候，就执行该处的内容，和 if 语句的 else 相似。
 
@@ -379,9 +378,9 @@ public class IfDemo05 {
 
 #### 1.default 的位置和省略
 
-switch 语句中的 default 代码块，可以省略，但是自己写的时候不建议省略。因为一旦省略后，就没有备用选项了。
+switch 语句中的 default 语句，可以省略，但是自己写的时候不建议省略。因为一旦省略后，就没有备用选项了。
 
-switch 语句中的 default 代码块，不一定写在最下方，只是习惯性的写在最下方。如果 default 语句写在其它地方，记得加上 break 语句。
+switch 语句中的 default 语句，不一定写在最下方，只是习惯性的写在最下方。如果 default 语句写在其它地方，记得加上 break 语句。
 
 demo-project/base-code/Day04/src/com/kkcf/process_control/IIfDemo04.java
 
@@ -422,9 +421,10 @@ public class IfDemo05 {
 
 switch 语句在执行时，
 
-1. 会使用小括号中的表达式，跟下面每一个 case 进行比较；
-2. 如果匹配上了，就会执行对应的语句体；如果此时发现 break，那么就会结束整个 switch 语句。
-3. 如果没有发现 break，那么就会继续执行下一个语句体，直到遇到 break 或者大括号为止。
+1. 会使用小括号中的表达式，与下面每一个 case 进行比较；
+2. 如果匹配上了，就会执行对应的语句体；执行完后：
+   - 如果发现 break，那么就会结束整个 switch 语句。
+   - 如果没有发现 break，那么就会继续执行下一个 case 语句体，直到遇到 break 或者大括号为止。
 
 case 穿透的使用场景：
 
@@ -806,7 +806,7 @@ tjkz->cond
 cond(false)->qtyj(left)
 ```
 
-while 循环的执行流程：
+while 循环的执行流程，与 for 循环也是一致的：
 
 1. 执行初始化语句（初始化语句只会执行一次）；
 2. 执行条件判断语句，判断结果是 true 还是 false；
@@ -832,8 +832,8 @@ for (; i < 100; i++) {
 
 for 循环和 while 循环在开发中如何选择？
 
-- 如果知道循环次数或者循环的范围，就使用 for 循环。
-- 如果不知道循环次数或者循环的范围，只知道循环的结束条件，就使用 while 循环。
+- 如果知道循环次数或者循环的范围，我们习惯使用 for 循环。
+- 如果不知道循环次数或者循环的范围，只知道循环的结束条件，我们习惯使用 while 循环。
 
 案例理解：世界上最高的山峰是珠穆朗玛峰，高度为 8844.43 米，约等于 8844430 毫米，假如有一张足够大的纸，它的厚度为 0.1 毫米，请问折叠多少次，可以达到珠穆朗玛峰的高度。
 
