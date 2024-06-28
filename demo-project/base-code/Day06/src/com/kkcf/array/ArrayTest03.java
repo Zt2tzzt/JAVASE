@@ -11,7 +11,7 @@ public class ArrayTest03 {
 
         // 填充随机数
         for (int i = 0; i < nums.length; i++) {
-            nums[i] = r.nextInt(100) + 1; // 0-100
+            nums[i] = r.nextInt(101); // 0-100
         }
 
         // 打印这个数组
