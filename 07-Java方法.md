@@ -246,3 +246,144 @@ public class MethodTest02 {
 
 - `return` 语句在 Java 方法没有返回值时，可以省略不写；如果写了，表示结束方法；
 - `return` 语句在 Java 方阿有返回值时，必须写，表示结束方法和返回结果。
+
+## 三、Java 方法的重载
+
+Java 方法重载，指的是在同一个类中，定义了多个同名的方法，这些同名的方法，具有相同的功能。每个方法具有不同的参数类型，或参数个数，这些同名的方法，就构成了重载关系。
+
+简单的说：在同一个类中，方法名相同，参数（个数，或类型，或顺序）不同的方法，就构成了方法重载。与返回值无关。
+
+判断以下类中的方法，是否构成重载关系：
+
+第一个类中的方法，不构成重载关系。
+
+- 因为两个同名方法的形参，完全相同。
+
+demo-project/base-code/Day06/src/com/kkcf/method/MethodOverloadDemo01.java
+
+```java
+package com.kkcf.method;
+
+public class MethodOverloadDemo01 {
+    public static void fn (int a) {
+        
+    }
+    
+    public static int fn (int a) {
+        
+    }
+}
+```
+
+第二个类中的方法，构成重载关系：
+
+demo-project/base-code/Day06/src/com/kkcf/method/MethodOverloadDemo01.java
+
+```java
+package com.kkcf.method;
+
+public class MethodOverloadDemo01 {
+    public static float fn (int a) {
+
+    }
+
+    public static int fn (int a, int b) {
+
+    }
+}
+```
+
+第三个类中的方法，不构成重载关系：
+
+- 因为这两个同名方法，不在一个类中。
+
+demo-project/base-code/Day06/src/com/kkcf/method/MethodOverloadDemo01.java
+
+```java
+package com.kkcf.method;
+
+public class MethodOverloadDemo01 {
+    public static void fn (int a) {
+
+    }
+}
+
+public class MethodOverloadDemo02 {
+    public static int fn (double a) {
+
+    }
+
+}
+```
+
+第四个类中的方法，构成重载关系：
+
+demo-project/base-code/Day06/src/com/kkcf/method/MethodOverloadDemo01.java
+
+```java
+package com.kkcf.method;
+
+public class MethodOverloadDemo01 {
+    public static void fn (int a) {
+
+    }
+    
+    public static void fn (double a) {
+
+    }
+}
+```
+
+第五个类中的方法，构成重载关系：
+
+demo-project/base-code/Day06/src/com/kkcf/method/MethodOverloadDemo01.java
+
+```java
+package com.kkcf.method;
+
+public class MethodOverloadDemo01 {
+    public static void fn (int a, double b) {
+
+    }
+
+    public static void fn (double a, int b) {
+
+    }
+}
+```
+
+- 形参顺序的不同，可以构成重载关系，但不建议这么写。
+
+案例理解；使用方法重载的思想，设计比较两个整数，是否相同的方法，要求兼容全部整数类型（byte, short, int, long）。
+
+demo-project/base-code/Day06/src/com/kkcf/method/MethodOverloadDemo01.java
+
+```java
+package com.kkcf.method;
+
+public class MethodOverloadDemo01 {
+    public static void main(String[] args) {
+        System.out.println(compare(10, 20));
+        System.out.println(compare((byte)10, (byte)20));
+        System.out.println(compare((short)10, (short)20));
+        System.out.println(compare((long)10, (long)20));
+    }
+
+    public static boolean compare(byte b1, byte b2) {
+        return b1 == b2;
+    }
+
+    public static boolean compare(short s1, short s2) {
+        return s1 == s2;
+    }
+
+    public static boolean compare(int i1, int i2) {
+        return i1 == i2;
+    }
+
+    public static boolean compare(long l1, long l2) {
+        return l1 == l2;
+    }
+}
+```
+
