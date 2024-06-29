@@ -20,7 +20,7 @@
 Java 无参数的方法，定义格式如下：
 
 ```java
-public static void 方法名 () { 
+public static void 方法名 () {
  方法体;
 }
 ```
@@ -112,11 +112,11 @@ Java 带参数的方法，定义格式如下：
 
 ```java
 public static void 方法名 (参数1) {
-	方法体;
+  方法体;
 }
 
 public static void 方法名 (参数1, 参数2, 参数3...) {
-	方法体;
+  方法体;
 }
 ```
 
@@ -182,16 +182,67 @@ public class MethodTest01 {
 Java 带返回值的方法，定义格式如下：
 
 ```java
-public static 返回值数据类型 方法名 ( 参数 ) { 
+public static 返回值数据类型 方法名 ( 参数 ) {
+  方法体;
 	return 数据 ;
 }
 ```
 
 Java 带返回值的方法，调用格式如下：
 
-```java
-方法名 ( 参数 ) ;
+直接调用：
 
-数据类型 变量名 = 方法名 ( 参数 ) ;
+```java
+方法名 ( 实参 ) ;
 ```
 
+赋值调用：
+
+```java
+数据类型 变量名 = 方法名 ( 实参 ) ;
+```
+
+输出调用：
+
+```java
+System.out.println(方法名 ( 实参 ));
+```
+
+案例理解：季孙一个商场四个季度的营业额，并将它们相加，求出全年营业额。
+
+demo-project/base-code/Day06/src/com/kkcf/method/MethodTest02.java
+
+```java
+package com.kkcf.method;
+
+public class MethodTest02 {
+    public static void main(String[] args) {
+        double sea1 = getSum(10, 20, 30);
+        double sea2 = getSum(30, 10, 20);
+        double sea3 = getSum(10, 20, 29);
+        double sea4 = getSum(10, 40, 20);
+
+        double year = sea1 + sea2 + sea3 + sea4;
+        System.out.println("年销售总额为" + year);
+    }
+
+    public static double getSum(double mon1, double mon2, double mon3) {
+        return mon1 + mon2 + mon3;
+    }
+}
+```
+
+## 二、Java 方法的注意事项
+
+- 方法不调用，就不执行。
+- 方法与方法之间，是平级的关系，不能嵌套定义。
+- 方法的编写顺序，与它的执行顺序无关。
+- 方法的返回值类型为 `void` 时，表示该方法没有返回值，可以省略 `return` 语句不写，如果要编写 `return` 语句，后面不能跟具体数据。
+- 方法的 `return` 语句下面，不能编写代码，因为永远执行不到，属于无效代码。
+
+### 1.return 关键字
+
+`return` 关键字用于 Java 方法中的 return 语句，表示结束方法，并返回值。
+
+- `return` 语句在 Java 方法没有返回值时，可以省略不写；如果写了，表示结束方法；
+- `return` 语句在 Java 方阿有返回值时，必须写，表示结束方法和返回结果。
