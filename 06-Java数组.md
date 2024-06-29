@@ -507,7 +507,7 @@ public class BasicDataTypeMemory {
 
 ![基本数据类型的内存表现](NodeAssets/基本数据类型的内存表现.jpg)
 
-### 3.Java 数组内存表现
+### 3.Java 引用类型的内存表现
 
 下方代码，用于演示数组数据类型，在内存中的表现形式。
 
