@@ -262,7 +262,7 @@ public class ArrayTest01 {
                 arr[i] *= 2;
         }
 
-      	// 打印数组
+        // 打印数组
         for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i]);
         }
