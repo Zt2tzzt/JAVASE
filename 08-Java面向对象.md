@@ -100,7 +100,9 @@ public class GirlFriend {
 
 #### 1.JavaBean 类
 
-用来描述一类事物的类，专业叫做 JavaBean 类。在 JavaBean 类中，是不写 `main` 方法的。
+用来描述一类事物的类，专业叫做 JavaBean 类。
+
+在 JavaBean 类中，是不写 `main` 方法的。
 
 #### 2.测试类
 
@@ -165,14 +167,10 @@ public class Test01 {
 
 `private` 是 Java 中的关键字，它
 
-- 表示一个权限的修饰符；
-- 可以修饰类中的成员（成员变量、成员方法）。
-- 被修饰的成员，只能在本类中才嫩访问。
-- 针对 `private` 修饰的成员变量，如果需要被其它类使用，要提供相应的操作：
+- 表示一个权限的修饰符；可以修饰类中的成员（成员变量、成员方法）。被修饰的成员，只能在本类中才嫩访问。
+- 针对 `private` 修饰的成员变量，如果需要被其它类使用，要提供相应的 getter、setter 操作：
   - 提供 `setXxx(参数)` 方法，用于给成员变量赋值，方法用 `public` 修饰。
   - 提供 `getXxx()` 方法，用于获取成员变量的值，方法用 `public` 修饰
-
-针对每个私有化的成员变量，都要提供 get、set 方法。
 
 demo-project/base-code/Day08/src/com/kkcf/object_riented/GirlFriend.java
 
@@ -247,8 +245,8 @@ public class GirlFriend {
     private int age = 18;
 
     public void setName(String name) {
-        int age = 10;
-        System.out.println(age); // 10
+        int age = 9;
+        System.out.println(age); // 9
     }
 }
 ```
@@ -287,8 +285,8 @@ public class GirlFriend {
     private int age = 18;
 
     public void setName(String name) {
-        int age = 10;
-        System.out.println(this.age); // 18
+        int age = 9;
+        System.out.println(this.age); // 9
     }
 }
 ```
@@ -353,8 +351,8 @@ public class Demo01 {
 ```
 
 - 构造方法的方法名，与类名完全相同（大小写要保持一致）；
-- 没有返回值类型，连 `void` 都没有；
-- 没有具体的返回值（不能由 `return` 返回结果数据）。
+- 构造方法没有返回值类型，连 `void` 都没有；
+- 构造方法没有具体的返回值（不能由 `return` 返回结果数据）。
 
 ### 1.空参构造方法、带参构造方法
 
@@ -365,8 +363,8 @@ Java 类中的构造方法，分为**空参构造方法**，和**带参构造方
 
 Java 类中的构造方法的执行时机：
 
-1. 使用 Java 类创建对象实例的时候，由 JVM 虚拟机调用，不能手动调用构造方法。
-2. 每创建一次对象，就会调用一次构造方法。
+1. 当使用 `new` 关键字操作 Java 类创建对象实例的时候，由 JVM 虚拟机调用构造方法，不能手动调用构造方法。
+2. 每创建一次对象实例，就会调用一次构造方法。
 
 为 `Student` 类，编写构造方法，和 getter、setter 访问器：
 
@@ -530,14 +528,14 @@ public class User {
 Student stu = new Student();
 ```
 
-会执行以下步骤：
+上方操作，会执行以下步骤：
 
 1. 加载 .class 文件（字节码文件加载到方法区）。
-2. 声明局部变量（创建对象左边的声明的标识符，用于存储创建的对象的地址值）。
+2. 声明局部变量（创建对象左边声明的标识符，用于存储创建的对象的地址值）。
 3. 在堆内存中，开辟一个空间。
-4. 默认初始化（成员变量根据其数据类型生成默认初始值）。
-5. 显示初始化（成员变量赋默认值）。
-6. 构造方法初始化（构造方法给成员变量初始化值）。
+4. 默认初始化（成员变量，根据其数据类型，生成默认初始值）。
+5. 显示初始化（成员变量，赋默认值）。
+6. 构造方法初始化（成员变量，在构造方法中被初始化）。
 7. 将堆内存中的地址值，赋值给左边的局部变量。
 
 4，5，6 步骤，都是对第 3 步中的变量，进行赋值的操作。

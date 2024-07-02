@@ -18,9 +18,8 @@
 
 在 Java 中，数组的定义，有两种方式：一般习惯使用方式一。
 
-方式一：`数据类型[] 数组名`，比如：`int[] array`
-
-方式二：`数据类型  数组名[]`，比如： `int array[]`
+- 方式一：`数据类型[] 数组名`，比如：`int[] array`
+- 方式二：`数据类型  数组名[]`，比如： `int array[]`
 
 其中的含义如下：
 
@@ -30,7 +29,7 @@
 
 ## 二、Java 数组初始化
 
-数组的初始化，就是在内存中，为数组容器开辟空间，并将数组存入容器中的过程。
+数组的初始化，就是在堆内存中，为数组容器开辟空间，并将数组存入容器中的过程。
 
 数组初始化的方式分为两种，分别是**静态初始化**，**动态初始化**。
 
@@ -126,7 +125,7 @@ public class ArrayDynamicInitialization {
 
         System.out.println(names[0]);
         System.out.println(names[1]);
-        System.out.println(names[2]); // 数组初始化默认值：null
+        System.out.println(names[2]); // 字符串类型的数组，初始化默认值：null
     }
 }
 ```
@@ -270,7 +269,7 @@ public class ArrayTest01 {
 }
 ```
 
-- 一个循环只做一件事情，这样代码可读性更高。
+> 一个循环只做一件事情，这样代码可读性更高。
 
 ## 六、Java 数组常见问题
 
@@ -366,7 +365,7 @@ public class ArrayTest03 {
         System.out.println("和为 " + sum);
 
         // 求平均数
-        double average = (double) sum / nums.length;
+        double average = sum * 1.0 / nums.length;
         System.out.println("平均数为 " + average);
 
         // 统计有多少数字小于平均数
@@ -575,4 +574,4 @@ public class ArrayMemory02 {
 
 ![数组数据类型的内存表现2](NodeAssets/数组数据类型的内存表现2.jpg)
 
-- 当两个数组类型的变量，指向同一块顿内存空间时，如果其中一个数组变量的引用，对数组中的元素进行了修改，那么另外一个数组变量的引用，访问到的数组中的元素，就是修改后的元素了。
+- 当两个数组类型的变量，指向同一块内存空间时，如果其中一个数组变量的引用，对数组中的元素进行了修改，那么另外一个数组变量的引用，访问到的数组中的元素，就是修改后的元素了。

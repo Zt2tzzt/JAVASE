@@ -103,7 +103,7 @@ public class ArithmeticOperatorsDemo01 {
 }
 ```
 
-- 结论 1：小数参与的除（`/`）运算，结果也是小数；并且结果有可能不精确（具体原因后续介绍）。
+- 结论：小数参与的除（`/`）运算，结果也是小数；并且结果有可能不精确（具体原因后续介绍）。
 
 #### 5.整数的取模（%）运算
 
@@ -223,7 +223,7 @@ public class ArithmeticOperatorsDemo02 {
 ```
 
 - 字面量 `10` 是 int 整数类型。
-- 在赋值的时候把一个 int 类型的值，赋值给了一个 double 类型的标识符。相当于把一个取值范围小的数据类型，赋值给一个取值范围大的数据类型，这是被允许的，程序执行时默认会进行隐式转换。
+- 把一个 int 类型的值，赋值给了一个 double 类型的标识符。相当于把一个取值范围小的数据类型，赋值给一个取值范围大的数据类型，这是被允许的，程序执行时默认会进行隐式转换。
 
 案例二：将 byte 类型的数值，赋值给 int 类型的数值；默认会进行隐式转换。
 
@@ -242,7 +242,7 @@ public class ArithmeticOperatorsDemo02 {
 }
 ```
 
-案例三：int 类型的数据与 double 类型的数据相加，int 类型的数据隐式转换为了 double 类型：
+案例三：int 类型的数据与 double 类型的数据相加，int 类型的数据隐式转换为了 double 类型，再进行的运算：
 
 demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo02.java
 
@@ -311,7 +311,7 @@ public class ArithmeticOperatorsDemo03 {
 
 案例二：将 `byte` 类型的变量 `b1`、`b1` 相加，在运算时，它们会隐式转为 `int` 类型；
 
-然后，将 `int` 类型的运算的结果，强制转为 `byte` 类型。
+然后，将 `int` 类型的运算结果，强制转为 `byte` 类型。
 
 demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo03.java
 
@@ -431,7 +431,7 @@ public class ArithmeticOperatorsDemo05 {
 }
 ```
 
-- 结论：`char` 字符类型与字符串类型相加，会应用字符串的拼接规则。
+- 结论：`char` 字符类型与字符串类型的值相加，会应用字符串的拼接规则。
 
 ## 二、Java 自增自减运算符
 
@@ -444,7 +444,7 @@ public class ArithmeticOperatorsDemo05 {
   - 变量的前面有 `--`，称为**前置自增运算符**，比如：`--a`；表示”先减后用“
   - 变量的后面有 `--`，称为**后置自增运算符**。 比如：`a--`。表示”先用后减“。
 
-自增自减运算符在处理 `byte`、`short` 和 `char` 类型时，同样会先隐式转换（自动类型提升）为 `int` 类型，再计算。
+自增自减运算符在处理 `byte`、`short`、`char` 类型时，同样会先隐式转换（自动类型提升）为 `int` 类型，再计算。
 
 案例一：
 
@@ -665,7 +665,7 @@ public class LogicOperatorDemo01 {
 }
 ```
 
-### 1.短路逻辑运算符
+### 4.短路逻辑运算符
 
 Java 中的短路逻辑运算符，分为**短路与（&&）**和**短路或（||）**。
 

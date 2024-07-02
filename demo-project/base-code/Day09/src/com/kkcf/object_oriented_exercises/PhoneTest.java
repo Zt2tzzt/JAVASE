@@ -9,9 +9,8 @@ public class PhoneTest {
         phones[2] = new Phone("苹果", 9999, "金色");
 
         int sum = 0;
-        for (int i = 0; i < phones.length; i++) {
+        for (int i = 0; i < phones.length; i++)
             sum += phones[i].getPrice();
-        }
 
         double avg = sum * 1.0 / phones.length;
         System.out.println("平均价格：" + avg); // 6332.333333333333

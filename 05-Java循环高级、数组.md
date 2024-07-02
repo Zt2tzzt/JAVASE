@@ -77,7 +77,7 @@ public class InfiniteLoop {
 
 ### 1.break 语句
 
-break 语句，不能单独存在，可以用在 switch 和循环中，表示结束，跳出的意思。
+break 语句，不能单独存在，它可以用在 switch 语句和循环中，表示结束，跳出的意思。
 
 demo-project/base-code/Day05/src/com/kkcf/loop_array/JumpControl.java
 
@@ -99,7 +99,7 @@ public class JumpControl {
 
 ### 2.continue 语句
 
-continue 语句，不能单独存在。只能存在于循环当中。表示：跳过本次循环，继续执行下次循环。
+continue 语句，不能单独存在。它只能存在于循环当中。表示：跳过本次循环，继续执行下次循环。
 
 demo-project/base-code/Day05/src/com/kkcf/loop_array/JumpControl.java
 

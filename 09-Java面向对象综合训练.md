@@ -17,6 +17,8 @@
 - 鸠摩智举起拳头打了鸠摩智一下，造成了 XX 点伤害，乔峰还剩下 XXX 点血。
 - 乔峰 K.O 了鸠摩智
 
+### 1.printf 输出语句
+
 > 输出语句
 >
 > ```java
@@ -341,7 +343,7 @@ sc.nextLine(); // 键盘录入一个字符串
 - 比如：先用 `nextInt`，再用 `nextLine` 会导致 `nextLine` 接收不到数据。
 - 因为：`nextInt` 键盘录入完成后，输入的 Enter，被 `nextLine` 接收了。
 
-需求 2：定义数组存储3部汽车对象。汽车的属性：品牌，价格，颜色。创建三个汽车对象，数据通过键盘录入而来，并把数据存入到数组当中。
+需求 2：定义数组存储 3 部汽车对象。汽车的属性：品牌，价格，颜色。创建三个汽车对象，数据通过键盘录入而来，并把数据存入到数组当中。
 
 demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/Car.java
 
@@ -504,19 +506,19 @@ public class PhoneTest {
         phones[2] = new Phone("苹果", 9999, "金色");
 
         int sum = 0;
-        for (int i = 0; i < phones.length; i++) {
+        for (int i = 0; i < phones.length; i++)
             sum += phones[i].getPrice();
-        }
 
         double avg = sum * 1.0 / phones.length;
         System.out.println("平均价格：" + avg); // 6332.333333333333
     }
 }
+
 ```
 
 需求：定义数组存储 4 个女朋友的对象；女朋友的属性：姓名、年龄、性别、爱好；
 
-要求 1：计算出四女朋友的平均年龄；要求 2：统计年龄比平均值低的女朋友有几个？并把她们的所有信息打印出来。
+要求 1：计算出 4 个女朋友的平均年龄；要求 2：统计年龄比平均值低的女朋友有几个？并把她们的所有信息打印出来。
 
 demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/GirlFriend.java
 
@@ -594,7 +596,7 @@ public class GirlFriendTest {
 
         GirlFriend gf1 = new GirlFriend("aoi", 18, "萌妹子", "向山进发");
         GirlFriend gf2 = new GirlFriend("rin", 19, "萌妹子", "摇曳露营");
-        GirlFriend gf3 = new GirlFriend("mayu", 22, "萌妹子", "照片摄影");
+        GirlFriend gf3 = new GirlFriend("mayu", 22, "萌妹子", "摄影拍照");
         GirlFriend gf4 = new GirlFriend("kumiko", 21, "萌妹子", "上低音号");
 
         gfs[0] = gf1;
@@ -708,85 +710,81 @@ public class StudentTest {
 
         // 唯一性判断，学号重复，不用添加进数组
         boolean flag1 = isOnly(stus, stu4.getNo());
-        if (!flag1) {
+        if (!flag1)
             System.out.println("学号重复，添加失败");
-            return;
-        }
+        else {
+            // 判断数组是否已满，不满，则添加；已满，则创建一个新数组，并将原数组中的元素复制到新数组中
+            int count = getCount(stus);
+            boolean flag2 = count == stus.length;
 
-        // 判断数组是否已满，不满，则添加
-        int count = getCount(stus);
-        boolean flag2 = count == stus.length;
-        if (!flag2) {
+            if (flag2) stus = createStudentArr(stus);
             stus[count] = stu4;
+
             printStudents(stus);
-            return;
         }
 
-        // 判断数组是否已满，已满，则创建一个新数组，并将原数组中的元素复制到新数组中
-        stus =  createStudentArr(stus);
-        stus[count] = stu4;
-        printStudents(stus);
 
-        // 通过 id 删除学生信息；如果存在，则删除，如果不存在，则提示删除失败。
+        // 4.通过 id 删除学生信息；如果存在，则删除，如果不存在，则提示删除失败。
         int index1 = getIndex(stus, 4);
-        if (index1 == -1) {
+        if (index1 == -1)
             System.out.println("删除失败");
-            return;
+        else {
+            stus[index1] = null;
+            // 5.删除完毕之后，遍历所有学生信息。
+            printStudents(stus);
         }
-        stus[index1] = null;
-        printStudents(stus);
 
-        // 查询数组 id 为“2”的学生，如果存在，则将他的年龄 +1 岁
+        // 6.查询数组 id 为“2”的学生，如果存在，则将他的年龄 +1 岁
         int index2 = getIndex(stus, 2);
-        if (index2 == -1) {
+        if (index2 == -1)
             System.out.println("查询失败");
-            return;
+        else {
+            stus[index2].setAge(stus[index2].getAge() + 1);
+            printStudents(stus);
         }
-        stus[index2].setAge(stus[index2].getAge() + 1);
-        printStudents(stus);
     }
 
     /**
      * 此函数用于，判断学号是否唯一
+     *
      * @param stus
      * @param id
      * @return
      */
     public static boolean isOnly(Student[] stus, int id) {
-        for (int i = 0; i < stus.length; i++) {
-            if (stus[i] != null && stus[i].getNo() == id) {
+        for (int i = 0; i < stus.length; i++)
+            if (stus[i] != null && stus[i].getNo() == id)
                 return false;
-            }
-        }
+
         return true;
     }
 
     /**
      * 此函数用于，获取学生人数
+     *
      * @param stus
      * @return
      */
     public static int getCount(Student[] stus) {
         int count = 0;
 
-        for (int i = 0; i < stus.length; i++) {
+        for (int i = 0; i < stus.length; i++)
             if (stus[i] != null) count++;
-        }
 
         return count;
     }
 
     /**
      * 此函数用于，创建一个新数组，并将原数组中的元素复制到新数组中
+     *
      * @param oldArr
      * @return
      */
     public static Student[] createStudentArr(Student[] oldArr) {
         Student[] newArr = new Student[oldArr.length + 1];
 
-        for (int i = 0; i < oldArr.length; i++) {
+        for (int i = 0; i < oldArr.length; i++)
             newArr[i] = oldArr[i];
-        }
 
         System.out.println("创建新数组成功");
         return newArr;
@@ -794,28 +792,30 @@ public class StudentTest {
 
     /**
      * 此函数用于，打印学生信息
+     *
      * @param stus
      */
     public static void printStudents(Student[] stus) {
         System.out.println("=====================遍历开始=====================");
-        for (int i = 0; i < stus.length; i++) {
+
+        for (int i = 0; i < stus.length; i++)
             if (stus[i] != null) System.out.println(stus[i].toString());
-        }
+
         System.out.println("=====================遍历结束=====================");
     }
 
     /**
      * 此函数用于，获取学生索引
+     *
      * @param stus
      * @param no
      * @return
      */
     public static int getIndex(Student[] stus, int no) {
-        for (int i = 0; i < stus.length; i++) {
-            if (stus[i] != null && stus[i].getNo() == no) {
+        for (int i = 0; i < stus.length; i++)
+            if (stus[i] != null && stus[i].getNo() == no)
                 return i;
-            }
-        }
+
         return -1;
     }
 }
