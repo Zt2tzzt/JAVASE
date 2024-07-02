@@ -19,9 +19,9 @@ public class Test08 {
             }
         }
 
-        for (int i = 0; i < randomaward.length; i++) {
+        // 打印数组
+        for (int i = 0; i < randomaward.length; i++)
             System.out.println(randomaward[i] + " ");
-        }
     }
 
     public static boolean isExist(int[] arr, int award) {

@@ -15,9 +15,8 @@ public class Test03 {
         }
 
         // 打印数组
-        for (int i = 0; i < chars.length; i++) {
+        for (int i = 0; i < chars.length; i++)
             System.out.print(chars[i] + " ");
-        }
         System.out.println();
 
         // 获取验证码

@@ -2,7 +2,7 @@ package com.kkcf.trainning;
 
 public class Test04 {
     public static void main(String[] args) {
-        // 定义一个老数组
+        // 定义一个数组
         int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
         // 定义一个新数组

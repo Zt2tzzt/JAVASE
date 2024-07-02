@@ -1,8 +1,8 @@
-## Java 面向对象综合训练
+# Java 面向对象综合训练
 
 ## 一、文字版格斗游戏
 
-需求：格斗游戏，每个游戏角色的姓名，血量，都不相同，在选定人物的时候（new 对象的时候），这些信息就应该被确定下来。 
+需求：格斗游戏，每个游戏角色的姓名，血量，都不相同，在选定人物的时候（new 对象的时候），这些信息就应该被确定下来。
 
 程序运行之后创建了两个角色：
 
@@ -15,7 +15,7 @@
 - 鸠摩智举起拳头打了鸠摩智一下，造成了 XX 点伤害，乔峰还剩下 XXX 点血。
 - 乔峰举起拳头打了鸠摩智一下，造成了 XX 点伤害，鸠摩智还剩下 XXX 点血。
 - 鸠摩智举起拳头打了鸠摩智一下，造成了 XX 点伤害，乔峰还剩下 XXX 点血。
-- 乔峰 K.O 了鸠摩智 
+- 乔峰 K.O 了鸠摩智
 
 > 输出语句
 >
@@ -422,7 +422,7 @@ public class CarTest {
             Car car = new Car(brand, price, color);
             cars[i] = car;
         }
-        
+
         sc.close();
 
         for (int i = 0; i < cars.length; i++) {
@@ -622,3 +622,201 @@ public class GirlFriendTest {
 }
 ```
 
+### 4.对象数组-学生
+
+定义一个长度为 3 的数组，数组存储 1~3 名学生对象作为初始数据，学生对象的学号，姓名各不相同。
+
+学生的属性：学号，姓名，年龄。
+
+- 要求1：再次添加一个学生对象，并在添加的时候进行学号的唯一性判断。
+- 要求2：添加完毕之后，遍历所有学生信息。
+- 要求3：通过 id 删除学生信息；如果存在，则删除，如果不存在，则提示删除失败。
+- 要求4：删除完毕之后，遍历所有学生信息。
+- 要求5：查询数组 id 为“2”的学生，如果存在，则将他的年龄 +1 岁
+
+demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/Student.java
+
+```java
+package com.kkcf.object_oriented_exercises;
+
+public class Student {
+    private int no;
+    private String name;
+    private int age;
+
+    public Student() {
+    }
+
+    public Student(int no, String name, int age) {
+        this.no = no;
+        this.name = name;
+        this.age = age;
+    }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "no=" + no +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+}
+```
+
+demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/StudentTest.java
+
+```java
+package com.kkcf.object_oriented_exercises;
+
+public class StudentTest {
+    public static void main(String[] args) {
+        // 1.创建学生数组
+        Student[] stus = new Student[3];
+
+        // 2.创建学生对象，并添加进数组
+        stus[0] = new Student(1, "张三", 18);
+        stus[1] = new Student(2, "李四", 19);
+        stus[2] = new Student(3, "王五", 20);
+
+        // 3.再次添加一个学生对象，并在添加的时候进行学号的唯一性判断。
+        Student stu4 = new Student(4, "赵六", 21);
+
+        // 唯一性判断，学号重复，不用添加进数组
+        boolean flag1 = isOnly(stus, stu4.getNo());
+        if (!flag1) {
+            System.out.println("学号重复，添加失败");
+            return;
+        }
+
+        // 判断数组是否已满，不满，则添加
+        int count = getCount(stus);
+        boolean flag2 = count == stus.length;
+        if (!flag2) {
+            stus[count] = stu4;
+            printStudents(stus);
+            return;
+        }
+
+        // 判断数组是否已满，已满，则创建一个新数组，并将原数组中的元素复制到新数组中
+        stus =  createStudentArr(stus);
+        stus[count] = stu4;
+        printStudents(stus);
+
+        // 通过 id 删除学生信息；如果存在，则删除，如果不存在，则提示删除失败。
+        int index1 = getIndex(stus, 4);
+        if (index1 == -1) {
+            System.out.println("删除失败");
+            return;
+        }
+        stus[index1] = null;
+        printStudents(stus);
+
+        // 查询数组 id 为“2”的学生，如果存在，则将他的年龄 +1 岁
+        int index2 = getIndex(stus, 2);
+        if (index2 == -1) {
+            System.out.println("查询失败");
+            return;
+        }
+        stus[index2].setAge(stus[index2].getAge() + 1);
+        printStudents(stus);
+    }
+
+    /**
+     * 此函数用于，判断学号是否唯一
+     * @param stus
+     * @param id
+     * @return
+     */
+    public static boolean isOnly(Student[] stus, int id) {
+        for (int i = 0; i < stus.length; i++) {
+            if (stus[i] != null && stus[i].getNo() == id) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 此函数用于，获取学生人数
+     * @param stus
+     * @return
+     */
+    public static int getCount(Student[] stus) {
+        int count = 0;
+
+        for (int i = 0; i < stus.length; i++) {
+            if (stus[i] != null) count++;
+        }
+
+        return count;
+    }
+
+    /**
+     * 此函数用于，创建一个新数组，并将原数组中的元素复制到新数组中
+     * @param oldArr
+     * @return
+     */
+    public static Student[] createStudentArr(Student[] oldArr) {
+        Student[] newArr = new Student[oldArr.length + 1];
+
+        for (int i = 0; i < oldArr.length; i++) {
+            newArr[i] = oldArr[i];
+        }
+
+        System.out.println("创建新数组成功");
+        return newArr;
+    }
+
+    /**
+     * 此函数用于，打印学生信息
+     * @param stus
+     */
+    public static void printStudents(Student[] stus) {
+        System.out.println("=====================遍历开始=====================");
+        for (int i = 0; i < stus.length; i++) {
+            if (stus[i] != null) System.out.println(stus[i].toString());
+        }
+        System.out.println("=====================遍历结束=====================");
+    }
+
+    /**
+     * 此函数用于，获取学生索引
+     * @param stus
+     * @param no
+     * @return
+     */
+    public static int getIndex(Student[] stus, int no) {
+        for (int i = 0; i < stus.length; i++) {
+            if (stus[i] != null && stus[i].getNo() == no) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+```
