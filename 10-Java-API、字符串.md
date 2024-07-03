@@ -337,3 +337,690 @@ public class Test02 {
 ```
 
 - char 类型的字符，在运算时，会根据 ASCLL 码表，隐式转为 int 整数类型。
+
+### 7.String 类字符串对象的拼接
+
+案例理解：定义一个方法，把 int 数组中的数据，按照指定的格式拼接成一个字符串返回，调用该方法，并在控制台输出结果。
+
+数组为：`int[] arr = {1, 2, 3}`；执行方法后的输出结果为 `[1, 2, 3]`
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test03.java
+
+```java
+package com.kkcf.string;
+
+public class Test03 {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3};
+
+        System.out.println(arr2String(arr));
+    }
+
+    public static String arr2String(int[] arr) {
+        if (arr == null) return "";
+
+        if (arr.length == 0) return "[]";
+
+        String str = "[";
+
+        for (int i = 0; i < arr.length; i++)
+            str += i != arr.length - 1 ? (arr[i] + ", ") : (arr[i]);
+
+        str += "]";
+
+        return str;
+    }
+}
+```
+
+### 8.String 类字符串对象的反转
+
+案例理解：定义一个方法，实现字符出的反转，键盘录入一个字符串，调用该方法后，在控制台输出结果，例如键盘录入“abc”，输出结果“cba”。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test04.java
+
+```java
+package com.kkcf.string;
+
+import java.util.Scanner;
+
+public class Test04 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("请输入一个字符串：");
+        String str = sc.nextLine();
+
+        String result = reverse(str);
+        System.out.println(result);
+    }
+
+    public static String reverse(String str) {
+        int len = str.length();
+
+        char[] chs = new char[len];
+
+        for (int i = len - 1; i >= 0; i--) {
+            char c = str.charAt(i);
+            chs[len - 1 - i] = c;
+        }
+
+        String result = new String(chs);
+
+        return result;
+    }
+}
+```
+
+### 9.金额转换
+
+案例理解，将一个数字表示的金额，转为中文大写的金额描述。
+
+- 思路：使用”查表法“的思想，将数组索引，和中文数字大写对应起来。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test05.java
+
+```java
+package com.kkcf.string;
+
+import java.util.Scanner;
+
+public class Test05 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int money;
+        while (true) {
+            System.out.println("请输入一个金额：");
+            int i = sc.nextInt();
+
+            if (i >= 0 && i <= 9999999) {
+                money = i;
+                break;
+            } else {
+                System.out.println("输入的金额无效");
+            }
+        }
+
+        String moneyStr = "";
+        while (money > 0) {
+            int num = money % 10;
+            moneyStr = getCapitelNumber(num) + moneyStr;
+            money /= 10;
+        }
+
+        // 在前面补“零”
+        int count = 7 - moneyStr.length();
+        for (int i = 0; i < count; i++)
+            moneyStr = "零" + moneyStr;
+
+        String[] arr = {"佰", "拾", "万", "仟", "佰", "拾", "元"};
+        String result = "";
+        for (int i = 0; i < moneyStr.length(); i++) {
+            char c = moneyStr.charAt(i);
+            result += c + arr[i];
+        }
+
+        System.out.println(result);
+    }
+
+    /**
+     * 此函数用于，使用”查表法获取大写数字
+     * @param num
+     * @return
+     */
+    public static String getCapitelNumber(int num) {
+        String[] arr = {"零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"};
+        return arr[num];
+    }
+}
+```
+
+### 10.String 类字符串对象的截取
+
+截取 String 类字符串对象字符串，需要用到 String 类中封装的方法
+
+- `public String substring(int beginIndex, int endIndex)`，返回一个新字符串，它是此字符串的一个子字符串。该子字符串从指定的 `beginIndex` 处开始，直到索引 `endIndex - 1` 处的字符（包头不包尾，包左不包右）。因此，该子字符串的长度为 `endIndex-beginIndex`。
+- `public String substring(int beginIndex)`，返回一个新的字符串，它是此字符串的一个子字符串。该子字符串从指定索引处的字符开始，直到此字符串末尾。
+
+案例理解：将手机号码中间四位用“*”号代替。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Demo04.java
+
+```java
+package com.kkcf.string;
+
+public class Demo04 {
+    public static void main(String[] args) {
+        String phoneNum = "13812345678";
+
+        String start = phoneNum.substring(0, 3);
+        String end = phoneNum.substring(7);
+
+        String result = start + "****" + end;
+        System.out.println(result);
+    }
+}
+```
+
+案例理解：身份证号每一位代表的含义：
+
+- 1、2 位，省份；
+- 3、4 位，城市；
+- 5、6 位，区县；
+- 7 - 14 位，出生年月日；
+- 15、16 位，所在地派出所。
+- 17 位，性别（奇数：男；偶数：女）
+
+根据一个身份证号码，输出这个人的出生年月日和性别。
+
+- 难点：利用 ASCLL 码表，把字符变成数字。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test06.java
+
+```java
+package com.kkcf.string;
+
+public class Test06 {
+    public static void main(String[] args) {
+        String id = "430202200612124321";
+
+        String year = id.substring(6, 10);
+        String mon = id.substring(10, 12);
+        String day = id.substring(12, 14);
+
+        System.out.println("出生年月日：" + year + " 年 " + mon + " 月 " + day + " 日 ");
+
+        char c = id.charAt(id.length() - 1);
+        int num = c - '0';
+
+        System.out.println("性别码：" + (num % 2 == 0 ? "女" : "男"));
+    }
+}
+```
+
+### 11.10.String 类字符串对象的替换
+
+替换 String 类字符串对象中的子字符串，需要用到 String 类中封装的方法
+
+- `public String replace(CharSequence target, CharSequence replacement)`，使用指定的字面值替换序列替换此字符串所有匹配字面值目标序列的子字符串。该替换从字符串的开头朝末尾执行，例如，用 "b" 替换字符串 "aaa" 中的 "aa" 将生成 "ba" 而不是 "ab"。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test07.java
+
+```java
+package com.kkcf.string;
+
+public class Test07 {
+    public static void main(String[] args) {
+        String talk = "你玩的真好，SB，以后别玩了，CNM，NMSL";
+
+        String[] arr = {"SB", "CNM", "NMSL", "MLGB", "TMD"};
+
+        for (int i = 0; i < arr.length; i++)
+            talk = talk.replace(arr[i], "***");
+
+        System.out.println(talk);
+    }
+}
+```
+
+## 三、StringBuilder 类
+
+`StringBuilder` 类创建的字符串对象，可以看成是一个容器，将要操作的字符串放入其中，对象创建之后里面的内容是可变的。
+
+当我们在拼接字符串和反转字符串的时候会使用到。
+
+`StringBuilder` 类常用的构造方法有两个：
+
+- `public StringBuilder()`，构造一个其中不带字符的字符串生成器，初始容量为 16 个字符。
+- `public StringBuilder(String str)`，构造一个字符串生成器，并初始化为指定的字符串内容。该字符串生成器的初始容量为 16 加上字符串参数的长度。
+
+`StringBuilder` 类常用的成员方法有：
+
+- `public StringBuilder append(任意类型)`，添加数据，并返回对象本身。
+- `public StringBuilder reverse()`，反转容器中的内容。
+- `public int length()`，返回长度（字符出现的个数）。
+- `public String toString()`，把 StringBuilder 类型转为 String 类型的字符串。
+
+StringBuilder 是 Java 已经写好的类，Java 在底层对他做了一些特殊处理，使得打印对象时输出的不是地址值，而是属性值。
+
+```java
+package com.kkcf.string;
+
+public class Demo05 {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder("哈哈");
+
+        System.out.println(sb); // 哈哈
+    }
+}
+```
+
+StringBuilder 类的基本使用：
+
+demo-project/base-code/Day10/src/com/kkcf/string/Demo05.java
+
+```java
+package com.kkcf.string;
+
+public class Demo05 {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("aaa");
+        sb.append("bbb");
+        sb.append("ccc");
+        sb.append("ddd");
+
+        sb.reverse();
+
+        System.out.println(sb.length()); // 12
+
+        String str = sb.toString();
+
+        System.out.println(str); // dddcccbbbaaa
+    }
+}
+```
+
+### 1.链式编程
+
+链式编程，指的是当在调用一个方法的时候，不需要用变量接收它的结果，可以继续调用其它方法。
+
+使用链式编程，重构上方的代码：
+
+demo-project/base-code/Day10/src/com/kkcf/string/Demo05.java
+
+```java
+package com.kkcf.string;
+
+public class Demo05 {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder();
+
+        String str = sb.append("aaa").append("bbb").append("ccc").append("ddd").reverse().toString();
+
+        System.out.println(str.length()); // 12
+        System.out.println(str); // dddcccbbbaaa
+    }
+}
+```
+
+案例理解：键盘录入一个字符串，判断该字符串是否是对此字符串，并在控制台打印“是”或“不是”。例如对成字符串有“123321”、“111”
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test08.java
+
+```java
+package com.kkcf.string;
+
+import java.util.Scanner;
+
+public class Test08 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入一个字符串：");
+
+        String str = sc.nextLine();
+
+        sc.close();;
+
+        String strReverse = new StringBuilder().append(str).reverse().toString();;
+
+        System.out.println((str.equals(strReverse) ? "是" : "不是") + "对称字符串");
+    }
+}
+```
+
+### 2.StringBuilder 使用场景
+
+StringBuilder 的使用场景主要有两个：
+
+- 场景一：字符串的拼接；
+- 场景二：字符串的反转。
+
+案例理解，使用 StringBuilder 类，重构上方 String 类拼接字符串的方法。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test09.java
+
+```java
+package com.kkcf.string;
+
+public class Test09 {
+    public static void main(String[] args) {
+        int arr[] = {1, 2, 3};
+
+        System.out.println(arr2String(arr));
+    }
+
+    public static String arr2String(int[] arr) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("[");
+
+        for (int i = 0; i < arr.length; i++)
+            sb.append(i == arr.length - 1 ? arr[i] : arr[i] + ",");
+
+        sb.append("]");
+
+        return sb.toString();
+    }
+}
+```
+
+## 四、StringJoiner 类
+
+`StringJoiner` 类跟 `StringBuilder` 类相似，也可以看成是一个容器，创建之后里面的内容是可变的。
+
+`StringJoiner` 的作用，是提高字符串的操作效率，而且代码编写特别简洁，
+
+`StringJoiner` 类是 JDK8 之后出现的新特性。
+
+`StringJoiner` 类常用的构造方法有两个（它没有空参构造方法）：
+
+- `public StringJoiner(CharSequence delimiter)`，创建一个 StringJoiner 对象，指定间隔符号。
+- `public StringJoiner(CharSequence delimiter, CharSequence prefix, CharSequence suffix)`，创建一个 StringJonier 对象，指定拼接时的间隔符号，开始符号，结束符号。
+
+`StringJoiner` 类常用的成员方法有以下几个：
+
+- `public StringJoiner add(CharSequence newElement)`，添加数据，并返回对象本身。
+- `public int length()`，返回长度，字符出现的个数。
+- `public String toString()`，返回一个字符串，该字符串就是拼接后的结果。
+
+使用 StringJoiner 类，将三段字符串，用连字符（-）拼接。
+
+```java
+package com.kkcf.string;
+
+import java.util.StringJoiner;
+
+public class Demo06 {
+    public static void main(String[] args) {
+        StringJoiner sj = new StringJoiner("-");
+
+        sj.add("aaa").add("bbb").add("ccc");
+
+        System.out.println(sj); // aaa-bbb-ccc
+    }
+}
+```
+
+使用 StringJoiner 类，打印一个完整的数组。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Demo06.java
+
+```java
+package com.kkcf.string;
+
+import java.util.StringJoiner;
+
+public class Demo06 {
+    public static void main(String[] args) {
+        StringJoiner sj = new StringJoiner(", ", "[", "]");
+
+        sj.add("aaa").add("bbb").add("ccc");
+
+        System.out.println(sj.length()); // 15
+
+        System.out.println(sj.toString()); // [aaa, bbb, ccc]
+    }
+}
+```
+
+### 1.StringJoiner 使用场景
+
+StringJoiner 的使用场景主要有：
+
+- 场景一：字符串的拼接；
+
+## 五、Java 字符串原理
+
+### 1.字符出存储的内存原理
+
+前面已详细介绍过，这里做总结：
+
+- 字符串字面量直接赋值给变量，会使用 StringTable（串池）中的地址值。
+- 使用 `new` 操作符，创建一个 String 类的对象，会在堆内存中开辟一块新的空间。
+
+### 2.字符串 == 号的比较
+
+前面已详细介绍过，这里做总结：
+
+- Java 中的字符串，是引用数据类型，== 号只能用于字符串的地址值的比较。
+- Java 中的字符串，要比其值是否相同，就要使用 `equals` 方法。
+
+### 3.字符串拼接的底层原理
+
+String 类创建的字符串对象，在进行拼接的时候，分为两种情况。
+
+#### 1.字符串字面量的拼接
+
+情况一：字符串字面量的拼接。如下方代码所示：
+
+```java
+String s = "a" + "b" + "c";
+System.out.println(s);
+```
+
+- 这会触发字符串的优化机制，在代码编译时，即 .java  文件转为 .class 文件的过程组（还没运行 .class 文件），就已经是最终的结果，即"abc"了。
+- 相当于直接给 `s` 变量赋值`"abc"`。
+
+根据上方结论，理解这段代码：
+
+```java
+package com.kkcf.string;
+
+public class Demo07 {
+    public static void main(String[] args) {
+        String s1 = "abc";
+        String s2 = "a" + "b" + "c";
+
+        System.out.println(s1 == s2); // true
+    }
+}
+```
+
+#### 2.变量参与的字符串拼接
+
+情况二：有变量参与的字符串拼接。如下方代码所示：
+
+```java
+String s1 = "a";
+String s2 = s1 + "b";
+String s3 = s2 + "c";
+
+System.out.println(s3);
+```
+
+上方代码，在 JDK 8 以前：
+
+- 会在 StringTable（串池）中，创建"a"和"b"两个字符串对象；
+- 并在堆内存中，创建一个 StringBuilder 对象，将"a"和"b"放入到该容器中，使用 `append` 方法拼接，再将 StringBuilder 对象，转回 String 字符串对象。依此类推……。
+- 所以，变量参与的 String 字符串对象拼接，一个 `+` 号，至少会在内存中创建连个对象。
+
+![字符串拼接原理](NodeAssets/字符串拼接原理.jpg)
+
+上方代码，在 JDK 8 及以后：
+
+- 会对字符串变量相 `+` 后的字符串长度，进行预估；
+- 在内存中创建一个预估长度的数据，将字符串变量放入其中，这样，内存中就只会创建一个对象。
+- 然而，预估也是非常耗时的，所以不推荐在字符串拼接时，使用 `+` 号。
+
+根据上方结论，理解下方代码：
+
+```java
+package com.kkcf.string;
+
+public class Demo07 {
+    public static void main(String[] args) {
+        String s1 = "abc";
+        String s2 = "ab";
+        String s3 = s2 + "c";
+
+        System.out.println(s1 == s3); // false
+    }
+}
+```
+
+### 4.字符串 StringBuilder 类提高效率的原理图
+
+StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼接时，会将所有的字符串对象，都放入其中。
+
+1.StringBuilder 使用空参构造方法，创建对象时，会创建一个长度为 0，默认容量为 16 的字节数组。
+
+> 长度和容量是不一样的：
+>
+> - 容量，表示最多能装多少。
+> - 长度，表示实际装了多少。
+
+![StringBuilder默认容量](NodeAssets/StringBuilder默认容量.jpg)
+
+2.如果把字符串"abc"放入 StringBuilder 对象中，它的表现形式如下，可知
+
+![StringBuilder容器1](NodeAssets/StringBuilder容器1.jpg)
+
+- 字节数组中，实际存储的是字符对应的 ASCLL 码表数值。
+- 此时字节数组的长度为 3，容量为 16.
+
+3.如果把"a"-"z"，26 个英文字母组成的字符串添加到  StringBuilder 对象中，这时超出了 StringBuilder 字符串对象的容量，那么它会自动扩容，即 `老容量(16) * 2 + 2 = 34`。
+
+![StringBuilder容器2](NodeAssets/StringBuilder容器2.jpg)
+
+- 此时字节数组的长度为 26，容量为 34.
+
+4.如果把"a"-"z"，"0"-"9" 共 36 个字符组成的字符串，添加到  StringBuilder 对象中，这时超出了 StringBuilder 字符串对象自动扩容的最大容量 34，那么他会按照实际要存储的字符串长度，来创建字节数组的容量。
+
+![StringBuilder容器3](NodeAssets/StringBuilder容器3.jpg)
+
+- 此时字节数组的长度为 36，容量为 36.
+
+上方步骤，使用代码表示为：
+
+demo-project/base-code/Day10/src/com/kkcf/string/Demo07.java
+
+```java
+package com.kkcf.string;
+
+public class Demo07 {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder();
+
+        System.out.println(sb.capacity()); // 16
+        System.out.println(sb.length()); // 0
+
+        sb.append("abc");
+
+        System.out.println(sb.capacity()); // 16
+        System.out.println(sb.length()); // 3
+
+        sb.append("defghijklmnopqrstuvwxyz");
+
+        System.out.println(sb.capacity()); // 34
+        System.out.println(sb.length()); // 26
+
+        StringBuilder sb2 = new StringBuilder();
+        sb2.append("abcdefghijklmnopqrstuvwxyz0123456789");
+
+        System.out.println(sb2.capacity()); // 36
+        System.out.println(sb2.length()); // 36
+    }
+}
+```
+
+总的来说，使用 StringBuilder 创建的对象，会将所有字符串放在一个容器中，不会创建很多无用的空间，节约内存。
+
+## 六、Java 字符串综合练习
+
+### 1.罗马数字
+
+键盘录入一个字符串，要求1：长度小于等于 9；要求2：只能是数字；将内容编程罗马数字。
+
+注意：罗马数字中，没有 0，如果键盘录入的数字包含 0，可以变成长度为 0 的字符串。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test10.java
+
+```java
+package com.kkcf.string;
+
+import java.util.Scanner;
+
+public class Test10 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        String str;
+        while (true) {
+            System.out.println("请输入一个字符串：");
+            str = sc.next();
+
+            boolean flag = checkString(str);
+            if (flag) break;
+            else System.out.println("输入的字符串不符合要求，请重新输入！");
+        }
+
+        sc.close();
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            String s = changeRoman(c - '0');
+
+            sb.append(s);
+        }
+
+        System.out.println(sb.toString());
+    }
+
+    /**
+     * 此函数用于，检查输入的字符串是否符合要求
+     * @param str
+     * @return
+     */
+    public static boolean checkString(String str) {
+        if (str.length() > 9) return false;
+
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 此函数用于，使用查表法，将阿拉伯数字转换为罗马数字
+     * @param num 阿拉伯数字
+     * @return
+     */
+    public static String changeRoman(int num) {
+        String[] romaNum = {"", "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "Ⅵ", "Ⅶ", "Ⅷ", "Ⅸ"};
+        return romaNum[num];
+    }
+}
+```
+
+上方代码，changeRoman 方法，可以使用 JDK 12 switch 语句新特性来重构
+
+- JDK 12 switch 语句新特性，使用变量接收 switch 语句的返回结果。
+
+```java
+public static String changeRoman(int num) {
+    String str = switch (num) {
+        case 0 -> "";
+        case 1 -> "Ⅰ";
+        case 2 -> "Ⅱ";
+        case 3 -> "Ⅲ";
+        case 4 -> "Ⅳ";
+        case 5 -> "Ⅴ";
+        case 6 -> "Ⅵ";
+        case 7 -> "Ⅶ";
+        case 8 -> "Ⅷ";
+        case 9 -> "Ⅸ";
+        default -> "";
+    };
+
+    return str;
+}
+```
+
+### 2.调整字符串
