@@ -65,7 +65,7 @@ A[方形] --> B(其它语句体)
     D --> F[结束]
 ```
 
-案例一：键盘录入一个数，表示女婿的开的车的排面，如果女婿排面大于 8，去老丈人家可以先动筷，否则就不能先动筷。
+案例一：键盘录入一个数，表示女婿回村开的汽车排面，如果女婿的排面大于 8，去老丈人家可以先动筷，否则就不能先动筷。
 
 demo-project/base-code/Day04/src/com/kkcf/process_control/IfDemo1.java
 
@@ -295,12 +295,12 @@ switch (表达式) {
 
 switch 语句的格式说明：
 
-- 表达式，表示将要匹配的值，只能匹配 byte，short，int，char 类型的值，
+- `表达式`，表示将要匹配的值，只能匹配 `byte`，`short`，`int`，`char` 类型的值，
   - JDK5 以后，可以是枚举类型的值；
-  - JDK7 以后可以是 String 类型的值。
-- case 后面跟的值，**只能是字面量，不能是变量**，不能重复；用于和表达式的结果进行 `==` 比较。
-- break 表示中断、结束的意思，用来结束 switch 语句。
-- default 表示所有情况都不匹配的时候，就执行该处的内容，和 if 语句的 else 相似。
+  - JDK7 以后可以是 `String` 类型的值。
+- `case` 后面跟的值，**只能是字面量，不能是变量**，不能重复；用于和表达式的结果进行 `==` 比较。
+- `break` 表示中断、结束的意思，用来结束 switch 语句。
+- `default` 表示所有情况都不匹配的时候，就执行该处的内容，和 if 语句的 else 相似。
 
 这种写法的执行流程如下：
 
@@ -378,7 +378,7 @@ public class IfDemo05 {
 
 #### 1.default 的位置和省略
 
-switch 语句中的 default 语句，可以省略，但是自己写的时候不建议省略。因为一旦省略后，就没有备用选项了。
+switch 语句中的 default 语句，可以省略，但是不建议。因为一旦省略后，就没有备用选项了。
 
 switch 语句中的 default 语句，不一定写在最下方，只是习惯性的写在最下方。如果 default 语句写在其它地方，记得加上 break 语句。
 
@@ -614,7 +614,7 @@ public class SwitchDemo03 {
 
 JDK 12 中，如果 switch 语句会返回一个结果，那么还可以用一个变量，来接收这个结果。
 
-后续介绍这种写法。
+后续介绍这种写法（见[10-Java-API、字符串.md](./10-Java-API、字符串.md/###1.罗马数字)）。
 
 #### 4.switch 和 if 如何选择
 
@@ -850,8 +850,8 @@ public class WhileDemo01 {
         int count = 0;
 
         while (paperThickness < mountThickness) {
-            count++;
             paperThickness *= 2;
+            count++;
         }
 
         System.out.println(count); // 27
@@ -897,7 +897,7 @@ public class WhileDemo02 {
 }
 ```
 
-案例理解：给定两个整数，被除数和除数（都是正数，且不超过 int 类型范围），将两数相除，要求不使用乘法、除法、和 % 运算符。得到商和余数。
+案例理解：给定两个整数，被除数和除数（都是正数，且不超过 int 类型范围），将两数相除，要求不使用 *、/、 % 运算符。得到商和余数。
 
 demo-project/base-code/Day04/src/com/kkcf/process_control/WhileDemo02.java
 
