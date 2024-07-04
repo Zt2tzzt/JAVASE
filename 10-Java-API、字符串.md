@@ -19,17 +19,19 @@ Java 字符串相关的类有 `String`、`StringBuilder`、`StringJonier`（JDK 
 
 ## 二、String 类
 
-java.lang.String 类代表字符串。
+String 类在 `java.lang` 包下，所以使用的时候不需要导包！
 
-Java 程序中的所有字符串文字（例如“abc”）都被实现为此类的实例。也就是说，Java 程序中所有的双引号字符串，都是 String 类的对象。
+String 类用于创建字符串对象。
 
-String 类在 java.lang 包下，所以使用的时候不需要导包！
+Java 程序中的所有字符串（例如“abc”）都被实现为此类的实例；
+
+也就是说，Java 程序中所有的双引号包裹的字符串，都是 String 类的对象。
 
 ### 1.String 类特点
 
 String 类创建的字符串对象，有以下特点：
 
-特点一：String 类创建的字符串对象不可变，它们的值在创建后不能被更改。
+特点一：String 类创建的字符串对象不可变，它们的值在创建后不能被更改。比如说：
 
 下方代码，一共产生了三个 String 类创建的对象。
 
@@ -47,12 +49,9 @@ String abc = "abc";
 abc = "cba";
 ```
 
+特点二：虽然 String 类对象中字符串的值是不可变的，但是它们可以被共享。
 
-
-
-
-- 虽然 String 的值是不可变的，但是它们可以被共享。
-- 字符串效果上相当于字符数组( char[] )，但是底层原理是字节数组( byte[] )
+特点三：字符串效果上相当于字符数组（`char[]`），但是底层原理是字节数组（`byte[]`）。
 
 ### 2.String 类创建对象
 
@@ -61,12 +60,14 @@ String 类创建对象有两种方式：
 - 第一种：直接赋值；比如：`String name = "zzt";`（最常用的方式）。
 - 第二种：使用 `new` 操作符，调用 `String` 类的构造方法，常用的构造方法如下。
 
-| 构造方法                         | 说明                             |
-| -------------------------------- | -------------------------------- |
-| `public String()`                | 创建空白字符串，不含任何内容     |
-| `public String(String original)` | 根据传入的字符串，创建字符串对象 |
-| `public String(char[] chs)`      | 根据字符数组，创建字符串对象     |
-| `public String(byte[] bytes)`    | 根据字节数组，创建字符串对象     |
+| 构造方法                         | 说明                                                   |
+| -------------------------------- | ------------------------------------------------------ |
+| `public String()`                | 创建空白字符串，不含任何内容                           |
+| `public String(String original)` | 根据传入的字符串，创建字符串对象（没有意义，一般不用） |
+| `public String(char[] chs)`      | 根据字符数组，创建字符串对象                           |
+| `public String(byte[] bytes)`    | 根据字节数组，创建字符串对象                           |
+
+使用 String 类的构造方法，创建 String 字符串对象。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Demo01.java
 
@@ -105,7 +106,7 @@ JDK7 以前，StringTable（串池）在方法区当中；
 
 ![串池1](NodeAssets/串池1.jpg)
 
-JDK7以后，StringTable（串池）在堆内存当中。
+JDK7 以后，StringTable（串池）在堆内存当中。
 
 ![串池2](NodeAssets/串池2.jpg)
 
@@ -128,9 +129,12 @@ public class Demo01 {
 
 ![字符串字面量赋值](NodeAssets/字符串字面量赋值.jpg)
 
-结论：当使用字符串字面量（索引号包裹）直接赋值给标识符时，系统会检查该字符串在串池中，是否存在；不存在，则创建新的；存在，则直接复用；
+结论：当使用字符串字面量（双引号包裹）直接赋值给标识符时，系统会检查该字符串在串池中，是否存在；
 
-> 字符串字面量直接赋值的方式，即简洁，也节约内存。
+- 不存在，则创建新的；
+- 存在，则直接引用其地址；
+
+> 字符串字面量直接赋值的方式，既简洁，也节约内存。
 
 #### 2.new 操作符创建字符串对象
 
@@ -152,14 +156,14 @@ public class Demo01 {
 
 ![new操作符创建字符串对象](NodeAssets/new操作符创建字符串对象.jpg)
 
-- 结论：new 操作符创建的字符串对象，不能复用。
+- 结论：`new` 操作符创建的字符串对象，不能复用地址值。
 
 ### 4.String 类字符串对象内存地址比较
 
 == 号在比较数据的时候，分两种情况：
 
 - 第一种情况：比较两个基本数据类型，比较的是值。
-- 第二种情况，标胶两个引用数据类型，比较的是地址值。
+- 第二种情况，比较两个引用数据类型，比较的是地址值。
 
 下方代码，比较了 String 类的字符串对象。结合上文【String 类创建对象的内存表现】来理解比较结果。
 
@@ -193,7 +197,7 @@ public class Demo01 {
 }
 ```
 
-字面量直接赋值的 String 类的对象，`new` 操作符创建的 String 类的对象，地址值也不相同。
+字面量直接赋值的 String 类的对象，和 `new` 操作符创建的 String 类的对象，地址值也不相同。
 
 ```java
 package com.kkcf.string;
@@ -269,7 +273,7 @@ public class Test01 {
 
 ### 6.String 类字符串对象的遍历
 
-遍历 String 类字符串对象中的每个字符，需要用到 String 类中封装的方法
+遍历 String 类创建的字符串对象中的每个字符，需要用到 String 类中封装的方法
 
 - `public char charAt(int index)`，用于返回指定索引处的 char 值。
 - `public int length()`，用于返回此字符串的长度。
@@ -375,7 +379,7 @@ public class Test03 {
 
 ### 8.String 类字符串对象的反转
 
-案例理解：定义一个方法，实现字符出的反转，键盘录入一个字符串，调用该方法后，在控制台输出结果，例如键盘录入“abc”，输出结果“cba”。
+案例理解：定义一个方法，实现字符串的反转，键盘录入一个字符串，调用该方法后，在控制台输出结果，例如键盘录入“abc”，输出结果“cba”。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test04.java
 
@@ -416,7 +420,7 @@ public class Test04 {
 
 案例理解，将一个数字表示的金额，转为中文大写的金额描述。
 
-- 思路：使用”查表法“的思想，将数组索引，和中文数字大写对应起来。
+- 思路：使用”查表法“的思想，将数组索引，和中文数字大写字符对应起来。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test05.java
 
@@ -478,12 +482,12 @@ public class Test05 {
 
 ### 10.String 类字符串对象的截取
 
-截取 String 类字符串对象字符串，需要用到 String 类中封装的方法
+截取 String 类字符串对象中的字符串，需要用到 String 类中封装的方法
 
 - `public String substring(int beginIndex, int endIndex)`，返回一个新字符串，它是此字符串的一个子字符串。该子字符串从指定的 `beginIndex` 处开始，直到索引 `endIndex - 1` 处的字符（包头不包尾，包左不包右）。因此，该子字符串的长度为 `endIndex-beginIndex`。
 - `public String substring(int beginIndex)`，返回一个新的字符串，它是此字符串的一个子字符串。该子字符串从指定索引处的字符开始，直到此字符串末尾。
 
-案例理解：将手机号码中间四位用“*”号代替。
+案例理解：将手机号码中间四位数字，用”****“号代替。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Demo04.java
 
@@ -568,7 +572,7 @@ public class Test07 {
 
 `StringBuilder` 类创建的字符串对象，可以看成是一个容器，将要操作的字符串放入其中，对象创建之后里面的内容是可变的。
 
-当我们在拼接字符串和反转字符串的时候会使用到。
+当我们在拼接字符串，和反转字符串的时候会使用到。
 
 `StringBuilder` 类常用的构造方法有两个：
 
@@ -580,7 +584,7 @@ public class Test07 {
 - `public StringBuilder append(任意类型)`，添加数据，并返回对象本身。
 - `public StringBuilder reverse()`，反转容器中的内容。
 - `public int length()`，返回长度（字符出现的个数）。
-- `public String toString()`，把 StringBuilder 类型转为 String 类型的字符串。
+- `public String toString()`，把 StringBuilder 类型的字符串对象，转为 String 类型的字符串对象。
 
 StringBuilder 是 Java 已经写好的类，Java 在底层对他做了一些特殊处理，使得打印对象时输出的不是地址值，而是属性值。
 
@@ -646,7 +650,7 @@ public class Demo05 {
 }
 ```
 
-案例理解：键盘录入一个字符串，判断该字符串是否是对此字符串，并在控制台打印“是”或“不是”。例如对成字符串有“123321”、“111”
+案例理解：键盘录入一个字符串，判断该字符串是否是对此字符串，并在控制台打印“是”或“不是”。例如对称字符串有“123321”、“111”
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test08.java
 
@@ -709,11 +713,11 @@ public class Test09 {
 
 ## 四、StringJoiner 类
 
-`StringJoiner` 类跟 `StringBuilder` 类相似，也可以看成是一个容器，创建之后里面的内容是可变的。
+`StringJoiner` 类是 JDK8 之后出现的新特性。
+
+`StringJoiner` 类与 `StringBuilder` 类相似，也可以看成是一个容器，创建之后里面的内容是可变的。
 
 `StringJoiner` 的作用，是提高字符串的操作效率，而且代码编写特别简洁，
-
-`StringJoiner` 类是 JDK8 之后出现的新特性。
 
 `StringJoiner` 类常用的构造方法有两个（它没有空参构造方法）：
 
@@ -774,7 +778,7 @@ StringJoiner 的使用场景主要有：
 
 ## 五、Java 字符串原理
 
-### 1.字符出存储的内存原理
+### 1.字符串存储的内存原理
 
 前面已详细介绍过，这里做总结：
 
@@ -786,7 +790,7 @@ StringJoiner 的使用场景主要有：
 前面已详细介绍过，这里做总结：
 
 - Java 中的字符串，是引用数据类型，== 号只能用于字符串的地址值的比较。
-- Java 中的字符串，要比其值是否相同，就要使用 `equals` 方法。
+- Java 中的字符串，要比较其值是否相同，就要使用 `equals` 方法。
 
 ### 3.字符串拼接的底层原理
 
@@ -801,7 +805,7 @@ String s = "a" + "b" + "c";
 System.out.println(s);
 ```
 
-- 这会触发字符串的优化机制，在代码编译时，即 .java  文件转为 .class 文件的过程组（还没运行 .class 文件），就已经是最终的结果，即"abc"了。
+- 这会触发字符串的优化机制，在代码编译时，即 .java 文件转为 .class 文件的过程中（还没运行 .class 文件），就已经是最终的结果，即"abc"了。
 - 相当于直接给 `s` 变量赋值`"abc"`。
 
 根据上方结论，理解这段代码：
@@ -841,7 +845,7 @@ System.out.println(s3);
 
 上方代码，在 JDK 8 及以后：
 
-- 会对字符串变量相 `+` 后的字符串长度，进行预估；
+- 会对字符串变量相 `+` 后的字符串长度，进行**预估**；
 - 在内存中创建一个预估长度的数据，将字符串变量放入其中，这样，内存中就只会创建一个对象。
 - 然而，预估也是非常耗时的，所以不推荐在字符串拼接时，使用 `+` 号。
 
@@ -865,7 +869,7 @@ public class Demo07 {
 
 StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼接时，会将所有的字符串对象，都放入其中。
 
-1.StringBuilder 使用空参构造方法，创建对象时，会创建一个长度为 0，默认容量为 16 的字节数组。
+1.StringBuilder 使用空参构造方法，创建对象时，会创建一个长度为 0，默认容量为 16 的字节（byte）数组。
 
 > 长度和容量是不一样的：
 >
@@ -878,16 +882,16 @@ StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼
 
 ![StringBuilder容器1](NodeAssets/StringBuilder容器1.jpg)
 
-- 字节数组中，实际存储的是字符对应的 ASCLL 码表数值。
+- 字节数组中，实际存储的是：字符对应的 ASCLL 码表数值。
 - 此时字节数组的长度为 3，容量为 16.
 
-3.如果把"a"-"z"，26 个英文字母组成的字符串添加到  StringBuilder 对象中，这时超出了 StringBuilder 字符串对象的容量，那么它会自动扩容，即 `老容量(16) * 2 + 2 = 34`。
+3.如果把"a"-"z"，26 个英文字母组成的字符串，添加到 StringBuilder 对象中，这时超出了 StringBuilder 字符串对象的容量，那么它会自动扩容，即 `老容量(16) * 2 + 2 = 34`。
 
 ![StringBuilder容器2](NodeAssets/StringBuilder容器2.jpg)
 
 - 此时字节数组的长度为 26，容量为 34.
 
-4.如果把"a"-"z"，"0"-"9" 共 36 个字符组成的字符串，添加到  StringBuilder 对象中，这时超出了 StringBuilder 字符串对象自动扩容的最大容量 34，那么他会按照实际要存储的字符串长度，来创建字节数组的容量。
+4.如果把"a"-"z"，"0"-"9" 共 36 个字符组成的字符串，添加到空参构造创建的 StringBuilder 对象中，这时超出了 StringBuilder 字符串对象自动扩容的最大容量 16，那么他会按照实际要存储的字符串长度，来创建字节数组的容量。
 
 ![StringBuilder容器3](NodeAssets/StringBuilder容器3.jpg)
 
@@ -932,7 +936,12 @@ public class Demo07 {
 
 ### 1.罗马数字
 
-键盘录入一个字符串，要求1：长度小于等于 9；要求2：只能是数字；将内容编程罗马数字。
+键盘录入一个字符串。
+
+- 要求 1：长度小于等于 9；
+- 要求 2：只能是数字。
+
+将内容变成罗马数字。
 
 注意：罗马数字中，没有 0，如果键盘录入的数字包含 0，可以变成长度为 0 的字符串。
 
@@ -1024,3 +1033,222 @@ public static String changeRoman(int num) {
 ```
 
 ### 2.调整字符串
+
+给定两个字符串 A 和 B，A 的旋转操作，就是将 A 最左边的字符移动到最右边。
+
+- 例如：若 A = "abcde"，在旋转一次之后，结果就是 "bcdea"。
+
+如果在若干次旋转操作之后，A 能变成 B，那么返回 True，否则返回 false。
+
+> String 类创建的字符串是不可修改的，如果要修改字符串，有两种办法：
+>
+> - 第一种：`substring` 方法，对字符串进行截取。把左边的字符串取出来，拼接到右边。
+> - 第二种：`toCharArray` 方法，把字符串，先变为一个字符数组，然后调整字符数组里面的数据，然后再把数组转为字符串。
+
+第一种解法：
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test11Case1.java
+
+```java
+package com.kkcf.string;
+
+public class Test11Case1 {
+    public static void main(String[] args) {
+        String strTarget = "cdeab";
+        String str = "abcde";
+
+        boolean result = check(strTarget, str);
+        System.out.println(result);
+    }
+
+    public static boolean check(String strTarget, String str) {
+        for (int i = 0; i < str.length(); i++) {
+            str = rotate(str);
+
+            if (str.equals(strTarget))
+                return true;
+        }
+
+        return false;
+    }
+
+    public static String rotate(String str) {
+        char first = str.charAt(0);
+        String end = str.substring(1);
+
+        return end + first;
+    }
+}
+```
+
+第二种解法：使用字符数组的方式，重构 `rotate` 方法。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test11Case1.java
+
+```java
+public static String rotate(String str) {
+  char[] chars = str.toCharArray();
+
+  char temp = chars[0];
+
+  for (int i = 0; i < chars.length; i++)
+      if (i != chars.length - 1)
+          chars[i] = chars[i + 1];
+      else
+          chars[i] = temp;
+
+  return new String(chars);
+}
+```
+
+案例理解：键盘录入一个字符串，打乱字符串里面的内容。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test12.java
+
+```java
+package com.kkcf.string;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Test12 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("请输入一个字符串：");
+        String str = sc.next();
+
+        sc.close();
+
+        char[] chars = str.toCharArray();
+
+        Random r = new Random();
+
+        for (int i = 0; i < chars.length; i++) {
+            int index = r.nextInt(chars.length);
+
+            char temp = chars[i];
+            chars[i] = chars[index];
+            chars[index] = temp;
+        }
+
+        System.out.println(new String(chars));
+    }
+}
+```
+
+案例理解：生成验证码。验证码可以是大写或小写的英文字母，也可以是数字。验证码的长度为 5，字母有 4 个，数字有 1 个。数字的位置可以是任意位置。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test13.java
+
+```java
+package com.kkcf.string;
+
+import java.util.Random;
+
+public class Test13 {
+    public static void main(String[] args) {
+        // 初始化英文字母数组
+        char[] letterChars = new char[52]; // 26 个小写英文字母 + 26 个大写英文字母
+
+        for (int i = 0; i < 26; i++) {
+            letterChars[i] = (char) ('a' + i);
+            letterChars[i + 26] = (char) ('A' + i);
+        }
+
+        // 初始化数字数组
+        char[] numChars = new char[10];
+
+        for (int i = 0; i < 10; i++)
+            numChars[i] = (char) ('0' + i);
+
+        // 随机生成字符串
+        Random r = new Random();
+        char[] resChars = new char[5];
+
+        int len = resChars.length;
+
+        for (int i = 0; i < len; i++)
+            if (i != len - 1)
+                resChars[i] = letterChars[r.nextInt(letterChars.length)];
+            else
+                resChars[i] = numChars[r.nextInt(numChars.length)];
+
+        // 将最后一位数字，与前面随机一位字母对调。
+        int randomIndex = r.nextInt(len);
+        char temp = resChars[randomIndex];
+
+        resChars[randomIndex] = resChars[len - 1];
+        resChars[len - 1] = temp;
+
+        String result = new String(resChars);
+        System.out.println(result);
+    }
+}
+```
+
+案例理解：给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test14.java
+
+```java
+package com.kkcf.string;
+
+public class Test14 {
+    public static void main(String[] args) {
+        String numStr1 = "123";
+        String numStr2 = "456789";
+
+        // 遍历字符串，得到每一位的数字字符。
+        int num1 = 0;
+        for (int i = 0; i < numStr1.length(); i++) {
+            char c = numStr1.charAt(i);
+            int n = c - '0';
+            num1 = num1 * 10 + n;
+        }
+
+        int num2 = 0;
+        for (int i = 0; i < numStr2.length(); i++) {
+            char c = numStr2.charAt(i);
+            int n = c - '0';
+            num2 = num2 * 10 + n;
+        }
+
+        System.out.println(num1 * num2);
+    }
+}
+```
+
+案例理解：给你一个字符串 a，它由若干单词组成，单词前后用一些空格字符隔开，返回字符串中最后一个单词的长度。单词是指仅由字母组成，不包含任何空格字符的最大子字符串。
+
+- 思路：倒着遍历，直到遇到空格，遍历的次数，就是单词中的字母的个数。
+
+demo-project/base-code/Day10/src/com/kkcf/string/Test15.java
+
+```java
+package com.kkcf.string;
+
+public class Test15 {
+    public static void main(String[] args) {
+        String str = "fly me to the moon";
+
+        System.out.println(caculate(str)); // 4
+    }
+
+    public static int caculate(String str) {
+        int result = 0;
+
+        for (int i = str.length() - 1; i >= 0; i--) {
+            char c = str.charAt(i);
+
+            if (c == ' ')
+                return result;
+            else
+                result++;
+        }
+
+        return result;
+    }
+}
+
+```
