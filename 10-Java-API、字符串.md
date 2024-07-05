@@ -277,6 +277,7 @@ public class Test01 {
 
 - `public char charAt(int index)`，用于返回指定索引处的 char 值。
 - `public int length()`，用于返回此字符串的长度。
+- `public char[] toCharArray()`，方法将字符串转换为字符数组。
 
 > 数组对象的 `length` 是属性，String 类的字符串对象的 `length` 是方法。
 
