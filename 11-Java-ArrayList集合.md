@@ -13,7 +13,7 @@ ArrayList 集合与数组的区别有两个：
 
 `ArrayList` 类，定义在 `java.util` 包下，使用时，需要导包。
 
-使用泛型，可以约束集合中存储元素的数据类型
+`ArrayList` 类结合泛型使用，可以约束集合中存储元素的数据类型
 
 ### 1.ArrayList 构造方法
 
@@ -37,6 +37,7 @@ ArrayList 类内部做了处理，在打印 ArrayList 类创建的集合对象�
 
 ```java
 ArrayList<String> strings = new ArrayList<>();
+
 System.out.println(strings); // []
 ```
 
@@ -83,10 +84,14 @@ public class Demo01 {
 
         System.out.println(removeString); // bbb
 
+        System.out.println(list); // [ccc, ddd]
+
         // 改
         String settedString = list.set(1, "xxx");
 
         System.out.println(settedString); // ddd
+
+        System.out.println(list); // [ccc, xxx]
 
         // 查
         String s = list.get(1);
@@ -135,7 +140,7 @@ public class Demo02 {
 
 ### 1.基本数据类型对应的包装类
 
-基本数据类型对应的包装类，如下表所示》
+基本数据类型对应的包装类，如下表所示：
 
 | 基本数据类型 | 引用数据类型 |
 | ------------ | ------------ |
@@ -182,6 +187,8 @@ public class Demo03 {
 ## 五、ArrayList 存储学生对象
 
 案例理解：定义一个集合列表，添加一些学生对象，并进行遍历。学生类的属性为：姓名，年龄。
+
+创建 JavaBean 类 Student。
 
 demo-project/base-code/Day11/src/com/kkcf/ArrayList/Student.java
 
@@ -332,6 +339,49 @@ public class Demo05 {
 main 方法中，定义一个集合列表，存入三个手机对象。分别为：小米，1000；苹果：8000；锤子：2999；
 
 定义一个方法，将价格低于 3000 的手机返回。
+
+demo-project/base-code/Day11/src/com/kkcf/ArrayList/Phone.java
+
+```java
+package com.kkcf.ArrayList;
+
+public class Phone {
+    private String brand;
+    private int price;
+
+    public Phone() {
+    }
+
+    public Phone(String brand, int price) {
+        this.brand = brand;
+        this.price = price;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "brand='" + brand + '\'' +
+                ", price=" + price +
+                '}';
+    }
+}
+```
 
 demo-project/base-code/Day11/src/com/kkcf/ArrayList/Demo06.java
 

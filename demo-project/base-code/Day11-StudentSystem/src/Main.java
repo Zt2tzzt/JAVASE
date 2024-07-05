@@ -18,7 +18,7 @@ public class Main {
             System.out.println("”3：修改学生“");
             System.out.println("”4：查询学生“");
             System.out.println("”5：退出“");
-            System.out.println("”请输入您的选择:“");
+            System.out.print("”请输入您的选择:“");
             String input = sc.next();
 
             switch (input) {
@@ -34,14 +34,11 @@ public class Main {
                 default -> System.out.println("”输入错误“");
             }
         }
-
-        sc.close();
     }
 
     /**
      * 此方法用于：添加学生
-     *
-     * @param stus
+     * @param stus 学生集合列表
      */
     public static void addStu(ArrayList<Student> stus) {
         Scanner sc = new Scanner(System.in);
@@ -51,7 +48,7 @@ public class Main {
         do {
             System.out.print("请输入学生id:");
             id = sc.next();
-            if (findStuId(stus, id) >= 0)
+            if (findStuIndexById(stus, id) >= 0)
                 System.out.print("该id已存在，请重新输入！");
             else
                 break;
@@ -67,7 +64,7 @@ public class Main {
             System.out.print("请输入学生年龄:");
             ageStr = sc.next();
 
-            if (!checkNum(ageStr) && str2Num(ageStr) < 100)
+            if (checkNum(ageStr) && str2Num(ageStr) < 100)
                 System.out.print("输入值不合法，请重新输入！");
             else
                 break;
@@ -80,21 +77,79 @@ public class Main {
 
         // 添加学生
         stus.add(new Student(id, name, age, address));
-        System.out.println("”添加学生成功“");
+        System.out.println("添加学生成功");
     }
 
+    /**
+     * 此方法用于：删除学生
+     * @param stus 学生集合列表
+     */
     public static void removeStu(ArrayList<Student> stus) {
-        System.out.println("”删除学生“");
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("请输入要删除的学生id:");
+        String id = sc.next();
+
+        int index = findStuIndexById(stus, id);
+        if (index >= 0) {
+            Student stu = stus.remove(index);
+            if (stu != null) System.out.println("删除学生成功");
+        } else
+            System.out.println("该学生不存在，回到主菜单");
     }
 
+    /**
+     * 此函数用于：修改学生信息
+     *
+     * @param stus 学生集合列表
+     */
     public static void modifyStu(ArrayList<Student> stus) {
-        System.out.println("”修改学生“");
+        Scanner sc = new Scanner(System.in);
+
+        // 输入要修改的学生id
+        System.out.print("请输入要修改的学生id:");
+        String id = sc.next();
+
+        int index = findStuIndexById(stus, id);
+        if (index < 0) {
+            System.out.println("该学生不存在，回到主菜单");
+            return;
+        }
+
+        // 输入要修改的学生姓
+        System.out.print("请输入要修改的学生姓名:");
+        String newName = sc.next();
+
+        // 输入要修改的学生年龄
+        String ageStr = "";
+        do {
+            System.out.print("请输入学生年龄:");
+            ageStr = sc.next();
+
+            if (checkNum(ageStr) && str2Num(ageStr) < 100)
+                System.out.print("输入值不合法，请重新输入！");
+            else
+                break;
+        } while (true);
+        int newAge = str2Num(ageStr);
+
+        // 输入要修改的学生家庭住址
+        System.out.print("请输入学生家庭住址:");
+        String newAddress = sc.next();
+
+        // 修改学生信息
+        Student stu = stus.get(index);
+        stu.setName(newName);
+        stu.setAge(newAge);
+        stu.setAddress(newAddress);
+
+        System.out.println("修改学生信息成功");
     }
 
     /**
      * 此函数用于，显示学生信息
      *
-     * @param stus
+     * @param stus 学生集合列表
      */
     public static void showStu(ArrayList<Student> stus) {
         if (stus.isEmpty()) {
@@ -105,17 +160,16 @@ public class Main {
         System.out.println("id\t\t姓名\t\t年龄\t\t家庭住址");
         for (Student stu : stus)
             System.out.println(stu.getId() + "\t\t" + stu.getName() + "\t\t" + stu.getAge() + "\t\t" + stu.getAddress());
-
     }
 
     /**
      * 此函数用于，查找学生id
      *
-     * @param stus
-     * @param id
-     * @return
+     * @param stus 学生集合列表
+     * @param id   学生id
+     * @return -1：未找到；>=0：找到
      */
-    public static int findStuId(ArrayList<Student> stus, String id) {
+    public static int findStuIndexById(ArrayList<Student> stus, String id) {
         for (int i = 0; i < stus.size(); i++)
             if (stus.get(i).getId().equals(id))
                 return i;
@@ -126,25 +180,25 @@ public class Main {
     /**
      * 此方法用于：判断字符串是否由数字组成
      *
-     * @param str
-     * @return
+     * @param str 字符串
+     * @return true：是数字；false：不是数字
      */
     public static boolean checkNum(String str) {
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
 
             if (c < '0' || c > '9')
-                return false;
+                return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
      * 此函数用于：将字符串转换为数字
      *
-     * @param str
-     * @return
+     * @param str 字符串
+     * @return -1：转换失败；其他：转换后的数字
      */
     public static int str2Num(String str) {
         int num = 0;
