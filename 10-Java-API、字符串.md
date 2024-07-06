@@ -77,23 +77,23 @@ package com.kkcf.string;
 public class Demo01 {
     public static void main(String[] args) {
         String s1 = "abcd";
-        System.out.println(s1);
+        System.out.println(s1); // abcd
 
         String s2 = new String();
-        System.out.println("@" + s2 + "!");
+        System.out.println("@" + s2 + "!"); // @!
 
         String s3 = new String(s1);
-        System.out.println(s3);
+        System.out.println(s3); // abcd
 
         // 使用场景：修改字符串的内容时，先把字符串转为字符数组，再转为字符串。
         char[] chs = {'a', 'b', 'c', 'd'};
         String s4 = new String(chs);
-        System.out.println(s4);
+        System.out.println(s4); // abcd
 
         // 使用场景：网络传输中都是字节信息，将这些字节信息放入数组，再转成字符串
         byte[] bytes = {97, 98, 99, 100};
         String s5 = new String(bytes);
-        System.out.println(s5);
+        System.out.println(s5); // abcd
     }
 }
 ```
@@ -146,6 +146,7 @@ package com.kkcf.string;
 public class Demo01 {
     public static void main(String[] args) {
         char[] chs = {'a', 'b', 'c'};
+      
         String s1 = new String(chs);
         String s2 = new String(chs);
     }
@@ -519,8 +520,6 @@ public class Demo04 {
 
 根据一个身份证号码，输出这个人的出生年月日和性别。
 
-- 难点：利用 ASCLL 码表，把字符变成数字。
-
 demo-project/base-code/Day10/src/com/kkcf/string/Test06.java
 
 ```java
@@ -544,11 +543,13 @@ public class Test06 {
 }
 ```
 
-### 11.10.String 类字符串对象的替换
+### 11.String 类字符串对象的替换
 
-替换 String 类字符串对象中的子字符串，需要用到 String 类中封装的方法
+替换 String 类字符串对象中的子字符串，需要用到 String 类中封装的方法:
 
 - `public String replace(CharSequence target, CharSequence replacement)`，使用指定的字面值替换序列替换此字符串所有匹配字面值目标序列的子字符串。该替换从字符串的开头朝末尾执行，例如，用 "b" 替换字符串 "aaa" 中的 "aa" 将生成 "ba" 而不是 "ab"。
+
+案例理解：将一些铭感词，替换为”***“
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test07.java
 
@@ -571,14 +572,18 @@ public class Test07 {
 
 ## 三、StringBuilder 类
 
-`StringBuilder` 类创建的字符串对象，可以看成是一个容器，将要操作的字符串放入其中，对象创建之后里面的内容是可变的。
+`StringBuilder` 类创建的字符串对象，可以看成是一个容器，要操作的字符串可放入其中，对象创建之后里面的内容是可变的。
 
 当我们在拼接字符串，和反转字符串的时候会使用到。
+
+### 1.StringBuilder 构造方法
 
 `StringBuilder` 类常用的构造方法有两个：
 
 - `public StringBuilder()`，构造一个其中不带字符的字符串生成器，初始容量为 16 个字符。
 - `public StringBuilder(String str)`，构造一个字符串生成器，并初始化为指定的字符串内容。该字符串生成器的初始容量为 16 加上字符串参数的长度。
+
+### 2.StringBuilder 成员方法
 
 `StringBuilder` 类常用的成员方法有：
 
@@ -628,9 +633,9 @@ public class Demo05 {
 }
 ```
 
-### 1.链式编程
+### 3.链式编程思想
 
-链式编程，指的是当在调用一个方法的时候，不需要用变量接收它的结果，可以继续调用其它方法。
+链式编程，指的是在调用一个方法的时候，不需要用变量接收它的结果，可以继续调用其它方法。
 
 使用链式编程，重构上方的代码：
 
@@ -651,7 +656,7 @@ public class Demo05 {
 }
 ```
 
-案例理解：键盘录入一个字符串，判断该字符串是否是对此字符串，并在控制台打印“是”或“不是”。例如对称字符串有“123321”、“111”
+案例理解：键盘录入一个字符串，判断该字符串是否是对称字符串，并在控制台打印“是”或“不是”。例如对称字符串有“123321”、“111”
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test08.java
 
@@ -720,10 +725,14 @@ public class Test09 {
 
 `StringJoiner` 的作用，是提高字符串的操作效率，而且代码编写特别简洁，
 
+### 1.StringJoiner 构造方法
+
 `StringJoiner` 类常用的构造方法有两个（它没有空参构造方法）：
 
 - `public StringJoiner(CharSequence delimiter)`，创建一个 StringJoiner 对象，指定间隔符号。
 - `public StringJoiner(CharSequence delimiter, CharSequence prefix, CharSequence suffix)`，创建一个 StringJonier 对象，指定拼接时的间隔符号，开始符号，结束符号。
+
+### 2.StringJoiner 成员方法
 
 `StringJoiner` 类常用的成员方法有以下几个：
 
@@ -749,7 +758,7 @@ public class Demo06 {
 }
 ```
 
-使用 StringJoiner 类，打印一个完整的数组。
+使用 StringJoiner 类，打印一个数组格式的字符串。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Demo06.java
 
@@ -797,12 +806,13 @@ StringJoiner 的使用场景主要有：
 
 String 类创建的字符串对象，在进行拼接的时候，分为两种情况。
 
-#### 1.字符串字面量的拼接
+#### 1.字面量的字符串拼接
 
 情况一：字符串字面量的拼接。如下方代码所示：
 
 ```java
 String s = "a" + "b" + "c";
+
 System.out.println(s);
 ```
 
@@ -836,13 +846,17 @@ String s3 = s2 + "c";
 System.out.println(s3);
 ```
 
+##### 1.JDK8 以前
+
 上方代码，在 JDK 8 以前：
 
 - 会在 StringTable（串池）中，创建"a"和"b"两个字符串对象；
 - 并在堆内存中，创建一个 StringBuilder 对象，将"a"和"b"放入到该容器中，使用 `append` 方法拼接，再将 StringBuilder 对象，转回 String 字符串对象。依此类推……。
-- 所以，变量参与的 String 字符串对象拼接，一个 `+` 号，至少会在内存中创建连个对象。
+- 所以，变量参与的 String 字符串对象拼接，一个 `+` 号，至少会在内存中创建两个对象。
 
 ![字符串拼接原理](NodeAssets/字符串拼接原理.jpg)
+
+##### 2.JDK8 以后
 
 上方代码，在 JDK 8 及以后：
 
@@ -868,9 +882,9 @@ public class Demo07 {
 
 ### 4.字符串 StringBuilder 类提高效率的原理图
 
-StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼接时，会将所有的字符串对象，都放入其中。
+StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼接时，会将所有的字符串对象，都放入其中。步骤如下：
 
-1.StringBuilder 使用空参构造方法，创建对象时，会创建一个长度为 0，默认容量为 16 的字节（byte）数组。
+1.StringBuilder 使用空参构造方法，创建对象时，会创建一个长度为 `0`，默认容量为 `16` 的字节（byte）数组。
 
 > 长度和容量是不一样的：
 >
@@ -884,21 +898,23 @@ StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼
 ![StringBuilder容器1](NodeAssets/StringBuilder容器1.jpg)
 
 - 字节数组中，实际存储的是：字符对应的 ASCLL 码表数值。
-- 此时字节数组的长度为 3，容量为 16.
+- 此时字节数组的长度为 `3`，容量为 `16`.
 
-3.如果把"a"-"z"，26 个英文字母组成的字符串，添加到 StringBuilder 对象中，这时超出了 StringBuilder 字符串对象的容量，那么它会自动扩容，即 `老容量(16) * 2 + 2 = 34`。
+3.如果把"a"-"z"，26 个英文字母组成的字符串，添加到 StringBuilder 对象中，这时超出了 StringBuilder 字符串对象的原来 `16` 的容量，那么它会自动扩容，即 `老容量(16) * 2 + 2 = 34`。
 
 ![StringBuilder容器2](NodeAssets/StringBuilder容器2.jpg)
 
-- 此时字节数组的长度为 26，容量为 34.
+- 此时字节数组的长度为 `26`，容量为 `34`.
 
-4.如果把"a"-"z"，"0"-"9" 共 36 个字符组成的字符串，添加到空参构造创建的 StringBuilder 对象中，这时超出了 StringBuilder 字符串对象自动扩容的最大容量 16，那么他会按照实际要存储的字符串长度，来创建字节数组的容量。
+4.如果把"a"-"z"，"0"-"9" 共 36 个字符组成的字符串，添加到空参构造创建的 StringBuilder 对象中，这时超出了 StringBuilder 字符串对象自动扩容的最大容量 `16`，那么他会按照实际要存储的字符串长度，来创建字节数组的容量。
 
 ![StringBuilder容器3](NodeAssets/StringBuilder容器3.jpg)
 
-- 此时字节数组的长度为 36，容量为 36.
+- 此时字节数组的长度为 `36`，容量为 `36`.
 
 上方步骤，使用代码表示为：
+
+> StringBuilder 类的 `capacity` 方法，用于返回对象的容量。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Demo07.java
 
@@ -1009,7 +1025,9 @@ public class Test10 {
 }
 ```
 
-上方代码，changeRoman 方法，可以使用 JDK 12 switch 语句新特性来重构
+#### 1.JDK12 switch 语句新特性
+
+上方代码，changeRoman 方法，可以使用 JDK12 switch 语句新特性来重构
 
 - JDK 12 switch 语句新特性，使用变量接收 switch 语句的返回结果。
 
@@ -1044,7 +1062,7 @@ public static String changeRoman(int num) {
 > String 类创建的字符串是不可修改的，如果要修改字符串，有两种办法：
 >
 > - 第一种：`substring` 方法，对字符串进行截取。把左边的字符串取出来，拼接到右边。
-> - 第二种：`toCharArray` 方法，把字符串，先变为一个字符数组，然后调整字符数组里面的数据，然后再把数组转为字符串。
+> - 第二种：`toCharArray` 方法，把字符串，先变为一个字符数组，然后调整字符数组里面的元素，然后再把数组转为字符串。
 
 第一种解法：
 
@@ -1102,6 +1120,8 @@ public static String rotate(String str) {
 }
 ```
 
+### 3.打乱字符串
+
 案例理解：键盘录入一个字符串，打乱字符串里面的内容。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test12.java
@@ -1137,6 +1157,8 @@ public class Test12 {
     }
 }
 ```
+
+### 4.生成验证码
 
 案例理解：生成验证码。验证码可以是大写或小写的英文字母，也可以是数字。验证码的长度为 5，字母有 4 个，数字有 1 个。数字的位置可以是任意位置。
 
@@ -1177,8 +1199,8 @@ public class Test13 {
 
         // 将最后一位数字，与前面随机一位字母对调。
         int randomIndex = r.nextInt(len);
+      
         char temp = resChars[randomIndex];
-
         resChars[randomIndex] = resChars[len - 1];
         resChars[len - 1] = temp;
 
@@ -1187,6 +1209,8 @@ public class Test13 {
     }
 }
 ```
+
+### 5.字符串相乘
 
 案例理解：给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积。
 
@@ -1219,6 +1243,8 @@ public class Test14 {
     }
 }
 ```
+
+### 6.单词长度
 
 案例理解：给你一个字符串 a，它由若干单词组成，单词前后用一些空格字符隔开，返回字符串中最后一个单词的长度。单词是指仅由字母组成，不包含任何空格字符的最大子字符串。
 

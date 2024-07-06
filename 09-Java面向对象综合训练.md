@@ -156,9 +156,15 @@ public class Role {
         int index1 = r.nextInt(attacks_desc.length);
         String desc1 = attacks_desc[index1];
         System.out.printf(desc1, this.getName(), role.getName());
-
-        String desc2;
-        if (remainBlood > 90) {
+        
+        String desc2 = remainBlood > 90 ? injureds_desc[0]
+                : remainBlood > 80 ? injureds_desc[1]
+                : remainBlood > 70 ? injureds_desc[2]
+                : remainBlood > 60 ? injureds_desc[3]
+                : remainBlood > 50 ? injureds_desc[4]
+                : remainBlood == 0 ? injureds_desc[6]
+                : injureds_desc[5];
+        /*if (remainBlood > 90) {
             desc2 = injureds_desc[0];
         } else if (remainBlood > 80) {
             desc2 = injureds_desc[1];
@@ -172,7 +178,7 @@ public class Role {
             desc2 = injureds_desc[6];
         } else {
             desc2 = injureds_desc[5];
-        }
+        }*/
 
         System.out.printf(desc2, role.getName());
         System.out.println();
@@ -340,7 +346,7 @@ sc.nextLine(); // 键盘录入一个字符串
 
 第一套体系，和第二套体系不能混用，
 
-- 比如：先用 `nextInt`，再用 `nextLine` 会导致 `nextLine` 接收不到数据。
+- 比如：先用 `nextInt`，再用 `nextLine`，会导致 `nextLine` 接收不到数据。
 - 因为：`nextInt` 键盘录入完成后，输入的 Enter，被 `nextLine` 接收了。
 
 需求 2：定义数组存储 3 部汽车对象。汽车的属性：品牌，价格，颜色。创建三个汽车对象，数据通过键盘录入而来，并把数据存入到数组当中。

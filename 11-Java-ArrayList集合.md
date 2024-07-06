@@ -4,16 +4,16 @@ ArrayList 集合，也是容器，也可用来存储多个数据。
 
 ## 一、ArrayList 与数组的区别
 
-ArrayList 集合与数组的区别有两个：
+ArrayList 集合，与数组的区别有两个：
 
-- ArrayList 集合的长度是可变的，当添加元素时，集合会自动扩容；数组的长度是固定的。
+- ArrayList 集合的长度是可变的，当添加元素时，会自动扩容；数组的长度是固定的。
 - ArrayList 集合不能存储基本数据类型，必须要把它们变成对应的包装类；数组可以存储基本数据类型。
 
 ## 二、ArrayList 的使用
 
 `ArrayList` 类，定义在 `java.util` 包下，使用时，需要导包。
 
-`ArrayList` 类结合泛型使用，可以约束集合中存储元素的数据类型
+`ArrayList` 类，结合泛型使用，可以约束集合中存储元素的数据类型。
 
 ### 1.ArrayList 构造方法
 
@@ -45,11 +45,11 @@ System.out.println(strings); // []
 
 ArrayList 类，常用的成员方法有：
 
-- `public boolean add(E e)`，将指定的元素添加到此列表集合的尾部，返回是否添加成功。
-- `public boolean remove(Object o)`，移除此列表中首次出现的指定元素（如果存在）。如果列表不包含此元素，则列表不做改动。更确切地讲，移除满足 (`o == null ? get(i) == null : o.equals(get(i))`) 的最低索引的元素（如果存在此类元素）。如果列表中包含指定的元素，则返回 `true`（或者等同于这种情况：如果列表由于调用而发生更改，则返回 `true`）。
-- `public E remove(int index)`，移除此列表中指定位置上的元素。向左移动所有后续元素（将其索引减 1）。
-- `public E set(int index, E element)`，用指定的元素替代此列表中指定位置上的元素。
-- `public E get(int index)`，返回此列表中指定位置上的元素。
+- `public boolean add(E e)`，将指定的元素添加到此集合列表的尾部，返回是否添加成功。
+- `public boolean remove(Object o)`，移除此集合列表中首次出现的指定元素（如果存在）。如果列表不包含此元素，则列表不做改动。更确切地讲，移除满足 (`o == null ? get(i) == null : o.equals(get(i))`) 的最低索引的元素（如果存在此类元素）。如果列表中包含指定的元素，则返回 `true`（或者等同于这种情况：如果列表由于调用而发生更改，则返回 `true`）。
+- `public E remove(int index)`，移除此集合列表中指定位置上的元素。向左移动后续所有元素（将其索引减 1）。
+- `public E set(int index, E element)`，用指定的元素替代此集合列表中指定位置上的元素。
+- `public E get(int index)`，返回此集合列表中指定位置上的元素。
 - `public int size()`，返回此列表中的元素数。
 
 ## 三、ArrayList 存储字符串
@@ -107,7 +107,7 @@ public class Demo01 {
 }
 ```
 
-案例理解：定义一个集合列表，添加字符串，并进行遍历；遍历格式参照：[元素1, 元素2, 元素3]。
+案例理解：定义一个 ArrayList 集合列表，添加字符串，并进行遍历；遍历格式参照：[元素1, 元素2, 元素3]。
 
 demo-project/base-code/Day11/src/com/kkcf/ArrayList/Demo02.java
 
@@ -294,7 +294,7 @@ public class Demo04 {
 
 ## 六、ArrayList 查找用户索引
 
-案例理解：main 方法中定义一个集合，存入三个用户对象。用户属性为：id，username，password。
+案例理解：测试类 `main` 方法中定义一个集合，存入三个用户对象。用户属性为：id，username，password。
 
 要求：定义一个方法，根据 id 查找对应的学生信息。
 

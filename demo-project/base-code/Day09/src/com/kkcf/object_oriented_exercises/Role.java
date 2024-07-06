@@ -116,7 +116,13 @@ public class Role {
         String desc1 = attacks_desc[index1];
         System.out.printf(desc1, this.getName(), role.getName());
 
-        String desc2;
+        String desc2 = remainBlood > 90 ? injureds_desc[0]
+                : remainBlood > 80 ? injureds_desc[1]
+                : remainBlood > 70 ? injureds_desc[2]
+                : remainBlood > 60 ? injureds_desc[3]
+                : remainBlood > 50 ? injureds_desc[4]
+                : remainBlood == 0 ? injureds_desc[6]
+                : injureds_desc[5];
         if (remainBlood > 90) {
             desc2 = injureds_desc[0];
         } else if (remainBlood > 80) {

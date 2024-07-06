@@ -39,8 +39,8 @@ public class Phone {
 创建一个手机测试类，在其中
 
 - 通过手机类，创建手机对象；
-- 访问对象中的属性；格式：`对象名.成员变量`
-- 访问对象中的方法。格式：`对项名.方法名(...)`
+- 访问对象中的属性；格式：`对象名.成员变量`。
+- 访问对象中的方法。格式：`对项名.方法名(...)`。
 
 demo-project/base-code/Day08/src/com/kkcf/object_riented/PhoneTest.java
 
@@ -73,7 +73,7 @@ Java 类的类名，建议使用大写的驼峰命名规范，需要做到见名
 - 但是，只能有一个类是 `public` 修饰的；
 - 而且 `public` 修饰的类名，必须成为 .java 的文件名。
 
-> 建议：一个 .java 文件中，通常只写一个类。
+> 建议：一个 .java 文件中，只写一个类。
 
 Java 类中：成员变量，完整定义格式为 `修饰符 数据类型 变量名称 = 初始化值;`
 
@@ -286,7 +286,7 @@ public class GirlFriend {
 
     public void setName(String name) {
         int age = 9;
-        System.out.println(this.age); // 9
+        System.out.println(this.age); // 18
     }
 }
 ```
@@ -415,6 +415,7 @@ package com.kkcf.object_riented;
 public class Test03 {
     public static void main(String[] args) {
         Student stu = new Student("zzt", 18);
+      
         System.out.println(stu.getName());
         System.out.println(stu.getAge());
     }
@@ -684,8 +685,9 @@ public class Student {
 
     public void method() {
         int age = 10;
-        System.out.println(age);
-        System.out.println(this.age);
+      
+        System.out.println(age); // 10
+        System.out.println(this.age); // 0
     }
 }
 ```
@@ -700,6 +702,7 @@ package com.kkcf.object_riented;
 public class Test03 {
     public static void main(String[] args) {
         Student s = new Student();
+      
         s.method();
     }
 }
