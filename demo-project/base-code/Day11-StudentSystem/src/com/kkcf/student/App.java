@@ -5,9 +5,15 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class App {
+    private static final ArrayList<User> userList = new ArrayList<>();
+
+    static {
+        userList.add(new User("admin", "123456", "123456789012345678", "12345678901"));
+        userList.add(new User("zetian", "654321", "123456789012345678", "12345678901"));
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<User> list = new ArrayList<>();
 
         loop:
         do {
@@ -17,9 +23,9 @@ public class App {
             String chose = sc.next();
 
             switch (chose) {
-                case "1" -> login(list);
-                case "2" -> register(list);
-                case "3" -> forgetPassword(list);
+                case "1" -> login(userList);
+                case "2" -> register(userList);
+                case "3" -> forgetPassword(userList);
                 case "4" -> {
                     System.out.println("退出成功！");
                     break loop;

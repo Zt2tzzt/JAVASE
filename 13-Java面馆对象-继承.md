@@ -38,7 +38,7 @@ Java 只支持单继承，不支持多继承，但支持多层继承。
 - 单继承：一个子类，只能继承一个父类。
 - 多层继承，存在子类，直接父类，间接父类的关系。
 
-再 Java 中，每一个类，都直接或间接的继承自 `Object` 类。
+在 Java 中，每一个类，都直接或间接的继承自 `Object` 类。
 
 > 当定义一个类时，如果这个类没有继承自任何类，那么 JVM 虚拟机在加载这个类时，会为它默认继承 `Object` 类。
 
@@ -183,7 +183,7 @@ Java 继承中，存在以下误区：
 - 父类私有的东西，子类就无法继承；
 - 父类中非私有的成员，就被子类继承下来了。
 
-一个类中的成员，主要有三部分组成：
+我们知道，一个类中的成员，主要有三部分组成：
 
 - 构造方法；
 - 成员变量；
@@ -255,9 +255,9 @@ public class TestStudent {
 
 Ⅱ、执行 `main` 方法，`main` 方法进栈。
 
-- 其中有 `Zi` 类，将 `Zi` 类的字节码文件加载到方法区；
-- 又因为 `Zi` 类继承自 `Fu` 类，再将 `Fu` 类的字节码文件加载到方法区中；
-- 又因为 `Fu` 类隐式的继承自 `Object` 类，方法区中还会加载 `Object` 类的字节码文件。
+- 其中有 `Zi` 类，将 `Zi` 类的字节码文件（.class）加载到方法区；
+- 又因为 `Zi` 类继承自 `Fu` 类，再将 `Fu` 类的字节码文件（.class）加载到方法区中；
+- 又因为 `Fu` 类在加载时，JVM 会为它隐式的继承 `Object` 类，方法区中还会加载 `Object` 类的字节码文件（.class）。
 
 ![继承内存表现2](NodeAssets/继承内存表现2.jpg)
 
@@ -294,13 +294,17 @@ graph LR
 A[A类（方法a）] -->|继承| B[B类（方法b）] -->|继承| C[C类（方法c）]
 ```
 
-C 类是最上层的父类，它其中满足以下条件的方法，会被放入一个“虚方法表”
+C 类是最上层的父类，它其中满足以下条件的方法，会被放入一个“**虚方法表**”
 
 - 满足非 `private` 修饰；
 - 满足非 `static` 修饰；
 - 满足非 `final` 修饰。
 
-在继承的时候，C 类会将它的虚方法表，交给 B 类；B 类在 C 类的虚方法表基础上，添加自己的虚方法表。依此类推……
+在继承的时候，
+
+1. C 类会将它的虚方法表，交给 B 类；
+2. B 类在 C 类的虚方法表基础上，添加自己的虚方法表；
+3. 依此类推……
 
 ![虚方法表](NodeAssets/虚方法表.jpg)
 
@@ -374,7 +378,7 @@ public class TestStudent {
 
 Ⅱ、当 `Zi` 类对象，调用 `ziShow`，`fuShow1` 方法时，会去自己的虚方法表中查找，找到了就会直接调用；
 
-调用 `fushow2` 方法时，子类在自己虚方法表中没有找到，就会去父类中查找，发现该方法是 `private` 修饰的，所以会报错不能被调用。
+当 `Zi` 类对象，调用 `fushow2` 方法时，子类在自己虚方法表中没有找到，就会去父类中查找，发现该方法是 `private` 修饰的，所以会报错不能被调用。
 
 ## 四、Java 继承的成员变量
 
@@ -465,20 +469,20 @@ class Zii extends Fuu {
 
     public void show() {
         // 打印 Zi 的方式
-        System.out.println(name);
-        System.out.println(this.name);
+        System.out.println(name); // Zi
+        System.out.println(this.name); // Zi
 
         // 打印 Fu 的方式
-        System.out.println(super.name);
+        System.out.println(super.name); // Fu
 
         // 打印喝茶的方式
-        System.out.println(hobby);
-        System.out.println(this.hobby);
-        System.out.println(super.hobby);
+        System.out.println(hobby); // 喝茶
+        System.out.println(this.hobby); // 喝茶
+        System.out.println(super.hobby); // 喝茶
 
         // 打印吃鸡
-        System.out.println(game);
-        System.out.println(this.game);;
+        System.out.println(game); // 吃鸡
+        System.out.println(this.game);; // 吃鸡
     }
 }
 ```
@@ -742,7 +746,7 @@ public class ChineseDog extends Dog1{
 
 子类中所有的构造方法，默认会先执行父类方法中的空参构造方法，再执行自己。
 
-- 一个类执行空参构造方法，实际上是在给类中的成员变量，进行默认初始化。
+- 一个类执行空参构造方法，实际上是在给类中的成员变量，进行**默认初始化**。
 - 如果子类中的构造方法，不执行父类中的空参构造方法，那么子类继承下来的成员变量就没有默认值。
 
 所以，子类构造方法的第一行语句，默认都是 `super()`（不显示书写，在执行该构造方法时虚拟机会自动加上），而且必须在第一行。
@@ -908,7 +912,7 @@ public class Employee {
   
     // 成员方法
     public void work() {
-        System.out.println("员工再工作");
+        System.out.println("员工在工作");
     }
 
     public void eat() {
@@ -990,9 +994,9 @@ public class Test5 {
         c.setWorkNo("2");
         c.setName("李四");
         c.setSalary(10000);
-        c.work();
-        c.eat();
         System.out.println(c.getName() + " " + c.getWorkNo() + " " + c.getSalary());
+        c.eat();
+        c.work();
     }
 }
 ```
