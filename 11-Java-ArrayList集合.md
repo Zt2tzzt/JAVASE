@@ -334,7 +334,7 @@ public class Demo05 {
 
 ## 七、ArrayList 返回一个集合列表
 
-需求：定义 JavaBean 类 Phone，它有属性：品牌、价格。
+需求：定义 JavaBean 类 `Phone，它有属性：品牌、价格。
 
 main 方法中，定义一个集合列表，存入三个手机对象。分别为：小米，1000；苹果：8000；锤子：2999；
 

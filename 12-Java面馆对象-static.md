@@ -290,7 +290,7 @@ public class Student2 {
     public void show(Student2 this) {
         System.out.println(name + " " + age + " " + teacher);;
 
-        // show2() // 等同于
+        // show2() // 等同于 👇
         this.show2();
     }
 

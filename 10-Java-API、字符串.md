@@ -6,7 +6,9 @@
 
 API（Application Programming Interface）：表示应用程序编程接口。
 
-java 中的 API，指的就是 JDK 中提供的各种功能的 Java 类，这些类将底层的实现封装了起来，我们不需要关心这些类是如何实现的，只需要学习这些类如何使用即可，我们可以通过帮助文档来学习这些 API 如何使用。
+java 中的 API，指的就是 JDK 中提供的各种功能的 Java 类，这些类将底层的实现封装了起来；
+
+我们不需要关心这些类是如何实现的，只需要学习这些类如何使用即可，我们可以通过帮助文档来学习这些 API 如何使用。
 
 使用 `java.lang` 包中的 API 时，是不需要导包的。
 
@@ -23,9 +25,9 @@ String 类在 `java.lang` 包下，所以使用的时候不需要导包！
 
 String 类用于创建字符串对象。
 
-Java 程序中的所有字符串（例如“abc”）都被实现为此类的实例；
+Java 程序中的所有字符串（例如“abc”）都被实现为此类的实例对象；
 
-也就是说，Java 程序中所有的双引号包裹的字符串，都是 String 类的对象。
+也就是说，Java 程序中所有的双引号包裹的字符串，都是 String 类的实例对象。
 
 ### 1.String 类特点
 
@@ -100,7 +102,7 @@ public class Demo01 {
 
 ### 3.String 类创建对象内存表现
 
-JVM 内存模型中，有一块区域 StringTable（串池），用来存放字面量类型的字符串。
+JVM 内存模型中，有一块区域称为 **StringTable（串池）**，用来存放字面量类型的字符串。
 
 JDK7 以前，StringTable（串池）在方法区当中；
 
@@ -129,16 +131,16 @@ public class Demo01 {
 
 ![字符串字面量赋值](NodeAssets/字符串字面量赋值.jpg)
 
-结论：当使用字符串字面量（双引号包裹）直接赋值给标识符时，系统会检查该字符串在串池中，是否存在；
+结论：当使用字符串字面量（双引号包裹）直接赋值给标识符时，系统会检查该字符串在 StringTable 串池中是否存在；
 
-- 不存在，则创建新的；
+- 不存在，则在 StringTable 串池中创建新的；
 - 存在，则直接引用其地址；
 
-> 字符串字面量直接赋值的方式，既简洁，也节约内存。
+字符串字面量直接赋值的方式，既简洁，也节约内存。一般采用这种方式创建字符串对象。
 
 #### 2.new 操作符创建字符串对象
 
-下方代码中，使用 `new` 操作符，调用 `String` 类的构造函数，传入字节数组，创建字符串对象。
+下方代码中，使用 `new` 操作符，调用 `String` 类的构造函数，传入字符数组，创建字符串对象。
 
 ```java
 package com.kkcf.string;
@@ -489,7 +491,7 @@ public class Test05 {
 - `public String substring(int beginIndex, int endIndex)`，返回一个新字符串，它是此字符串的一个子字符串。该子字符串从指定的 `beginIndex` 处开始，直到索引 `endIndex - 1` 处的字符（包头不包尾，包左不包右）。因此，该子字符串的长度为 `endIndex-beginIndex`。
 - `public String substring(int beginIndex)`，返回一个新的字符串，它是此字符串的一个子字符串。该子字符串从指定索引处的字符开始，直到此字符串末尾。
 
-案例理解：将手机号码中间四位数字，用”****“号代替。
+案例理解：将手机号码中间四位数字，用”****“代替。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Demo04.java
 
@@ -549,7 +551,7 @@ public class Test06 {
 
 - `public String replace(CharSequence target, CharSequence replacement)`，使用指定的字面值替换序列替换此字符串所有匹配字面值目标序列的子字符串。该替换从字符串的开头朝末尾执行，例如，用 "b" 替换字符串 "aaa" 中的 "aa" 将生成 "ba" 而不是 "ab"。
 
-案例理解：将一些铭感词，替换为”***“
+案例理解：将一些敏感词，替换为”***“
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test07.java
 
@@ -592,7 +594,7 @@ public class Test07 {
 - `public int length()`，返回长度（字符出现的个数）。
 - `public String toString()`，把 StringBuilder 类型的字符串对象，转为 String 类型的字符串对象。
 
-StringBuilder 是 Java 已经写好的类，Java 在底层对他做了一些特殊处理，使得打印对象时输出的不是地址值，而是属性值。
+StringBuilder 是 Java 已经写好的类，Java 在底层对它做了一些特殊处理，使得打印对象时输出的不是地址值，而是属性值。
 
 ```java
 package com.kkcf.string;
@@ -884,7 +886,7 @@ public class Demo07 {
 
 StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼接时，会将所有的字符串对象，都放入其中。步骤如下：
 
-1.StringBuilder 使用空参构造方法，创建对象时，会创建一个长度为 `0`，默认容量为 `16` 的字节（byte）数组。
+Ⅰ、StringBuilder 使用空参构造方法，创建对象时，会创建一个长度为 `0`，默认容量为 `16` 的字节（byte）数组。
 
 > 长度和容量是不一样的：
 >
@@ -893,20 +895,20 @@ StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼
 
 ![StringBuilder默认容量](NodeAssets/StringBuilder默认容量.jpg)
 
-2.如果把字符串"abc"放入 StringBuilder 对象中，它的表现形式如下，可知
+Ⅱ、如果把字符串"abc"放入 StringBuilder 对象中，它的表现形式如下，可知
 
 ![StringBuilder容器1](NodeAssets/StringBuilder容器1.jpg)
 
 - 字节数组中，实际存储的是：字符对应的 ASCLL 码表数值。
 - 此时字节数组的长度为 `3`，容量为 `16`.
 
-3.如果把"a"-"z"，26 个英文字母组成的字符串，添加到 StringBuilder 对象中，这时超出了 StringBuilder 字符串对象的原来 `16` 的容量，那么它会自动扩容，即 `老容量(16) * 2 + 2 = 34`。
+Ⅲ、如果把"a"-"z"，26 个英文字母字符组成的字符串，添加到 StringBuilder 对象中，这时超出了 StringBuilder 字符串对象的原来 `16` 的容量，那么它会自动扩容，即 `老容量(16) * 2 + 2 = 34`。
 
 ![StringBuilder容器2](NodeAssets/StringBuilder容器2.jpg)
 
 - 此时字节数组的长度为 `26`，容量为 `34`.
 
-4.如果把"a"-"z"，"0"-"9" 共 36 个字符组成的字符串，添加到空参构造创建的 StringBuilder 对象中，这时超出了 StringBuilder 字符串对象自动扩容的最大容量 `16`，那么他会按照实际要存储的字符串长度，来创建字节数组的容量。
+Ⅳ、如果把"a"-"z"，"0"-"9" 共 36 个字符组成的字符串，添加到空参构造创建的 StringBuilder 对象中，这时超出了 StringBuilder 字符串对象自动扩容的最大容量 `16`，那么他会按照实际要存储的字符串长度，来创建字节数组的容量。
 
 ![StringBuilder容器3](NodeAssets/StringBuilder容器3.jpg)
 
@@ -1027,7 +1029,7 @@ public class Test10 {
 
 #### 1.JDK12 switch 语句新特性
 
-上方代码，changeRoman 方法，可以使用 JDK12 switch 语句新特性来重构
+上方代码，`changeRoman` 方法，可以使用 JDK12 switch 语句新特性来重构。
 
 - JDK 12 switch 语句新特性，使用变量接收 switch 语句的返回结果。
 
