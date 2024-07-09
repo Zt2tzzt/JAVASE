@@ -261,6 +261,8 @@ public class TestStudent {
 
 ![继承内存表现2](NodeAssets/继承内存表现2.jpg)
 
+> 事实上，JVM 虚拟机会先加载父类的字节码文件（.class）
+
 Ⅲ、`new` 操作符创建 `Zi` 类的对象，
 
 - 会在堆内存中开辟一块空间；因为现在 `Zi` 类继承自 `Fu` 类，所以该空间会分为两部分：一部分记录父类的成员变量，一部分记录子类的成员变量。
@@ -363,6 +365,7 @@ public class TestStudent {
 
         z.ziShow();
         z.fuShow1();
+        // 报错 👇
         z.fuShow2();
     }
 }
@@ -523,10 +526,12 @@ class Student extends Person {
         drink();
 
         // 等同于 👇
+      
         this.eat();
         this.drink();
 
         // 等同于 👇
+      
         super.eat();
         super.drink();
     }
@@ -585,7 +590,7 @@ class OverseasStudent extends Person {
 }
 ```
 
-在继承体系中，子类中出现了和父类**一模一样**的方法声明，我们就称子类的这个方法是重写的方法。
+在继承体系中，子类中出现了和父类**一模一样**的方法声明，我们就称子类的这个方法是**重写**的方法。
 
 #### 1.方法重写的设计原则
 
@@ -656,8 +661,8 @@ class OverseasStudent extends Person {
 
 - 只有被添加到**虚方法表**中的方法，才能被重写。
 - 子类重写的**方法名称**、**形参列表**必须与父类中的方法保持一致。
-- 子类重写的方法，访问权限必须大于等于父类被重写的方法（权限修饰符：空着不写 < protected < public）。
-- 子类重写的方法，返回值类型子类必须小于等于父类被重写的方法。
+- 子类重写的方法，访问权限必须大于等于父类被重写的方法（权限修饰符：private < 空着不写 < protected < public）。
+- 子类重写的方法，返回值类型必须小于等于父类被重写的方法。
 
 案例理解：现在有三种动物：哈士奇、沙皮狗、中华田园犬
 
@@ -749,7 +754,7 @@ public class ChineseDog extends Dog1{
 - 一个类执行空参构造方法，实际上是在给类中的成员变量，进行**默认初始化**。
 - 如果子类中的构造方法，不执行父类中的空参构造方法，那么子类继承下来的成员变量就没有默认值。
 
-所以，子类构造方法的第一行语句，默认都是 `super()`（不显示书写，在执行该构造方法时虚拟机会自动加上），而且必须在第一行。
+所以，子类构造方法的第一行语句，默认都是 `super()`（如果不写，在执行该构造方法时虚拟机会自动加上），而且必须在第一行。
 
 #### 2.调用有参构造方法
 
@@ -835,7 +840,7 @@ public class Student2 extends Person2 {
     private String schoole;
 
     public Student2() {
-        this(null, 0, "北宇治高等学校");
+        this(null, 0, null);
         System.out.println("Student2 constructor");
     }
 
