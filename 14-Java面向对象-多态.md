@@ -13,7 +13,7 @@
 
 多态的条件：
 
-- 有继承，或实现（与接口有关）关系；
+- 有继承，或实现（与接口有关）的关系；
 - 有父类引用指向子类对象；比如：`Fu f = new Zi();`
 - 有方法的重写。
 
@@ -136,12 +136,12 @@ package com.kkcf.a01polymorphismdemo1;
 public class Test {
     public static void main(String[] args) {
         Teacher t = new Teacher("易爱平", 55);;
-        Student s = new Student("张三", 20);
-        Administator a = new Administator("李四", 40);
+        Student s = new Student("于伟康", 18);
+        Administator a = new Administator("蒋玥凡", 17);
 
-        register(t); // 老师的信息为：易爱平，30
-        register(s); // 学生的信息为：张三，20
-        register(a); // 管理员的信息为：李四 40
+        register(t); // 老师的信息为：易爱平，55
+        register(s); // 学生的信息为：于伟康，18
+        register(a); // 管理员的信息为：蒋玥凡 17
     }
 
     public static void register(Person p) {
@@ -170,11 +170,11 @@ public class Test {
 
 子类会继承父类中的所有成员变量。
 
-- 如果用父类型的变量，访问子类中的成员变量，那么访问的就是子类继承下来的父类中的成员变量。
+- 如果用父类型的变量引用，访问子类中的成员变量，那么访问的就是子类继承下来的父类中的成员变量。
 
 子类对象会在虚方法表中调用继承下来的成员方法。
 
-- 如果用父类型的变量，调用子类中的成员方法，那么调用的就是子类虚方法表中重写的成员方法。
+- 如果用父类型的变量引用，调用子类中的成员方法，那么调用的就是子类虚方法表中重写的成员方法。
 
 上方代码的内存表现，如下图所示：
 

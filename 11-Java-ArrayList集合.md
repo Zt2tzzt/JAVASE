@@ -21,13 +21,13 @@ ArrayList 集合，与数组的区别有两个：
 
 - `public ArrayList()`，构造一个初始容量为 10 的空列表。
 
-JDK7 以前，创建集合的方式：
+JDK7 以前，创建 ArrayList 集合列表对象的方式：
 
 ```java
 ArrayList<String> strings = new ArrayList<String>();
 ```
 
-JDK7 及以后，创建集合的方式：
+JDK7 及以后，创建 ArrayList 集合列表对象的方式：
 
 ```java
 ArrayList<String> strings = new ArrayList<>();
@@ -296,7 +296,7 @@ public class Demo04 {
 
 案例理解：测试类 `main` 方法中定义一个集合，存入三个用户对象。用户属性为：id，username，password。
 
-要求：定义一个方法，根据 id 查找对应的学生信息。
+要求：定义一个方法，根据 id 查找对应的用户信息。
 
 - 如果存在，返回索引
 - 如果不存在，返回-1

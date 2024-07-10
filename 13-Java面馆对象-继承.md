@@ -181,7 +181,7 @@ public class Test {
 Java 继承中，存在以下误区：
 
 - 父类私有的东西，子类就无法继承；
-- 父类中非私有的成员，就被子类继承下来了。
+- 父类中非私有的成员，都被子类继承下来了。
 
 我们知道，一个类中的成员，主要有三部分组成：
 
@@ -263,9 +263,10 @@ public class TestStudent {
 
 > 事实上，JVM 虚拟机会先加载父类的字节码文件（.class）
 
-Ⅲ、`new` 操作符创建 `Zi` 类的对象，
+Ⅲ、`new` 操作符创建 `Zi` 类的对象，会在堆内存中开辟一块空间；因为现在 `Zi` 类继承自 `Fu` 类，所以该空间会分为两部分：
 
-- 会在堆内存中开辟一块空间；因为现在 `Zi` 类继承自 `Fu` 类，所以该空间会分为两部分：一部分记录父类的成员变量，一部分记录子类的成员变量。
+- 一部分记录父类的成员变量，
+- 一部分记录子类的成员变量。
 
 ![继承内存表现3](NodeAssets/继承内存表现3.jpg)
 
@@ -385,9 +386,9 @@ public class TestStudent {
 
 ## 四、Java 继承的成员变量
 
-Java 继承中的成员变量访问特点，依然遵循就近原则。
+Java 继承中的成员变量访问特点，依然遵循**就近原则**。
 
-### 1.就近原则理解
+### 1.访问成员变量的就近原则
 
 成员变量访问的就近原则指的是：
 
@@ -492,6 +493,8 @@ class Zii extends Fuu {
 
 ## 五、Java 继承的成员方法
 
+### 1.访问成员方法的就近原则
+
 Java 继承中的成员方法的访问，同样也遵循**就近原则**；同时也可以使用 `super` 关键字，直接访问父类。
 
 理解下方代码：
@@ -543,7 +546,7 @@ Java 继承成员方法的访问特点：
 - `this` 调用：就近原则（先在本类找，找不到再到父类中找）
 - `super` 调用：直接找父类的方法。
 
-### 1.方法的重写
+### 2.方法的重写
 
 下面的代码，是一个方法重写的案例。
 
@@ -617,7 +620,6 @@ public class Test3 {
 
         s.lunch();
     }
-
 }
 
 class Person {
@@ -661,7 +663,7 @@ class OverseasStudent extends Person {
 
 - 只有被添加到**虚方法表**中的方法，才能被重写。
 - 子类重写的**方法名称**、**形参列表**必须与父类中的方法保持一致。
-- 子类重写的方法，访问权限必须大于等于父类被重写的方法（权限修饰符：private < 空着不写 < protected < public）。
+- 子类重写的方法，访问权限必须大于等于父类被重写的方法（权限修饰符：`private` < `空着不写` < `protected` < `public`）。
 - 子类重写的方法，返回值类型必须小于等于父类被重写的方法。
 
 案例理解：现在有三种动物：哈士奇、沙皮狗、中华田园犬
@@ -701,7 +703,7 @@ demo-project/base-code/Day12/src/com/kkcf/extendss/Husky1.java
 ```java
 package com.kkcf.extendss;
 
-public class Husky1 extends Dog1{
+public class Husky1 extends Dog1 {
     public void breakHouse() {
         System.out.println("狗在拆家");
     }
@@ -720,7 +722,7 @@ public class SharPai extends Dog1{
     @Override
     public void eat() {
         super.eat();
-        System.out.println("狗在吃骨头");
+        System.out.println("狗在吃狗粮，吃骨头");
     }
 }
 ```
@@ -741,7 +743,7 @@ public class ChineseDog extends Dog1{
 }
 ```
 
-## 六、Java 继承的构造方法
+## 六、Java 类不继承构造方法
 
 在 Java 中，首先要明确，父类中的构造方法，不会被子类继承。
 

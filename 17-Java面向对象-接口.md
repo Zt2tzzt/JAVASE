@@ -2,7 +2,9 @@
 
 Java 接口，就是一种规则。它是对**行为**的抽象。
 
-Java 接口，是更加彻底的抽象，JDK7 及之前，接口中全部是抽象方法。接口同样是不能创建对象的
+Java 接口，是更加彻底的抽象，JDK7 及之前，接口中全部是抽象方法。
+
+Java 接口是不能创建对象的。
 
 Java 抽象类表示一类事物，Java 接口表示一系列**行为**。
 
@@ -107,16 +109,13 @@ public class Frog extends Animal implements Swim {
         super(name, age);
     }
 
-    @Override
-    public String toString() {
-        return "Frog{} " + super.toString();
-    }
-
+    // 重写抽象类中的抽象方法
     @Override
     public void eat() {
         System.out.println("青蛙在吃虫子");
     }
 
+    // 实现接口中的抽象方法
     @Override
     public void swim() {
         System.out.println("青蛙在蛙泳");
@@ -139,16 +138,13 @@ public class Dog extends Animal implements Swim {
         super(name, age);
     }
 
-    @Override
-    public String toString() {
-        return "Dog{} " + super.toString();
-    }
-
+    // 重写抽象类中的抽象方法
     @Override
     public void eat() {
         System.out.println("狗在吃骨头");
     }
 
+    // 实现接口中的抽象方法
     @Override
     public void swim() {
        System.out.println("狗在狗刨");
@@ -176,6 +172,7 @@ public class Rabbit extends Animal {
         return "Rabbit{} " + super.toString();
     }
 
+    // 重写抽象类中的抽象方法
     @Override
     public void eat() {
         System.out.println("兔子在吃胡萝卜");
@@ -185,7 +182,7 @@ public class Rabbit extends Animal {
 
 ## 一、Java 接口中的成员
 
-接口中的成员，有成员变量，构造方法，成员方法。
+接口中的成员，有成员变量，成员方法，没有构造方法。
 
 ### 1.接口中的成员变量
 
@@ -195,25 +192,23 @@ Java 接口中的成员变量，只能是常量；默认修饰符是 `public sta
 
 - 接口中的常量，一般使用 `接口名.常量` 访问。
 
-### 2.接口中的构造方法
+### 2.接口中的成员方法
+
+接口中的成员方法，默认修饰符是 `public abstract`
+
+- JDK7 及之前，接口中只能是抽象方法；
+- JDK8 及以后，接口中可以定义有方法体的方法。
+- JDK9 及以后，接口中可以定义私有方法。
+
+### 3.接口中没有构造方法
 
 接口不能创建对象。也不需要给子类的成员变量赋值，所以：
 
 Java 接口中，没有构造方法。
 
-### 3.接口中的成员方法
-
-接口中的成员方法，默认修饰符是 `public abstract`
-
-JDK7 及之前，接口中只能是抽象方法；
-
-JDK8 及以后，接口中可以定义有方法体的方法。
-
-JDK9 及以后，接口中可以定义私有方法。
-
 ## 二、Java 接口与类之间的关系
 
-在 Java 中，要分清除接口与类之间的关系，要先以下三种关系：
+在 Java 中，要分清除接口与类之间的关系，要先分清以下三种关系：
 
 ### 1.类与类之间的关系
 
@@ -361,7 +356,7 @@ public class InterImpl implements Inter3{
 }
 ```
 
-案例理解：编写带有接口和抽象类的标准 JavaBean 类。
+案例理解：编写实现接口和继承抽象类的标准 JavaBean 类。
 
 我们现在有乒乓球运动员篮球运动员，乒乓球教练和篮球教练。
 
@@ -585,7 +580,7 @@ public class Test {
 
 ## 三、Java 接口在 JDK8 及以后的使用
 
-JDK8 及以后接口中里有方法体的方法，是为了在接口升级时，提升代码兼容性。
+JDK8 及以后接口中里有方法体的方法，是为了在接口升级时（增加了很多新的抽象方法），提升代码兼容性。
 
 - 接口升级后，实现类不需要立马修改，等以后用到某个规则，再重写接口中的方法即可。
 
@@ -630,6 +625,7 @@ public interface Inter1 {
 定义一个 `InterImpl1` 类，用于实现 `Inter1` 接口。
 
 - 其中只需要实现接口中的抽象方法 `method` 即可。
+- 不强制要求实现默认方法 `defaultMethod`。
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee3/InterImpl1.java
 
@@ -678,9 +674,9 @@ public interface Inter2 {
 }
 ```
 
-再 `InterImpl1` 类中，实现 `Inter1` 和 `Inter2` 接口。
+在 `InterImpl1` 类中，实现 `Inter1` 和 `Inter2` 接口。
 
-- 此时，就必须实现两接口中，同名的 `defaultMethod` 方法。
+- 此时，就必须在子类中实现两接口中，同名的 `defaultMethod` 方法。
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee3/InterImpl1.java
 
@@ -700,7 +696,7 @@ public class InterImpl1 implements Inter1, Inter2 {
 }
 ```
 
-在测试类中`Test1` 中，测试：
+在测试类`Test1` 中，测试：
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee3/Test1.java
 
@@ -766,8 +762,8 @@ JDK9 及以后接口中里有 `private` 修饰的私有方法，是为了在接�
 
 JDK9 及以后，接口中可以定义 `private` 修饰的私有方法，可以是：
 
-- 私有方法（没有 `default`）。
-- 私有静态（`static`）方法。
+- 普通私有方法（没有 `default`）。
+- 静态私有方法（`static` 修饰）。
 
 ### 1.JDK9 及以后接口中的私有方法
 
@@ -797,7 +793,7 @@ public interface Inter1 {
 }
 ```
 
-### 2.JDK9 及以后接口中的私有静态方法
+### 2.JDK9 及以后接口中的静态私有方法
 
 JDK9 及以后接口中的私有静态方法，要用 `private`，`static` 关键字修饰，服务于接口中其它的静态（`static`）方法，用于抽取它们中共性的逻辑：
 
@@ -827,7 +823,7 @@ public interface Inter1 {
 
 ## 五、Java 接口的应用
 
-接口的实现，也满足多态的3个前提条件：
+接口常用于多态，子类实现接口，也满足多态的三个前提条件：
 
 - 有继承，或者实现的关系。
 - 父类类型的引用，指向子类对象。
@@ -835,7 +831,7 @@ public interface Inter1 {
 
 接口的多态表现形式为：`接口类型 j = new 实现类();`
 
-实例对象在调用接口中的方法时，也会遵循“编译看左边，运行看右边”的规则。
+实例对象，在调用接口中的方法时，也会遵循“编译看左边，运行看右边”的规则。
 
 ### 1.适配器设计模式
 
@@ -849,10 +845,10 @@ public interface Inter1 {
 
 使用步骤：
 
-1. 编写中间类 `XxxAdapter`，实现对应的接口。并在其中对接口所有方法，进行空实现。
+1. 编写中间类 `XxxAdapter`，实现对应的接口。并在其中对接口中的所有抽象方法，进行空实现。
 2. 让真正的实现类，继承中间类 `XxxAdapter`，并重写需要用到的方法。
 3. 为避免外界创建中间类 `XxxAdapter` 的实例对象，使用 `abstract` 修饰中间类 `XxxAdapter`。
-4. 如果实现类，有父类，那么让中间类 `XxxAdapter` 继承父类，并实现其中的构造方法即可。
+4. 如果实现类，有父类，那么让中间类 `XxxAdapter` 继承父类，并添加构造方法即可。
 
 案例理解，接口中有很多抽象方法：
 
@@ -876,7 +872,7 @@ public interface Inter2 {
 }
 ```
 
-假设，现有一实现类 `InterImpl`，只需要用到其中的 `method5` 方法 ；
+假设，现有一个实现类 `InterImpl`，只需要用到其中的 `method5` 方法 ；
 
 那么可以先定义一个中间类 `InterAdapter`（抽象类），空实现 `Inter2` 接口。
 
@@ -938,7 +934,7 @@ public abstract class InterAdapter implements Inter2 {
 }
 ```
 
-将实现类 `InterImpl`，继承自 `InterAdapter`。
+再将实现类 `InterImpl`，继承自 `InterAdapter`，重写 `method5` 方法即可。
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee4/InterImpl.java
 
