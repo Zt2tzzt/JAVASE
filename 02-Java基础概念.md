@@ -147,7 +147,7 @@ public class ValueDemo1 {
 5. 布尔类型的字面量只有两个值，`true`、`false`。
 6. 空类型的字面量只有一个值，`null`。
 
-### 2.特殊字符
+### 2.Java 特殊字符
 
 Java 中的特殊字符字面量，可以使用单引号（''）或者双引号（""）包裹。
 
@@ -599,20 +599,20 @@ demo-project/demo/src/VariableTest2.java
 ```java
 public class VariableTest2 {
     public static void main(String[] args) {
-      //1.定义字符串类型的变量记录老师的姓名
+      //1.定义字符串类型的变量记录我的姓名
       String name = "zzt";
 
-      //2.定义整数类型的变量记录老师的年龄
+      //2.定义整数类型的变量记录我的年龄
       int age = 18;
 
-      //3.定义字符类型的变量记录老师的性别
+      //3.定义字符类型的变量记录我的性别
       char gender = '男';
 
-      //4.定义小数类型的变量记录老师的身高
+      //4.定义小数类型的变量记录我的身高
       double height = 188.89;
 
-      //5.定义布尔类型的变量记录老师的婚姻状况
-      boolean flag = true;
+      //5.定义布尔类型的变量记录我的婚姻状况
+      boolean flag = false;
 
       //输出5个变量的值
       System.out.println(name);
