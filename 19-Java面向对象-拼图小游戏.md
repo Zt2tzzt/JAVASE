@@ -1,10 +1,10 @@
-# Java 面向对象之拼图小游戏综合练习
+# Java 面向对象之拼图小游戏综合练习（一）
 
 ## 一、Java GUI介绍
 
 图形化用户界面（Graphic User Interface），又称图形用户接口，简称 GUI。
 
-Java 中有的 GUI 有两套体系。
+Java 中的 GUI 有两套体系。
 
 - AWT 包，最先推出，有兼容性问题，显示中文可能有乱码。
 - Swing 包，用的比较多。
@@ -57,9 +57,9 @@ public class Test {
 }
 ```
 
-将三个界面，分别抽取成三各类，将各自界面的逻辑，写在类中。
+将三个界面，分别抽取成三个类，将各自界面的逻辑，写在类中。
 
-在类的=构造方法中，设置界面的一些初始化信息，比如：
+在类的构造方法中，设置界面的一些初始化信息，比如：
 
 - 设置窗口的代销。
 - 设置窗口标题。
@@ -166,7 +166,7 @@ public class App {
 }
 ```
 
-## 四、游戏主界面菜单
+## 四、游戏主界面菜单（一）
 
 ### 1.游戏主界面菜单添加
 
@@ -241,13 +241,32 @@ import javax.swing.*;
 public class GameJFrame extends JFrame {
     public GameJFrame() {
         // super() // 隐式调用了父类的空参构造
-      
+
         initJFrame();
 
         initJMenuBar();
 
         // 窗口设为可见。
         this.setVisible(true);
+    }
+
+    /**
+     * 此方法用于，初始化游戏窗口
+     */
+    private void initJFrame() {
+        this.setSize(603, 680);
+
+        // 设置窗口标题
+        this.setTitle("拼图小游戏 V1.0");
+        // 设置窗口始终置顶
+        this.setAlwaysOnTop(true);
+        // 设置窗口居中展示
+        this.setLocationRelativeTo(null);
+        // 设置游戏的关闭模式
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // 表示关闭窗口后，虚拟机停止运行。
+
+        // 取消默认的居中设置，这样才能按照 x、y 轴的形式添加组件
+        this.setLayout(null);
     }
 
     /**
@@ -279,41 +298,23 @@ public class GameJFrame extends JFrame {
 
         // 给整个界面，设置菜单
         this.setJMenuBar(jMenuBar);
-        ;
-    }
-
-    /**
-     * 此方法用于，初始化游戏窗口
-     */
-    private void initJFrame() {
-        this.setSize(603, 680);
-
-        // 设置窗口标题
-        this.setTitle("拼图小游戏 V1.0");
-        // 设置窗口始终置顶
-        this.setAlwaysOnTop(true);
-        // 设置窗口居中展示
-        this.setLocationRelativeTo(null);
-        // 设置游戏的关闭模式
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // 表示关闭窗口后，虚拟机停止运行。
-
-        // 取消默认的居中设置，这样才能按照 x、y 轴的形式添加组件
-        this.setLayout(null);
     }
 }
 ```
 
-- `setLayout(null)` 方法，用于取消默认的居中设置，这样才能按照 x、y 轴的形式添加组件。为后续添加图片做准备。
+- `setLayout(null)` 方法，用于取消 jFrame 容器默认的居中设置，这样才能按照 x、y 轴的形式添加组件。为后续添加图片做准备。
 
 ### 2.游戏主界面图片添加
 
-Java 中，图形化界面中的图片，对应的类是 `ImageIcon`；要将图片放入 `JLabel` 进行管理。
+Java 中，图形化界面中的图片，对应的类是 `ImageIcon`；
+
+要将 `ImageIcon` 的图片实例对象，放入 `JLabel` 进行管理。
 
 > `JLabel` 可以管理图片和文字。
 
 将静态资源文件夹 `image` 放入当前项目（project）的模块（module）目录下：
 
-- 将图片放在抽口的左上角。
+- 将图片放在窗口的左上角。
 
 demo-project/puzzelgame/src/com/kkcf/ui/GameJFrame.java
 
@@ -350,14 +351,14 @@ public class GameJFrame extends JFrame {
         // 获取隐藏的容器，再添图片容器
         this.getContentPane().add(jLabel);
     }
-  
+
     // ...
 }
 ```
 
-- `getContentPane()` 方法，获取 `JFrame` 中的隐藏容器。
+- `getContentPane()` 方法，用于获取 `JFrame` 中的隐藏容器。
 
-优化上方代码，将其它的图片，也添加到容器中，使用循环。
+优化上方代码，使用循环。将其它的图片，也添加到容器中。
 
 demo-project/puzzelgame/src/com/kkcf/ui/GameJFrame.java
 
@@ -386,7 +387,7 @@ private void initImage() {
 }
 ```
 
--  当 `number` 为 16 时，没有加载到对应的图片，`jLabel` 会添加一个空的图片对象。
+- 当 `number` 为 16 时，没有加载到对应的图片，`jLabel` 会添加一个空的图片对象。
 
 ### 3.游戏主界面打乱图片
 
@@ -425,7 +426,7 @@ public class GameJFrame extends JFrame {
         // 窗口设为可见。
         this.setVisible(true);
     }
-  
+
     //...
 
     /**
@@ -437,7 +438,6 @@ public class GameJFrame extends JFrame {
         int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
         int len = arr.length;
-
         for (int i = 0; i < len; i++) {
             int randomIndex = r.nextInt(len);
 
@@ -473,17 +473,319 @@ public class GameJFrame extends JFrame {
             }
         }
     }
-  
+
     // ...
 }
 ```
 
 > 如果要对项目中的代码进行临时的测试，一般会在模块下再创建一个名为 `test` 的包。
 
-### 4.游戏主界面移动图片
+## 五、Java 中的事件
 
 事件，是组件可以识别的操作。触发组件的事件，就会执行对应的代码。
 
 事件有以下要素：
 
 - 事件源：按钮、图片、窗体……
+- 事件，表示某些操作；比如：鼠标单击、鼠标划入。
+- 绑定监听，表示当事件源上发生了某个事件，则执行某些代码。常用的绑定监听有：
+  - `KeyListener` 键盘监听；
+  - `MouseListenner` 鼠标监听；
+  - `ActionListenner` 动作监听（只能监听鼠标的单击，和键盘的空格）
+
+### 1.ActionListenner 动作监听
+
+为组件添加事件监听的两种方式：
+
+方式一，使用匿名内部类；
+
+demo-project/puzzelgame/src/com/kkcf/test/Test2.java
+
+```java
+package com.kkcf.test;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Test2 {
+    public static void main(String[] args) {
+        JFrame jFrame = new JFrame();
+
+        jFrame.setSize(603, 680);
+        // 设置窗口标题
+        jFrame.setTitle("拼图小游戏 V1.0");
+        // 设置窗口始终置顶
+        jFrame.setAlwaysOnTop(true);
+        // 设置窗口居中展示
+        jFrame.setLocationRelativeTo(null);
+        // 设置游戏的关闭模式
+        jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // 表示关闭窗口后，虚拟机停止运行。
+        // 取消默认的居中设置，这样才能按照 x、y 轴的形式添加组件
+        jFrame.setLayout(null);
+
+        // 创建一个按钮对象
+        JButton jbtn = new JButton("点我啊");
+        // 设置位置和宽高
+        jbtn.setBounds(0, 0, 100, 50);
+
+        // 为 jbtn 添加事件监听。
+        // addActionListener 方法，表示动作监听，只能监听鼠标左键点击，和键盘空格；传入的参数，表示事件触发后要执行的代码
+        // 创建一个自己的实现类 MyActionListenner，实现 ActionListener 接口，并传入 addActionListener 方法中。
+        // jbtn.addActionListener(new MyActionListenner());
+       
+        // 因为 MyActionListenner 类只会在这里使用到一次，所以使用匿名内部类，简化代码。
+        jbtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("不要点我啊");
+            }
+        });
+
+        // 把 jbtn 添加到页面中。
+        jFrame.getContentPane().add(jbtn);
+
+        jFrame.setVisible(true);
+    }
+}
+```
+
+方式二：使用接口的实现。
+
+为 `MyFrame` 类，实现 `ActionListener` 接口，并实现其中的方法。
+
+demo-project/puzzelgame/src/com/kkcf/test/MyFrame.java
+
+```java
+package com.kkcf.test;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+public class MyFrame extends JFrame implements ActionListener {
+    // 创建一个按钮对象
+    JButton jbtn1 = new JButton("点我啊");
+
+    // 创建一个按钮对象
+    JButton jbtn2 = new JButton("再点我啊");
+
+    public MyFrame(){
+        this.setSize(603, 680);
+        // 设置窗口标题
+        this.setTitle("拼图小游戏 V1.0");
+        // 设置窗口始终置顶
+        this.setAlwaysOnTop(true);
+        // 设置窗口居中展示
+        this.setLocationRelativeTo(null);
+        // 设置游戏的关闭模式
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // 表示关闭窗口后，虚拟机停止运行。
+        // 取消默认的居中设置，这样才能按照 x、y 轴的形式添加组件
+        this.setLayout(null);
+
+        // 设置位置和宽高
+        jbtn1.setBounds(0, 0, 100, 50);
+        // MyFrame 类实现了 ActionListener 接口，所以可以直接传入 MyFrame 类的对象。
+        jbtn1.addActionListener(this);
+
+        // 设置位置和宽高
+        jbtn2.setBounds(100, 0, 100, 50);
+        // MyFrame 类实现了 ActionListener 接口，所以可以直接传入 MyFrame 类的对象。
+        jbtn2.addActionListener(this);
+
+        this.getContentPane().add(jbtn1);
+        this.getContentPane().add(jbtn2);
+
+        this.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Random r = new Random();
+
+        // 对当前按钮，进行判断
+        Object source = e.getSource();
+        if (source == jbtn1)
+            jbtn1.setSize(200, 200);
+        else if (source == jbtn2)
+            jbtn2.setLocation(r.nextInt(500), r.nextInt(500));
+    }
+}
+```
+
+测试类
+
+demo-project/puzzelgame/src/com/kkcf/test/Test3.java
+
+```java
+package com.kkcf.test;
+
+public class Test3 {
+    public static void main(String[] args) {
+        new MyFrame();
+    }
+}
+```
+
+### 2.MouseListenner 鼠标监听
+
+`ActionListenner` 动作监听，只能监听鼠标的点击事件，或者键盘的空格。
+
+`MouseListenner` 鼠标监听，可以监听鼠标的：
+
+- `mouseEntered` 划入动作
+- `mousePressed` 按下动作
+- `mouseReleased` 松开动作
+- `mouseExited` 划出动作
+- 按下动作，松开动作又可规为 `mouseClicked` 单击动作。
+
+所以，在 Java 中，监听一个按钮的点击事件，有以下几种写法：
+
+- 写法一：`ActionListenner` 动作监听的 `actionPerformed` 事件，
+- 写法二：`MouseListenner` 鼠标监听的 `mouseClicked` 单击事件，
+- 写法三：`MouseListenner` 鼠标监听的 `mouseReleased` 松开事件。
+
+案例理解，使用 Java 创建一个窗口，在其中添加一个按钮，并为这个按钮，添加鼠标事件（使用实现接口的方式）。
+
+demo-project/puzzelgame/src/com/kkcf/test/MyFrame2.java
+
+```java
+package com.kkcf.test;
+
+import javax.swing.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+public class MyFrame2 extends JFrame implements MouseListener {
+    // 创建一个按钮对象
+    JButton jbtn1 = new JButton("点我啊");
+
+    public MyFrame2() {
+        this.setSize(603, 680);
+        // 设置窗口标题
+        this.setTitle("拼图小游戏 V1.0");
+        // 设置窗口始终置顶
+        this.setAlwaysOnTop(true);
+        // 设置窗口居中展示
+        this.setLocationRelativeTo(null);
+        // 设置游戏的关闭模式
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // 表示关闭窗口后，虚拟机停止运行。
+        // 取消默认的居中设置，这样才能按照 x、y 轴的形式添加组件
+        this.setLayout(null);
+
+        // 设置按钮位置和宽高
+        jbtn1.setBounds(0, 0, 100, 50);
+        // 给按钮绑定鼠标事件
+        jbtn1.addMouseListener(this);
+
+        this.getContentPane().add(jbtn1);
+
+        this.setVisible(true);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("单击");
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        System.out.println("按下");
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        System.out.println("松开");
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        System.out.println("划入");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        System.out.println("划出");
+    }
+}
+```
+
+测试类：
+
+在测试类中打开 `MyFrame2` 窗口。
+
+demo-project/puzzelgame/src/com/kkcf/test/Test3.java
+
+```java
+package com.kkcf.test;
+
+public class Test3 {
+    public static void main(String[] args) {
+        new MyFrame2();
+    }
+}
+```
+
+### 3.KeyListener 键盘监听
+
+KeyListener 键盘监听，可以监听键盘的：
+
+- `mousePressed` 按下动作
+- `mouseReleased` 松开动作
+- `mouseExited` 键入动作（有局限性，Ctrl、Alt 等等键不能监听）
+
+案例理解，使用 Java 创建一个窗口，在给这个窗口，添加键盘的事件监听。
+
+demo-project/puzzelgame/src/com/kkcf/test/MyFrame3.java
+
+```java
+package com.kkcf.test;
+
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class MyFrame3 extends JFrame implements KeyListener {
+    public MyFrame3() {
+        this.setSize(603, 680);
+        // 设置窗口标题
+        this.setTitle("拼图小游戏 V1.0");
+        // 设置窗口始终置顶
+        this.setAlwaysOnTop(true);
+        // 设置窗口居中展示
+        this.setLocationRelativeTo(null);
+        // 设置游戏的关闭模式
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // 表示关闭窗口后，虚拟机停止运行。
+        // 取消默认的居中设置，这样才能按照 x、y 轴的形式添加组件
+        this.setLayout(null);
+
+        // 一般是给整个窗体，添加键盘监听
+        // 调用者 this，表示本类对象，当前的界面对象，表示要给整个界面添加监听
+        // addKeyListener：表示要给本界面添加键盘监听
+        // 参数 this，当事件被触发之后，会执行本类中对应的代码
+        this.addKeyListener(this);
+
+        this.setVisible(true);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        //System.out.println("键入");
+    }
+
+    // 细节 1：如果按下一个按键，没有松开，那么会去重复调用 keyPressed 方法
+    @Override
+    public void keyPressed(KeyEvent e) {
+        System.out.println("按下");
+    }
+
+    // 细节 2：键盘中的按键，如何区分，使用 e.getKeyCode() 获取键盘按键的代号（与 ASCLL 码表无关）
+    @Override
+    public void keyReleased(KeyEvent e) {
+        System.out.println("松开");
+        int keyCode = e.getKeyCode();
+        System.out.println("keyCode: " + keyCode);
+    }
+}
+```
