@@ -64,6 +64,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
 
         // 设置窗口标题
         this.setTitle("拼图小游戏 V1.0");
+
         // 设置窗口始终置顶
         this.setAlwaysOnTop(true);
         // 设置窗口居中展示
@@ -176,7 +177,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
                 JLabel jLabel = new JLabel(icon);
 
                 // 指定图片的位置
-                jLabel.setBounds(105 * j + 83, 105 * i + 143, 105, 105);  // 图片都是 105 * 105 的尺寸。
+                jLabel.setBounds(105 * j + 83, 105 * i + 134, 105, 105);  // 图片都是 105 * 105 的尺寸。
 
                 // 给图片添加功能
                 jLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
@@ -282,8 +283,6 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
                 if (y == 3) return;
                 // 空白处右方的图片，左移
                 // x, y 表示空白方块的索引，x, y + 1 表示空白方块右
-                // 空白处上方的图片，下移
-                // x, y 表示空白方块的索引，x - 1, y 表示空白方块上方的索引
                 data[x][y] = data[x][y + 1];
                 data[x][y + 1] = 0;
                 y++;
