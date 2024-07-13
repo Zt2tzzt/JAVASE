@@ -1179,3 +1179,18 @@ public class LoginJFrame extends JFrame implements MouseListener {
     }
 }
 ```
+
+## 三、游戏打包
+
+将游戏打包成一个 .exe 安装包。其中要包含如下几部分：
+
+- 图形化界面。
+- 源码。
+- 用到的图片。
+- JDK
+
+打包的步骤：
+
+1. 把所有代码，打包成一个 jar 包（Java 形式的压缩包，.jar 后缀的压缩包）。
+2. 把 jar 包转成 exe 安装包。
+3. 把 exe 安装包、图片、JDK 整合在一起，变成最终的 exe 安装包。
