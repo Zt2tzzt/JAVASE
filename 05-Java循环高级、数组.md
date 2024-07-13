@@ -20,7 +20,6 @@ public class InfiniteLoop {
         }
     }
 }
-
 ```
 
 - 初始化语句可以空着不写，表示循环之前不定义任何的控制变量。

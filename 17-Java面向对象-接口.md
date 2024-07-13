@@ -167,11 +167,6 @@ public class Rabbit extends Animal {
         super(name, age);
     }
 
-    @Override
-    public String toString() {
-        return "Rabbit{} " + super.toString();
-    }
-
     // 重写抽象类中的抽象方法
     @Override
     public void eat() {
@@ -202,9 +197,7 @@ Java 接口中的成员变量，只能是常量；默认修饰符是 `public sta
 
 ### 3.接口中没有构造方法
 
-接口不能创建对象。也不需要给子类的成员变量赋值，所以：
-
-Java 接口中，没有构造方法。
+接口不能创建对象。也不需要给子类的成员变量赋值，所以：Java 接口中，没有构造方法。
 
 ## 二、Java 接口与类之间的关系
 
@@ -288,7 +281,7 @@ public class InterImpl implements Inter1, Inter2{
 
 在 Java 中，接口和接口的关系，是继承关系，可以单继承，也可以多继承。
 
-如果实现类，实现了最下层的子接口，那么就要实现其中所有的抽象方法。
+如果实现类，实现了继承关系中最下层的子接口，那么就要实现其中所有的抽象方法。
 
 案例理解：
 
@@ -367,7 +360,7 @@ public class InterImpl implements Inter3{
 
 定义一个抽象类，人类 `Person`；
 
-- `Person` 类是抽象类，但其中没有抽象方法，原因只是不想让外界直接创建该类的实例对象。
+- `Person` 类是抽象类，但其中没有抽象方法，原因是不想让外界直接创建该类的实例对象。
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee2/Person.java
 
@@ -580,29 +573,28 @@ public class Test {
 
 ## 三、Java 接口在 JDK8 及以后的使用
 
-JDK8 及以后接口中里有方法体的方法，是为了在接口升级时（增加了很多新的抽象方法），提升代码兼容性。
+JDK8 及以后接口中里有方法体的方法，是为了在接口升级（增加了很多新的抽象方法）时，提升代码兼容性。
 
 - 接口升级后，实现类不需要立马修改，等以后用到某个规则，再重写接口中的方法即可。
 
 JDK8 及以后，接口中可以定义有方法体的方法，可以是：
 
-- 默认（`default`）方法。
-- 静态（`static`）方法。
+- 默认（`default` 修饰的）方法。
+- 静态（`static` 修饰的）方法。
 
 ### 1.JDK8 及以后接口中的默认方法
 
 JDK8 及以后接口中的默认方法，要用 `default` 关键字修饰：
 
-- 格式为：`public default 返回值类型 方法名(参数列表) {}`
-- 比如：`public default void show() {}`
+- 格式为：`public default 返回值类型 方法名(参数列表) {}`比如：`public default void show() {}`
 - `public` 是默认修饰符，可省略。
 
 子类实现接口中的默认方法时，有如下特点：：
 
 - 特点一：JDK8 及以后接口中的默认方法，不是抽象方法，所以不强制子类重写。如果被重写，子类重写的方法上要去掉 `default` 关键字。
-- 特点二：如果子类实现了多个接口，且多个接口中存在相同名字的默认方法，子类就必须对该默认方法进行重写。
+- 特点二：如果子类实现了多个接口，且多个接口中存在相同名字的默认方法，子类就必须对该默认方法进行实现了。
 
-特点一理解：
+特点一，理解：
 
 定义一个接口 `Inter1`，其中有抽象方法 `method` 和默认方法 `defaultMethod`。
 
@@ -624,7 +616,7 @@ public interface Inter1 {
 
 定义一个 `InterImpl1` 类，用于实现 `Inter1` 接口。
 
-- 其中只需要实现接口中的抽象方法 `method` 即可。
+- 必须实现接口中的抽象方法 `method`。
 - 不强制要求实现默认方法 `defaultMethod`。
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee3/InterImpl1.java
@@ -657,9 +649,9 @@ public class Test1 {
 }
 ```
 
-特点二理解：
+特点二，理解：
 
-定义一个接口 `Inter2`，其中也有一个默认方法 `defaultMethod`，
+定义一个接口 `Inter2`，其中也有一个与 `Inter1` 接口中同名的默认方法 `defaultMethod`，
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee3/Inter2.java
 
@@ -721,7 +713,10 @@ JDK8 及以后接口中的静态方法，要用 `static` 关键字修饰：
 - 比如：`public static void show() {}`
 - `public` 是默认修饰符，可省略。
 
-JDK8 及以后接口中的静态方法，只能通过接口名调用，不能通过实现类名，或实例对象调用。
+JDK8 及以后接口中的静态方法，
+
+- 只能通过接口名调用；
+- 不能通过实现类名，或实例对象调用。
 
 JDK8 及以后接口中的静态方法，不能被实现类重写（静态方法，不会添加到虚方法表中）。
 
@@ -758,11 +753,14 @@ public class Test {
 
 ## 四、Java 接口在 JDK9 及以后的使用
 
-JDK9 及以后接口中里有 `private` 修饰的私有方法，是为了在接口的默认方法中，抽取共性代码，并禁止外界调用该段代码逻辑。
+JDK9 及以后接口中里有 `private` 修饰的私有方法，是为了
+
+- 在接口的默认方法中，抽取共性代码；
+- 并禁止外界调用该段代码逻辑。
 
 JDK9 及以后，接口中可以定义 `private` 修饰的私有方法，可以是：
 
-- 普通私有方法（没有 `default`）。
+- 普通私有方法（没有 `default` 修饰）。
 - 静态私有方法（`static` 修饰）。
 
 ### 1.JDK9 及以后接口中的私有方法
@@ -821,7 +819,7 @@ public interface Inter1 {
 }
 ```
 
-## 五、Java 接口的应用
+## 五、Java 接口的多态
 
 接口常用于多态，子类实现接口，也满足多态的三个前提条件：
 
@@ -874,7 +872,7 @@ public interface Inter2 {
 
 假设，现有一个实现类 `InterImpl`，只需要用到其中的 `method5` 方法 ；
 
-那么可以先定义一个中间类 `InterAdapter`（抽象类），空实现 `Inter2` 接口。
+那么可以先定义一个中间类 `InterAdapter`（抽象类），空实现 `Inter2` 接口里的所有抽象方法。
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee4/InterAdapter.java
 
