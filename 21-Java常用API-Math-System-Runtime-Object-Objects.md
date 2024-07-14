@@ -1,6 +1,6 @@
-# Java 常用 API
+# Java 常用 API 之 Math、System、Runtime、Object、Objects
 
-## 一、Math 类
+## 一、Math 工具类
 
 Math 类，所在包为 java.lang 包，因此在使用的时候不需要进行导包。
 
@@ -23,6 +23,8 @@ Math 类中，常用的方法如下：
 | `public static int min(int a,int b)`          | 获取两个 int 值中的较小值                  |
 | `public static double pow(double a,double b)` | 计算 a 的 b 次幂的值                       |
 | `public static double random()`               | 返回一个 `[0.0,1.0)` 的随机值              |
+
+### 1.abs 静态方法
 
 int 类型的数字，取值范围为 -2147483647-2147483647，如果使用 `Math.abs` 方法，传入这个范围之外的数，那么结果有误。
 
@@ -48,6 +50,8 @@ public class MathDemo01 {
 }
 ```
 
+### 2.ceil 静态方法
+
 `Math.cell` 方法，是往数轴的正方向取整。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/MathDemo01.java
@@ -64,6 +68,8 @@ public class MathDemo01 {
 
 ```
 
+### 3.floor 静态方法
+
 `Math.floor` 方法，是往数轴的负方向取整。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/MathDemo01.java
@@ -78,6 +84,8 @@ public class MathDemo01 {
     }
 }
 ```
+
+### 4.pow 静态方法
 
 `Math.pow` 方法，如果第二个参数，传入的是 0-1 之间的小鼠，表示开平方根。
 
@@ -95,6 +103,8 @@ public class MathDemo01 {
 }
 ```
 
+### 5.sqrt、cbrt 静态方法
+
 `Math.sqrt` 和 `Math.cbrt` 方法，分别表示开平方根，开立方根。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/MathDemo01.java
@@ -109,6 +119,8 @@ public class MathDemo01 {
     }
 }
 ```
+
+### 6.random 静态方法
 
 使用 `Math.random` 方法，获取一个 1-100 的随机数/
 
@@ -126,6 +138,23 @@ public class MathDemo01 {
 
 - 这种方式在 java 中用的不多，因为底层仍使用 `Random` 类来实现的。
 - 这种方式在获取随机数，在 JS 中使用比较多。
+
+### 7.min、max 静态方法
+
+使用 `Math.min`、`Math.max` 方法，获取两个数的最小值、最大值。
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/MathDemo01.java
+
+```java
+package com.kkcf.myapi;
+
+public class MathDemo01 {
+    public static void main(String[] args) {
+        System.out.println(Math.min(10, 20)); // 10
+        System.out.println(Math.max(10, 20)); // 20
+    }
+}
+```
 
 案例理解：判断一个数，是否是质数。
 
@@ -275,7 +304,7 @@ public class MathDemo03 {
 }
 ```
 
-## 二、System 类
+## 二、System 工具类
 
 `System` 也是一个工具类，提供了一些与系统相关的方法。
 
@@ -292,6 +321,8 @@ public class MathDemo03 {
 > 1970 年 1 月 1 号 00:00:00
 >
 > 中国（东八区）有八小时时差。即 1970 年 1 月 1 号 08:00:00
+
+### 1.exit 静态方法
 
 `System.exit` 的使用：
 
@@ -311,6 +342,8 @@ public class SystemDemo01 {
 }
 ```
 
+### 2.currentTimeMillis 静态方法
+
 `System.currentTimeMillis` 的使用：
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/SystemDemo01.java
@@ -321,6 +354,24 @@ package com.kkcf.myapi;
 public class SystemDemo01 {
     public static void main(String[] args) {
         System.out.println(System.currentTimeMillis()); // 1720863235923
+    }
+}
+```
+
+### 3.arraycopy 静态方法
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/SystemDemo01.java
+
+```java
+package com.kkcf.myapi;
+
+public class SystemDemo01 {
+    public static void main(String[] args) {
+        int[] arr1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int[] arr2 = new int[10];
+
+        // 从 0 索引的位置拷贝 arr1 到 arr2 的 0 索引上，拷贝 arr1.length 个元素。
+        System.arraycopy(arr1, 0, arr2, 0, arr1.length);
     }
 }
 ```
@@ -354,6 +405,8 @@ public class SystemDemo01 {
 
 > `System.exit` 底层调用的就是 `Runtime.exit` 的方法。
 
+### 1.getRuntime 静态方法
+
 `Runtime.getRuntime` 方法的使用，获取系统的运行环菌实例对象。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/RuntimeDemo01.java
@@ -371,6 +424,8 @@ public class RuntimeDemo01 {
 }
 ```
 
+### 2.exit 方法
+
 `exit` 方法的使用：
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/RuntimeDemo01.java
@@ -387,6 +442,8 @@ public class RuntimeDemo01 {
 }
 ```
 
+### 3.availableProcessors 方法
+
 `availableProcessors` 方法的使用
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/RuntimeDemo01.java
@@ -400,6 +457,8 @@ public class RuntimeDemo01 {
     }
 }
 ```
+
+### 4.maxMemory 方法
 
 `maxMemory` 方法的使用
 
@@ -415,6 +474,8 @@ public class RuntimeDemo01 {
 }
 ```
 
+### 5.totalMemory 方法
+
 `totalMemory` 方法的使用
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/RuntimeDemo01.java
@@ -428,6 +489,8 @@ public class RuntimeDemo01 {
     }
 }
 ```
+
+### 6.freeMemory 方法
 
 `freeMemory` 方法的使用
 
@@ -443,6 +506,8 @@ public class RuntimeDemo01 {
 }
 
 ```
+
+### 7.exec 方法
 
 `exec` 方法的使用，要处理该方法的异常。
 
@@ -488,7 +553,7 @@ Object 类，一共有 11 个成员方法，这里先介绍 3 个：
 | `public boolean equals(Object obj)` | 比较两个对象地址值是否相等；true 表示相同，false 表示不相同 |
 | `protected Object clone()`          | 对象克隆                                                    |
 
-`toString` 方法的使用：
+### 1.toString 方法
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/ObjecDemo01.java
 
@@ -519,4 +584,398 @@ public class ObjecDemo01 {
 1. 当使用 `System.out.println` 打印语句，打印一个对象的时候，底层会调用对象的 `toString` 方法，把对象变成字符串。
 2. 然后再打印在控制台上，打印完毕做换行处理。
 
-所以，如果要打印一个对象中的属性值，那么重写这个对象所对应的类中的 `toString` fang
+所以，如果要打印一个对象中的属性值，那么重写这个对象所对应的类中的 `toString` 方法
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/Student.java
+
+```java
+package com.kkcf.myapi;
+
+import java.util.Objects;
+
+public class Student {
+    private String name;
+    private int age;
+
+    public Student() {
+    }
+
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // getter、setter……
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+}
+```
+
+### 2.equals 方法
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/ObjectDemo02.java
+
+```java
+package com.kkcf.myapi;
+
+public class ObjectDemo02 {
+    public static void main(String[] args) {
+        Student stu1 = new Student();
+        Student stu2 = new Student();
+
+        System.out.println(stu1.equals(stu2)); // false
+    }
+}
+```
+
+在 `Object` 类中，`equals` 方法，默认比较的是对象的地址值。
+
+所以，如果要比较一个对象中的属性值，那么重写这个对象所对应的类中的 `equals` 方法。
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/Student.java
+
+```java
+package com.kkcf.myapi;
+
+import java.util.Objects;
+
+public class Student {
+    private String name;
+    private int age;
+
+    public Student() {
+    }
+
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // getter、setter……
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return age == student.age && Objects.equals(name, student.name);
+    }
+}
+
+```
+
+理解下方代码：
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/ObjectDemo02.java
+
+```java
+package com.kkcf.myapi;
+
+public class ObjectDemo02 {
+    public static void main(String[] args) {
+        String s = new String("haha");
+        StringBuilder sb = new StringBuilder("hehe");
+
+        System.out.println(s.equals(sb)); /// false
+        System.out.println(sb.equals(s)); /// false
+    }
+}
+```
+
+`String` 类中的 `equals` 方法，会先判断参数是否为 `String` 类的实例（源码如下）：
+
+- 如果是，再比较内部的属性；
+- 如果不是，直接返回 `false`
+
+```java
+public boolean equals(Object anObject) {
+    if (this == anObject) {
+        return true;
+    }
+    return (anObject instanceof String aString)
+            && (!COMPACT_STRINGS || this.coder == aString.coder)
+            && StringLatin1.equals(value, aString.value);
+}
+```
+
+`StringBuilder` 类中，没有重写 `equals` 方法，
+
+- 因此使用 `sb` 调用 `equals` 方法时，会默认使用 `Object` 类里的 `equals` 方法。
+- 又因为 `Object` 类里的 `equals` 方法，比较的是对象的地址值，所以返回的也是 `false`
+
+### 3.clone 方法
+
+`clone` 方法，用于把 A 对象的属性值，完全拷贝给 B 对象，也陈为对象拷贝，对象复制。
+
+案例理解：创建一个 JavaBean 类 `User`，在代码中克隆它的实例对象。
+
+- 在 `User` 类中，先要重写 `Object` 类中的 `clone` 方法；
+- 然后，为 `User` 类实现 `Cloneable` 接口。
+
+> `Cloneable` 接口里面没有任何抽象方法。
+>
+> - 实现该接口的类，它的实例对象，就可以被克隆；
+> - 没有实现该接口，那么这个类的实例对象，就不可以被克隆。
+>
+> 如果一个接口，里面没有抽象方法，表示这个接口是一个标记性的接口，
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/User.java
+
+```java
+package com.kkcf.myapi;
+
+import java.util.Arrays;
+
+public class User implements Cloneable {
+    private String id; // 游戏角色
+    private String name; // 用户名
+    private String password; // 密码
+    private String path; // 图片
+    private int[] data; // 游戏进度
+
+    public User() {
+    }
+
+    public User(String id, String name, String password, String path, int[] data) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.path = path;
+        this.data = data;
+    }
+
+    // getter、setter……
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", path='" + path + '\'' +
+                ", data=" + Arrays.toString(data) +
+                '}';
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        // 用于调用 Object 类中的 clone 方法，克隆一个对象，并把它返回出去
+        return super.clone();
+    }
+}
+```
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/ObjectDemo02.java
+
+```java
+package com.kkcf.myapi;
+
+public class ObjectDemo02 {
+    public static void main(String[] args) throws CloneNotSupportedException {
+        User u1 = new User("1", "zhangsan", "123456", "abc/cba/nba", new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
+
+        Object obj = u1.clone();
+        User u2 = (User) obj;
+
+        System.out.println(u1); // User{id='1', name='zhangsan', password='123456', path='abc/cba/nba', data=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
+        System.out.println(u2); // User{id='1', name='zhangsan', password='123456', path='abc/cba/nba', data=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
+    }
+}
+```
+
+- `clone` 方法，在底层会创建一个对象，并把愿对象中的数据，拷贝过去。
+- 使用 `Object` 类中的 `clone` 方法，
+  1. 先要在要克隆的对象的类中，重写 `clone` 方法，
+  2. 再为这个类实现 `Cloneable` 标记性的接口。
+  3. 创建类的实例对象，并调用重写的 `clone` 方法。
+
+> Java 中的浅拷贝、深拷贝
+>
+> - Java 中的浅拷贝：不管对象内部的属性，是基本数据类型，还是引用数据类型，都完全拷贝过来。
+> - Java 中的深拷贝：对象中的基本数据类型，会直接拷贝过来；字符串会复用 StringTable 串池中已存在的地址值；引用数据类型会创建一个新对象。
+
+`Object` 类中的 `clone` 方法，属于浅拷贝。
+
+重构 `User` 类中的 `clone` 方法，实现深拷贝的效果：
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/User.java
+
+```java
+package com.kkcf.myapi;
+
+import java.util.Arrays;
+
+public class User implements Cloneable {
+    private String id; // 游戏角色
+    private String name; // 用户名
+    private String password; // 密码
+    private String path; // 图片
+    private int[] data; // 游戏进度
+
+    public User() {
+    }
+
+    public User(String id, String name, String password, String path, int[] data) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.path = path;
+        this.data = data;
+    }
+
+    // getter、setter……
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", path='" + path + '\'' +
+                ", data=" + Arrays.toString(data) +
+                '}';
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        int[] newData = new int[data.length];
+
+        System.arraycopy(data, 0, newData, 0, newData.length);
+
+        // 用于调用 Object 类中的 clone 方法，克隆一个对象，并把它返回出去
+        User u = (User) super.clone();
+        u.data = newData;
+
+        return u;
+    }
+}
+```
+
+在项目中，导入第三方包，用于深拷贝。
+
+1. 在 module 模块中，创建一个目录 `lib`，将第三方包 `gson-2.6.2.jar` 放在该目录下。
+2. 在 idea 中，右键单击第三方包，选择“Add as Library”。
+
+使用 `gson` 包，对 `User` 类的实例对象，进行深拷贝：
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/ObjectDemo02.java
+
+```java
+package com.kkcf.myapi;
+
+import com.google.gson.Gson;
+
+public class ObjectDemo02 {
+    public static void main(String[] args) throws CloneNotSupportedException {
+        User u1 = new User("1", "zhangsan", "123456", "abc/cba/nba", new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
+
+        Gson gson = new Gson();
+        String u1JsontStr = gson.toJson(u1);
+        System.out.println(u1JsontStr);
+
+        User u3 = gson.fromJson(u1JsontStr, User.class);
+        System.out.println(u3);
+    }
+}
+```
+
+## 五、Objects 工具类
+
+`Objects` 是一个工具类，提供了一些方法，去完成一些功能。
+
+常用的方法如下：
+
+| 方法名                                             | 说明                                 |
+| -------------------------------------------------- | ------------------------------------ |
+| `public static String toString(Object o)`          | 获取对象的字符串表现形式             |
+| `public static boolean equals(Object a, Object b)` | 先做非空判断，再比较两个对象是否相等 |
+| `public static boolean isNull(Object obj)`         | 判断对象是否为 null                  |
+| `public static boolean nonNull(Object obj)`        | 判断对象是否不为 null                |
+
+### 1.equals 静态方法
+
+当使用 `实例对象.equals` 方法时，经常会出现 `NullPointException` 空指针异常的错误，原因是比较的两个对象，其中至少有一个是 null，为了避免这类错误，可以使用 `Objects.equals` 方法。
+
+`Objects.equals` 静态方法的使用：
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/ObjectsDemo01.java
+
+```java
+package com.kkcf.myapi;
+
+import java.util.Objects;
+
+public class ObjectsDemo01 {
+    public static void main(String[] args) {
+        Student s1 = new Student("zhangsan", 23);
+        Student s2 = new Student("zhangsan", 23);
+
+        System.out.println(Objects.equals(s1, s2)); // true
+    }
+}
+```
+
+`Objects.equals` 静态方法细节分析：
+
+1. 该方法的底层， 会先判断 `s1` 是否为 null，如果为 null，直接返回 false；
+2. 如果 `s1` 不为 null，那么就通过 `s1` 调用该对象中的 `equals` 方法，即 `Student` 类中重写的 `equals` 方法。
+
+`Objects.equals` 静态方法源码如下：
+
+java/util/Objects.java
+
+```java
+public static boolean equals(Object a, Object b) {
+    return (a == b) || (a != null && a.equals(b));
+}
+```
+
+### 2.isNull 静态方法
+
+`Objects.isNull` 静态方法的使用：
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/ObjectsDemo01.java
+
+```java
+package com.kkcf.myapi;
+
+import java.util.Objects;
+
+public class ObjectsDemo01 {
+    public static void main(String[] args) {
+        Student s3 = new Student();
+        Student s4 = null;
+
+        System.out.println(Objects.isNull(s3)); // false
+        System.out.println(Objects.isNull(s4)); // true
+    }
+}
+```
+
+### 3.nonNull 静态方法
+
+`Objects.nonNull` 静态方法的使用：
+
+demo-project/base-code/Day18/src/com/kkcf/myapi/ObjectsDemo01.java
+
+```java
+package com.kkcf.myapi;
+
+import java.util.Objects;
+
+public class ObjectsDemo01 {
+    public static void main(String[] args) {
+        Student s3 = new Student();
+        Student s4 = null;
+
+        System.out.println(Objects.nonNull(s3)); // true
+        System.out.println(Objects.nonNull(s4)); // false
+    }
+}
+```

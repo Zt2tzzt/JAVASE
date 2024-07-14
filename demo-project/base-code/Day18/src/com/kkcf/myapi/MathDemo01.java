@@ -25,6 +25,10 @@ public class MathDemo01 {
         //System.out.println(Math.sqrt(4)); // 2.0
         //System.out.println(Math.cbrt(8)); // 2.0
 
-        System.out.println(Math.floor(Math.random() * 100 + 1));
+        //System.out.println(Math.floor(Math.random() * 100 + 1));
+
+
+        System.out.println(Math.min(10, 20)); // 10
+        System.out.println(Math.max(10, 20)); // 20
     }
 }
