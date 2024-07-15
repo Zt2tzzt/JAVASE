@@ -110,7 +110,7 @@ public class GirlFriend {
 
 我们通常会在测试类中，创建 JavaBean 类的实例对象。
 
-### 2.Java 类的设计
+### 2.JavaBean 类的设计
 
 名词提炼法：将需求中的名词，提炼为类的属性。
 
@@ -167,10 +167,10 @@ public class Test01 {
 
 `private` 是 Java 中的关键字，它
 
-- 表示一个权限的修饰符；可以修饰类中的成员（成员变量、成员方法）。被修饰的成员，只能在本类中才嫩访问。
+- 表示一个权限的修饰符；可以修饰类中的成员（成员变量、成员方法）；被修饰的成员，只能在本类中才嫩访问。
 - 针对 `private` 修饰的成员变量，如果需要被其它类使用，要提供相应的 getter、setter 操作：
   - 提供 `setXxx(参数)` 方法，用于给成员变量赋值，方法用 `public` 修饰。
-  - 提供 `getXxx()` 方法，用于获取成员变量的值，方法用 `public` 修饰
+  - 提供 `getXxx()` 方法，用于获取成员变量的值，方法用 `public` 修饰。
 
 demo-project/base-code/Day08/src/com/kkcf/object_riented/GirlFriend.java
 

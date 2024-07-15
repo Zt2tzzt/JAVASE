@@ -6,7 +6,7 @@
 
 long 类型，能表示的最大的数字是 `01111111 11111111 11111111 11111111 11111111 11111111 11111111 11111111`，转为十进制是 `9223372036854775807`。
 
-超过该数字的**整数**，long 类型也无法正常表示，这时就要使用 `BigInteger` 类（无法表示小鼠）。
+超过该数字的**整数**，long 类型也无法正常表示，这时就要使用 `BigInteger` 类（无法表示小数）。
 
 当 `BigInteger` 对象创建后，内部记录的值，不允许发生改变；只要用 `BigInteger` 对象进行计算，那么都会产生一个新的对象。
 
@@ -107,8 +107,8 @@ public class BigIntegerDemo01 {
 
 细节：
 
-- 字符串，必须是整数；
-- 字符串中的数字，必须要跟进制吻合。
+- 传入的字符串，必须是整数；
+- 传入的字符串中的数字，必须要跟进制吻合（比如："123" 不能用于 2 进制转化）。
 
 ### 2.BigInteger 静态方法
 
@@ -135,8 +135,8 @@ public class BigIntegerDemo01 {
 
 细节：
 
-- `BigInteger` 的静态方法 `valueOf` 能表示的范围较小，传入的整数参数，只能在 long 的取值范围之内；
-- `BigInteger` 的静态方法 `valueOf` 在内部对常用数组 -16-16 进行了优化，提前创建了这个范围内，数字的 `BigInteger` 实例对象，如果多次获取不会重新创建对象。
+- `BigInteger` 的静态方法 `valueOf` 能表示的范围较小，传入的整数参数，只能在 long 数据类型的取值范围之内；
+- `BigInteger` 的静态方法 `valueOf` 在内部对常用数字 `-16-16` 进行了优化，提前创建了这个范围内，数字的 `BigInteger` 实例对象，如果多次获取不会重新创建对象。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/BigIntegerDemo01.java
 
@@ -164,6 +164,8 @@ public class BigIntegerDemo01 {
 ```
 
 `BigInteger` 的静态方法 `valueOf` 源码如下：
+
+java/math/BigInteger.java
 
 ```java
 public static BigInteger valueOf(long val) {
@@ -207,7 +209,6 @@ package com.kkcf.myapi;
 import java.math.BigInteger;
 
 public class BigIntegerDemo02 {
-    public static void main(String[] args) {
     public static void main(String[] args) {
         BigInteger bd1 = BigInteger.valueOf(10);
         BigInteger bd2 = BigInteger.valueOf(5);
@@ -353,12 +354,12 @@ public class BigIntegerDemo02 {
 
 ![BigInteger原理](NodeAssets/BigInteger原理.jpg)
 
-- 将数据，变成二进制的补码形式，以 32 位为一组，分成 n 组，再转为十进制，放入一个数组中。
+- 将数据，变成二进制的补码形式，以 32 比特位（4 个字节）为一组，分成 n 组，再转为十进制，放入一个 int 类型的数组中。
   - 数组的最大长度（int 的最大值）`2147483647`，即 21 亿多.
   - 数组中每一位能表示的数字为 `-2147483648-2147483647`，即 42 亿多.
-  - 所以，BigInteger 能存储的最大值是：42 亿的 21 忆次方（现实中没有电脑内存能存储这么大的数字）。
+  - 所以，BigInteger 能存储的最大值是：42 亿的 21 忆次方（现实中没有计算机的内存能存储这么大的数字）。
 
-## 二、Big Decimal 类
+## 二、BigDecimal 类
 
 在 Java 中，直接使用小数进行计算，结果可能不精确：
 
@@ -377,14 +378,12 @@ public class Test01 {
 }
 ```
 
-计算机中的小鼠：
+计算机中的小数，以十进制的 `69.875` 为例，转为二进制后：
 
-十进制的 69.875，转为二进制：
+- 整数部分表示为：`0100 0101`；
+- 小数部分表示为：`111`，即 1 \* 2^-1^ + 1 \* 2^-2^ + 1 \* 2^-3^ -> 0.5 + 0.25 + 0.125 = 0.875
 
-- 整数部分：`0100 0101`；
-- 小鼠部分：`111`，即 1 \* 2^-1^ + 1 \* 2^-2^ + 1 \* 2^-3^ -> 0.5 + 0.25 + 0.125 = 0.875
-
-那么 0.9 转为二进制，就是一个 45 比特位的二进制数字；0.226 转为二进制，就是一个 55 比特位的二进制数。
+依此类推：`0.9` 转为二进制，就是一个 45 比特位的二进制数字；`0.226` 转为二进制，就是一个 55 比特位的二进制数。
 
 在 Java 中，用于存储浮点数的两个类型如下：
 
@@ -393,12 +392,12 @@ public class Test01 {
 | float  | 4          | 32        | 23              |
 | double | 8          | 64        | 52              |
 
-当一个小鼠的二进制位数，超过能数据类型所能表示的范围时，就会出现精度错误。
+当一个小数的二进制位数，超过数据类型所能表示的范围时，就会出现精度错误。
 
 `BigDecimal` 类，就是为了解决这个问题，它可以：
 
 - 用于小数的精确计算；
-- 用来表示很大的小鼠。
+- 用来表示很大的小数。
 
 `BigDecimal` 类，一旦创建对象后，其中保存的值就不可变了。
 
@@ -408,7 +407,7 @@ public class Test01 {
 
 | 方法名                          | 说明                                                           |
 | ------------------------------- | -------------------------------------------------------------- |
-| `public BigDecimal(double val)` | 传入 double 类型的小鼠，创建对象（结果可能不精确，不建议使用） |
+| `public BigDecimal(double val)` | 传入 double 类型的小数，创建对象（结果可能不精确，不建议使用） |
 | `public BigDecimal(String val)` | 传入 String 类型的字符串，创建对象，结果精确。                 |
 
 `public BigDecimal(double val)` 的使用，结果可能不精确
@@ -464,7 +463,9 @@ public class BigDecimalDemo01 {
 | ------------------------------------------------------- | ------------------------------------------ |
 | `public static BigDecimal valueOf(double/long/int val)` | 通过传入的参数，创建一个实例对象，并返回。 |
 
-如果要表示的小数不大，没有超过 double 类型的取值范围，建议使用该种方式创建对象，否则，建议使用构造方法的形式创建对象。
+如果要表示的小数不大，没有超过 double 类型的取值范围，建议使用该种方式创建对象；
+
+否则，建议使用构造方法的形式传入字符串，创建对象。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/BigDecimalDemo01.java
 
@@ -482,7 +483,7 @@ public class BigDecimalDemo01 {
 }
 ```
 
-类似于 `BigInteger` 类中的 `valueOf` 方法，为了节约内存，如果该方法，传递的时 `[0, 10]` 范围内的**整数**，那么方法会返回已经创建好的对象。
+类似于 `BigInteger` 类中的 `valueOf` 方法，为了节约内存，如果该方法，传递的是 `[0, 10]` 范围内的**整数**作为参数，那么方法会返回已经创建好的对象。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/BigDecimalDemo01.java
 
@@ -497,7 +498,6 @@ public class BigDecimalDemo01 {
         BigDecimal bd2 = BigDecimal.valueOf(10);
 
         System.out.println(bd1 == bd2); // true
-
 
         BigDecimal bd3 = BigDecimal.valueOf(10.0);
         BigDecimal bd4 = BigDecimal.valueOf(10.0);
@@ -556,7 +556,7 @@ public class BigDecimalDemo02 {
         System.out.println(bd4); // 8.0
 
         BigDecimal bd5 = bd1.multiply(bd3);
-        System.out.println(bd5); // 120.00
+        System.out.println(bd5); // 20.00
     }
 }
 ```
@@ -565,7 +565,9 @@ public class BigDecimalDemo02 {
 
 `divide` 方法的使用：
 
-被除数，与除数进行出发运算，如果除不尽，使用该方法 `public BigDecimal divide(BigDecimal value)` 会报错；应该使用该方法 `public BigDecimal divide(BigDecimal value, 精确几位, 舍入模式)`
+被除数，与除数进行除法运算，如果除不尽，使用该方法 `public BigDecimal divide(BigDecimal value)` 会报错；
+
+应该使用该方法 `public BigDecimal divide(BigDecimal value, 精确几位, 舍入模式)`
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/BigDecimalDemo02.java
 
@@ -591,22 +593,19 @@ public class BigDecimalDemo02 {
         //BigDecimal bd7 = bd1.divide(bd3); //  java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result.
         BigDecimal bd7 = bd1.divide(bd3, 2, RoundingMode.HALF_UP); // RoundingMode.HALF_UP 表示四舍五入模式
         System.out.println(bd7);
-
     }
 }
 ```
 
 ### 4.BigDecimal 底层实现
 
-以小数 0.226 为例，它转为二进制有 55 位。
+以小数 `0.226` 为例，它转为二进制有 55 位。
 
 当使用字符串 `"0.226"`创建一个 `BigDecimal` 对象时，底层会遍历字符串中每一个字符，并将它门的 ASCLL 码，存入到一个数组中。原理如下图所示：
 
 ![BigDecimal底层原理](NodeAssets/BigDecimal底层原理.jpg)
 
-以此类推，如果是一个有整数部分的小数，比如 `"123.226"`；或者一个带负号的小数，比如 `"-1.5"`（正数不会存符号位的 ASCLL 码）；
-
-都会将字符串中的字符，转为 ASCLL 码，存入一个数组中。
+以此类推，如果是一个有整数部分的小数，比如 `"123.226"`；或者一个带负号的小数，比如 `"-1.5"`；都会将字符串中的字符，转为 ASCLL 码，存入一个数组中（正数不会存符号位的 ASCLL 码）。
 
 ![BigDecimal底层原理2](NodeAssets/BigDecimal底层原理2.jpg)
 

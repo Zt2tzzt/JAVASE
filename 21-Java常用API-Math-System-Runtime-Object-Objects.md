@@ -4,9 +4,9 @@
 
 Math 类，所在包为 java.lang 包，因此在使用的时候不需要进行导包。
 
-Math 类被 final 修饰了，因此该类是不能被继承的。
+Math 类被 `final` 修饰了，因此该类是不能被继承的。
 
-Math 类是一个帮助我们进行数学计算的工具类，包含执行基本数学运算的方法。
+Math 类是一个帮助我们进行数学计算的**工具类**，包含执行基本数学运算的方法。
 
 - Math 类里面所有的方法都是静态的。
 - Math 类私有化了构造方法，外界不能创建它的实例对象。
@@ -26,7 +26,7 @@ Math 类中，常用的方法如下：
 
 ### 1.abs 静态方法
 
-int 类型的数字，取值范围为 -2147483647-2147483647，如果使用 `Math.abs` 方法，传入这个范围之外的数，那么结果有误。
+int 类型的数字，取值范围为 `-2147483647-2147483647`，如果使用 `Math.abs` 方法，传入这个范围之外的数，那么结果有精度错误。
 
 为解决上面的 bug，推荐使用 JDK 15 新特性：`Math.absExact` 方法，传入 int 范围之外的数，会直接报错。
 
@@ -65,7 +65,6 @@ public class MathDemo01 {
         System.out.println(Math.ceil(-12.34)); // -12.0
     }
 }
-
 ```
 
 ### 3.floor 静态方法
@@ -87,7 +86,7 @@ public class MathDemo01 {
 
 ### 4.pow 静态方法
 
-`Math.pow` 方法，如果第二个参数，传入的是 0-1 之间的小鼠，表示开平方根。
+`Math.pow` 方法，如果第二个参数，传入的是 0-1 之间的小数，表示开平方根。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/MathDemo01.java
 
@@ -97,8 +96,8 @@ package com.kkcf.myapi;
 public class MathDemo01 {
     public static void main(String[] args) {
         System.out.println(Math.pow(4, 2)); // 16.0
-        System.out.println(Math.pow(4, 0.5)); // 2.0
-        System.out.println(Math.pow(2, -2)); // 0.25
+        System.out.println(Math.pow(4, 0.5)); // 2.0，相当于 4 开平方根
+        System.out.println(Math.pow(2, -2)); // 0.25，相当于 1 / 2^2
     }
 }
 ```
@@ -115,6 +114,7 @@ package com.kkcf.myapi;
 public class MathDemo01 {
     public static void main(String[] args) {
         System.out.println(Math.sqrt(4)); // 2.0
+
         System.out.println(Math.cbrt(8)); // 2.0
     }
 }
@@ -122,7 +122,7 @@ public class MathDemo01 {
 
 ### 6.random 静态方法
 
-使用 `Math.random` 方法，获取一个 1-100 的随机数/
+使用 `Math.random` 方法，返回一个 `[0.0,1.0)` 的随机值
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/MathDemo01.java
 
@@ -136,7 +136,7 @@ public class MathDemo01 {
 }
 ```
 
-- 这种方式在 java 中用的不多，因为底层仍使用 `Random` 类来实现的。
+- 这种方式获取随机数，在 java 中用的不多，因为底层仍然是使用 `Random` 类来实现的。
 - 这种方式在获取随机数，在 JS 中使用比较多。
 
 ### 7.min、max 静态方法
@@ -151,6 +151,7 @@ package com.kkcf.myapi;
 public class MathDemo01 {
     public static void main(String[] args) {
         System.out.println(Math.min(10, 20)); // 10
+
         System.out.println(Math.max(10, 20)); // 20
     }
 }
@@ -189,7 +190,8 @@ public class MathDemo02 {
 
 如果自幂数是
 
-- 一位数，也叫做：独身数；
+- 一位数：独身数；
+- 二位数：没有二位的自幂数
 - 三位自幂数：水仙花数；
 - 四位自幂数：四叶玫瑰数；
 - 五位数：五角星数；
@@ -208,9 +210,9 @@ package com.kkcf.myapi;
 
 public class MathDemo03 {
     public static void main(String[] args) {
-        System.out.println("水仙花数有 " + daffodils() + " 个");
-
         System.out.println(twoDigitExponentiation() > 0 ? "有" : "没有" + "两位的自幂数");
+
+        System.out.println("水仙花数有 " + daffodils() + " 个");
 
         System.out.println("四叶玫瑰数有 " + fourleafRose() + " 个");
 
@@ -218,7 +220,7 @@ public class MathDemo03 {
     }
 
     /**
-     * 此芳芳用于，统计两位自幂数的个数
+     * 此方法用于，统计两位自幂数的个数
      * @return 两位自幂数的个数
      */
     public static int twoDigitExponentiation() {
@@ -238,7 +240,7 @@ public class MathDemo03 {
     }
 
     /**
-     * 此芳芳用于，统计水仙花数的个数
+     * 此方法用于，统计水仙花数的个数
      * @return 水仙花数的个数
      */
     public static int daffodils() {
@@ -258,7 +260,7 @@ public class MathDemo03 {
     }
 
     /**
-     * 此芳芳用于，统计四叶玫瑰数的个数
+     * 此方法用于，统计四叶玫瑰数的个数
      * @return 四叶玫瑰数的个数
      */
     public static int fourleafRose() {
@@ -280,7 +282,7 @@ public class MathDemo03 {
     }
 
     /**
-     * 此芳芳用于，统计五角星数的个数
+     * 此方法用于，统计五角星数的个数
      * @return 五角星数的个数
      */
     public static int pentagram() {
@@ -306,21 +308,19 @@ public class MathDemo03 {
 
 ## 二、System 工具类
 
-`System` 也是一个工具类，提供了一些与系统相关的方法。
+`System` 也是一个**工具类**，提供了一些与系统相关的方法。
 
 `System` 类中常用的方法有：
 
-| 方法名                                                                               | 说明                                   |
-| ------------------------------------------------------------------------------------ | -------------------------------------- |
-| `public static void exit(int status)`                                                | 终止当前运行的 Java 虚拟机             |
-| `public static long currentTimeMillis()`                                             | 返回时间原点到当前系统的时间毫秒值形式 |
-| `public static void arraycopy(数据源数组, 起始索引, 目的地数组, 起始索引, 拷贝个数)` | 拷贝数组                               |
+| 方法名                                                       | 说明                                   |
+| ------------------------------------------------------------ | -------------------------------------- |
+| `public static void exit(int status)`                        | 终止当前运行的 Java 虚拟机             |
+| `public static long currentTimeMillis()`                     | 返回时间原点到当前系统的时间毫秒值形式 |
+| `public static void arraycopy(数据源数组, 起始索引, 目的地数组, 起始索引, 拷贝个数)` | 拷贝数组（浅拷贝）                     |
 
-> 计算机中的时间原点
+> 计算机中的时间原点：
 >
-> 1970 年 1 月 1 号 00:00:00
->
-> 中国（东八区）有八小时时差。即 1970 年 1 月 1 号 08:00:00
+> 1970 年 1 月 1 号 00:00:00；中国（东八区）有八小时时差。即 1970 年 1 月 1 号 08:00:00
 
 ### 1.exit 静态方法
 
@@ -388,8 +388,9 @@ public class SystemDemo01 {
 
 `Runtime` 类，里面的方法不是静态，需要先获取它的实例对象，才能调用其中的方法。
 
-- 需要使用类中提供的静态方法 `getRuntime` 获取实例对象，因为 `Runtime` 类在程序运行时，只能创建一个对象。
-- 因为 `Runtime` 类，表示的时 Java 虚拟机的运行环菌，而在一台计算机中，只能由一个 Java 虚拟机运行环菌。
+- 不能使用 `new` 操作符创建实例对象，而是要使用类中提供的静态方法 `getRuntime` 获取实例对象；
+- 因为 `Runtime` 类在程序运行时，只能创建一个对象。
+- `Runtime` 类，表示的是 Java 虚拟机的运行环菌，而在一台计算机中，只能有一个 Java 虚拟机运行环菌。
 
 `Runtime` 类常用方法如下：
 
@@ -460,7 +461,7 @@ public class RuntimeDemo01 {
 
 ### 4.maxMemory 方法
 
-`maxMemory` 方法的使用
+`maxMemory` 方法的使用，获取的结果，单位是字节。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/RuntimeDemo01.java
 
@@ -476,7 +477,7 @@ public class RuntimeDemo01 {
 
 ### 5.totalMemory 方法
 
-`totalMemory` 方法的使用
+`totalMemory` 方法的使用，获取的结果，单位是字节。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/RuntimeDemo01.java
 
@@ -504,7 +505,6 @@ public class RuntimeDemo01 {
         System.out.println(Runtime.getRuntime().freeMemory() / 1024 / 1024); // 253 即 253MB 内存
     }
 }
-
 ```
 
 ### 7.exec 方法
@@ -535,25 +535,27 @@ public class RuntimeDemo01 {
 
 ## 四、Object 类
 
-Object 类所在包是 java.lang 包。
+`Object` 类所在包是 `java.lang` 包。
 
-Object 类，是 Java 中的顶级父类，所有类都直接或间接的继承自 Object 类。该类所具备的方法，其他所有类都继承了。
+`Object` 类，是 Java 中的顶级父类，所有类都直接或间接的继承自 `Object` 类。该类所具备的方法，其他所有类都继承了。
 
-Object 类，没有成员变量，只有一个空参构造方法
+`Object` 类，没有成员变量，只有一个空参构造方法
 
 | 方法名            | 说明     |
 | ----------------- | -------- |
 | `public Object()` | 空参构造 |
 
-Object 类，一共有 11 个成员方法，这里先介绍 3 个：
+`Object` 类，一共有 11 个成员方法，这里先介绍 3 个：
 
 | 方法名                              | 说明                                                        |
 | ----------------------------------- | ----------------------------------------------------------- |
-| `public String toString()`          | 返回该对象的字符串表示形式(，可以看做是对象的内存地址值)    |
+| `public String toString()`          | 返回该对象的字符串表示形式（可以看做是对象的内存地址值）    |
 | `public boolean equals(Object obj)` | 比较两个对象地址值是否相等；true 表示相同，false 表示不相同 |
 | `protected Object clone()`          | 对象克隆                                                    |
 
 ### 1.toString 方法
+
+`toString`  方法的使用，默认返回的是对象地址值。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/ObjecDemo01.java
 
@@ -575,16 +577,18 @@ public class ObjecDemo01 {
 }
 ```
 
-- `java.lang.Object` 是该对象的报名；
+Java 中，对象地址值的打印格式分析：
+
+- `java.lang.Object` 是该对象的包名；
 - `@` 是固定格式；
 - `4eec7777` 是对象的地址值。
 
-直接打印对象，和打印对象调用 `toString` 方法返回的结果，效果是一样的。这是因为：
+直接打印对象，和对象调用 `toString` 方法返回的结果，效果是一样的。这是因为：
 
 1. 当使用 `System.out.println` 打印语句，打印一个对象的时候，底层会调用对象的 `toString` 方法，把对象变成字符串。
 2. 然后再打印在控制台上，打印完毕做换行处理。
 
-所以，如果要打印一个对象中的属性值，那么重写这个对象所对应的类中的 `toString` 方法
+所以，如果要使用 `System.out.println` 打印语句，打印一个对象中的属性值，那么重写这个对象所对应的类中的 `toString` 方法即可。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/Student.java
 
@@ -619,6 +623,8 @@ public class Student {
 
 ### 2.equals 方法
 
+`equals` 方法的使用
+
 demo-project/base-code/Day18/src/com/kkcf/myapi/ObjectDemo02.java
 
 ```java
@@ -634,9 +640,9 @@ public class ObjectDemo02 {
 }
 ```
 
-在 `Object` 类中，`equals` 方法，默认比较的是对象的地址值。
+在 `Object` 类中，`equals` 方法，默认比较的，是对象的地址值。
 
-所以，如果要比较一个对象中的属性值，那么重写这个对象所对应的类中的 `equals` 方法。
+所以，如果要比较一个对象中的属性值，那么重写这个对象所对应的类中的 `equals` 方法即可。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/Student.java
 
@@ -667,7 +673,6 @@ public class Student {
         return age == student.age && Objects.equals(name, student.name);
     }
 }
-
 ```
 
 理解下方代码：
@@ -688,10 +693,17 @@ public class ObjectDemo02 {
 }
 ```
 
-`String` 类中的 `equals` 方法，会先判断参数是否为 `String` 类的实例（源码如下）：
+`String` 类中的 `equals` 方法，
 
-- 如果是，再比较内部的属性；
-- 如果不是，直接返回 `false`
+1. 先判断比较的两个 `String` 对象的地址值，是否相等；
+
+2. 再判断参数是否为 `String` 类的实例（源码如下）：
+
+   - 如果是，再比较内部的属性；
+
+   - 如果不是，直接返回 `false`。
+
+java/lang/Object.java
 
 ```java
 public boolean equals(Object anObject) {
@@ -707,7 +719,7 @@ public boolean equals(Object anObject) {
 `StringBuilder` 类中，没有重写 `equals` 方法，
 
 - 因此使用 `sb` 调用 `equals` 方法时，会默认使用 `Object` 类里的 `equals` 方法。
-- 又因为 `Object` 类里的 `equals` 方法，比较的是对象的地址值，所以返回的也是 `false`
+- 又因为 `Object` 类里的 `equals` 方法，比较的是对象的地址值，所以返回的也是 `false`。
 
 ### 3.clone 方法
 
@@ -789,7 +801,7 @@ public class ObjectDemo02 {
 }
 ```
 
-- `clone` 方法，在底层会创建一个对象，并把愿对象中的数据，拷贝过去。
+- `clone` 方法，在底层会创建一个对象，并把原对象中的属性，拷贝过去。
 - 使用 `Object` 类中的 `clone` 方法，
   1. 先要在要克隆的对象的类中，重写 `clone` 方法，
   2. 再为这个类实现 `Cloneable` 标记性的接口。
@@ -887,7 +899,7 @@ public class ObjectDemo02 {
 
 ## 五、Objects 工具类
 
-`Objects` 是一个工具类，提供了一些方法，去完成一些功能。
+`Objects` 是一个**工具类**，提供了一些方法，去完成一些功能。
 
 常用的方法如下：
 
@@ -900,9 +912,9 @@ public class ObjectDemo02 {
 
 ### 1.equals 静态方法
 
-当使用 `实例对象.equals` 方法时，经常会出现 `NullPointException` 空指针异常的错误，原因是比较的两个对象，其中至少有一个是 null，为了避免这类错误，可以使用 `Objects.equals` 方法。
+当使用 `实例对象.equals` 方法时，经常会出现 `NullPointException` 空指针异常的错误，原因是比较的两个对象，其中至少有一个是 `null`；
 
-`Objects.equals` 静态方法的使用：
+为了避免这类错误，可以使用 `Objects.equals` 静态方法。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/ObjectsDemo01.java
 
@@ -923,8 +935,8 @@ public class ObjectsDemo01 {
 
 `Objects.equals` 静态方法细节分析：
 
-1. 该方法的底层， 会先判断 `s1` 是否为 null，如果为 null，直接返回 false；
-2. 如果 `s1` 不为 null，那么就通过 `s1` 调用该对象中的 `equals` 方法，即 `Student` 类中重写的 `equals` 方法。
+1. 该方法的底层， 会先判断 `s1` 是否为 `null`，如果为 `null`，直接返回 `false`；
+2. 如果 `s1` 不为 `null`，那么就通过 `s1` 调用该对象中的 `equals` 方法，即 `Student` 类中重写的 `equals` 方法。
 
 `Objects.equals` 静态方法源码如下：
 
