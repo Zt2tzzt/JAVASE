@@ -224,7 +224,7 @@ public class GameTest {
 
 ### 1.对象数组-商品
 
-需求1：定义数组存储 3 个商品对象。商品的属性：商品的 id，名字，价格，库存。创建三个商品对象，并把商品对象存入到数组当中。
+需求1：定义数组存储 3 个商品对象。商品的属性有：商品的 id，名字，价格，库存。创建三个商品对象，并把商品对象存入到数组当中。
 
 demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/Goods.java
 
@@ -336,7 +336,7 @@ sc.next(); // 键盘录入一个字符串
 
 第二套体系：
 
-- 可以接收空格，制表符，遇到回车才停止接收。
+- 可以接收空格，制表符；遇到回车才停止接收。
 
 ```java
 Scanner sc = new Scanner();
@@ -728,7 +728,6 @@ public class StudentTest {
 
             printStudents(stus);
         }
-
 
         // 4.通过 id 删除学生信息；如果存在，则删除，如果不存在，则提示删除失败。
         int index1 = getIndex(stus, 4);

@@ -21,21 +21,21 @@ Java 字符串相关的类有 `String`、`StringBuilder`、`StringJonier`（JDK 
 
 ## 二、String 类
 
-String 类在 `java.lang` 包下，所以使用的时候不需要导包！
+`String` 类在 `java.lang` 包下，所以使用的时候不需要导包。
 
-String 类用于创建字符串对象。
+`String` 类用于创建字符串对象。
 
 Java 程序中的所有字符串（例如“abc”）都被实现为此类的实例对象；
 
-也就是说，Java 程序中所有的双引号包裹的字符串，都是 String 类的实例对象。
+也就是说，Java 程序中所有的双引号包裹的字符串，都是 `String` 类的实例对象。
 
 ### 1.String 类特点
 
-String 类创建的字符串对象，有以下特点：
+`String` 类创建的字符串对象，有以下特点：
 
-特点一：String 类创建的字符串对象不可变，它们的值在创建后不能被更改。比如说：
+特点一：`String` 类创建的字符串对象不可变，它们的值在创建后不能被更改。比如说：
 
-下方代码，一共产生了三个 String 类创建的对象。
+下方代码，一共产生了三个 `String` 类创建的对象。
 
 ```java
 String abc = "abc";
@@ -44,22 +44,23 @@ String cba = "cba";
 System.out.println(abc + cba);
 ```
 
-下方代码，一共产生了两个 String 类创建的对象。
+下方代码，一共产生了两个 `String` 类创建的对象。
 
 ```java
 String abc = "abc";
+
 abc = "cba";
 ```
 
-特点二：虽然 String 类对象中字符串的值是不可变的，但是它们可以被共享。
+特点二：虽然 `String` 类对象中字符串的值是不可变的，但是它们可以被共享。
 
 特点三：字符串效果上相当于字符数组（`char[]`），但是底层原理是字节数组（`byte[]`）。
 
 ### 2.String 类创建对象
 
-String 类创建对象有两种方式：
+`String` 类创建对象有两种方式：
 
-- 第一种：直接赋值；比如：`String name = "zzt";`（最常用的方式）。
+- 第一种：字面量赋值；比如：`String name = "zzt";`（最常用的方式）。
 - 第二种：使用 `new` 操作符，调用 `String` 类的构造方法，常用的构造方法如下。
 
 | 构造方法                         | 说明                                                   |
@@ -69,7 +70,7 @@ String 类创建对象有两种方式：
 | `public String(char[] chs)`      | 根据字符数组，创建字符串对象                           |
 | `public String(byte[] bytes)`    | 根据字节数组，创建字符串对象                           |
 
-使用 String 类的构造方法，创建 String 字符串对象。
+使用 `String` 类的构造方法，创建 `String` 字符串对象。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Demo01.java
 
@@ -159,7 +160,7 @@ public class Demo01 {
 
 ![new操作符创建字符串对象](NodeAssets/new操作符创建字符串对象.jpg)
 
-- 结论：`new` 操作符创建的字符串对象，不能复用地址值。
+- 结论：`new` 操作符创建的字符串对象，不能复用 StringTable 串池中的地址值。
 
 ### 4.String 类字符串对象内存地址比较
 
@@ -185,7 +186,7 @@ public class Demo01 {
 }
 ```
 
-字面量直接赋值的 String 类的对象，在 StringTable（串池）中的地址值相同。
+字面量直接赋值的 String 类的对象，在 StringTable（串池）中可直接复用地址值，所以地址值相同。
 
 ```java
 package com.kkcf.string;
@@ -276,7 +277,7 @@ public class Test01 {
 
 ### 6.String 类字符串对象的遍历
 
-遍历 String 类创建的字符串对象中的每个字符，需要用到 String 类中封装的方法
+遍历 String 类创建的字符串对象中的每个字符，需要用到 String 类中封装的方法，常用的有以下几种：
 
 - `public char charAt(int index)`，用于返回指定索引处的 char 值。
 - `public int length()`，用于返回此字符串的长度。
@@ -383,7 +384,9 @@ public class Test03 {
 
 ### 8.String 类字符串对象的反转
 
-案例理解：定义一个方法，实现字符串的反转，键盘录入一个字符串，调用该方法后，在控制台输出结果，例如键盘录入“abc”，输出结果“cba”。
+案例理解：定义一个方法，实现字符串的反转：
+
+键盘录入一个字符串，调用该方法后，在控制台输出结果，例如键盘录入“abc”，输出结果“cba”。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test04.java
 
@@ -486,10 +489,15 @@ public class Test05 {
 
 ### 10.String 类字符串对象的截取
 
-截取 String 类字符串对象中的字符串，需要用到 String 类中封装的方法
+截取 `String` 类字符串对象中的字符串，需要用到 `String` 类中封装的方法
 
-- `public String substring(int beginIndex, int endIndex)`，返回一个新字符串，它是此字符串的一个子字符串。该子字符串从指定的 `beginIndex` 处开始，直到索引 `endIndex - 1` 处的字符（包头不包尾，包左不包右）。因此，该子字符串的长度为 `endIndex-beginIndex`。
-- `public String substring(int beginIndex)`，返回一个新的字符串，它是此字符串的一个子字符串。该子字符串从指定索引处的字符开始，直到此字符串末尾。
+- `public String substring(int beginIndex, int endIndex)`，返回一个新字符串，它是此字符串的一个子字符串。
+  - 该子字符串从指定的 `beginIndex` 处开始，直到索引 `endIndex - 1` 处的字符（包头不包尾，包左不包右）。
+  - 因此，该子字符串的长度为 `endIndex-beginIndex`。
+
+- `public String substring(int beginIndex)`，返回一个新的字符串，它是此字符串的一个子字符串。
+  - 该子字符串从指定索引处的字符开始，直到此字符串末尾。
+
 
 案例理解：将手机号码中间四位数字，用”****“代替。
 
@@ -658,7 +666,9 @@ public class Demo05 {
 }
 ```
 
-案例理解：键盘录入一个字符串，判断该字符串是否是对称字符串，并在控制台打印“是”或“不是”。例如对称字符串有“123321”、“111”
+案例理解：键盘录入一个字符串，判断该字符串是否是对称字符串，并在控制台打印“是”或“不是”。
+
+例如：对称字符串有“123321”、“111”
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test08.java
 
@@ -685,12 +695,12 @@ public class Test08 {
 
 ### 2.StringBuilder 使用场景
 
-StringBuilder 的使用场景主要有两个：
+`StringBuilder` 类的使用场景主要有两个：
 
 - 场景一：字符串的拼接；
 - 场景二：字符串的反转。
 
-案例理解，使用 StringBuilder 类，重构上方 String 类拼接字符串的方法。
+案例理解，使用 `StringBuilder` 类，重构上方 `String` 类拼接字符串的方法。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test09.java
 
@@ -742,7 +752,7 @@ public class Test09 {
 - `public int length()`，返回长度，字符出现的个数。
 - `public String toString()`，返回一个字符串，该字符串就是拼接后的结果。
 
-使用 StringJoiner 类，将三段字符串，用连字符（-）拼接。
+使用 `StringJoiner` 类，将三段字符串，用连字符（-）拼接。
 
 ```java
 package com.kkcf.string;
@@ -760,7 +770,7 @@ public class Demo06 {
 }
 ```
 
-使用 StringJoiner 类，打印一个数组格式的字符串。
+使用 `StringJoiner` 类，打印一个数组格式的字符串。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Demo06.java
 
@@ -784,7 +794,7 @@ public class Demo06 {
 
 ### 1.StringJoiner 使用场景
 
-StringJoiner 的使用场景主要有：
+`StringJoiner` 的使用场景主要有：
 
 - 场景一：字符串的拼接；
 
@@ -902,7 +912,9 @@ StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼
 - 字节数组中，实际存储的是：字符对应的 ASCLL 码表数值。
 - 此时字节数组的长度为 `3`，容量为 `16`.
 
-Ⅲ、如果把"a"-"z"，26 个英文字母字符组成的字符串，添加到 StringBuilder 对象中，这时超出了 StringBuilder 字符串对象的原来 `16` 的容量，那么它会自动扩容，即 `老容量(16) * 2 + 2 = 34`。
+Ⅲ、如果把"a"-"z"，26 个英文字母字符组成的字符串，添加到 StringBuilder 对象中；
+
+这时超出了 StringBuilder 字符串对象原来 `16` 的容量，那么它会自动扩容，即 `老容量(16) * 2 + 2 = 34`。
 
 ![StringBuilder容器2](NodeAssets/StringBuilder容器2.jpg)
 
@@ -1053,13 +1065,13 @@ public static String changeRoman(int num) {
 }
 ```
 
-### 2.调整字符串
+### 2.旋转字符串
 
 给定两个字符串 A 和 B，A 的旋转操作，就是将 A 最左边的字符移动到最右边。
 
 - 例如：若 A = "abcde"，在旋转一次之后，结果就是 "bcdea"。
 
-如果在若干次旋转操作之后，A 能变成 B，那么返回 True，否则返回 false。
+如果在若干次旋转操作之后，A 能变成 B，那么返回 true，否则返回 false。
 
 > String 类创建的字符串是不可修改的，如果要修改字符串，有两种办法：
 >
@@ -1162,7 +1174,9 @@ public class Test12 {
 
 ### 4.生成验证码
 
-案例理解：生成验证码。验证码可以是大写或小写的英文字母，也可以是数字。验证码的长度为 5，字母有 4 个，数字有 1 个。数字的位置可以是任意位置。
+案例理解：生成验证码。验证码可以是大写或小写的英文字母，也可以是数字。
+
+验证码的长度为 5，字母有 4 个，数字有 1 个。数字的位置可以是任意位置。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test13.java
 
@@ -1214,7 +1228,7 @@ public class Test13 {
 
 ### 5.字符串相乘
 
-案例理解：给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积。
+案例理解：给定两个以字符串形式表示的非负整数 `num1` 和 `num2`，返回 `num1` 和 `num2` 的乘积。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test14.java
 
@@ -1250,7 +1264,7 @@ public class Test14 {
 
 案例理解：给你一个字符串 a，它由若干单词组成，单词前后用一些空格字符隔开，返回字符串中最后一个单词的长度。单词是指仅由字母组成，不包含任何空格字符的最大子字符串。
 
-- 思路：倒着遍历，直到遇到空格，遍历的次数，就是单词中的字母的个数。
+- 思路：倒着遍历字符串，直到遇到空格，遍历的次数，就是单词中的字母的个数。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test15.java
 
