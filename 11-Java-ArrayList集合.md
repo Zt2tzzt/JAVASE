@@ -46,7 +46,7 @@ System.out.println(strings); // []
 ArrayList 类，常用的成员方法有：
 
 - `public boolean add(E e)`，将指定的元素添加到此集合列表的尾部，返回是否添加成功。
-- `public boolean remove(Object o)`，移除此集合列表中首次出现的指定元素（如果存在）。如果列表不包含此元素，则列表不做改动。更确切地讲，移除满足 (`o == null ? get(i) == null : o.equals(get(i))`) 的最低索引的元素（如果存在此类元素）。如果列表中包含指定的元素，则返回 `true`（或者等同于这种情况：如果列表由于调用而发生更改，则返回 `true`）。
+- `public boolean remove(Object o)`，移除此集合列表中首次出现的指定元素，如果存在并移除成功，则返回 `true`，否则返回 `false`。
 - `public E remove(int index)`，移除此集合列表中指定位置上的元素。向左移动后续所有元素（将其索引减 1）。
 - `public E set(int index, E element)`，用指定的元素替代此集合列表中指定位置上的元素。
 - `public E get(int index)`，返回此集合列表中指定位置上的元素。

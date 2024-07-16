@@ -159,17 +159,17 @@ public class Test {
     public static void main(String[] args) {
         // 创建布偶猫对象
         CatPlus cp = new CatPlus();
-        cp.eat();
-        cp.drink();
-        cp.eat();
-        cp.catchmice();
+        cp.eat(); // 动物吃食物
+        cp.drink(); //动物喝水
+        cp.eat(); // 动物吃食物
+        cp.catchmice(); // 猫在抓老鼠
 
         // 创建哈士奇对象
         Husky husky = new Husky();
-        husky.eat();
-        husky.drink();
-        husky.breakHouse();
-        husky.houseKeeping();
+        husky.eat(); // 动物吃食物
+        husky.drink(); // 动物喝水
+        husky.breakHouse(); // 哈士奇在拆家
+        husky.houseKeeping(); // 狗在看家
     }
 }
 ```
@@ -510,7 +510,6 @@ public class Test3 {
 
         s.lunch();;
     }
-
 }
 
 class Person {
@@ -543,7 +542,7 @@ class Student extends Person {
 
 Java 继承成员方法的访问特点：
 
-- `this` 调用：就近原则（先在本类找，找不到再到父类中找）
+- `this` 调用：就近原则（先在本类找，找不到再到父类中找）；
 - `super` 调用：直接找父类的方法。
 
 ### 2.方法的重写
@@ -561,7 +560,6 @@ public class Test3 {
 
         s.lunch();
     }
-
 }
 
 class Person {
@@ -603,8 +601,7 @@ class OverseasStudent extends Person {
 
 `@Override` 方法重写注解，是放在重写方法上的：
 
-- 用于 JVM 虚拟机校验子类重写的方法的语法是否正确；
-- 加上该注解后，如果有红色波浪线，表示语法错误。
+- 用于 JVM 虚拟机校验子类重写的方法的语法是否正确；加上该注解后，如果有红色波浪线，表示语法错误。
 - 建议所有重写的方法，都加上该注解，这样代码更加安全，优雅。
 
 使用 `@Override` 注解，重构上面的代码：
@@ -664,7 +661,7 @@ class OverseasStudent extends Person {
 - 只有被添加到**虚方法表**中的方法，才能被重写。
 - 子类重写的**方法名称**、**形参列表**必须与父类中的方法保持一致。
 - 子类重写的方法，访问权限必须大于等于父类被重写的方法（权限修饰符：`private` < `空着不写` < `protected` < `public`）。
-- 子类重写的方法，返回值类型必须小于等于父类被重写的方法。
+- 子类重写的方法，返回值数据类型必须小于等于父类被重写的方法。
 
 案例理解：现在有三种动物：哈士奇、沙皮狗、中华田园犬
 
@@ -826,7 +823,7 @@ public class Test4 {
 
 `this(...)` 的使用，表示调用本类的其它构造方法，常用于赋默认值。
 
-- `this(...)` 会调用子类其它构造方法，如果这其中没有手动调用 `super(...)`，虚拟机在执行时，会默认在第一行加上 `super()`。所以使用 `this(...)` 的构造方法中，虚拟机不会在第一行再默认调用 `super()`。
+- `this(...)` 会调用子类其它构造方法，如果这其中没有手动调用 `super(...)`，虚拟机在执行时，会默认在第一行加上 `super()`。所以在使用 `this(...)` 的构造方法中，虚拟机不会再在第一行默认调用 `super()`。
 - `this(...)` 同样也要写在构造方法的第一行。
 
 理解下方代码：

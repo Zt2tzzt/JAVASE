@@ -2,13 +2,15 @@
 
 Java 接口，就是一种规则。它是对**行为**的抽象。
 
-Java 接口，是更加彻底的抽象，JDK7 及之前，接口中全部是抽象方法。
+Java 抽象类，表示一类事物，Java 接口，表示一系列**行为**。
 
-Java 接口是不能创建对象的。
+Java 接口，相比抽象类，是更加彻底的抽象；
 
-Java 抽象类表示一类事物，Java 接口表示一系列**行为**。
+Java 接口，在 JDK7 及之前全部是抽象方法。
 
-Java 接口用关键字 `interface` 来定义，格式为：`public interface 接口名 {}`
+Java 接口，是不能创建对象的。
+
+Java 接口，用关键字 `interface` 来定义，格式为：`public interface 接口名 {}`
 
 Java 接口不能实例化，
 
@@ -185,7 +187,7 @@ public class Rabbit extends Animal {
 
 Java 接口中的成员变量，只能是常量；默认修饰符是 `public static final`
 
-- 接口中的常量，一般使用 `接口名.常量` 访问。
+接口中的常量，一般使用 `接口名.常量` 访问。
 
 ### 2.接口中的成员方法
 
@@ -247,7 +249,7 @@ public interface Inter2 {
 }
 ```
 
-定义一个类 `InterImpl`，实现 `Inter1` 和 `Inter2` 接口：
+定义一个类 `InterImpl`，实现 `Inter1` 和 `Inter2` 接口；同名的方法，只需要实现一次即可。
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee/InterImpl.java
 
@@ -360,7 +362,7 @@ public class InterImpl implements Inter3{
 
 定义一个抽象类，人类 `Person`；
 
-- `Person` 类是抽象类，但其中没有抽象方法，原因是不想让外界直接创建该类的实例对象。
+- `Person` 类设置为抽象类，原因只是不想让外界直接创建该类的实例对象。所以该类中没有抽象方法，
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee2/Person.java
 
@@ -573,7 +575,7 @@ public class Test {
 
 ## 三、Java 接口在 JDK8 及以后的使用
 
-JDK8 及以后接口中里有方法体的方法，是为了在接口升级（增加了很多新的抽象方法）时，提升代码兼容性。
+JDK8 及以后接口中允许有方法体的方法存在，是为了在接口升级（增加了很多新的抽象方法）时，提升代码兼容性。
 
 - 接口升级后，实现类不需要立马修改，等以后用到某个规则，再重写接口中的方法即可。
 
@@ -651,7 +653,7 @@ public class Test1 {
 
 特点二，理解：
 
-定义一个接口 `Inter2`，其中也有一个与 `Inter1` 接口中同名的默认方法 `defaultMethod`，
+再定义一个接口 `Inter2`，其中有一个与 `Inter1` 接口中同名的默认方法 `defaultMethod`，
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee3/Inter2.java
 
@@ -668,7 +670,7 @@ public interface Inter2 {
 
 在 `InterImpl1` 类中，实现 `Inter1` 和 `Inter2` 接口。
 
-- 此时，就必须在子类中实现两接口中，同名的 `defaultMethod` 方法。
+此时，就必须在子类 `InterImpl1` 中实现两接口中，同名的 `defaultMethod` 方法。
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee3/InterImpl1.java
 
@@ -688,7 +690,7 @@ public class InterImpl1 implements Inter1, Inter2 {
 }
 ```
 
-在测试类`Test1` 中，测试：
+在测试类 `Test1` 中，测试：
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee3/Test1.java
 
@@ -709,8 +711,7 @@ public class Test1 {
 
 JDK8 及以后接口中的静态方法，要用 `static` 关键字修饰：
 
-- 格式为：`public static 返回值类型 方法名(参数列表) {}`
-- 比如：`public static void show() {}`
+- 格式为：`public static 返回值类型 方法名(参数列表) {}`，比如：`public static void show() {}`
 - `public` 是默认修饰符，可省略。
 
 JDK8 及以后接口中的静态方法，
@@ -753,19 +754,23 @@ public class Test {
 
 ## 四、Java 接口在 JDK9 及以后的使用
 
-JDK9 及以后接口中里有 `private` 修饰的私有方法，是为了
+JDK9 及以后接口里可以存在 `private` 修饰的私有方法，是为了
 
 - 在接口的默认方法中，抽取共性代码；
 - 并禁止外界调用该段代码逻辑。
 
 JDK9 及以后，接口中可以定义 `private` 修饰的私有方法，可以是：
 
-- 普通私有方法（没有 `default` 修饰）。
-- 静态私有方法（`static` 修饰）。
+- 普通私有方法（`private` 修饰，没有 `default` 修饰）。
+- 静态私有方法（`private static` 修饰）。
 
 ### 1.JDK9 及以后接口中的私有方法
 
-JDK9 及以后接口中的私有方法，要用 `private` 关键字修饰，服务于接口中其它的默认（`default`）方法，用于抽取它们中共性的逻辑：
+JDK9 及以后接口中的私有方法，要用 `private` 关键字修饰；
+
+它服务于接口中其它的默认（`default`）方法，用于抽取它们中共性的逻辑：
+
+理解下方代码：
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee3/Inter1.java
 
@@ -793,7 +798,9 @@ public interface Inter1 {
 
 ### 2.JDK9 及以后接口中的静态私有方法
 
-JDK9 及以后接口中的私有静态方法，要用 `private`，`static` 关键字修饰，服务于接口中其它的静态（`static`）方法，用于抽取它们中共性的逻辑：
+JDK9 及以后接口中的私有静态方法，要用 `private static` 关键字修饰，
+
+服务于接口中其它的静态（`static`）方法，用于抽取它们中共性的逻辑：
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee3/Inter1.java
 
@@ -845,7 +852,7 @@ public interface Inter1 {
 
 1. 编写中间类 `XxxAdapter`，实现对应的接口。并在其中对接口中的所有抽象方法，进行空实现。
 2. 让真正的实现类，继承中间类 `XxxAdapter`，并重写需要用到的方法。
-3. 为避免外界创建中间类 `XxxAdapter` 的实例对象，使用 `abstract` 修饰中间类 `XxxAdapter`。
+3. 为避免外界创建中间类 `XxxAdapter` 的实例对象，将中间类 `XxxAdapter` 设为抽象类。
 4. 如果实现类，有父类，那么让中间类 `XxxAdapter` 继承父类，并添加构造方法即可。
 
 案例理解，接口中有很多抽象方法：
