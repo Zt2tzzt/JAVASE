@@ -28,7 +28,7 @@ private void initImage() {
             // 指定图片的位置
             jLabel.setBounds(105 * j + 83, 105 * i + 143, 105, 105);  // 图片都是 105 * 105 的尺寸。
 
-            // 给图片添加功能
+            // 给图片添加边框
             jLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
             // 获取隐藏的容器，再添图片容器
@@ -36,7 +36,7 @@ private void initImage() {
         }
     }
 
-    // 添加被禁图片，细节：先加载的图片，会放在图层的上方；后加载的图片，会放在图层的下方。
+    // 添加背景图片，细节：先加载的图片，会放在图层的上方；后加载的图片，会放在图层的下方。
     JLabel background = new JLabel(new ImageIcon("image/background.png"));
     background.setBounds(40, 40, 508, 560);
     this.getContentPane().add(background);
@@ -236,7 +236,7 @@ public class GameJFrame extends JFrame implements KeyListener {
             }
         }
 
-        // 添加被禁图片，细节：先加载的图片，会放在图层的上方；后加载的图片，会放在图层的下方。
+        // 添加bei图片，细节：先加载的图片，会放在图层的上方；后加载的图片，会放在图层的下方。
         JLabel background = new JLabel(new ImageIcon("image/background.png"));
         background.setBounds(40, 40, 508, 560);
         this.getContentPane().add(background);
@@ -264,7 +264,6 @@ public class GameJFrame extends JFrame implements KeyListener {
                 x++;
 
                 initImage();
-
             }
             case KeyEvent.VK_DOWN -> {
                 System.out.println("向下移动");
@@ -415,7 +414,7 @@ public void keyReleased(KeyEvent e) {
 
 当二维数组中数字的顺序显示正确，那么显示“胜利”的图片。
 
-1. 先定义一个二维数组 `win`，表示顺序正确的二维数组。
+1. 先定义一个二维数组 `win`，表示游戏胜利时顺序正确的二维数组。
 2. 在图片加载之前，先判断一下二维数组中的数字顺序，与 `win` 数组中的数字顺序是否相同。
    - 相同，展示“胜利”图片。
    - 不相同，不做任何操作。
@@ -554,7 +553,6 @@ public class GameJFrame extends JFrame implements KeyListener {
                 stepCount++;
 
                 initImage();
-
             }
             case KeyEvent.VK_DOWN -> {
                 System.out.println("向下移动");
@@ -630,7 +628,6 @@ import java.awt.event.KeyListener;
 import java.util.Random;
 
 public class GameJFrame extends JFrame implements KeyListener, ActionListener {
-
     // 创建菜单条目对象
     JMenuItem replayItem = new JMenuItem("重新游戏");
     JMenuItem reLoginItem = new JMenuItem("重新登录");
@@ -810,7 +807,7 @@ public void actionPerformed(ActionEvent e) {
         jDialog.setSize(344, 344);
         // 让弹框置顶
         jDialog.setAlwaysOnTop(true);
-        // g让弹框居中
+        // 让弹框居中
         jDialog.setLocationRelativeTo(null);
         // 弹框不关闭则无法操作下面的界面
         jDialog.setModal(true);
@@ -912,7 +909,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
 
 1. 界面搭建。代码不需要大家写，大家主要完成里面的业务逻辑即可。界面搭建的代码在作业当中已经给出。
 
-2. 用静态代码块准备一些初始的用户信息
+2. 用静态代码块准备一些初始的用户信息。
 
 3. 点击登陆按钮之后的逻辑：
 
@@ -961,7 +958,7 @@ public class LoginJFrame extends JFrame implements MouseListener {
     String codeStr = VerificationCode.getVerificationCode();
     JTextField codeInput = new JTextField();
 
-    //创建一个集合存储正确的用户名和密码
+    // 创建一个集合存储正确的用户名和密码
     static ArrayList<User> list = new ArrayList<>();
 
     static {

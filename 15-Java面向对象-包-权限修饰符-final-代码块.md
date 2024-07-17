@@ -220,7 +220,7 @@ public class StudentSystem {
 
         ArrayList<Student> stus = new ArrayList<>();
 
-        // 给 while 循环体标号为 loop，方便 break 关键字推出循环体。
+        // 给 while 循环体标号为 loop，方便 break 关键字退出循环体。
         loop:
         while (true) {
             System.out.println("”-------------欢迎来到北宇治学生管理系统----------------“");
@@ -383,7 +383,7 @@ public class Student {
         this.age = age;
     }
 
-    public void foo() {
+    private void foo() {
         System.out.println("开始创建学生对象");
     }
 }
@@ -391,7 +391,7 @@ public class Student {
 
 ### 3.Java 静态代码块（重点）
 
-Java 中的静态代码块，书写格式为 `static {}`，它随着类的加载而加载，并且**自动触发，只执行一次**。
+Java 中的静态代码块，书写格式为 `static {}`，它**随着类的加载而加载**，并且**自动触发，只执行一次**。
 
 Java 中的静态代码块，在实际开发中，一般用于在类加载的时候，做一些数据初始化。
 

@@ -1,6 +1,6 @@
 # Java 面向对象之拼图小游戏综合练习（一）
 
-## 一、Java GUI介绍
+## 一、Java GUI 介绍
 
 图形化用户界面（Graphic User Interface），又称图形用户接口，简称 GUI。
 
@@ -38,9 +38,8 @@ public class Test {
     public static void main(String[] args) {
         // 创建一个游戏的主界面
         JFrame gameJframe = new JFrame();
-
+        // 设置界面尺寸
         gameJframe.setSize(603, 680);
-
         // 设置界面显示
         gameJframe.setVisible(true);
 
@@ -387,7 +386,7 @@ private void initImage() {
 }
 ```
 
-- 当 `number` 为 16 时，没有加载到对应的图片，`jLabel` 会添加一个空的图片对象。
+- 当 `number` 为 16 时，没有加载到对应的图片名，那么 `jLabel` 会添加一个空的图片对象。
 
 ### 3.游戏主界面打乱图片
 
@@ -478,7 +477,7 @@ public class GameJFrame extends JFrame {
 }
 ```
 
-> 如果要对项目中的代码进行临时的测试，一般会在模块下再创建一个名为 `test` 的包。
+> 如果要对项目中的代码进行临时的测试，一般会在 module 模块下再创建一个名为 `test` 的包。
 
 ## 五、Java 中的事件
 
@@ -531,7 +530,7 @@ public class Test2 {
 
         // 为 jbtn 添加事件监听。
         // addActionListener 方法，表示动作监听，只能监听鼠标左键点击，和键盘空格；传入的参数，表示事件触发后要执行的代码
-        // 创建一个自己的实现类 MyActionListenner，实现 ActionListener 接口，并传入 addActionListener 方法中。
+        // 创建一个自己的实现类 MyActionListenner，实现 ActionListener 接口，并创建对象传入 addActionListener 方法中。
         // jbtn.addActionListener(new MyActionListenner());
        
         // 因为 MyActionListenner 类只会在这里使用到一次，所以使用匿名内部类，简化代码。
@@ -607,9 +606,9 @@ public class MyFrame extends JFrame implements ActionListener {
         // 对当前按钮，进行判断
         Object source = e.getSource();
         if (source == jbtn1)
-            jbtn1.setSize(200, 200);
+            jbtn1.setSize(200, 200); // 扩大 jbtn1 的尺寸
         else if (source == jbtn2)
-            jbtn2.setLocation(r.nextInt(500), r.nextInt(500));
+            jbtn2.setLocation(r.nextInt(500), r.nextInt(500)); // 随机设置 jbtn2 的位移
     }
 }
 ```
@@ -638,7 +637,7 @@ public class Test3 {
 - `mousePressed` 按下动作
 - `mouseReleased` 松开动作
 - `mouseExited` 划出动作
-- 按下动作，松开动作又可规为 `mouseClicked` 单击动作。
+- 按下动作，松开动作又可归为 `mouseClicked` 单击动作。
 
 所以，在 Java 中，监听一个按钮的点击事件，有以下几种写法：
 
