@@ -12,7 +12,6 @@ public class StudentSystem {
 
 
     public static void startStudentSystem() {
-
         Scanner sc = new Scanner(System.in);
 
         ArrayList<Student> stus = new ArrayList<>();
