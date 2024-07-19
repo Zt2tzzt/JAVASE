@@ -25,5 +25,9 @@ public class ZoneDateTimeDemo01 {
         ZonedDateTime zdt3 = zdt1.minusYears(1L);
 
         System.out.println(zdt3); // 2023-07-18T17:40:33.619900600+08:00[Asia/Shanghai]
+
+        ZonedDateTime zdt4 = zdt3.withYear(2015);
+
+        System.out.println(zdt4); // 2015-07-18T17:40:33.619900600+08:00[Asia/Shanghai]
     }
 }

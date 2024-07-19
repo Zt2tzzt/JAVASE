@@ -4,7 +4,7 @@
 
 - 例如：年龄必须是 2 位的数字；用户名必须是 8 位长度而且只能包含大小写字母、数字。
 
-正则表达式可用来：
+这个时候，就要用到正则表达，它式可用来：
 
 - 验证字符串是否满足特定的规则。
 - 在一段文本中，查找满足要求的内容。
@@ -109,14 +109,13 @@ public class RegexDemo2 {
 
 1. `&&`：并且；
 2. `|`：或者；
-3. `\`：转义字符。
 
 ```java
 public class Demo {
    public static void main(String[] args) {
       String str = "had";
 
-      // 1.要求字符串是小写辅音字符开头，后跟 ad
+      // 1.要求字符串不是小写辅音字符开头，后跟 ad
       String regex = "[a-z&&[^aeiou]]ad";
      
       System.out.println("1." + str.matches(regex));
@@ -129,11 +128,13 @@ public class Demo {
 }
 ```
 
+> 在 Java 的正则表达式中 `\` 表示转义字符。用于 Java 中的特殊字符转义，比如双引号 `"`
+
 ## 三、正则表达式-预定义字符
 
 语法示例：
 
-1. `.`： 匹配任何字符，`\n` 回车符号不匹配。
+1. `.`： 匹配任何字符（不能批撇 `\n` 回车符号）；
 2. `\d`：任何数字 `[0-9]` 的简写；
 3. `\D`：任何非数字 `[^0-9]` 的简写；
 4. `\s`： 空白字符：`[\t\n\x0B\f\r]` 的简写
@@ -180,8 +181,6 @@ public class Demo {
 }
 ```
 
-> Java 中，`\` 表示转义字符，用于 Java 中的特殊字符转义，比如双引号 `"`
->
 > Java 中，`\\` 就表示 `\`，前面的 `\` 用来转义。
 
 ## 四、正则表达式-数量词
@@ -223,7 +222,7 @@ public class Demo {
 ```java
 String regexp1 = "^[a-zA-Z0-9_]{4,16}$";
 
-String regexp2 = "[0-9]{17}[\\dXx]$";
+String regexp2 = "^[0-9]{17}[\\dXx]$";
 
 String regexp3 = "^[1-9]\d{5}(18|19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[\dXx]$";
 ```
@@ -244,7 +243,7 @@ String regex = "a(?i)bc";
 String regex = "a((?i)b)c";
 ```
 
-## 六、正则表达式-总结
+## 六、正则表达式-阶段总结
 
 `[]`，表示里面的内容出现一次。
 
@@ -252,16 +251,24 @@ String regex = "a((?i)b)c";
 
 ## 七、正则表达式-爬虫
 
-爬虫，分为本地爬虫和网络爬虫。在 Java 中：
+使用正则表达式爬虫在一段文本中，查找满足要求的内容的功能，实现爬虫。爬虫分为本地爬虫、网络爬虫。
+
+### 1.Java Pattern 类、Matcher 类
+
+在 Java 中：
 
 - `Pattern` 类，表示正则表达式；
 - `Matcher` 类，表示文本匹配器，利用正则表达式的规则，从头读取字符串，并获取子字符串。
+
+#### 1.Pattern 类 complie 静态方法
 
 在 Java 中，获取一个正则表达式的对象，要调用 `Pattern` 类的静态方法 `compile`
 
 ```java
 Pattern pattern = Pattern.compile("^[a-zA-Z0-9_]{4,16}$");
 ```
+
+#### 2.Pattern 类 matcher 方法
 
 在 Java 中，获取一个文本匹配器对象，可以使用 `Pattern` 类实例对象，调用 `matcher` 方法：
 
@@ -289,10 +296,17 @@ public class RegexDemo02 {
 - `matcher` 是文本匹配器对象。
 - `str` 是字符串。
 - `pattern` 是正则表达式对象。
-- `matcher.find()` 表示使用文本匹配器，从头开始读取，寻找是否有满足规则的子字符串。
-  - 如果有，返回 `true`，并在底层，记录子字符串的`起始索引`，以及`结束索引 + 1`。
-  - 如果没有，返回 `false`。
-- `matcher.group()` 表示根据 `find` 方法记录的索引，返回截取的子字符串。
+
+#### 3.Matcher 类 find 方法
+
+`matcher.find()` 表示使用文本匹配器，从头开始读取，寻找是否有满足规则的子字符串。
+
+- 如果有，返回 `true`，并在底层，记录子字符串的`起始索引`，以及`结束索引 + 1`。
+- 如果没有，返回 `false`。
+
+#### 4.Matcher 类 group 方法
+
+`matcher.group()` 表示根据 `find` 方法记录的索引，返回截取的子字符串。
 
 `matcher` 实例对象要在 `str` 字符串中找符合 `pattern` 规则的子字符串。
 
@@ -435,7 +449,7 @@ public class RegexDemo05 {
 正则表达式中 `?=` 说明
 
 - `?` 表示为前面的数据 Java
-- `=` 表示在 Java 后面要跟随的数据，但是在获取的时候，只获取前半部分。
+- `=` 表示在 Java 后面要跟随的数据，但是在获取的时候，只获取 `?` 代表的前半部分。
 
 需求2：爬取版本号为 8，11，17 的 Java 文本。正确爬取结果为：Java8、Java11、Java17、Java17
 
@@ -454,11 +468,10 @@ public class RegexDemo05 {
 
         // 1.定义正则表达式
 
-        //需求2:
+        //需求2，以下两种写法都可以
         String regex1 = "((?i)Java)(8|11|17)";
         String regex2 = "((?i)Java)(?:8|11|17)";
 
-        // regex1、regex2 都可以
         Pattern p = Pattern.compile(regex2);
 
         Matcher m = p.matcher(s);
@@ -472,8 +485,8 @@ public class RegexDemo05 {
 
 正则表达式中 `?:` 说明：
 
-- `?` 理解为前面的数据 Java
-- `:` 表示在 Java 后面要跟随的数据。  
+- `?` 理解为前面的数据 `Java`
+- `:` 表示在 `Java` 后面要跟随的数据。  
 
 需求3：爬取除了版本号为 8，11，17 的 Java 文本。
 
@@ -506,8 +519,8 @@ public class RegexDemo05 {
 
 正则表达式中 `?!` 说明：
 
-- `?` 理解为前面的数据 Java
-- `!` 表示在 Java 后面不能跟随的数据，
+- `?` 理解为前面的数据 `Java`
+- `!` 表示在 `Java` 后面不能跟随的数据，
 
 ### 6.Java 贪婪爬取、非贪婪爬取
 
@@ -519,9 +532,7 @@ public class RegexDemo05 {
 
 - 数量词 `+` 号后面，加 `?` 号表示非贪婪爬取。
 
-案例理解：在字符串 `"abbbbbbbbbbbbaaaaaaaaaaaaa" 中，`
-
-获取 `"ab"` 字符串，并尽可能多的获取 `b`。使用贪婪爬取。
+案例理解：在字符串 `"abbbbbbbbbbbbaaaaaaaaaaaaa"` 中，获取 `"ab"` 字符串，并尽可能多的获取 `b`。使用贪婪爬取。
 
 demo-project/base-code/Day18/src/com/kkcf/regexp/RegexDemo06.java
 
@@ -587,7 +598,7 @@ public class RegexDemo06 {
 
 案例理解：有一段字符串：`"小诗诗dqwefqwfqwfwq12312小丹丹dqwefqwfqwfwq12312小惠惠"`
 
-要求：把字符串中三个名称之间的字母替换为 `"vs"`；
+要求：把字符串中三个中文名之间的字母，替换为 `"vs"`；
 
 demo-project/base-code/Day18/src/com/kkcf/regexp/RegexDemo07.java
 
@@ -665,7 +676,7 @@ public class RegexDemo08 {
 }
 ```
 
-- `\\1` 表示第 1 组，用于把第 1 组的内容再拿出来用一次。
+- `\\1` 表示第 1 组，用于把正则表达式第 1 组的内容再拿出来用一次。
 
 需求 2：判断一个字符串的开始部分和结束部分是否一致？可以有多个字符
 
@@ -687,7 +698,7 @@ public class RegexDemo08 {
 }
 ```
 
-需求 3：判断一个字符串的开始部分和结束部分是否一致?开始部分内部每个字符也需要一致
+需求 3：判断一个字符串的开始部分和结束部分是否一致？开始部分内部每个字符也需要一致
 
 demo-project/base-code/Day18/src/com/kkcf/regexp/RegexDemo08.java
 
@@ -709,7 +720,7 @@ public class RegexDemo08 {
 
 - `(.)`，把首字母看做一组。
 - `\\2`，把首字母拿出来再次使用。
-- `*`，作用于 `\\2`，表示后面重复的内容出现二次或多次。
+- `*`，作用于 `\\2`，表示后面重复的内容出现零次或多次。
 
 ### 1.Java 捕获分组
 
@@ -771,7 +782,9 @@ public class RegexDemo10 {
 
 ## 五、Java 和 JavaScript 的正则表达式
 
-Java 和 JavaScript 都支持正则表达式，并且它们的基础语法非常相似，因为两者都遵循类似的正则表达式标准。然而，它们在如何使用和一些高级特性上存在差异。以下是一些主要的区别：
+Java 和 JavaScript 都支持正则表达式，并且它们的基础语法非常相似，因为两者都遵循类似的正则表达式标准。
+
+然而，它们在如何使用和一些高级特性上存在差异。以下是一些主要的区别：
 
 ### 1.创建方式
 
