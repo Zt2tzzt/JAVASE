@@ -338,7 +338,7 @@ public class Test01 {
 
 ## 三、阶段练习
 
-### 1.练习一
+### 1.练习一：sort 方法的使用
 
 定义数组，并存储一些女朋友对象，利用 Arrays 中的 sort 方法，进行排序。
 
@@ -433,6 +433,154 @@ public class Test06 {
         });
 
         System.out.println(Arrays.toString(gfs));
+    }
+}
+```
+
+### 2.练习二：不死神兔
+
+有一个很有名的数学逻辑问题称为不死神兔，有一对兔子，从出身第三个月起，每个月生一对兔子，小兔子长长到第三个月后，每个月又生一对兔子，假如兔子都不死，问第十二个月的兔子对数是多少？
+
+找规律：
+
+- 第一个月：1 对
+- 第二个月：1 对
+- 第三个月：2 对
+- 第四个月：3 对
+- 第五个月：5 对
+- 第六个月：8 对
+- ……
+
+我们发现，这个问题，本质上，是斐波那契额数列。
+
+使用 Java 解题的两个思路：
+
+思路一：定义一个长度为 12 对数组，并初始化第一、二个元素为 1，然后利用循环求解。
+
+demo-project/base-code/Day21/src/com/kkcf/test/Test01.java
+
+```java
+package com.kkcf.test;
+
+import java.util.Arrays;
+
+public class Test01 {
+    public static void main(String[] args) {
+        int[] arr = new int[12];
+        arr[0] = 1;
+        arr[1] = 1;
+
+        for (int i = 2; i < arr.length; i++)
+            arr[i] = arr[i - 1] + arr[i - 2];
+
+        // 打印数组
+        System.out.println(Arrays.toString(arr)); // [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]
+    }
+}
+```
+
+思路二：使用递归的方式完成：递归的两个核心要素：
+
+- 找到出口；
+- 找到规律。
+
+demo-project/base-code/Day21/src/com/kkcf/test/Test02.java
+
+```java
+package com.kkcf.test;
+
+public class Test02 {
+    public static void main(String[] args) {
+        int result = recursion(12);
+
+        System.out.println(result); // 144
+    }
+
+    public static int recursion(int month) {
+        if (month == 1 || month == 2)
+            return 1;
+        else
+            return recursion(month - 1) + recursion(month - 2);
+    }
+}
+```
+
+### 3.练习三：猴子吃桃子
+
+有一堆桃子，猴子第一天吃了其中的一半，并多吃了一个！以后每天猴子都吃当前剩下的一半，然后再多吃一个；第 10 天（还没吃），发现置剩下一个桃子了；请问，最初总共有多少个桃子？
+
+使用递归的方式解题，这里要使用方向递归的思路：
+
+demo-project/base-code/Day21/src/com/kkcf/test/Test03.java
+
+```java
+package com.kkcf.test;
+
+public class Test03 {
+    public static void main(String[] args) {
+        int result1 = recursion1(10, 1);
+
+        System.out.println(result1); // 1534
+
+        int result2 = recursion2(1);
+
+        System.out.println(result2); // 1534
+    }
+
+    /**
+     * 此方芳用于，递归计算
+     * @param day 最后一天的天数
+     * @param count 最后一天剩下的桃子数
+     * @return 第一天的桃子数
+     */
+    public static int recursion1(int day, int count) {
+        if (day == 1) return count;
+
+        return recursion1(day - 1, (count + 1) * 2);
+    }
+
+    /**
+     * 此方法用于，递归计算
+     * @param day 第一天的天数
+     * @return 第一天的桃子数
+     */
+    public static int recursion2(int day) {
+        if (day == 10) return 1;
+
+        return (recursion2(day + 1) + 1) * 2;
+    }
+}
+```
+
+### 4.练习四：爬楼梯
+
+小明特别喜欢爬楼梯，他有的时候一次爬一个台阶，有的时候一次爬两个台阶。
+
+如果这个楼梯有 20 个台阶，小明一共有多少种爬法呢？
+
+本质上，也是一个斐波那契数列。
+
+demo-project/base-code/Day21/src/com/kkcf/test/Test4.java
+
+```java
+package com.kkcf.test;
+
+public class Test4 {
+    public static void main(String[] args) {
+        int result = recursion(20);
+
+        System.out.println(result); // 10946
+    }
+
+    /**
+     * 此方芳用于，递归计算爬楼梯的方式
+     * @param stairs 楼梯的台阶数
+     * @return 爬楼梯有的方式有几种
+     */
+    public static int recursion(int stairs) {
+        if (stairs == 1) return 1;
+        if (stairs == 2) return 2;
+        return recursion(stairs - 1) + recursion(stairs - 2);
     }
 }
 ```
