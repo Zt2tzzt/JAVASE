@@ -12,9 +12,9 @@
 
 时间单位换算：
 
-- 1秒 = 1000毫秒
-- 1毫秒 = 1000微秒
-- 1微妙 = 1000纳秒
+- 1 秒 = 1000 毫秒
+- 1 毫秒 = 1000 微秒
+- 1 微妙 = 1000 纳秒
 
 ## 一、JDK7 前时间相关类
 
@@ -45,6 +45,8 @@ public class Date {
 }
 ```
 
+#### 1.Date 类构造方法
+
 案例理解：使用 Date 类，创建对象，表示当前的时间和指定的时间。
 
 demo-project/base-code/Day20/src/com/kkcf/date/DateDemo01.java
@@ -56,16 +58,20 @@ import java.util.Date;
 
 public class DateDemo01 {
     public static void main(String[] args) {
+        // 当前时间
         Date d1 = new Date();
 
         System.out.println(d1); // Wed Jul 17 15:46:04 CST 2024
 
+        // 指定时间
         Date d2 = new Date(0L);
 
         System.out.println(d2); // Thu Jan 01 08:00:00 CST 1970
     }
 }
 ```
+
+#### 2.getTime、setTime 成员方法
 
 案例理解：使用 Date 实例对象的 `getTime`、`setTime` 方法，获取和设置实例对象的时间。
 
@@ -91,7 +97,7 @@ public class DateDemo01 {
 }
 ```
 
-- Date 的构造方法，和 `setTime` 方法，都应传入 long 类型的数值。
+- Date 的构造方法，和 `setTime` 方法，都应传入 long 类型的数值，表示指定毫秒数。
 
 案例理解：获取时间原点开始，一年之后的时间。
 
@@ -150,7 +156,6 @@ public class DateTest01 {
                 : "第一个时间，等于第二个时间");
     }
 }
-
 ```
 
 - Date 构造方法，接收的是 long 类型的数值，如果参数为 int 类型，那么会进行隐式转换。
@@ -159,7 +164,7 @@ public class DateTest01 {
 
 SimpleDateFormat 类，主要有两个作用：
 
-- 作用一：用于格式化时间，按照固定的格式，展示时间。
+- 作用一：用于格式化时间，即按照固定的格式，展示时间。
 - 作用二：解析把字符串表示的时间，转为 Date 对象。
 
 SimpleDateFormat 类继承自 DateFormat 抽象类。
@@ -175,18 +180,17 @@ SimpleDateFormat 类，常用的构造方法有：
 
 常用的格式规则有：
 
-| 标识字母（区分大小写） | 含义       |
-| ---------------------- | ---------- |
-| y（小写）              | 年         |
-| M（大写）              | 月         |
-| d（小写）              | 日         |
-| H（大写）              | 时         |
-| m（小写）              | 分         |
-| s（小写）              | 秒         |
-| E（大写）              | 星期几     |
-| EE（大写）             | 中文星期几 |
-
-#### 2.SimpleDateFormat 类成员方法
+| 标识字母（区分大小写） | 含义         |
+| ---------------------- | :----------- |
+| y                      | 年           |
+| M                      | 月           |
+| d                      | 日           |
+| H                      | 时           |
+| m                      | 分           |
+| s（小写）              | 秒           |
+| E                      | 星期几       |
+| EE                     | 中文星期几   |
+| a                      | 上午还是下午 |
 
 SimpleDateFormat 类，常用的成员方法有：
 
@@ -195,7 +199,9 @@ SimpleDateFormat 类，常用的成员方法有：
 | `public final String format(Date date)` | 格式化（Date 对象 -> 字符串） |
 | `public Date parse(String source)`      | 解析（字符串 -> Date 对象）   |
 
-案例理解：利用空参构造，构造一个SimpleDateFormat 对象，并使用默认格式，格式化时间原点的 Date 对象。
+#### 2.format 成员方法
+
+案例理解：利用空参构造，构造一个 SimpleDateFormat 对象，并使用默认格式，格式化时间原点的 Date 对象。
 
 demo-project/base-code/Day20/src/com/kkcf/date/SimpleDateFormatDemo01.java
 
@@ -235,15 +241,19 @@ public class SimpleDateFormatDemo01 {
         Date d1 = new Date(0L);
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         String format2 = sdf2.format(d1); // 1970-01-01 08:00:00
         System.out.println(format2);
 
         SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒 EE");
+
         String format3 = sdf3.format(d1);
         System.out.println(format3); // 1970年01月01日 08时00分00秒 周四
     }
 }
 ```
+
+#### 3.parse 成员方法
 
 案例理解：将一个字符串表示的时间，解析成 Date 对象。
 
@@ -272,17 +282,17 @@ public class SimpleDateFormatDemo02 {
 
 Calendar 类，代表了系统当前时间的日历对象，可以单独修改，获取时间中的年、月、日。
 
-Calendar 类，是一个抽象类，不能直接创建对象。应使用它的静态方法 getInstance 获取它的实例对象。
+Calendar 类，是一个抽象类，不能直接创建对象。应使用它的静态方法 `getInstance` 获取它的实例对象。
 
-#### 1.Calendar 类构造方法
+#### 1.getInstance 静态方法
 
-Calendar 类常用的构造方法有：
+Calendar 类常用的静态方法有：
 
 | 方法名                                 | 说明                     |
 | -------------------------------------- | ------------------------ |
 | `public static Calendar getInstance()` | 获取当前时间的日历对象。 |
 
-使用 `getInstance` 方法，获取一个日历对象：
+使用 `getInstance` 方法，获取当前时间的日历对象：
 
 demo-project/base-code/Day20/src/com/kkcf/calendar/CalendarDemo01.java
 
@@ -298,15 +308,12 @@ public class CalendarDemo01 {
         System.out.println(c);
     }
 }
-
 ```
 
 - 该方法，会根据系统的时区，来获取日历对象，默认表示当前时间。
 - c 对象，会把时间中的纪元、年、月、日、时、分、秒、星期……都放到一个数组当中
-  - 其中月的范围是 0-11。0 代表 1 月；
+  - 其中月的范围是 0-11。0 代表 1 月，11 代表 12 月（反人类）；
   - 其中星期的范围是1-7。1 代表星期日，7 代表星期六。
-
-#### 2.Calendar 类成员方法
 
 Calendar 类中常用的成员方法有：
 
@@ -319,6 +326,8 @@ Calendar 类中常用的成员方法有：
 | `public int get(int field)`                | 获取日历中某个字段信息                    |
 | `public void set(int field, int value)`    | 修改日历的某个字段信息                    |
 | `public void add(int field, int amount)`   | 为某个日历对象的某个字段增加/减少指定的值 |
+
+#### 2.setTime 成员方法
 
 案例理解，`setTime` 方法的使用，为日历对象，设置一个日期对象。
 
@@ -340,6 +349,8 @@ public class CalendarDemo01 {
     }
 }
 ```
+
+#### 3.get、set 成员方法
 
 案例理解：`get` 方法的使用，获取日历对象中的年、月、日、星期。
 
@@ -425,6 +436,8 @@ public class CalendarDemo01 {
 - 6：一年中的第几天；对应 Calendar 类中的常量 `Calendar.DAY_OF_YEAR`
 - 7：一星期中的第几天；对应 Calendar 类中的常量 `Calendar.DAY_OF_WEEK`
 
+#### 4.add 成员方法
+
 案例理解：`add` 方法的使用，设置日历对象，往后加一个月，往前减一个月
 
 demo-project/base-code/Day20/src/com/kkcf/calendar/CalendarDemo01.java
@@ -457,8 +470,8 @@ JDK7 和 JDK8 中的时间相关类，有如下的不同：
 
 代码层面：
 
-- JDK7 的时间类，日期对象，在比较、计算时，要转为毫秒值，非常麻烦；
-- JDK8 的时间类，判断的方法、计算时间间隔的方法都非常简单。
+- JDK7 的时间类，Date 对象，在比较、计算时间间隔时，要转为毫秒值，非常麻烦；
+- JDK8 的时间类，比较、计算时间间隔的方法，都非常简单。
 
 安全层面：
 
@@ -467,31 +480,29 @@ JDK7 和 JDK8 中的时间相关类，有如下的不同：
 
 JDK8 中常用的时间类有：
 
-日期类（类似于 JDK7 的 Date 类）
+**日期类**（类似于 JDK7 的 Date 类）
 
 - ZoneId 类，表示时区；
 - Instant 类，表示时间戳，只能表示世界标准时间（0 时区）的时间。
 - ZoneDateTime 类，表示带时区的时间。
 
-日期格式化类（类似于 JDK7 的 SimpleDateFormat 类）
+**日期格式化类**（类似于 JDK7 的 SimpleDateFormat 类）
 
 - DateTimeFormatter 类，用于时间的格式化和解析。
 
-日历类（类似于 JDK7 的 Calendar 类）
+**日历类**（类似于 JDK7 的 Calendar 类）
 
 - LocalDate 类，表示年、月、日
 - LocalTime 类，表示时、分、秒
 - LocalDateTime 类，表示年、月、日、时、分、秒
 
-工具类：
+**日期时间工具类**（用于计算时间间隔）：
 
 - Duration 类，表示时间间隔（秒、纳秒）
 - Period 类，表示时间间隔（年、月、日）
 - ChronoUnit 类，表示时间间隔（所有单位）
 
-### 1.JDK8 日期类
-
-#### 1.ZoneId 类
+### 1.ZoneId 类
 
 ZoneId 类，表示时区；在 Java 中，时区的表示形式是：`洲名/城市名` 或者 `国家名/城市名`。比如：
 
@@ -505,7 +516,7 @@ ZoneId 类，常用的方法如下：
 | `static ZoneId systemDefault()`             | 获取系统默认时区           |
 | `static ZoneId of(String zoneId)`           | 获取一个指定时区           |
 
-##### 1.getAvailableZoneIds 静态方法
+#### 1.getAvailableZoneIds 静态方法
 
 案例理解：`getAvailableZoneIds` 静态方法的使用，获取 Java 中可用的时区
 
@@ -527,7 +538,7 @@ public class ZoneIdDemo01 {
 }
 ```
 
-##### 2.systemDefault 静态方法
+#### 2.systemDefault 静态方法
 
 案例理解：`systemDefault` 静态方法的使用，获取当前计算机系统中的默认时区
 
@@ -547,7 +558,7 @@ public class ZoneIdDemo01 {
 }
 ```
 
-##### 3.of 静态方法
+#### 3.of 静态方法
 
 案例理解：`of` 静态方法的使用，获取一个指定时区
 
@@ -568,7 +579,7 @@ public class ZoneIdDemo01 {
 }
 ```
 
-#### 2.Instant 类
+### 2.Instant 类
 
 Instant 类，表示时间戳，只能表示世界标准时间（0 时区）的时间。
 
@@ -583,9 +594,9 @@ Instant 类，常用的方法有如下：
 | `Instant minusXxx(long millisToSubtract)`      | 减少时间系列的方法                      |
 | `Instant plusXxx(long millisToAdd)`            | 增加时间系列的方法                      |
 
-##### 1.now 静态方法（Instant）
+#### 1.now 静态方法（Instant）
 
-案例理解：`now` 静态方法的使用，获取当前标准时间。
+案例理解：`static Instant now()` 静态方法的使用，获取当前标准时间。
 
 demo-project/base-code/Day20/src/com/kkcf/instant/InstantDemo01.java
 
@@ -603,9 +614,13 @@ public class InstantDemo01 {
 }
 ```
 
-##### 2.ofEpochMilli 静态方法
+#### 2.ofEpochMilli 静态方法
 
-案例理解：`ofEpochMilli(long epochMilli)`、`ofEpochSecond(long epochSecond)`、`ofEpochSecond(long epochSecond, long nanoAdjustment)` 静态方法的使用，根据秒、毫秒、纳秒获取 Instant 对象。
+案例理解：静态方法的使用，根据秒、毫秒、纳秒获取 Instant 对象。
+
+- `static Instant ofEpochMilli(long epochMilli)` 方法；
+- `static Instant ofEpochSecond(long epochSecond)`  方法；
+- `static Instant ofEpochSecond(long epochSecond, long nanoAdjustment)` 方法
 
 demo-project/base-code/Day20/src/com/kkcf/instant/InstantDemo01.java
 
@@ -634,9 +649,9 @@ public class InstantDemo01 {
 }
 ```
 
-##### 3.atZone 方法
+#### 3.atZone 方法
 
-案例理解：`atZone` 方法，为 Instant 对象，指定时区；
+案例理解：`ZonedDateTime atZone(ZoneId zone)` 方法，为 Instant 对象，指定时区；
 
 demo-project/base-code/Day20/src/com/kkcf/instant/InstantDemo02.java
 
@@ -656,7 +671,7 @@ public class InstantDemo02 {
 }
 ```
 
-##### 4.isAfter、isBefore 方法
+#### 4.isAfter、isBefore 方法
 
 案例理解：`isAfter([Instant otherInstant)`、`isBefore(Instant otherInstant)` 方法的使用，用于判断 Instant 对象的时间前后顺序。
 
@@ -679,7 +694,7 @@ public class InstantDemo02 {
 }
 ```
 
-##### 5.minus、plus 开头的方法
+#### 5.minus、plus 开头的方法
 
 案例理解：`minusMillis(long millisToSubtract)` 方法的使用，将 Instant 对象，往后减 1s。
 
@@ -705,7 +720,7 @@ public class InstantDemo03 {
 
 - `plusXxx` 方法，用法也是类似的。
 
-#### 3.ZoneDateTime 类
+### 3.ZoneDateTime 类
 
 ZoneDateTime 类，用于表示带有时区的时间。
 
@@ -719,9 +734,9 @@ ZoneDateTime 类，常用的方法如下：
 | `ZonedDateTime minusXxx(时间)` | 减少时间系列的方法                 |
 | `ZonedDateTime plusXxx(时间)`  | 增加时间系列的方法                 |
 
-##### 1.now 静态方法（ZoneDateTime）
+#### 1.now 静态方法（ZoneDateTime）
 
-案例理解：获取当前时间（带时区）的对象
+案例理解：`static ZonedDateTime now()` 方法的使用；获取当前时间（带时区）的对象
 
 demo-project/base-code/Day20/src/com/kkcf/zonedatetime/ZoneDateTimeDemo01.java
 
@@ -739,7 +754,7 @@ public class ZoneDateTimeDemo01 {
 }
 ```
 
-##### 2.of 静态方法（ZoneDateTime）
+#### 2.of 静态方法（ZoneDateTime）
 
 案例理解：获取指定的时间对象，有两种种方式：
 
@@ -772,7 +787,7 @@ public class ZoneDateTimeDemo01 {
 }
 ```
 
-##### 3.minus、plus 开头的方法
+#### 3.minus、plus 开头的方法
 
 案例理解，给 ZoneDateTime 对象表示的时间，减 1 年；
 
@@ -799,7 +814,7 @@ public class ZoneDateTimeDemo01 {
 - `minusXxx`、`plusXxx` 的其它方法用法类似。
 - 注意：JDK8 新增的时间类，对应的时间对象都是不可变的，使用的方法返回的时间对象都是新创建的对象。
 
-##### 4.with 开头的方法
+#### 4.with 开头的方法
 
 案例理解：将 ZoneDatTime 对象的年份，修改为 2015.
 
@@ -823,9 +838,7 @@ public class ZoneDateTimeDemo01 {
 }
 ```
 
-### 2.JDK8 日期格式化类
-
-#### 1.DateTimeFormatter 类
+### 4.DateTimeFormatter 类
 
 DateTimeFormatter 类，用于时间格式化和解析。
 
@@ -836,7 +849,7 @@ DateTimeFormatter 类，常用的方法有如下：
 | `static DateTimeFormatter ofPattern(格式)` | 获取格式对象       |
 | `String format(TemporalAccessor temporal)` | 按照指定方式格式化 |
 
-##### 1.ofPattern 静态方法、format 方法
+#### 1.ofPattern 静态方法、format 方法
 
 案例理解：创建 DateTimeFormatter 解析器，并按照指定格式，格式化 ZonedDateTime 对象。
 
@@ -865,9 +878,7 @@ public class DateTimeFormatterDemo01 {
 }
 ```
 
-### 3.JDK8 日历类
-
-#### 1.LocalDate、LocalTime、LocalDateTime 类
+### 5.LocalDate、LocalTime、LocalDateTime 类
 
 日历类 LocalDate 类，用于表示年、月、日的日历对象
 
@@ -894,7 +905,7 @@ LocalDateTime  类，可以转换成 LocalDate 类或者 LocalTime 类，用到�
 | `LocalDate toLocalDate()` | LocalDateTime  对象，转成 LocalDate 对象 |
 | `LocalTime toLocalTime()` | LocalDateTime  对象，转成 LocalTime 对象 |
 
-##### 1.now 静态方法（JDK8 日历类）
+#### 1.now 静态方法（JDK8 日历类）
 
 案例理解：使用 `now` 静态方法，获取一个当前时间的 LocalDate 日历对象
 
@@ -914,7 +925,7 @@ public class LocalDateTimeDemo01 {
 }
 ```
 
-##### 2.of 静态方法（JDK8 日历类）
+#### 2.of 静态方法（JDK8 日历类）
 
 `of` 方法的使用，用于创建一个指定时间的日历对象。
 
@@ -945,7 +956,7 @@ public class LocalDateTimeDemo02 {
 
 > LocalTime 类，专注于时间（秒、毫秒、纳秒）的表示，可用于“秒杀”等业务场景。
 
-##### 3.get 开头的方法
+#### 3.get 开头的方法
 
 案例理解：使用 `get` 开头的方法，获取一个 LocalDate 日历对象中的年、月
 
@@ -980,7 +991,7 @@ public class LocalDateTimeDemo01 {
 
 - 其它 `get` 开头的方法，使用是类似的。
 
-##### 4.isBefor、isAfter 方法
+#### 4.isBefor、isAfter 方法
 
 案例理解：判断两个时间的日历对象的先后顺序。
 
@@ -1003,7 +1014,7 @@ public class LocalDateTimeDemo01 {
 }
 ```
 
-##### 5.with 开头的方法
+#### 5.with 开头的方法
 
 `with` 开头的方法，用于修改日历对象，只能修改年、月、日。
 
@@ -1029,7 +1040,7 @@ public class LocalDateTimeDemo01 {
 }
 ```
 
-##### 6.minus、plus 开头的方法
+#### 6.minus、plus 开头的方法
 
 `minus` 方法的使用，用于修改日历对象的年、月、日，
 
@@ -1053,9 +1064,7 @@ public class LocalDateTimeDemo01 {
 }
 ```
 
-### 4.JDK8 时间间隔工具类
-
-#### 1.Duration 类
+### 6.Duration 类
 
 Duration 类，用于计算两个时间间隔（秒、纳秒）
 
@@ -1088,7 +1097,7 @@ public class DurationDemo01 {
 }
 ```
 
-#### 2.Period 类
+### 7.Period 类
 
 Period 类，用于计算两个日期间隔（年、月、日）
 
@@ -1118,7 +1127,7 @@ public class PeriodDemo01 {
 }
 ```
 
-#### 3.ChronoUnit 类（重点）
+### 8.ChronoUnit 类（重点）
 
 ChronoUnit 类，用于计算两个日期间隔（所有单位）。
 

@@ -143,9 +143,7 @@ public class MyArraysDemo01 {
 
 ### 5.sort 方法
 
-sort 方法，用于为数组排序。
-
-默认使用快速排序的算法，进行升序排序。
+sort 方法，用于为数组排序。默认使用快速排序的算法，进行升序排序。
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo01.java
 
@@ -165,9 +163,11 @@ public class MyArraysDemo01 {
 }
 ```
 
-指定排序算法，并指定排序顺序（升序、降序）
+指定排序顺序（升序还是降序），要用到 sort 方法的重载。
 
-前提条件：只能给引用数据类型的数组排序，如果数组是基本数据类型，需要变成其对应的包装类。
+该方法的前提条件：
+
+- 只能给引用数据类型的数组排序；如果数组是基本数据类型，需要变成其对应的包装类。
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo02.java
 
@@ -193,7 +193,7 @@ public class MyArraysDemo02 {
 }
 ```
 
-sort 方法底层原理：
+该方法底层原理：
 
 - 利用插入排序 + 二分查找的方式，进行排序。
 - 默认把 0 索引的数据，当作是有序的；1 索引到最后认为是无序的。
@@ -201,14 +201,14 @@ sort 方法底层原理：
 - 遍历到的元素 A，与有序序列插入位置的元素进行比较，比较的规则，就是 `compare` 方法的方法体。
   - 如果 `compare` 方法，返回的是负数，则将 A 元素插入到插入点的前面。
   - 如果 `compare` 方法，返回的是正数，则将 A 元素插入到插入点的后面。
-  - 如果 `compare` 方法，返回的是 0，则将 A 元素插入到插入点的后面。
+  - 如果 `compare` 方法，返回的是 0，也将 A 元素插入到插入点的后面。
   - 直到确认 A 元素的最终位置位置。
 
 `Comparator` 接口中 `compare` 方法的形参分析：
 
 - 参数一 `o1`，表示在无序序列中，遍历得到的元素；
 - 参数二 `o2`，表示有序序列中的元素。
-- 结论：o1 - o2 表示升序排序；o2 - o1 表示降序排序。
+- 结论：`o1 - o2` 表示升序排序；`o2 - o1` 表示降序排序。
 
 ## 二、Lambda 表达式
 
@@ -227,14 +227,16 @@ Lambda 表达式，是 JDK8 出现的一种新语法形式。格式为
 ```
 
 - `()` 对应着方法的形参；
-- `->` 固定格式
+- `->` 是固定格式。
 - `{}` 对应着方法的方法体。
 
 Lambda 表达式，可以简化匿名内部类的书写.，然而，只能简化**函数式接口**的匿名内部类的写法。
 
-> Java 中的函数式接口，表示有且仅有一个抽象方法的接口，这种接口上方可以加 `@FunctionalInterface` 注解，用于验证语法是否正确。
+> Java 中的函数式接口，表示有且仅有一个抽象方法的接口；
+>
+> 这种接口上方可以加 `@FunctionalInterface` 注解，用于验证语法是否正确。
 
-Lambda 表达式，主要用于省略代码，省略的原则是：可推导，可省略。
+Lambda 表达式，主要用于省略代码，省略的原则是：可推导，即可省略。
 
 使用 Lambda 表达式，重构上面 sort 方法的使用。
 
@@ -280,10 +282,11 @@ public class MyArraysDemo02 {
 }
 ```
 
-- 此时 `{}` 大括号、`;`  分号、`return` 关键字都可以省略；`->` 后面表达式的结果，会作为函数体的返回值返回。
+- 此时 `{}` 大括号、`;`  分号、`return` 关键字都可以省略；
 - 如果形参只有一个，`()` 也可以省略。
+- `->` 后面表达式的结果，会作为函数体的返回值。
 
-自行定义一个函数式接口，并使用 Lambda 表达式，使用改嫁口中的方法。
+自行定义一个函数式接口，并使用 Lambda 表达式，实现该接口中的方法，并创建该接口的匿名内部类，调用该方法。
 
 demo-project/base-code/Day20/src/com/kkcf/lambda/LambdaDemo01.java
 
@@ -293,6 +296,7 @@ package com.kkcf.lambda;
 public class LambdaDemo01 {
     public static void main(String[] args) {
 
+        // 方式一：传入匿名内部类的
         method(new swim() {
             @Override
             public void swimming() {
@@ -300,8 +304,8 @@ public class LambdaDemo01 {
             }
         });
 
+        // 方式二：使用 Lambda 表达式
         method(() -> System.out.println("正在游泳"));
-
     }
 
     public static void method(swim s) {
@@ -344,7 +348,7 @@ public class Test01 {
 
 要求1：属性有姓名、年龄、身高
 
-要求2：按照年龄大小进行排序，年龄一样，按照身高排序，身高一样按照姓名的字母进行排序。
+要求2：按照年龄大小进行排序；年龄一样，按照身高排序；身高一样按照姓名的字母进行排序。
 
 > String 类里有一个成员方法 compareTo，用于字符串对象按照字典顺序进行比较，
 
@@ -414,7 +418,7 @@ import java.util.Arrays;
 public class Test06 {
     public static void main(String[] args) {
         GirlFriend kumiko = new GirlFriend("kumiko", 18, 1.65);
-        GirlFriend mayu = new GirlFriend("mayu", 18, 1.60);
+        GirlFriend mayu = new GirlFriend("mayu", 18, 1.63);
         GirlFriend kaori = new GirlFriend("kaori", 19, 1.68);
 
         GirlFriend[] gfs = {kumiko, mayu, kaori};
@@ -439,7 +443,7 @@ public class Test06 {
 
 ### 2.练习二：不死神兔
 
-有一个很有名的数学逻辑问题称为不死神兔，有一对兔子，从出身第三个月起，每个月生一对兔子，小兔子长长到第三个月后，每个月又生一对兔子，假如兔子都不死，问第十二个月的兔子对数是多少？
+有一个很有名的数学逻辑问题称为不死神兔，有一对兔子，从出生第三个月起，每个月生一对兔子，小兔子长到第三个月后，每个月又生一对兔子，假如兔子都不死，问第十二个月的兔子对数是多少？
 
 找规律：
 
@@ -451,7 +455,7 @@ public class Test06 {
 - 第六个月：8 对
 - ……
 
-我们发现，这个问题，本质上，是斐波那契额数列。
+我们发现，这个问题，本质上是斐波那契额数列。
 
 使用 Java 解题的两个思路：
 
@@ -507,9 +511,9 @@ public class Test02 {
 
 ### 3.练习三：猴子吃桃子
 
-有一堆桃子，猴子第一天吃了其中的一半，并多吃了一个！以后每天猴子都吃当前剩下的一半，然后再多吃一个；第 10 天（还没吃），发现置剩下一个桃子了；请问，最初总共有多少个桃子？
+有一堆桃子，猴子第一天吃了其中的一半，并多吃了一个！以后每天猴子都吃当前剩下的一半，然后再多吃一个；第 10 天（还没吃）发现只剩下一个桃子了；请问，最初总共有多少个桃子？
 
-使用递归的方式解题，这里要使用方向递归的思路：
+使用递归的方式解题，这里要使用反向递归的思路：
 
 demo-project/base-code/Day21/src/com/kkcf/test/Test03.java
 
