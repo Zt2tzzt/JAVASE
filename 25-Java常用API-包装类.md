@@ -69,6 +69,8 @@ public class IntegerDemo01 {
 
 `valueOf` 静态方法，与构造方法，获取 Integer 对象的区别：
 
+理解下方代码：
+
 demo-project/base-code/Day20/src/com/kkcf/integer/IntegerDemo02.java
 
 ```java
@@ -95,9 +97,9 @@ public class IntegerDemo02 {
 }
 ```
 
-- `valueOf` 静态方法，会将 -128-127 之间的数字，都创建好 Integer 对象，放入一个 cache 数组中。
-- 当传入 -128-127 之间的数字时，会使用创建好的 Integer 对象。
-- 这种作坊本质上是为了优化新能，节约内存。
+- `valueOf` 静态方法，会将 -128-127 之间的数字，先创建好 Integer 对象，放入一个 cache 数组中。
+- 当为该方法传入 -128-127 之间的数字时，会使用创建好的 Integer 对象。
+- 这种做法本质上是为了优化性能，节约内存。
 
 对象之间，不能直接进行计算，如果要进行计算，应执行如下步骤：
 
@@ -145,7 +147,7 @@ public class IntegerDemo04 {
 }
 ```
 
-- 上面代码是自动装箱的体现，本质上也是调用 `Integer.valueOf` 静态方法，得到一个 Integer 对象。
+上面代码是自动装箱的体现，本质上也是调用 `Integer.valueOf` 静态方法，得到一个 Integer 对象。
 
 demo-project/base-code/Day20/src/com/kkcf/integer/IntegerDemo04.java
 
@@ -167,9 +169,9 @@ public class IntegerDemo04 {
 }
 ```
 
-- 上面代码是自动装箱、自动拆箱的体现，
+上面代码是自动装箱、自动拆箱的体现，
 
-在 JDK5 以后，int 类型和 Integer 类型可以看作是同一个东西，因为在执行代码时会自动转化。
+在 JDK5 以后，int 类型和 Integer 包装类型可以看作是同一个东西，因为在执行代码时会自动转化。
 
 ### 2.Integer 静态方法
 
@@ -182,7 +184,7 @@ public class IntegerDemo04 {
 
 Integer 中，获取进制数的静态方法，返回的都是 String 类型，这是因为：
 
-- 二进制有可能以 0 开头，如果是数字类型就不能正确表示。
+- 二进制有可能以 0 开头（数字的补码形式），如果是数字类型就不能正确表示。
 - 数字类型比如 int 最大值是 21 亿多，即 10 位数字，用于表示二进制可能不够。
 
 `tobinarystring`、`tooctalstring`、`toHexstring` 静态方法的使用
@@ -228,12 +230,13 @@ public class IntegerDemo05 {
 
   ```java
   boolean flag = Boolean.parseBoolean("true");
+  
   System.out.println(flag); // true
   ```
 
 案例理解：重构键盘录入，使用 `nextLine` 方法来接收录入的值。
 
-- 当使用 next、nextInt、nextDouble 在接收数据的时候，遇到空格、回车、制表符就会停止。
+- 当使用 `next`、`nextInt`、`nextDouble` 在接收数据的时候，遇到空格、回车、制表符就会停止。
 - 结合包装类中的 `parseXxx` 方法与 `nextLine` 方法，接收键盘录入的字符串，并转为对应的数据类型
 
 demo-project/base-code/Day20/src/com/kkcf/integer/Test01.java
@@ -318,6 +321,7 @@ public class Test02 {
     public static void main(String[] args) {
         String str = "12345";
 
+        // 正则表达式，验证字符串格式
         boolean flag = str.matches("[0-9]\\d{0,9}");
 
         if (!flag) {
@@ -447,7 +451,7 @@ JDK7 前的解法：
 JDK8 的解法，
 
 - 思路 1：与上方思路 3 类似，只不过使用的是 JDK8 中的日历类 LocalDate。
-- 思路 2：直接使用 LocalDate 类的方法，判断当前日历对象所在年份是否是闰年。
+- 思路 2：直接使用 LocalDate 类的方法 `isLeapYear`，判断当前日历对象所在年份是否是闰年。
 
 demo-project/base-code/Day20/src/com/kkcf/test/Test05.java
 

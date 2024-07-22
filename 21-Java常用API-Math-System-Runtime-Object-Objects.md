@@ -124,6 +124,8 @@ public class MathDemo01 {
 
 使用 `Math.random` 方法，返回一个 `[0.0,1.0)` 的随机值
 
+利用  `Math.random`  方法，获取一个范围在 [1, 100] 的随机数。
+
 demo-project/base-code/Day18/src/com/kkcf/myapi/MathDemo01.java
 
 ```java
@@ -386,11 +388,10 @@ public class SystemDemo01 {
 
 `Runtime` 类，表示当前虚拟机的运行环菌。
 
-`Runtime` 类，里面的方法不是静态，需要先获取它的实例对象，才能调用其中的方法。
+`Runtime` 类，里面的方法不是静态的，需要先获取它的实例对象，才能调用其中的方法。
 
 - 不能使用 `new` 操作符创建实例对象，而是要使用类中提供的静态方法 `getRuntime` 获取实例对象；
-- 因为 `Runtime` 类在程序运行时，只能创建一个对象。
-- `Runtime` 类，表示的是 Java 虚拟机的运行环菌，而在一台计算机中，只能有一个 Java 虚拟机运行环菌。
+- 因为 `Runtime` 类，表示的是 Java 虚拟机的运行环菌，而在一台计算机中，只能有一个 Java 虚拟机运行环菌。所以 `Runtime` 类在程序运行时，只能创建一个对象。
 
 `Runtime` 类常用方法如下：
 
@@ -539,7 +540,7 @@ public class RuntimeDemo01 {
 
 `Object` 类，是 Java 中的顶级父类，所有类都直接或间接的继承自 `Object` 类。该类所具备的方法，其他所有类都继承了。
 
-`Object` 类，没有成员变量，
+`Object` 类，没有成员变量。
 
 `Object` 类，只有一个空参构造方法：
 
@@ -583,11 +584,13 @@ Java 中，对象地址值的打印格式分析，以 `java.lang.Object@4eec7777
 
 - `java.lang.Object` 是该对象的包名；
 - `@` 是固定格式；
-- `4eec7777` 是对象的地址值。
+- `4eec7777` 才是对象的地址值。
 
 直接打印对象，和对象调用 `toString` 方法返回的结果，效果是一样的。这是因为：
 
-1. 当使用 `System.out.println` 打印一个对象的时候，底层会调用对象的 `toString` 方法，把对象变成字符串。然后再打印在控制台上，打印完毕做换行处理。
+1. 当使用 `System.out.println` 打印一个对象的时候，底层会调用对象的 `toString` 方法；
+1. 把对象变成字符串。然后再打印在控制台上；
+1. 打印完毕做换行处理。
 
 所以，如果要使用 `System.out.println` 打印语句，打印一个对象中的属性值，那么重写这个对象所对应的类中的 `toString` 方法即可。
 
@@ -724,7 +727,7 @@ public boolean equals(Object anObject) {
 
 ### 3.clone 方法
 
-`clone` 方法，用于把 A 对象的属性值，完全拷贝给 B 对象，也陈为对象拷贝，对象复制。
+`clone` 方法，用于把 A 对象的属性值，完全拷贝给 B 对象，也称为对象拷贝，对象复制。
 
 案例理解：创建一个 JavaBean 类 `User`，在代码中克隆它的实例对象。
 
@@ -936,7 +939,7 @@ public class ObjectsDemo01 {
 `Objects.equals` 静态方法细节分析：
 
 1. 该方法的底层， 会先判断 `s1` 是否为 `null`，如果为 `null`，直接返回 `false`；
-2. 如果 `s1` 不为 `null`，那么就通过 `s1` 调用该对象中的 `equals` 方法，即 `Student` 类中重写的 `equals` 方法。
+2. 如果 `s1` 不为 `null`，那么就通过 `s1` 调用该对象中的 `equals` 方法，即执行 `Student` 类中重写的 `equals` 方法。
 
 `Objects.equals` 静态方法源码如下：
 

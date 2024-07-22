@@ -15,14 +15,14 @@ public class BasicSearchDemo01 {
      * 此方法用于，普通查找
      * @param arr 数据列表
      * @param i 查找的数据
-     * @return 查找数据的索引
+     * @return 查找数据的索引st();
+     *
+     *         for (int j = 0; j < arr.length; j++)
+     *             if (arr[j] == i)
+     *                 list.add(j);
      */
     private static ArrayList<Integer> findIndex(int[] arr, int i) {
         ArrayList<Integer> list = new ArrayList();
-
-        for (int j = 0; j < arr.length; j++)
-            if (arr[j] == i)
-                list.add(j);
 
         return list;
     }
