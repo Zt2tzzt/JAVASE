@@ -75,12 +75,71 @@ ArrayList 中，不但有 `add` 方法，还有 `addAll` 方法，用于一次�
 
 ArrayList 空参构造创建的集合对象：
 
-1. 会在底层创建一个默认长度为 0 的数组 `elementData`；
-2. 当添加一个元素时，底层会创建一个新的长度为 10 的数组。
-3. 当数组存满时，会扩容 1.5 倍。并把原数组中的元素拷贝过来。
-4. 如果一次添加多个元素，1.5 倍还放不下，则新创建数组的长度以实际为准。
+1.会在底层创建一个默认长度为 0 的数组 `elementData`；
 
-3、4 步源码分析：
+java/util/ArrayList.java
+
+```java
+transient Object[] elementData; // non-private to simplify nested class access
+
+private int size;
+
+//...
+
+private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
+
+public ArrayList() {
+    this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+}
+```
+
+2.当添加一个元素时，底层会创建一个新的长度为 10 的数组。
+
+java/util/ArrayList.java
+
+```java
+public boolean add(E e) {
+    modCount++;
+    add(e, elementData, size);
+    return true;
+}
+
+private void add(E e, Object[] elementData, int s) {
+    if (s == elementData.length)
+        elementData = grow();
+    elementData[s] = e;
+    size = s + 1;
+}
+```
+
+- 如果数组已满，调用 `grow` 方法，进行扩容。
+
+3.当数组存满时，会扩容 1.5 倍。并把原数组中的元素拷贝过来。
+
+java/util/ArrayList.java
+
+```java
+private Object[] grow() {
+    return grow(size + 1);
+}
+
+private Object[] grow(int minCapacity) {
+    int oldCapacity = elementData.length;
+    if (oldCapacity > 0 || elementData != DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
+        int newCapacity = ArraysSupport.newLength(oldCapacity,
+                minCapacity - oldCapacity, /* minimum growth */
+                oldCapacity >> 1           /* preferred growth */);
+        return elementData = Arrays.copyOf(elementData, newCapacity);
+    } else {
+        return elementData = new Object[Math.max(DEFAULT_CAPACITY, minCapacity)];
+    }
+}
+```
+
+- `newCapacity` 表示扩容后新数组的长度。
+- `newLength` 方法用于计算新数组的长度。
+
+4.如果一次添加多个元素，1.5 倍还放不下，则新创建数组的长度以实际为准。
 
 jdk/internal/util/ArraysSupport.java
 
@@ -100,9 +159,13 @@ public static int newLength(int oldLength, int minGrowth, int prefGrowth) {
 }
 ```
 
+- `Math.max(minGrowth, prefGrowth)` 表达式分析：
+  - 第一种情况，如果一次添加一个元素，那么 `prefGrouwth` 参数一定是 1，表示此时数组只要扩容一个单位就可以了。
+  - 第二种情况，如果一次添加多个元素，比如 100，那么第 `prefGrowth` 参数是 100，表示此时数组需要扩容 100 个长度才可以。
+
 ## 三、LinkedList 底层原理
 
-LinkedList 底层数据结构是双向链表，查询慢，增删快，但是如果操作的是首尾元素，速度也是极快的。
+LinkedList 底层数据结构是双向链表，查询慢，增、删快，但是如果操作的是首尾元素，速度也是极快的。
 
 LinkedList 本身多了很多直接操作首尾元素的特有 API。如下方所示：
 
@@ -114,3 +177,134 @@ LinkedList 本身多了很多直接操作首尾元素的特有 API。如下方�
 | `public E getLast()`        | 返回此列表中的最后一个元素       |
 | `public E removeFirst()`    | 从此列表中删除并返回第一个元素   |
 | `public E removeLast()`     | 从此列表中删除并返回最后一个元素 |
+
+LinkedList 类中，有一个内部类 Node，表示结点
+
+java/util/LinkedList.java
+
+```java
+private static class Node<E> {
+    E item;
+    Node<E> next;
+    Node<E> prev;
+
+    Node(Node<E> prev, E element, Node<E> next) {
+        this.item = element;
+        this.next = next;
+        this.prev = prev;
+    }
+}
+```
+
+LinkedList 类中，有三个关键的成员变量：
+
+- `size`：表示集合的长度，也表示结点的总个数。
+- `first`，表示头结点。
+- `last`，表示尾结点，
+
+java/util/LinkedList.java
+
+```java
+transient int size = 0;
+
+/**
+ * Pointer to first node.
+ */
+transient Node<E> first;
+
+/**
+ * Pointer to last node.
+ */
+transient Node<E> last;
+```
+
+LinkedList 空参构造：当利用它创建一个空的 LinkedList 集合对象时，上面的三个成员变量，就被默认初始化了。
+
+java/util/LinkedList.java
+
+```java
+public LinkedList() {
+}
+```
+
+在 LinkedList 集合对象中，添加元素
+
+java/util/LinkedList.java
+
+```java
+public boolean add(E e) {
+    linkLast(e);
+    return true;
+}
+
+void linkLast(E e) {
+    final Node<E> l = last;
+    final Node<E> newNode = new Node<>(l, e, null);
+    last = newNode;
+    if (l == null)
+        first = newNode;
+    else
+        l.next = newNode;
+    size++;
+    modCount++;
+}
+```
+
+当在 LinkedList 集合对象中，添加元素时，它的内存表现如下：
+
+![linkedList内存表现](NodeAssets/LinkedList源码分析.png)
+
+## 四、Iterator 底层原理
+
+当使用 ArrayList 列表集合对象，获取迭代器对象时
+
+java/util/ArrayList.java
+
+```java
+public Iterator<E> iterator() {
+    return new Itr();
+}
+
+private class Itr implements Iterator<E> {
+    int cursor;       // index of next element to return
+    int lastRet = -1; // index of last element returned; -1 if no such
+    int expectedModCount = modCount;
+
+    // prevent creating a synthetic constructor
+    Itr() {}
+
+    public boolean hasNext() {
+        return cursor != size;
+    }
+
+    @SuppressWarnings("unchecked")
+    public E next() {
+        checkForComodification();
+        int i = cursor;
+        if (i >= size)
+            throw new NoSuchElementException();
+        Object[] elementData = ArrayList.this.elementData;
+        if (i >= elementData.length)
+            throw new ConcurrentModificationException();
+        cursor = i + 1;
+        return (E) elementData[lastRet = i];
+    }
+}
+```
+
+iterator 方法，底层创建了一个 `Itr` 内部类对象，
+
+cursor 是迭代器里的游标，默认指向 0 索引的位置。
+
+lastRet 表示上一次操作的索引。
+
+modCount 表示集合被修改的次数。
+
+- 每次用集合对象，删除、添加元素，该变量都会自增。
+
+checkForComodification 方法，会检查 modCount 最新记录的次数，跟一开始记录的次数是否相同。
+
+- 如果相同，证明当前集合没有发生改变。
+- 否则，证明在迭代器遍历集合的过程中，使用了集合中的方法添加/删除。会报并发修改异常 ConcurrentModificationException 的错误。
+
+为避免迭代器遍历时，发生并发修改异常：不要使用集合对象的方法，添加、修改元素即可。
