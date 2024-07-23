@@ -2,6 +2,7 @@ package com.kkcf.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Consumer;
 
 public class MyCollectionDemo03 {
     public static void main(String[] args) {
@@ -11,12 +12,12 @@ public class MyCollectionDemo03 {
         coll.add("ccc");
         coll.add("ddd");
 
-        /*coll.forEach(new Consumer<String>() {
+        coll.forEach(new Consumer<String>() {
             @Override
             public void accept(String s) {
                 System.out.println(s);
             }
-        });*/
+        });
 
         coll.forEach(s -> System.out.println(s));
 

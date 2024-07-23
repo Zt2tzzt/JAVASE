@@ -1,4 +1,4 @@
-# Java 常见 API 集合进阶之、集合体系结构、Collection、List
+# Java 常见 API 集合进阶之、集合体系结构、Collection 单列集合、List
 
 Java 中有很多集合
 
@@ -11,19 +11,19 @@ Java 中的集合，可分为两类：
 
 ## 二、Java Collection 单列集合
 
-Collection 实现接口，实现类的体系结构，如下图所示：
+Collection 接口，的继承体系结构，如下图所示：
 
 ![Java集合体系结构Collection](NodeAssets/Java集合体系结构.jpg)
 
 Collection 是单列集合的祖宗接口，它的功能是全部单列集合都可以继承使用的。
 
-List 系列集合实现了 Collection 接口，其中添加的元素有序、可重复、有索引。
+List 系列集合实现了 Collection 接口，实现 List 接口的类，其对象要求添加的元素是有序、可重复、有索引的。
 
-- 有序：指的是存、取的元素顺序是一致的，与大小顺序无关。
+- 有序：指的是存、取的元素顺序是一致的，与元素值的大小顺序无关。
 - 可重复：表示集合中存储的元素，是可重复的。
 - 有索引，表示可以通过索引，获取集合中存放的元素。
 
-Set 系列集合实现了 Collection 接口，与 List 系列集合相反，它其中添加的元素无序、不重复、无索引。
+Set 系列集合实现了 Collection 接口，与 List 系列集合相反，实现 Set 接口的类，其对象要求添加的元素无序、不重复、无索引。
 
 - 无序：指的是存、取的元素顺序是不一致的。
 - 不重复：表示集合中存储的元素，是不可重复的。可用于做去重。
@@ -43,14 +43,14 @@ Collection 接口中有如下方法：
 | `public boolean isEmpty()`          | 判断集合是否为空                   |
 | `public int size()`                 | 集合的长度，也就是集合中元素的个数 |
 
-Collection 是一个接口，不能直接创建对象，必须用它的实现类创建对象。这里用 ArrayList 做演示。
+Collection 是一个接口，不能直接创建对象，必须用它的实现类创建对象。下方用 ArrayList 实现类做演示。
 
 #### 1.add(E e) 方法
 
 add 方法的使用，用于添加元素；其中有如下细节：
 
-- 细节 1：如果给 List 系列集合中添加数据，那么方法永远返回 true，因为 List 系列集合允许元素的重复。
-- 细节 2：如果给 Set 系列集合中添加数据，添加的元素不存在，返回 true；否则，返回 false；
+- 细节 1：如果给 List 系列集合中添加数据，那么方法永远返回 `true`，因为 List 系列集合允许元素的重复。
+- 细节 2：如果给 Set 系列集合中添加数据，添加的元素不存在，返回 `true`；否则，返回 `false`；
 
 demo-project/base-code/Day22/src/com/kkcf/collection/MyCollectionDemo01.java
 
@@ -102,10 +102,12 @@ public class MyCollectionDemo01 {
 
 #### 3.remove 方法
 
-remove 方法的使用，用于删除集合中的元素，返回一个布尔值。其中有如下细节：
+remove 方法的使用，用于删除集合中的元素，返回一个布尔值，表示删除是否成功。
 
-- 细节 1：Collection 接口里定义的是共性的方法，所以此时不能通过索引进行删除，只能通过元素的对象进行删除。
-- 细节 2：如果要删除的元素存在，返回 true；否则，返回 false。
+其中有如下细节：
+
+- 细节 1：Collection 接口里定义的是共性的方法，因为 Set 系列集合没有索引，所以该方法不能通过索引进行删除，只能通过元素的对象进行删除。
+- 细节 2：如果要删除的元素存在，返回 `true`；否则，返回 `false`。
 
 demo-project/base-code/Day22/src/com/kkcf/collection/MyCollectionDemo01.java
 
@@ -137,7 +139,7 @@ public class MyCollectionDemo01 {
 
 contains 方法的使用，用于判断集合中是否存在某一个元素。其中有如下细节：
 
-- 细节 1：底层是依赖 equals 方法，进行判断。如果集合中存储的是自定义类的对象，要在类中重写 equals 方法。
+- 细节 1：底层是依赖 equals 方法，进行判断的。如果集合中存储的是自定义类的对象，要在类中重写 equals 方法。
 
 demo-project/base-code/Day22/src/com/kkcf/collection/MyCollectionDemo01.java
 
@@ -241,12 +243,12 @@ Collection 接口中，用于获取迭代器的方法如下
 | ------------------------ | ----------------------------------------- |
 | `Iterator<E> iterator()` | 返回迭代器对象，默认指向当前集合的 0 索引 |
 
-Iterator 中常用方法：
+Iterator 接口中常用方法：
 
-| 方法名              | 说明                                                  |
-| ------------------- | ----------------------------------------------------- |
-| `boolean hasNext()` | 判断当前位置是否有元素，有则返回 true；否则范围 false |
-| `E next()`          | 获取当前位置的元素，并将迭代器对象移向下一个位置      |
+| 方法名              | 说明                                                      |
+| ------------------- | --------------------------------------------------------- |
+| `boolean hasNext()` | 判断当前位置是否有元素，有则返回 `true`；否则返回 `false` |
+| `E next()`          | 返回当前位置的元素，并将迭代器对象移向下一个位置          |
 
 demo-project/base-code/Day22/src/com/kkcf/collection/MyCollectionDemo02.java
 
@@ -279,9 +281,9 @@ public class MyCollectionDemo02 {
 
 迭代器遍历的细节：
 
-- 当迭代器指针，指向没有元素的位置时，调用 `next` 方法，会报错 `NoSuchElementException`
-- 迭代器遍历完毕，指针不会复位；
-- 循环中只能用一次 `next` 方法。不然也会报错 `NoSuchElementException`
+- 当迭代器指针，指向没有元素的位置时，再调用 `next` 方法，会报错 `NoSuchElementException`。
+- 迭代器遍历完毕，指针不会复位；要重头遍历，要重新创建一个迭代器对象。
+- 循环中，每个循环体，最好只调用一次 `next` 方法。不然容易报错 `NoSuchElementException`
 - 迭代器遍历的过程中，不能用集合的 `add`、`remove` 方法，进行增加、删除的操作，否则会报错 `ConcurrentModificationException` 表示并发修改异常。这时，如果
   - 要删除元素，应使用迭代器中的 `remove` 方法删除元素。
   - 要添加元素，暂时还没有办法。
@@ -324,7 +326,7 @@ public class MyCollectionDemo02 {
 
 在 JDK5 出现了增强 for 遍历的写法，这是迭代器的语法糖，用于简化迭代器的书写。
 
-所有的单列结合，和数组，都可以用增强 for 的方式遍历（双列集合不行）。
+所有的 Collection 单列集合，数组，都可以用增强 for 的方式遍历（双列集合不行）。
 
 增强 for 的书写格式如下：
 
@@ -386,7 +388,7 @@ public class MyCollectionDemo03 {
 }
 ```
 
-#### 3.Collection Lambda 表达式遍历
+#### 3.Collection forEach + Lambda 表达式遍历
 
 JDK8 以后，出现了 Lambda 表达式，可用于书写更简单，更直接的遍历集合的方式：
 
@@ -396,7 +398,7 @@ JDK8 以后，出现了 Lambda 表达式，可用于书写更简单，更直接�
 | -------------------------------------------------- | ---------------------- |
 | `default void forEach(Consumer<? super T> action)` | 结合 Lambda 遍历集合。 |
 
-先使用 `forEach` 方法，结合匿名内部类的方式，进行遍历
+先使用 `forEach` 方法，结合匿名内部类的方式，进行遍历：
 
 demo-project/base-code/Day22/src/com/kkcf/collection/MyCollectionDemo03.java
 
@@ -426,8 +428,8 @@ public class MyCollectionDemo03 {
 ```
 
 - `forEach` 方法中，也会自己遍历集合，依次得到每一个元素；
-- 然后把得到的元素，传递给 Consumer 接口中的 `accept` 方法。
-- Consumer 接口，是一个函数式接口。
+- 然后把得到的元素，传递给 `Consumer` 接口中的 `accept` 方法。
+- `Consumer` 接口，是一个函数式接口。
 
 使用 Lambda 表达式，优化上方的代码：
 
@@ -455,13 +457,13 @@ public class MyCollectionDemo03 {
 三种遍历方式使用场景：
 
 - 迭代器遍历，当需要在遍历时，删除集合中的元素，可使用迭代器遍历。
-- 增强 for、forEach + Lambda 遍历，用于单纯的集合遍历。
+- 增强 for 遍历、forEach + Lambda 遍历，用于单纯的集合遍历。
 
-## 三、Collection 单列集合-List 集合
+## 三、List 集合
 
 List 集合有以下特点：
 
-- 有序：指的是存、取的元素顺序是一致的，与大小顺序无关。
+- 有序：指的是存、取的元素顺序是一致的，与元素值的大小顺序无关。
 - 可重复：表示集合中存储的元素，是可重复的。
 - 有索引，表示可以通过索引，获取集合中存放的元素。
 
@@ -478,7 +480,7 @@ List 集合，因为有了索引，所以多了很多索引操作的方法，有
 | `E set(int index,E element)`    | 修改指定索引处的元素，返回被修改的元素 |
 | `E get(int index)`              | 返回指定索引处的元素                   |
 
-#### 1.add(int index,E element) 方法
+#### 1.add(int i,E e) 方法
 
 `add(int index,E element)` 方法，用于在集合中的指定索引位置，添加元素。
 
@@ -505,7 +507,7 @@ public class MyCollectionDemo03 {
 }
 ```
 
-- 插入位置及后面的元素，会往后移一位
+- 插入位置及后面的所有元素，都会往后移一位
 
 #### 2.remove 方法
 
@@ -533,7 +535,10 @@ public class MyCollectionDemo04 {
 }
 ```
 
-如果集合中，存储的是 Integer 类型的数据。此时往 remove 方法中传入一个 int 类型的数字，不会自动装箱为 Integer 类型，而是调用 `E remove(int index)` 方法，表示删除指定索引位置的元素。
+特别注意：如果 List 系列集合中，存储的是 Integer 类型的数据。
+
+- 此时，调用集合对象的 remove 方法，传入一个 int 类型的数字，不会自动装箱为 Integer 类型；
+- 而是会调用 `E remove(int index)` 方法，表示删除指定索引位置的元素。
 
 demo-project/base-code/Day22/src/com/kkcf/collection/MyCollectionDemo04.java
 
@@ -651,9 +656,9 @@ public class MyCollectionDemo04 {
 
 #### 2.List 列表迭代器遍历
 
-在 Java 中，ListIterator 接口表示列表迭代器。它继承自 Iterator。
+在 Java 中，ListIterator 接口表示列表迭代器。它继承自 Iterator 接口。
 
-它运行在遍历的时候，添加元素，使用 ListIterator 的 `void add(E e)` 方法。
+使用 ListIterator 遍历的时候，运行添加元素，使用 ListIterator 的 `void add(E e)` 方法。
 
 demo-project/base-code/Day22/src/com/kkcf/collection/MyCollectionDemo04.java
 

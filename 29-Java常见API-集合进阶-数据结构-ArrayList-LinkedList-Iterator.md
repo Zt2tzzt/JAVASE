@@ -1,4 +1,4 @@
-# Java 常见 API 集合进阶之数据结构、ArrayList
+# Java 常见 API 集合进阶之数据结构、ArrayList、LinkedList、Iterator
 
 ## 一、Java 数据结构
 
@@ -32,7 +32,8 @@ Java 中数组，在内存中是一片连续的空间，
 
 数组中元素的查询，速度快：
 
-- 通过数组地址值和元素索引直接定位的，查询任意位置的元素，耗时相同。
+- 通过数组地址值和元素索引，直接定位；
+- 查询任意位置的元素，耗时相同。
 
 数组中元素的删除，效率低：
 
@@ -55,13 +56,13 @@ Java 中数组，在内存中是一片连续的空间，
 
 链表中元素的查询，效率低：
 
-- 无论查询哪个元素，都要从头开始查找。
+- 无论查询哪个元素，都要从头开始，挨个查找。
 
 链表中的元素的删除、添加，速度快：
 
 - 只要修改插入节点上一个结点记录的地址值，并将插入节点中保存的地址值，指向下一个结点即可。
 
-在链表的基础上，还可以拓展双向链表的概念，即一个结点中，存储了数据值，前结点地址值、后结点地址值的结点。
+在链表的基础上，还可以拓展双向链表的概念，即一个结点中，存储了数据值，前结点地址值、后结点地址值。
 
 当查询链表中第 n 个结点时，先判断该结点离头结点近，还是离尾结点近；再从近的一端开始挨个查找。查找效率稍微提升了。
 
@@ -69,7 +70,7 @@ Java 中数组，在内存中是一片连续的空间，
 
 ## 二、ArrayList 底层原理
 
-ArrayList 底层使用数组来实现。类中的成员 `size` 表示容器的长度，也表示下一个元素要插入的位置。
+ArrayList 底层使用数组来实现。类中的成员 `size` 属性，表示容器的长度，也表示下一个元素要插入的位置。
 
 ArrayList 中，不但有 `add` 方法，还有 `addAll` 方法，用于一次性添加很多元素。在容器扩容时要考虑这种情况。
 
@@ -93,7 +94,7 @@ public ArrayList() {
 }
 ```
 
-2.当添加一个元素时，底层会创建一个新的长度为 10 的数组。
+2.当添加一个元素时，底层会创建一个新的长度为 `10` 的数组。
 
 java/util/ArrayList.java
 
@@ -139,7 +140,7 @@ private Object[] grow(int minCapacity) {
 - `newCapacity` 表示扩容后新数组的长度。
 - `newLength` 方法用于计算新数组的长度。
 
-4.如果一次添加多个元素，1.5 倍还放不下，则新创建数组的长度以实际为准。
+4.如果一次添加多个元素，1.5 倍还放不下，则新创建的数组的长度以实际为准。
 
 jdk/internal/util/ArraysSupport.java
 
@@ -165,7 +166,7 @@ public static int newLength(int oldLength, int minGrowth, int prefGrowth) {
 
 ## 三、LinkedList 底层原理
 
-LinkedList 底层数据结构是双向链表，查询慢，增、删快，但是如果操作的是首尾元素，速度也是极快的。
+LinkedList 底层数据结构是双向链表，查询慢；增、删快；但是如果操作的是首尾元素，速度也是极快的。
 
 LinkedList 本身多了很多直接操作首尾元素的特有 API。如下方所示：
 
@@ -178,7 +179,7 @@ LinkedList 本身多了很多直接操作首尾元素的特有 API。如下方�
 | `public E removeFirst()`    | 从此列表中删除并返回第一个元素   |
 | `public E removeLast()`     | 从此列表中删除并返回最后一个元素 |
 
-LinkedList 类中，有一个内部类 Node，表示结点
+LinkedList 类中，有一个内部类 `Node`，表示结点
 
 java/util/LinkedList.java
 
@@ -292,19 +293,19 @@ private class Itr implements Iterator<E> {
 }
 ```
 
-iterator 方法，底层创建了一个 `Itr` 内部类对象，
+`iterator` 方法，底层创建了一个 `Itr` 内部类对象，
 
-cursor 是迭代器里的游标，默认指向 0 索引的位置。
+`cursor` 是迭代器里的游标，默认指向 0 索引的位置。
 
-lastRet 表示上一次操作的索引。
+`lastRet` 表示上一次操作的索引。
 
-modCount 表示集合被修改的次数。
+`modCount` 表示集合被修改的次数。
 
 - 每次用集合对象，删除、添加元素，该变量都会自增。
 
-checkForComodification 方法，会检查 modCount 最新记录的次数，跟一开始记录的次数是否相同。
+`checkForComodification` 方法，会检查 `modCount` 最新记录的次数，跟一开始记录的次数是否相同。
 
 - 如果相同，证明当前集合没有发生改变。
-- 否则，证明在迭代器遍历集合的过程中，使用了集合中的方法添加/删除。会报并发修改异常 ConcurrentModificationException 的错误。
+- 否则，证明在迭代器遍历集合的过程中，使用了集合中的方法添加/删除元素。会报并发修改异常 `ConcurrentModificationException` 的错误。
 
 为避免迭代器遍历时，发生并发修改异常：不要使用集合对象的方法，添加、修改元素即可。
