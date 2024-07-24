@@ -156,7 +156,7 @@ public class Role {
         int index1 = r.nextInt(attacks_desc.length);
         String desc1 = attacks_desc[index1];
         System.out.printf(desc1, this.getName(), role.getName());
-        
+
         String desc2 = remainBlood > 90 ? injureds_desc[0]
                 : remainBlood > 80 ? injureds_desc[1]
                 : remainBlood > 70 ? injureds_desc[2]
@@ -600,10 +600,10 @@ public class GirlFriendTest {
     public static void main(String[] args) {
         GirlFriend[] gfs = new GirlFriend[4];
 
-        GirlFriend gf1 = new GirlFriend("aoi", 18, "萌妹子", "向山进发");
-        GirlFriend gf2 = new GirlFriend("rin", 19, "萌妹子", "摇曳露营");
-        GirlFriend gf3 = new GirlFriend("mayu", 22, "萌妹子", "摄影拍照");
-        GirlFriend gf4 = new GirlFriend("kumiko", 21, "萌妹子", "上低音号");
+        GirlFriend gf1 = new GirlFriend("wee", 18, "萌妹子", "吃");
+        GirlFriend gf2 = new GirlFriend("yui", 19, "萌妹子", "吉他");
+        GirlFriend gf3 = new GirlFriend("mio", 22, "萌妹子", "贝斯");
+        GirlFriend gf4 = new GirlFriend("aoi", 21, "萌妹子", "登山");
 
         gfs[0] = gf1;
         gfs[1] = gf2;

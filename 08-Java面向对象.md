@@ -93,7 +93,7 @@ demo-project/base-code/Day08/src/com/kkcf/object_riented/GirlFriend.java
 package com.kkcf.object_riented;
 
 public class GirlFriend {
-    private String name = "aoi";
+    private String name = "wee";
     private int age = 18;
 }
 ```
@@ -178,8 +178,8 @@ demo-project/base-code/Day08/src/com/kkcf/object_riented/GirlFriend.java
 package com.kkcf.object_riented;
 
 public class GirlFriend {
-    private String name = "aoi";
-    private int age = 18;
+    private String name = "wee";
+    private int age = 19;
     private String gender = "萌妹子";
 
     public void setName(String n) {
@@ -221,8 +221,8 @@ public class Test02 {
         GirlFriend gf = new GirlFriend();
         //gf.age = 18; // 报错
 
-        gf.setName("kumiko");
-        gf.setAge(19);
+        gf.setName("wee");
+        gf.setAge(18);
         gf.setGender("萌妹子");
 
         System.out.println(gf.getName());
@@ -242,7 +242,7 @@ demo-project/base-code/Day08/src/com/kkcf/object_riented/GirlFriend.java
 package com.kkcf.object_riented;
 
 public class GirlFriend {
-    private int age = 18;
+    private int age = 19;
 
     public void setName(String name) {
         int age = 9;
@@ -298,7 +298,7 @@ demo-project/base-code/Day08/src/com/kkcf/object_riented/GirlFriend.java
 package com.kkcf.object_riented;
 
 public class GirlFriend {
-    private String name = "aoi";
+    private String name = "wee";
     private int age = 18;
     private String gender = "萌妹子";
 
@@ -414,7 +414,7 @@ package com.kkcf.object_riented;
 public class Test03 {
     public static void main(String[] args) {
         Student stu = new Student("zzt", 18);
-      
+
         System.out.println(stu.getName());
         System.out.println(stu.getAge());
     }
@@ -684,7 +684,7 @@ public class Student {
 
     public void method() {
         int age = 10;
-      
+
         System.out.println(age); // 10
         System.out.println(this.age); // 0
     }
@@ -701,7 +701,7 @@ package com.kkcf.object_riented;
 public class Test03 {
     public static void main(String[] args) {
         Student s = new Student();
-      
+
         s.method();
     }
 }

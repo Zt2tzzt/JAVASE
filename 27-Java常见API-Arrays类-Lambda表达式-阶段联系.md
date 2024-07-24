@@ -4,7 +4,7 @@
 
 Java 中的 Arrays 类，是操作数组的工具类。
 
-Arrays 类，私有化了构造方法，不能创建它的实例对象。其中的方法都是 static 修饰的静态方法。
+Arrays 类，私有化了构造方法，不能创建它的实例对象。其中的方法都是 `static` 修饰的静态方法。
 
 Arrays 类中常用的方法如下：
 
@@ -20,7 +20,7 @@ Arrays 类中常用的方法如下：
 
 ### 1.toString 方法
 
-toString 方法，用于把数组拼接成一个字符串
+`public static String toString(数组)` 方法，用于把数组拼接成一个字符串
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo01.java
 
@@ -42,12 +42,12 @@ public class MyArraysDemo01 {
 
 ### 2.binarySearch 方法
 
-binarySearch 方法，用于在数组中二分查找法查找元素。
+`public static int binarySearch(数组, 查找的元素)` 方法，用于在数组中二分查找法查找元素。
 
 前提条件：
 
 - 数组中的元素必须是有序的，且必须是升序的。
-- 如果要找的元素存在，则返回真实索引；否则返回该元素 (`-插入点索引 - 1`) 位置的索引；之所以 `-1`，是为了避免 `-0 = 0` 的情况。
+- 如果要找的元素存在，则返回真实索引；否则，返回该元素 (`-插入点索引 - 1`) 位置的索引；之所以要减 `1`，是为了避免 `-0 = 0` 的情况。
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo01.java
 
@@ -69,7 +69,7 @@ public class MyArraysDemo01 {
 
 ### 3.copyOf 方法
 
-copyOf  方法，用于拷贝数组。
+`public static int[] copyOf(愿数组, 新数组长度)`  方法，用于拷贝数组。
 
 底层用的是 `System.arraycopy` 方法。
 
@@ -99,7 +99,7 @@ public class MyArraysDemo01 {
 
 ### 4.copyOfRange 方法
 
-copyOfRange 方法，用于指定范围，拷贝数组。这个范围的规则是“包头不包尾，包左不包右”。
+`public static int[] copyOfRange(愿数组, 起始索引. 结束索引)` 方法，用于指定范围，拷贝数组。这个范围的规则是“包头不包尾，包左不包右”。
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo01.java
 
@@ -121,7 +121,7 @@ public class MyArraysDemo01 {
 
 ### 5.fill 方法
 
-fill 方法，用于填充数组
+`public static void fill(数组, 元素)` 方法，用于填充数组
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo01.java
 
@@ -143,7 +143,7 @@ public class MyArraysDemo01 {
 
 ### 5.sort 方法
 
-sort 方法，用于为数组排序。默认使用快速排序的算法，进行升序排序。
+`public static void sort(数组)` 方法，用于为数组排序。默认使用快速排序的算法，进行升序排序。
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo01.java
 
@@ -163,11 +163,11 @@ public class MyArraysDemo01 {
 }
 ```
 
-指定排序顺序（升序还是降序），要用到 sort 方法的重载。
+`public static void sort(数组, 排序规则)` 方法，用于指定排序顺序（升序还是降序）。
 
 该方法的前提条件：
 
-- 只能给引用数据类型的数组排序；如果数组是基本数据类型，需要变成其对应的包装类。
+- 只能给**引用数据类型**的数组排序；如果数组是基本数据类型，需要变成其对应的包装类。
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo02.java
 
@@ -226,7 +226,7 @@ Lambda 表达式，是 JDK8 出现的一种新语法形式。格式为
 }
 ```
 
-- `()` 对应着方法的形参；
+- `()` 对应着方法的形参列表；
 - `->` 是固定格式。
 - `{}` 对应着方法的方法体。
 
@@ -236,7 +236,7 @@ Lambda 表达式，可以简化匿名内部类的书写.，然而，只能简化
 >
 > 这种接口上方可以加 `@FunctionalInterface` 注解，用于验证语法是否正确。
 
-Lambda 表达式，主要用于省略代码，省略的原则是：可推导，即可省略。
+Lambda 表达式，主要用于省略代码，省略的原则是“可推导，即可省略”。
 
 使用 Lambda 表达式，重构上面 sort 方法的使用。
 
@@ -350,7 +350,7 @@ public class Test01 {
 
 要求2：按照年龄大小进行排序；年龄一样，按照身高排序；身高一样按照姓名的字母进行排序。
 
-> String 类里有一个成员方法 compareTo，用于字符串对象按照字典顺序进行比较，
+> String 类里有一个成员方法 `compareTo`，用于字符串对象按照字典顺序进行比较，
 
 JavaBean 类 GirlFriend
 
@@ -417,9 +417,9 @@ import java.util.Arrays;
 
 public class Test06 {
     public static void main(String[] args) {
-        GirlFriend kumiko = new GirlFriend("kumiko", 18, 1.65);
-        GirlFriend mayu = new GirlFriend("mayu", 18, 1.63);
-        GirlFriend kaori = new GirlFriend("kaori", 19, 1.68);
+        GirlFriend kumiko = new GirlFriend("wee", 18, 1.66);
+        GirlFriend kaori = new GirlFriend("yui", 18, 1.58);
+        GirlFriend mayu = new GirlFriend("mio", 19, 1.66);
 
         GirlFriend[] gfs = {kumiko, mayu, kaori};
 
@@ -455,7 +455,7 @@ public class Test06 {
 - 第六个月：8 对
 - ……
 
-我们发现，这个问题，本质上是斐波那契额数列。
+我们发现，这个问题，本质上是斐波那契数列。
 
 使用 Java 解题的两个思路：
 
@@ -511,7 +511,11 @@ public class Test02 {
 
 ### 3.练习三：猴子吃桃子
 
-有一堆桃子，猴子第一天吃了其中的一半，并多吃了一个！以后每天猴子都吃当前剩下的一半，然后再多吃一个；第 10 天（还没吃）发现只剩下一个桃子了；请问，最初总共有多少个桃子？
+有一堆桃子，猴子第一天吃了其中的一半，并多吃了一个！
+
+以后每天，猴子都吃当前剩下的一半，然后再多吃一个；
+
+第 10 天（还没吃）发现只剩下一个桃子了；请问，最初总共有多少个桃子？
 
 使用递归的方式解题，这里要使用反向递归的思路：
 

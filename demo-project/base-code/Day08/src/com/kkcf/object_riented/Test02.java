@@ -5,8 +5,8 @@ public class Test02 {
         GirlFriend gf = new GirlFriend();
         //gf.age = 18; // 报错
 
-        gf.setName("kumiko");
-        gf.setAge(19);
+        gf.setName("wee");
+        gf.setAge(18);
         gf.setGender("萌妹子");
 
         System.out.println(gf.getName());

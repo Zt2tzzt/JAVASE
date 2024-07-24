@@ -51,17 +51,17 @@ public class BasicSearchDemo01 {
 二分查找，前提条件是数组中的数据，必须是有序的。
 
 - 如果是无序的数组，要先排序，才能进行二分查找；
-- 在无序序列中，先排序，再二分查找，只能用于证明元素在是否存在，因为排序可能打乱元素顺序，查找到的元素索引无意义。
+- 在无序序列中，先排序，再二分查找，只能用于证明元素是否存在，因为排序可能打乱元素顺序，查找到的元素索引无意义。
 - 在有序序列中，二分查找可以用于查找元素索引。
 
 二分查找，核心思路是每次排除一半的查找范围。
 
 二分查找算法步骤实现：
 
-1. 定义两个索引值 min 和 max，表示当前要查找的范围；
-2. 再定义一个索引值 mid，表示 min、max 中间的元素索引；
-3. 如果要查找的元素，在 mid 的左边，缩小范围时 min 不变，max 等于 mid - 1；反之，max 不变，min 等于 mid + 1。
-5. 当 min > max 时，如果还未找到，则表示要查询的元素不存在，结束查询。
+1. 定义两个索引值 `min` 和 `max`，表示当前要查找的范围；
+2. 再定义一个索引值 `mid`，表示 `min`、`max` 中间的元素索引；
+3. 如果要查找的元素，在 `mid` 的左边，缩小范围时 `min` 不变，`max` 等于 `mid - 1`；反之，`max` 不变，`min` 等于 `mid + 1`。
+5. 当 `min > max` 时，如果还未找到，则表示要查询的元素不存在，结束查询。
 
 案例理解：在一个有序数组中，使用二分查找，查找指定的元素
 
@@ -75,7 +75,6 @@ public class BinarySearchDemo01 {
         int[] arr = {7, 23, 79, 81, 103, 127, 131, 147};
 
         System.out.println(binarySearch(arr, 131));
-
     }
 
     public static int binarySearch(int[] arr, int target) {
@@ -103,7 +102,7 @@ public class BinarySearchDemo01 {
 
 #### 1.分块查找-有规律的序列
 
-将有规律的序列，分为几块，其中有两个元素
+将有规律的序列，分为几块，其中有两个原则
 
 - 分块查找原则 1：前一块中最大的数据，小于后一块中所有的数据（块内无序，块间有序）。
 - 分块查找原则 2：快数数量一般等于序列长度开根号，比如：长度为 16 的序列一般分为 4 快左右。
@@ -118,8 +117,8 @@ public class BinarySearchDemo01 {
 
 实现步骤如下：
 
-1. 创建数组 blockArr 作为索引表，存放每一个块对象的信息；
-2. 先遍历 blockArr，确定要查找的数据属于哪一块；
+1. 创建数组 `blockArr` 作为索引表，存放每一个块对象的信息；
+2. 先遍历 `blockArr`，确定要查找的数据属于哪一块；
 3. 再单独遍历这一块数据即可。
 
 demo-project/base-code/Day21/src/com/kkcf/search/BlockSearchDemo01.java
@@ -229,7 +228,9 @@ public class BlockSearchDemo01 {
 
 #### 2.分块查找-无规律的序列
 
-使用分块查找，查找一组完全没有规律的数据，每个分块相对于其它分块，应该有一个独立的区间值，即有最大值和最小值。
+使用分块查找，查找一组完全没有规律的数据，
+
+每个分块相对于其它分块，应该有一个独立的区间值，即有最大值和最小值。
 
 demo-project/base-code/Day21/src/com/kkcf/search/BlockSearchDemo02.java
 
@@ -285,6 +286,7 @@ public class BlockSearchDemo02 {
             this.endIndex = endIndex;
         }
     }
+
     /**
      * 此方法用于，在索引表中，查找元素所在块的索引
      * @param blockArr 索引表
@@ -361,9 +363,9 @@ public class BlockSearchDemo02 {
 
 插值查找，同样也只能用于有序序列中元素的查找；且有序序列中的元素要分布均匀，不然效率很低。
 
-插值查找，在二分查找的基础上，优化了 mid 索引的初始值，使它更加贴近要查找的元素索引。
+插值查找，在二分查找的基础上，优化了 `mid` 索引的初始值，使它更加贴近要查找的元素索引。
 
-插值查找，mid 初始化值的公式为：`mid = min + key - arr[min]) / (arr[max] - arr[min]) * (max - min)`。
+插值查找，`mid` 初始化值的公式为：`mid = min + key - arr[min]) / (arr[max] - arr[min]) * (max - min)`。
 
 demo-project/base-code/Day21/src/com/kkcf/search/InterpolationSearchDemo01.java
 
@@ -503,7 +505,13 @@ public class FibonacciSearchDemo01 {
 
 后续在数据结构中介绍。
 
-## 二、Java 排序算法
+## 二、Java 字符串匹配算法（了解）
+
+基本查找、KMP 算法。
+
+正则表达式中，用的就是 KMP 算法
+
+## 三、Java 排序算法
 
 冒泡排序、选择排序、插入排序、快速排序
 
@@ -690,7 +698,9 @@ public class Test01 {
 
 因此，在使用递归时，一定要有出口，否则就会造成栈内存溢出。
 
-递归，只需要用少量的程序，就可以描述出解题过程所需要的多次重复计算。用于把一个复杂的问题，层层转化为一个与原问题相似的规模较小的问题来求解。
+递归，指的是用少量的程序，描述出解题过程所需要的多次重复计算。
+
+递归，用于把一个复杂的问题，层层转化为一个与原问题相似的规模较小的问题来求解。
 
 递归使用时，有两个核心要素：
 
@@ -827,8 +837,3 @@ public class QuickSortDemo01 {
 
 - 找到要交换的数字时，先移动 `end`，再移动 `start`，顺序不能变。
 
-## 三、Java 字符串匹配算法
-
-基本查找、KMP 算法。
-
-正则表达式中，用的就是 KMP 算法

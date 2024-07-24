@@ -41,7 +41,9 @@ Integer 包装类中，常用方法如下：
 
 #### 1.JDK5 前 Integer 对象创建、计算
 
-在 JDK5 以前，要通过手动的方式，创建 Integer 对象，如下方代码所示：
+在 JDK5 以前，要通过手动的方式，创建 Integer 对象，或者将 Integer 对象转为 int 类型。
+
+如下方代码所示：
 
 demo-project/base-code/Day20/src/com/kkcf/integer/IntegerDemo01.java
 
@@ -114,6 +116,7 @@ package com.kkcf.integer;
 
 public class IntegerDemo03 {
     public static void main(String[] args) {
+        // 装箱
         Integer i1 = Integer.valueOf(1);
         Integer i2 = Integer.valueOf(2);
 
@@ -173,7 +176,7 @@ public class IntegerDemo04 {
 
 在 JDK5 以后，int 类型和 Integer 包装类型可以看作是同一个东西，因为在执行代码时会自动转化。
 
-### 2.Integer 静态方法
+### 2.Integer 其它静态方法
 
 | 方法名                                | 说明                                  |
 | ------------------------------------- | ------------------------------------- |
@@ -226,7 +229,7 @@ public class IntegerDemo05 {
 
 - 在类型转换时，传入的参数，必须是数字组成的字符串。
 
-- 八种包装类中，除了 Character 类以外，都有对应的 parseXxx 方法，进行类型转换。比如下方代码：
+- 八种包装类中，除了 `Character` 类以外，都有对应的 `parseXxx` 方法，进行类型转换。比如下方代码：
 
   ```java
   boolean flag = Boolean.parseBoolean("true");
@@ -442,7 +445,7 @@ public class Test04 {
 JDK7 前的解法：
 
 - 思路 1：计算每一年的 1 月 1 日 0 时 0 分，到 12 月 31 日 23 时 59 分间隔的毫秒数，再转为天数，看是否是 365 天。
-- 思路 2：计算每一年的 2 月 1 日 0 时 0 分，到 3 月 1 日 0 时 0 分间隔的毫秒数，再转为天数，看是否是 31 天。
+- 思路 2：计算每一年的 2 月 1 日 0 时 0 分，到 3 月 1 日 0 时 0 分间隔的毫秒数，再转为天数，看是否是 29 天。
 - 思路 3，利用 Calendar 类，将每一年的 3 月 1 日减去一天，如果结果的日期是 2 月 29 日，说明是闰年。
 - 思路 4：利用 Calendar 类，将每一年的 1 月 1 日减去一天，如果结果的日期是一年中的第 366 天，说明前一年是闰年。
 

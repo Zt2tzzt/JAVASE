@@ -1,7 +1,7 @@
 package com.kkcf.object_riented;
 
 public class GirlFriend {
-    private String name = "aoi";
+    private String name = "wee";
     private int age = 18;
     private String gender = "萌妹子";
 
