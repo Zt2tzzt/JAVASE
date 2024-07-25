@@ -11,6 +11,8 @@ Java 泛型，定义格式：
 
 Java 泛型，仅支持**引用数据类型**。
 
+Java 泛型，在集合中的应用：
+
 在没有泛型的时候，集合中可以添加任意类型的数据，它们都会被当作 Object 类型。
 
 demo-project/base-code/Day23/src/com/kkcf/generics/GenericsDemo01.java
@@ -35,10 +37,10 @@ public class GenericsDemo01 {
 
 Java 泛型，好处：
 
-1. 限定集合中的数据类型，把运行时期的问题提前到了编译期间。
-2. 避免了强制类型转换
+1. 限定集合中的数据类型，把运行时期的问题，提前到了编译期间。
+2. 避免了强制类型转换。
 
-Java 泛型，是伪泛型，只在编译时期起作用，比如为集合指定泛型。
+Java 泛型，是伪泛型，只在编译时期起作用，比如为集合指定泛型后。
 
 - 事实上，集合中存储的，仍然是 Object 类型的对象；
 - 只是在数据添加到集合时，会检测数据类型是否符合泛型的限定。
@@ -218,7 +220,7 @@ Java 泛型接口，书写格式如下：
 Java 泛型接口的两种使用方式：
 
 - 方式一：实现类给出具体的泛型。
-- 方式二：实现类也是泛型类，延续泛型接口的泛型，创建泛型类对象时，再确定泛型。
+- 方式二：实现类也是泛型类，延续泛型接口的泛型，创建实现类对象时，再确定泛型。
 
 方式一理解：定义一个 `MyArrayList02` 类，实现 `List` 接口，并指定 `List` 接口中的泛型。
 
@@ -243,7 +245,7 @@ public class MyArrayList02 implements List<String> {
 
 - `add` 方法，传参的类型，已被确定下来。
 
-此时，创建 `MyArrayList02` 的实例，就不能再指定泛型了。
+此时，在测试类中，创建 `MyArrayList02` 的实例，就不能再指定泛型了。
 
 demo-project/base-code/Day23/src/com/kkcf/test/Test03.java
 
@@ -308,21 +310,20 @@ package com.kkcf.generics;
 import java.util.ArrayList;
 
 public class GenericsDemo02 {
-    public static void method(ArrayList<Ye> list) {
-    }
-
     public static void main(String[] args) {
         ArrayList<Ye> list1 = new ArrayList<>();
         ArrayList<Fu> list2 = new ArrayList<>();
         ArrayList<Zi> list3 = new ArrayList<>();
 
         method(list1);
-        // 泛型，不具备继承性，只能传递泛型指定的类型
+
         method(list2); // 报错
         method(list3); // 报错
     }
-}
 
+    public static void method(ArrayList<Ye> list) {
+    }
+}
 
 class Ye {}
 
@@ -341,9 +342,6 @@ package com.kkcf.generics;
 import java.util.ArrayList;
 
 public class GenericsDemo02 {
-    public static void method(ArrayList<Ye> list) {
-    }
-
     public static void main(String[] args) {
         ArrayList<Ye> list1 = new ArrayList<>();
 
@@ -353,6 +351,9 @@ public class GenericsDemo02 {
 
         // 数据具有继承性
         method(list1);
+    }
+
+    public static void method(ArrayList<Ye> list) {
     }
 }
 
@@ -385,9 +386,6 @@ package com.kkcf.generics;
 import java.util.ArrayList;
 
 public class GenericsDemo02 {
-    public static void method(ArrayList<? extends Ye> list) {
-    }
-
     public static void main(String[] args) {
         ArrayList<Ye> list1 = new ArrayList<>();
         ArrayList<Fu> list2 = new ArrayList<>();
@@ -396,6 +394,9 @@ public class GenericsDemo02 {
         method(list1);
         method(list2);
         method(list3);
+    }
+
+    public static void method(ArrayList<? extends Ye> list) {
     }
 }
 

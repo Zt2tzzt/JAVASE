@@ -18,11 +18,11 @@
 
 ## 一、Date 类
 
-java.util.Date 类，是一个 JDK 已经写好的 javaBean 类，用来描述时间，精确到毫秒。
+java.util.Date 类，是一个 JDK 提供的 javaBean 类，用来描述时间，精确到毫秒。
 
 Date 类常用的构造方法如下：
 
-- `public Date()`：从运行程序的此时此刻到时间原点（1970年1月1日）经历的毫秒值，转换成 Date 对象（精确到毫秒）。
+- `public Date()`：从运行程序的此时此刻到时间原点（1970 年 1 月 1 日）经历的毫秒值，转换成 Date 对象（精确到毫秒）。
 - `public Date(long date)`：将指定参数的毫秒值，转换成 Date 对象。
 
 Date 类原码分析：
@@ -327,7 +327,7 @@ Calendar 类中常用的成员方法有：
 
 ### 2.setTime 成员方法
 
-案例理解，`setTime` 方法的使用，为日历对象，设置一个日期对象。
+案例理解，`public final void setTime(Date date)` 方法的使用，为日历对象，设置一个日期对象。
 
 demo-project/base-code/Day20/src/com/kkcf/calendar/CalendarDemo01.java
 
@@ -350,7 +350,7 @@ public class CalendarDemo01 {
 
 ### 3.get、set 成员方法
 
-案例理解：`get` 方法的使用，获取日历对象中的年、月、日、星期。
+案例理解：`public int get(int field)` 方法的使用，获取日历对象中的年、月、日、星期。
 
 demo-project/base-code/Day20/src/com/kkcf/calendar/CalendarDemo01.java
 
@@ -386,7 +386,7 @@ public class CalendarDemo01 {
 
 > 查表法中的“表”，指的是容器，上方案例中的容器就是数组
 
-案例理解：`set` 方法的使用，设置日历对象中的年、月
+案例理解：`public void set(int field, int value)` 方法的使用，设置日历对象中的年、月
 
 demo-project/base-code/Day20/src/com/kkcf/calendar/CalendarDemo01.java
 
@@ -425,18 +425,18 @@ public class CalendarDemo01 {
 
 使用 `get`、`set` 方法，获取、设置日历中的纪元、年、月、日、时、分、秒、星期……,，所传的参数，有以下对应关系：
 
-- 0：纪元；对应 Calendar 类中的常量 `Calendar.ERA`
-- 1：年；对应 Calendar 类中的常量 `Calendar.YEAR`
-- 2：月；对应 Calendar 类中的常量 `Calendar.MONTH`
-- 3：一年中的第几周；对应 Calendar 类中的常量 `Calendar.WEEK_OF_YEAR`
-- 4：一个月中的第几周；对应 Calendar 类中的常量 `Calendar.WEEK_OF_MONTH`
-- 5：一个月中的第几天（日期）；对应 Calendar 类中的常量 `Calendar.DATE` / `Calendar.DAY_OF_MONTH`
-- 6：一年中的第几天；对应 Calendar 类中的常量 `Calendar.DAY_OF_YEAR`
-- 7：一星期中的第几天；对应 Calendar 类中的常量 `Calendar.DAY_OF_WEEK`
+- `0`：纪元；对应 Calendar 类中的常量 `Calendar.ERA`
+- `1`：年；对应 Calendar 类中的常量 `Calendar.YEAR`
+- `2`：月；对应 Calendar 类中的常量 `Calendar.MONTH`
+- `3`：一年中的第几周；对应 Calendar 类中的常量 `Calendar.WEEK_OF_YEAR`
+- `4`：一个月中的第几周；对应 Calendar 类中的常量 `Calendar.WEEK_OF_MONTH`
+- `5`：一个月中的第几天（日期）；对应 Calendar 类中的常量 `Calendar.DATE` / `Calendar.DAY_OF_MONTH`
+- `6`：一年中的第几天；对应 Calendar 类中的常量 `Calendar.DAY_OF_YEAR`
+- `7`：一星期中的第几天；对应 Calendar 类中的常量 `Calendar.DAY_OF_WEEK`
 
 ### 4.add 成员方法
 
-案例理解：`add` 方法的使用，设置日历对象，往后加一个月，往前减一个月
+案例理解：`public void add(int field, int amount)` 方法的使用，设置日历对象，往后加一个月，往前减一个月
 
 demo-project/base-code/Day20/src/com/kkcf/calendar/CalendarDemo01.java
 
