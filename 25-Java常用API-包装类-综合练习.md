@@ -41,7 +41,7 @@ Integer 包装类中，常用方法如下：
 
 #### 1.JDK5 前 Integer 对象创建、计算
 
-在 JDK5 以前，要通过手动的方式，创建 Integer 对象，或者将 Integer 对象转为 int 类型。
+在 JDK5 以前，要通过手动的方式，创建 Integer 对象；也要手动将 Integer 对象转为 int 类型。
 
 如下方代码所示：
 
@@ -174,7 +174,7 @@ public class IntegerDemo04 {
 
 上面代码是自动装箱、自动拆箱的体现，
 
-在 JDK5 以后，int 类型和 Integer 包装类型可以看作是同一个东西，因为在执行代码时会自动转化。
+在 JDK5 以后，int 类型和 Integer 包装类型，在代码执行时会自动转化。
 
 ### 2.Integer 其它静态方法
 
