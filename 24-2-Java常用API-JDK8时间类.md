@@ -14,31 +14,31 @@ JDK7 和 JDK8 中的时间相关类，有如下的不同：
 
 JDK8 中常用的时间类有：
 
-**日期类**（类似于 JDK7 的 Date 类）
+**日期类**（类似于 JDK7 的 `Date` 类）
 
-- ZoneId 类，表示时区；
-- Instant 类，表示时间戳，只能表示世界标准时间（0 时区）的时间。
-- ZoneDateTime 类，表示带时区的时间。
+- `ZoneId` 类，表示时区；
+- `Instant` 类，表示时间戳，只能表示世界标准时间（0 时区）的时间。
+- `ZoneDateTime` 类，表示带时区的时间。
 
-**日期格式化类**（类似于 JDK7 的 SimpleDateFormat 类）
+**日期格式化类**（类似于 JDK7 的 `SimpleDateFormat` 类）
 
-- DateTimeFormatter 类，用于时间的格式化和解析。
+- `DateTimeFormatter` 类，用于时间的格式化和解析。
 
-**日历类**（类似于 JDK7 的 Calendar 类）
+**日历类**（类似于 JDK7 的 `Calendar` 类）
 
-- LocalDate 类，表示年、月、日
-- LocalTime 类，表示时、分、秒
-- LocalDateTime 类，表示年、月、日、时、分、秒
+- `LocalDate` 类，表示年、月、日
+- `LocalTime` 类，表示时、分、秒
+- `LocalDateTime` 类，表示年、月、日、时、分、秒
 
 **日期时间工具类**（用于计算时间间隔）：
 
-- Duration 类，表示时间间隔（秒、纳秒）
-- Period 类，表示时间间隔（年、月、日）
-- ChronoUnit 类，表示时间间隔（所有单位）
+- `Duration` 类，表示时间间隔（秒、纳秒）
+- `Period` 类，表示时间间隔（年、月、日）
+- `ChronoUnit` 类，表示时间间隔（所有单位）
 
 ## 一、ZoneId 类
 
-ZoneId 类，表示时区；在 Java 中，时区的表示形式是：`洲名/城市名` 或者 `国家名/城市名`。比如：
+`ZoneId` 类，表示时区；在 Java 中，时区的表示形式是：`洲名/城市名` 或者 `国家名/城市名`。比如：
 
 - `Asia/Shanghai`；`Asia/Taipei`、`Asia/Chongqing`
 
@@ -52,7 +52,7 @@ ZoneId 类，常用的方法如下：
 
 ### 1.getAvailableZoneIds 静态方法
 
-案例理解：`getAvailableZoneIds` 静态方法的使用，获取 Java 中可用的时区
+案例理解：`static Set<String> getAvailableZoneIds()` 静态方法的使用，获取 Java 中可用的时区
 
 demo-project/base-code/Day20/src/com/kkcf/zoneid/ZoneIdDemo01.java
 
@@ -74,7 +74,7 @@ public class ZoneIdDemo01 {
 
 ### 2.systemDefault 静态方法
 
-案例理解：`systemDefault` 静态方法的使用，获取当前计算机系统中的默认时区
+案例理解：`static ZoneId systemDefault()` 静态方法的使用，获取当前计算机系统中的默认时区
 
 demo-project/base-code/Day20/src/com/kkcf/zoneid/ZoneIdDemo01.java
 
@@ -94,7 +94,7 @@ public class ZoneIdDemo01 {
 
 ### 3.of 静态方法
 
-案例理解：`of` 静态方法的使用，获取一个指定时区
+案例理解：`static ZoneId of(String zoneId)` 静态方法的使用，获取一个指定时区
 
 demo-project/base-code/Day20/src/com/kkcf/zoneid/ZoneIdDemo01.java
 
@@ -130,7 +130,7 @@ Instant 类，常用的方法有如下：
 
 ### 1.now 静态方法（Instant）
 
-案例理解：`static Instant now()` 静态方法的使用，获取当前标准时间。
+案例理解：`static Instant now()` 静态方法的使用，获取当前标准时间的时间戳。
 
 demo-project/base-code/Day20/src/com/kkcf/instant/InstantDemo01.java
 
@@ -150,7 +150,7 @@ public class InstantDemo01 {
 
 ### 2.ofEpochMilli 静态方法
 
-案例理解：静态方法的使用，根据秒、毫秒、纳秒获取 Instant 对象。
+根据秒、毫秒、纳秒，获取 Instant 时间戳对象。
 
 - `static Instant ofEpochMilli(long epochMilli)` 方法；
 - `static Instant ofEpochSecond(long epochSecond)`  方法；
@@ -185,7 +185,7 @@ public class InstantDemo01 {
 
 ### 3.atZone 方法
 
-案例理解：`ZonedDateTime atZone(ZoneId zone)` 方法，为 Instant 对象，指定时区；
+`ZonedDateTime atZone(ZoneId zone)` 方法，为 Instant 时间戳对象，指定时区；
 
 demo-project/base-code/Day20/src/com/kkcf/instant/InstantDemo02.java
 
@@ -207,7 +207,7 @@ public class InstantDemo02 {
 
 ### 4.isAfter、isBefore 方法
 
-案例理解：`isAfter([Instant otherInstant)`、`isBefore(Instant otherInstant)` 方法的使用，用于判断 Instant 对象的时间前后顺序。
+案例理解：`boolean isAfter([Instant otherInstant)`、`boolean isBefore(Instant otherInstant)` 方法的使用，用于判断 Instant 对象的时间前后顺序。
 
 demo-project/base-code/Day20/src/com/kkcf/instant/InstantDemo02.java
 
@@ -230,7 +230,7 @@ public class InstantDemo02 {
 
 ### 5.minus、plus 开头的方法
 
-案例理解：`minusMillis(long millisToSubtract)` 方法的使用，将 Instant 对象，往后减 1s。
+`Instant minusMillis(long millisToSubtract)` 方法的使用，将 Instant 对象，往后减 1s。
 
 demo-project/base-code/Day20/src/com/kkcf/instant/InstantDemo03.java
 
@@ -256,7 +256,7 @@ public class InstantDemo03 {
 
 ## 三、ZoneDateTime 类
 
-ZoneDateTime 类，用于表示带有时区的时间。
+ZoneDateTime 类，用于表示带有时区的时间对象。
 
 ZoneDateTime 类，常用的方法如下：
 
@@ -270,7 +270,7 @@ ZoneDateTime 类，常用的方法如下：
 
 ### 1.now 静态方法（ZoneDateTime）
 
-案例理解：`static ZonedDateTime now()` 方法的使用；获取当前时间（带时区）的对象
+`static ZonedDateTime now()` 方法的使用；获取当前时间（带时区）的时间对象
 
 demo-project/base-code/Day20/src/com/kkcf/zonedatetime/ZoneDateTimeDemo01.java
 
@@ -290,7 +290,7 @@ public class ZoneDateTimeDemo01 {
 
 ### 2.of 开头的静态方法（ZoneDateTime）
 
-案例理解：获取指定的时间对象，有两种种方式：
+案例理解：获取指定的带时区的时间对象，有两种种方式：
 
 - 方式一：使用 `static ZonedDateTime
   of(int year, int month, int dayOfMonth, int hour, int minute, int second, int nanoOfSecond, ZoneId zone)` 方法获取。
@@ -378,10 +378,10 @@ DateTimeFormatter 类，用于时间格式化和解析。
 
 DateTimeFormatter 类，常用的方法有如下：
 
-| 方法名                                     | 说明               |
-| ------------------------------------------ | ------------------ |
-| `static DateTimeFormatter ofPattern(格式)` | 获取格式对象       |
-| `String format(TemporalAccessor temporal)` | 按照指定方式格式化 |
+| 方法名                                     | 说明                              |
+| ------------------------------------------ | --------------------------------- |
+| `static DateTimeFormatter ofPattern(格式)` | 获取 DateTimeFormatter 解析器对象 |
+| `String format(TemporalAccessor temporal)` | 按照指定方式格式化                |
 
 ### 1.ofPattern 静态方法、format 方法
 
@@ -490,9 +490,9 @@ public class LocalDateTimeDemo02 {
 
 > LocalTime 类，专注于时间（秒、毫秒、纳秒）的表示，可用于“秒杀”等业务场景。
 
-### 3.get 开头的方法
+### 3.getXxx 方法
 
-案例理解：使用 `get` 开头的方法，获取一个 LocalDate 日历对象中的年、月
+案例理解：使用 `getXxx` 方法，获取一个 LocalDate 日历对象中的年、月
 
 demo-project/base-code/Day20/src/com/kkcf/localdatetime/LocalDateTimeDemo01.java
 
@@ -523,7 +523,7 @@ public class LocalDateTimeDemo01 {
 }
 ```
 
-- 其它 `get` 开头的方法，使用是类似的。
+- 其它 `getXxx` 方法，使用是类似的。
 
 ### 4.isBefor、isAfter 方法
 
@@ -574,9 +574,9 @@ public class LocalDateTimeDemo01 {
 }
 ```
 
-### 6.minus、plus 开头的方法
+### 6.minusXxx、plusXxx 方法
 
-`minus` 方法的使用，用于修改日历对象的年、月、日，
+`minusXxx` 方法的使用，用于修改日历对象的年、月、日，
 
 案例理解：将日历对象表示的日期，减一年。
 
@@ -708,6 +708,6 @@ public class ChronoUnitDemo01 {
 
 - 获取当前时间都是 `now` 静态方法。
 - 获取指定的时间，方法都以 `of` 开头的静态方法。
-- 修改时间，方法都是以 `with` 开头。
+- 修改指定时间，方法都是以 `with` 开头。
 - 将时间往前推，方法都是以 `minus` 开头。
 - 将时间往后加，方法都是以 `plus` 开头。
