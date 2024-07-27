@@ -12,8 +12,8 @@ Arrays 类中常用的方法如下：
 | ------------------------------------------------------------ | ------------------------ |
 | `public static String toString(数组)`                        | 把数组拼接成一个字符串   |
 | `public static int binarySearch(数组, 查找的元素)`           | 二分查找法查找元素       |
-| `public static int[] copyOf(愿数组, 新数组长度)`             | 拷贝数组                 |
-| `public static int[] copyOfRange(愿数组, 起始索引. 结束索引)` | 拷贝数组（指定范围）     |
+| `public static int[] copyOf(原数组, 新数组长度)`             | 拷贝数组                 |
+| `public static int[] copyOfRange(原数组, 起始索引. 结束索引)` | 拷贝数组（指定范围）     |
 | `public static void fill(数组, 元素)`                        | 填充数组                 |
 | `public static void sort(数组)`                              | 按照默认方式进行数组排序 |
 | `public static void sort(数组, 排序规则)`                    | 按照指定的规则排序       |
@@ -69,15 +69,13 @@ public class MyArraysDemo01 {
 
 ### 3.copyOf 方法
 
-`public static int[] copyOf(愿数组, 新数组长度)`  方法，用于拷贝数组。
+`public static int[] copyOf(愿数组, 新数组长度)`  方法，用于拷贝数组。底层用的是 `System.arraycopy` 方法。
 
-底层用的是 `System.arraycopy` 方法。
+`copyOf` 方法底层会根据第二个参数，来创建新数组：新数组长度：
 
-copyOf 方法底层会根据第二个参数，来创建新数组：
-
-- 如果新数组长度小于老数组长度，会部分拷贝。
-- 如果新数组长度等于老数组长度，会完全拷贝。
-- 如果新数组长度大于老数组长度，会补上默认初始值。
+- 小于老数组长度，会部分拷贝。
+- 等于老数组长度，会完全拷贝。
+- 大于老数组长度，会补上默认初始值。
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo01.java
 
@@ -99,7 +97,9 @@ public class MyArraysDemo01 {
 
 ### 4.copyOfRange 方法
 
-`public static int[] copyOfRange(愿数组, 起始索引. 结束索引)` 方法，用于指定范围，拷贝数组。这个范围的规则是“包头不包尾，包左不包右”。
+`public static int[] copyOfRange(愿数组, 起始索引. 结束索引)` 方法，用于指定范围，拷贝数组。
+
+这个范围的规则是“包头不包尾，包左不包右”。
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo01.java
 
@@ -165,9 +165,7 @@ public class MyArraysDemo01 {
 
 `public static void sort(数组, 排序规则)` 方法，用于指定排序顺序（升序还是降序）。
 
-该方法的前提条件：
-
-- 只能给**引用数据类型**的数组排序；如果数组是基本数据类型，需要变成其对应的包装类。
+该方法的前提条件：只能给**引用数据类型**的数组排序；如果数组是基本数据类型，需要变成其对应的包装类。
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo02.java
 
@@ -195,8 +193,8 @@ public class MyArraysDemo02 {
 
 该方法底层原理：
 
-- 利用插入排序 + 二分查找的方式，进行排序。
-- 默认把 0 索引的数据，当作是有序的；1 索引到最后认为是无序的。
+- 利用**插入排序** + **二分查找**的方式，进行排序。
+- 默认把 `0` 索引的元素，作为一个序列，当作是有序的；`1` 索引到最后的元素，认为是无序的。
 - 遍历无序的序列，将遍历到的元素 A，往有序序列中进行插入，在插入的时候利用二分查找算法，找到插入位置，
 - 遍历到的元素 A，与有序序列插入位置的元素进行比较，比较的规则，就是 `compare` 方法的方法体。
   - 如果 `compare` 方法，返回的是负数，则将 A 元素插入到插入点的前面。
@@ -234,11 +232,11 @@ Lambda 表达式，可以简化匿名内部类的书写.，然而，只能简化
 
 > Java 中的函数式接口，表示有且仅有一个抽象方法的接口；
 >
-> 这种接口上方可以加 `@FunctionalInterface` 注解，用于验证语法是否正确。
+> 这种接口上方，可以加 `@FunctionalInterface` 注解，用于验证语法是否正确。
 
 Lambda 表达式，主要用于省略代码，省略的原则是“可推导，即可省略”。
 
-使用 Lambda 表达式，重构上面 sort 方法的使用。
+使用 Lambda 表达式，重构上面 `sort` 方法的使用。
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo02.java
 
@@ -344,15 +342,15 @@ public class Test01 {
 
 ### 1.练习一：sort 方法的使用
 
-定义数组，并存储一些女朋友对象，利用 Arrays 中的 sort 方法，进行排序。
+定义数组，并存储一些女朋友对象，利用 `Arrays` 工具类中的 `sort` 方法，进行排序。
 
 要求1：属性有姓名、年龄、身高
 
-要求2：按照年龄大小进行排序；年龄一样，按照身高排序；身高一样按照姓名的字母进行排序。
+要求2：按照年龄大小进行排序；如果年龄一样，则按照身高排序；如果身高一样，则按照姓名的字母进行排序。
 
-> String 类里有一个成员方法 `compareTo`，用于字符串对象按照字典顺序进行比较，
+> `String` 类里有一个成员方法 `compareTo`，用于字符串对象，按照 ASCLL 码表顺序进行比较，
 
-JavaBean 类 GirlFriend
+JavaBean 类 `GirlFriend`
 
 demo-project/base-code/Day20/src/com/kkcf/test/GirlFriend.java
 
@@ -418,8 +416,8 @@ import java.util.Arrays;
 public class Test06 {
     public static void main(String[] args) {
         GirlFriend kumiko = new GirlFriend("wee", 18, 1.66);
-        GirlFriend kaori = new GirlFriend("yui", 18, 1.58);
-        GirlFriend mayu = new GirlFriend("mio", 19, 1.66);
+        GirlFriend kaori = new GirlFriend("yui", 19, 1.58);
+        GirlFriend mayu = new GirlFriend("mio", 18, 1.66);
 
         GirlFriend[] gfs = {kumiko, mayu, kaori};
 
@@ -443,7 +441,7 @@ public class Test06 {
 
 ### 2.练习二：不死神兔
 
-有一个很有名的数学逻辑问题称为不死神兔，有一对兔子，从出生第三个月起，每个月生一对兔子，小兔子长到第三个月后，每个月又生一对兔子，假如兔子都不死，问第十二个月的兔子对数是多少？
+有一个很有名的数学逻辑问题称为不死神兔：有一对兔子，从出生第三个月起，每个月生一对兔子，小兔子长到第三个月后，每个月又生一对兔子，假如兔子都不死，问第十二个月的兔子对数是多少？
 
 找规律：
 
@@ -455,11 +453,9 @@ public class Test06 {
 - 第六个月：8 对
 - ……
 
-我们发现，这个问题，本质上是斐波那契数列。
+我们发现，这个问题，本质上是斐波那契数列。使用 Java 解题的两个思路：
 
-使用 Java 解题的两个思路：
-
-思路一：定义一个长度为 12 对数组，并初始化第一、二个元素为 1，然后利用循环求解。
+思路一：循环求解；定义一个长度为 12 的数组，并初始化第一、二个元素为 1，然后利用循环求解。
 
 demo-project/base-code/Day21/src/com/kkcf/test/Test01.java
 
@@ -483,7 +479,9 @@ public class Test01 {
 }
 ```
 
-思路二：使用递归的方式完成：递归的两个核心要素：
+思路二：递归求解：
+
+递归的两个核心要素：
 
 - 找到出口；
 - 找到规律。
@@ -590,5 +588,5 @@ public class Test4 {
         if (stairs == 2) return 2;
         return recursion(stairs - 1) + recursion(stairs - 2);
     }
-}
+} 
 ```

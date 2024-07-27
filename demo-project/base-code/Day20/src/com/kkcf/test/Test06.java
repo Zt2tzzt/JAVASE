@@ -5,8 +5,8 @@ import java.util.Arrays;
 public class Test06 {
     public static void main(String[] args) {
         GirlFriend kumiko = new GirlFriend("wee", 18, 1.66);
-        GirlFriend kaori = new GirlFriend("yui", 18, 1.58);
-        GirlFriend mayu = new GirlFriend("mio", 19, 1.60);
+        GirlFriend kaori = new GirlFriend("yui", 19, 1.58);
+        GirlFriend mayu = new GirlFriend("mio", 18, 1.67);
 
         GirlFriend[] gfs = {kumiko, mayu, kaori};
 
