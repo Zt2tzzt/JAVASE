@@ -135,8 +135,8 @@ public class IntegerDemo03 {
 
 在 JDK5，提出了自动装箱、自动拆箱的机制。
 
-- 自动装箱：把基本数据类型，自动变为包装类型。
-- 自动拆箱：把包装类型，自动变为基本数据类型。
+- 自动装箱：表示把基本数据类型，自动变为包装类型。
+- 自动拆箱：表示把包装类型，自动变为基本数据类型。
 
 demo-project/base-code/Day20/src/com/kkcf/integer/IntegerDemo04.java
 
@@ -227,7 +227,7 @@ public class IntegerDemo05 {
 }
 ```
 
-- 在类型转换时，传入的参数，必须是数字组成的字符串。
+- 在类型转换时，传入的参数，必须是由数字组成的字符串。
 
 - 八种包装类中，除了 `Character` 类以外，都有对应的 `parseXxx` 方法，进行类型转换。比如下方代码：
 
@@ -311,9 +311,9 @@ public class Test01 {
 
 ### 2.练习二
 
-练习二：自己实现 `Integer.parseInt` 方法的效果，将字符串形式的数据，转成整数。
+练习二：自己实现 `Integer.parseInt` 方法的效果，将由数字组成的字符串，转成整数。
 
-要求：字符串中只能是数字，不能有其他字符，最少 1 位，最多 10 位，且不能以 0 开头。
+要求：最少 1 位，最多 10 位，且不能以 0 开头。
 
 demo-project/base-code/Day20/src/com/kkcf/test/Test02.java
 
@@ -373,7 +373,7 @@ public class Test3 {
 }
 ```
 
-- StringBuilder 类的 `insert` 方法，用于指定索引，插入元素。
+- `StringBuilder` 类的 `insert` 方法，用于指定索引，插入元素。
 
 ### 4.练习四
 
@@ -392,11 +392,22 @@ import java.util.Date;
 
 public class Test04 {
     public static void main(String[] args) throws ParseException {
-        long days1 = calcDays1();
+        long days1 = jdk7Calc();
         System.out.println("间隔" + days1 + "天");
 
-        long days2 = calcDays2();
+        long days2 = jdk8Calc();
         System.out.println("间隔" + days2 + "天");
+    }
+
+    /**
+     * 此方法用于：使用 JDK8 以后的方式，计算活了所少天
+     * @return 活了多少天
+     */
+    private static long jdk8Calc() {
+        LocalDate birthLd = LocalDate.of(1997, 10, 16);
+        LocalDate nowLd = LocalDate.now();
+
+        return ChronoUnit.DAYS.between(birthLd, nowLd);
     }
 
     /**
@@ -404,11 +415,13 @@ public class Test04 {
      * @return 活了多少天
      * @throws ParseException 时间字符串转化错误
      */
-    private static long calcDays1() throws ParseException {
+    private static long jdk7Calc() throws ParseException {
         // 生日时间 Date 对象
         String birthStr = "1997-10-16";
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date birthDate = sdf.parse(birthStr);
+
         long birthTime = birthDate.getTime();
 
         // 当前时间 Date 对象
@@ -417,17 +430,6 @@ public class Test04 {
         long intervalTime = nowTime - birthTime;
 
         return intervalTime / (1000 * 60 * 60 * 24);
-    }
-
-    /**
-     * 此方法用于：使用 JDK8 以后的方式，计算活了所少天
-     * @return 活了多少天
-     */
-    private static long calcDays2() {
-        LocalDate birthLd = LocalDate.of(1997, 10, 16);
-        LocalDate nowLd = LocalDate.now();
-
-        return ChronoUnit.DAYS.between(birthLd, nowLd);
     }
 }
 ```
@@ -446,15 +448,15 @@ JDK7 前的解法：
 
 - 思路 1：计算每一年的 1 月 1 日 0 时 0 分，到 12 月 31 日 23 时 59 分间隔的毫秒数，再转为天数，看是否是 365 天。
 - 思路 2：计算每一年的 2 月 1 日 0 时 0 分，到 3 月 1 日 0 时 0 分间隔的毫秒数，再转为天数，看是否是 29 天。
-- 思路 3，利用 Calendar 类，将每一年的 3 月 1 日减去一天，如果结果的日期是 2 月 29 日，说明是闰年。
-- 思路 4：利用 Calendar 类，将每一年的 1 月 1 日减去一天，如果结果的日期是一年中的第 366 天，说明前一年是闰年。
+- 思路 3，利用 `Calendar` 类，将每一年的 3 月 1 日减去一天，如果结果的日期是 2 月 29 日，说明是闰年。
+- 思路 4：利用 `Calendar` 类，将每一年的 1 月 1 日减去一天，如果结果的日期是一年中的第 366 天，说明前一年是闰年。
 
 思路 3、思路 4 更加简洁：下方代码用思路 3 实现：
 
 JDK8 的解法，
 
-- 思路 1：与上方思路 3 类似，只不过使用的是 JDK8 中的日历类 LocalDate。
-- 思路 2：直接使用 LocalDate 类的方法 `isLeapYear`，判断当前日历对象所在年份是否是闰年。
+- 思路 1：与上方思路 3 类似，只不过使用的是 JDK8 中的日历类 `LocalDate`。
+- 思路 2：直接使用 `LocalDate` 类的方法 `isLeapYear`，判断当前日历对象所在年份是否是闰年。
 
 demo-project/base-code/Day20/src/com/kkcf/test/Test05.java
 

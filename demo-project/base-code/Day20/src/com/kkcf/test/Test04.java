@@ -8,10 +8,10 @@ import java.util.Date;
 
 public class Test04 {
     public static void main(String[] args) throws ParseException {
-        long days1 = calcDays1();
+        long days1 = jdk7Calc();
         System.out.println("间隔" + days1 + "天");
 
-        long days2 = calcDays2();
+        long days2 = jdk8Calc();
         System.out.println("间隔" + days2 + "天");
     }
 
@@ -19,7 +19,7 @@ public class Test04 {
      * 此方法用于：使用 JDK8 以后的方式，计算活了所少天
      * @return 活了多少天
      */
-    private static long calcDays2() {
+    private static long jdk8Calc() {
         LocalDate birthLd = LocalDate.of(1997, 10, 16);
         LocalDate nowLd = LocalDate.now();
 
@@ -31,7 +31,7 @@ public class Test04 {
      * @return 活了多少天
      * @throws ParseException 时间字符串转化错误
      */
-    private static long calcDays1() throws ParseException {
+    private static long jdk7Calc() throws ParseException {
         // 生日时间 Date 对象
         String birthStr = "1997-10-16";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
