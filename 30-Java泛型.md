@@ -2,7 +2,7 @@
 
 ## 一、Java 泛型
 
-Java 泛型，是 JDK5 中引入的特性，它提供了编译时类型安全检测机制。
+Java 泛型，是 JDK5 中引入的特性，它提供了编译时的类型安全检测机制。
 
 Java 泛型，定义格式：
 
@@ -11,9 +11,9 @@ Java 泛型，定义格式：
 
 Java 泛型，仅支持**引用数据类型**。
 
-Java 泛型，在集合中的应用：
+案例理解：Java 泛型，在集合中的应用：
 
-在没有泛型的时候，集合中可以添加任意类型的数据，它们都会被当作 Object 类型。
+在没有泛型的时候，集合中可以添加任意类型的数据，它们都会被当作 `Object` 类型的对象。
 
 demo-project/base-code/Day23/src/com/kkcf/generics/GenericsDemo01.java
 
@@ -33,27 +33,27 @@ public class GenericsDemo01 {
 }
 ```
 
-- 在获取数据时，无法使用它的特有行为。
+- 在多态下，被当作 `Object` 类型的对象，无法使用它的特有行为（“编译看左边，运行看右边”）。
 
 Java 泛型，好处：
 
 1. 限定集合中的数据类型，把运行时期的问题，提前到了编译期间。
 2. 避免了强制类型转换。
 
-Java 泛型，是伪泛型，只在编译时期起作用，比如为集合指定泛型后。
+Java 泛型，是伪泛型，只在编译时期起作用，比如：为集合指定泛型后。
 
-- 事实上，集合中存储的，仍然是 Object 类型的对象；
-- 只是在数据添加到集合时，会检测数据类型是否符合泛型的限定。
+- 事实上，集合中存储的，仍然是 `Object` 类型的对象；只是:
+- 在数据添加到集合时，会检测数据类型是否符合泛型的限定。
 - 在数据取出集合时，会将数据强转为泛型指定的类型。
-- 当 Java 文件，编译为 .class 文件时，泛型就会消失，这个过程称为“**泛型的擦除**”。
+- 当 .Java 文件，编译为 .class 文件时，泛型就会消失，这个过程称为“**泛型的擦除**”。
 
 Java 泛型的细节总结：
 
-- 泛型中不能写基本数据类型；
-- 指定泛型的具体类型后，传递数据时，可以传入该类型或者其子类型，这是多态的体现。
-- 如果不写泛型，类型默认是 Object。
+- 泛型，不支持基本数据类型，只支持引用数据类型；
+- 指定泛型的具体类型后，传递数据时，可以传入该类型或者其子类型（多态）。
+- 如果不指定泛型，类型默认是 `Object`。
 
-Java 泛型，可以写在方法、类、接口上，它们分别称为**泛型方法**、**泛型类**、**泛型接口**。
+Java 泛型，可以写在类、方法、接口上，它们分别称为**泛型类**、**泛型方法**、**泛型接口**。
 
 ### 1.Java 泛型类
 
@@ -71,7 +71,7 @@ Java 泛型类，书写格式为：
 
 #### 2.泛型类书写使用
 
-案例理解：使用泛型类，实现一个自己的 ArrayList。
+案例理解：使用泛型类，实现一个自己的 `ArrayList`。
 
 demo-project/base-code/Day23/src/com/kkcf/generics/MyArrayList.java
 
@@ -125,6 +125,8 @@ public class Test02 {
 }
 ```
 
+结论：当泛型类创建实例对象时，泛型会被确认下来；
+
 ### 2.Java 泛型方法
 
 在 Java 中，当方法形参类型不确定时，可以使用泛型，有两种方案：
@@ -142,7 +144,7 @@ Java 泛型方法，书写格式为：
 }
 ```
 
-在“返回值类型”前，即所有修饰符后，编写泛型。
+在返回值类型前，即所有修饰符后，编写泛型。
 
 #### 2.泛型方法使用
 
@@ -369,12 +371,10 @@ class Zi extends Fu {}
 
 为了解决 Java 泛型，不能继承的问题，要使用泛型的通配符。
 
-Java 泛型的通配符是 `?`，表示所有的类型，
+Java 泛型的通配符是 `?`，表示所有的类型，在它基础上，**限定类型的范围**，常用的有两种方式：
 
-在通配符 `?` 上，**限定类型的范围**，常用的有两种方式：
-
-- `? extends E`，表示限定为 E 和它的所有子类类型。
-- `? super E`，表示限定为 E 和它的所有父类类型。
+- `? extends E`，表示限定为 `E` 和它的所有子类类型。
+- `? super E`，表示限定为 `E` 和它的所有父类类型。
 
 使用泛型的通配符，重构上方代码：
 
@@ -430,7 +430,9 @@ class Zi extends Fu {}
 
 需求 2：定义一个方法，该方法能养所有动物，但是不能传递其它类型；
 
-Animal 类：
+`Animal` 类：
+
+- 将 `Animal` 类设为抽象类，不让外界创建它的实力对象。这样做没有意义。
 
 demo-project/base-code/Day23/src/com/kkcf/javabean/Animal.java
 
@@ -449,6 +451,7 @@ public abstract class Animal {
         this.age = age;
     }
 
+    // 抽象方法
     public abstract void eat();
 
     // getter、getter
@@ -474,7 +477,7 @@ public abstract class Animal {
 }
 ```
 
-Cat 类
+`Cat` 类
 
 demo-project/base-code/Day23/src/com/kkcf/javabean/Cat.java
 
@@ -488,7 +491,7 @@ public abstract class Cat extends Animal {
 }
 ```
 
-Dog 类
+`Dog` 类
 
 demo-project/base-code/Day23/src/com/kkcf/javabean/Dog.java
 
@@ -502,7 +505,7 @@ public abstract class Dog extends Animal {
 }
 ```
 
-PersianCat 类，表示波斯猫
+`PersianCat` 类，表示波斯猫
 
 demo-project/base-code/Day23/src/com/kkcf/javabean/PersianCat.java
 
@@ -521,7 +524,7 @@ public class PersianCat extends Cat {
 }
 ```
 
-LihuaCat 类，表示狸花猫
+`LihuaCat` 类，表示狸花猫
 
 demo-project/base-code/Day23/src/com/kkcf/javabean/LihuaCat.java
 
@@ -540,7 +543,7 @@ public class LihuaCat extends Cat {
 }
 ```
 
-TeditDog 类，表示泰迪狗
+`TeditDog` 类，表示泰迪狗
 
 demo-project/base-code/Day23/src/com/kkcf/javabean/TeditDog.java
 
@@ -559,7 +562,7 @@ public class TeditDog extends Dog {
 }
 ```
 
-HuskyDog 类，表示哈士奇狗
+`HuskyDog` 类，表示哈士奇狗
 
 demo-project/base-code/Day23/src/com/kkcf/javabean/HuskyDog.java
 
@@ -623,12 +626,13 @@ public class Test04 {
         pcs.add(new PersianCat("小b", 1));
         pcs.add(new PersianCat("小c", 2));
 
+        keepCat(pcs);
+
         ArrayList<LihuaCat> lhs = new ArrayList<>();
         lhs.add(new LihuaCat("小d", 1));
         lhs.add(new LihuaCat("小e", 2));
         lhs.add(new LihuaCat("小f", 1));
 
-        keepCat(pcs);
         keepCat(lhs);
 
         ArrayList<TeditDog> teditList = new ArrayList<>();
@@ -636,12 +640,13 @@ public class Test04 {
         teditList.add(new TeditDog("小h", 2));
         teditList.add(new TeditDog("小i", 1));
 
+        keepDog(teditList);
+
         ArrayList<HuskyDog> huskyList = new ArrayList<>();
         huskyList.add(new HuskyDog("小j", 1));
         huskyList.add(new HuskyDog("小k", 2));
         huskyList.add(new HuskyDog("小l", 1));
 
-        keepDog(teditList);
         keepDog(huskyList);
     }
 }
