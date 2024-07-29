@@ -2,7 +2,7 @@
 
 `Set` 系列集合实现了 `Collection` 接口；
 
-与 `List` 系列集合相反，实现 `Set` 接口的类，其对象要求其中的元素：
+与 `List` 系列集合相反，实现 `Set` 接口的集合类，其对象要求其中的元素：
 
 - **无序**：指的是存、取的元素（遍历）顺序是不一致的。
 - **不重复**：表示集合中存储的元素，是不可重复的。可用于做去重。
@@ -10,11 +10,13 @@
 
 `Set` 集合的实现类；
 
-- `HashSet`：无序、不重复、无索引
-- `LinkedHashSet`：有序、不重复、无索引
-- `TreeSet`：可排序、不重复、无索引
+- `HashSet`：特点是：无序、不重复、无索引；
+- `LinkedHashSet`：特点是：有序、不重复、无索引；
+- `TreeSet`：特点是：可排序、不重复、无索引。
 
-案例理解；使用 `Set` 系列集合，添加字符串，并使用多种方式遍历（迭代器、增强 for 遍历、forEach 方法结合 Lambda 表达式）。
+案例理解；使用 `Set` 系列集合，添加字符串；
+
+并使用多种方式遍历（迭代器、增强 for 遍历、forEach 方法结合 Lambda 表达式）。
 
 demo-project/base-code/Day23/src/com/kkcf/set/SetDemo01.java
 
@@ -28,7 +30,7 @@ public class SetDemo01 {
     public static void main(String[] args) {
         Set<String> set = new HashSet<>();
 
-        // 使用 Set 系列结合的 add 方法，要处理返回值，因为有可能添加不成功。
+        // 使用 Set 系列集合的 add 方法，要处理返回值，因为有可能添加不成功。
         boolean flag1 = set.add("张三");
         boolean flag2 = set.add("张三");
 
@@ -72,16 +74,14 @@ public class SetDemo01 {
 
 ### 1.哈希表
 
-`HashSet` 集合底层采用**哈希表**存储数据。
-
-哈希表是一种增、删、改、查性能都比较高的数据结构。
+`HashSet` 集合，底层采用**哈希表**结构存储数据。这是一种增、删、改、查性能都比较高的数据结构。
 
 ### 2.哈希值
 
 哈希表中，有一个重要的概念：**哈希值**。
 
-- 哈希值，是对象根据 `hashCode` 方法，计算出来的 int 类型的整数；
-- `hashCode` 方法，定义在 `Object` 类中，默认使用地址值进行计算；
+- Java 中的哈希值，是实例对象调用 `hashCode` 方法，计算出来的 int 类型的整数；
+- `hashCode` 方法，定义在 `Object` 类中，默认返回实例对象的地址值；
 - 如果自定义类中，不重写 `hashCode` 方法，那么不同实例对象，计算出来的哈希值，都是不一样的。
 - 如果自定义类中，重写 `hashCode` 方法，利用对象内部的属性值，计算哈希值。那么不同的实例对象只要属性值相同，计算出的哈希值就是一样的。
 
@@ -103,22 +103,8 @@ public class Student {
         this.name = name;
         this.age = age;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
+  
+    // getter、setter……
 }
 ```
 
@@ -163,22 +149,6 @@ public class Student {
         this.age = age;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -191,6 +161,8 @@ public class Student {
     public int hashCode() {
         return Objects.hash(name, age);
     }
+  
+    // getter、setter……
 }
 ```
 
@@ -219,10 +191,25 @@ public class SetDemo02 {
 在哈希值计算时，有可能发生**哈希碰撞**
 
 - Java 中哈希值是 int 类型的数字，该类型取值范围是 -21 亿多-21 亿多，一共 42 亿多数字；
-- 如果创建 50 亿个对象，那么必定会有 8 亿多对象的哈希值是重复的。
+- 假设创建了 50 亿个对象，那么必会有 8 亿多对象的哈希值是重复的。
 - 在小部分情况下，不同属性值，或者不同地址值，计算出来的哈希值也有可能是一样的，称为哈希碰撞。
 
-`String` 类中，也重写了 `hashCode` 方法：
+哈希碰撞的情况：
+
+demo-project/base-code/Day23/src/com/kkcf/set/SetDemo02.java
+
+```java
+package com.kkcf.set;
+
+public class SetDemo02 {
+    public static void main(String[] args) {
+        System.out.println("abc".hashCode()); // 96354
+        System.out.println("acD".hashCode()); // 96354
+    }
+}
+```
+
+`String` 类中，重写了 `hashCode` 方法：
 
 java/lang/String.java
 
@@ -252,21 +239,6 @@ public int hashCode() {
 
 > `String`、`Integer` 等等 Java 提供的类中，已经重写好了 `hashCode`、`equals` 方法。
 
-哈希碰撞的情况：
-
-demo-project/base-code/Day23/src/com/kkcf/set/SetDemo02.java
-
-```java
-package com.kkcf.set;
-
-public class SetDemo02 {
-    public static void main(String[] args) {
-        System.out.println("abc".hashCode()); // 96354
-        System.out.println("acD".hashCode()); // 96354
-    }
-}
-```
-
 ### 4.重写 hashCode、equals 方法的意义
 
 当在 `HashSet` 中，存储自定义对象时，必须重写该对象类中的 `hashCode`、`equals` 方法。
@@ -281,9 +253,9 @@ Java 中，哈希表的实现：
 - JDK8 之前，哈希表的实现是数组 + 链表；
 - JDK8 以后，哈希表的实现是数组 + 链表 + 红黑树。
 
-在哈希表的创建，和元素的存入，具体的步骤如下：
+创建哈希表，并存入元素，具体的步骤如下：
 
-1. 创建一个默认长度 `16` ，默认加载因子 `0.75` 的数组，数组名为 `table`；
+1. 先创建一个默认长度 `16` ，默认加载因子 `0.75` 的数组（数组名为 `table`）；
 
 2. 结合元素的哈希值，和数组长度，计算出元素应存入的位置：计算公式为：`int index = (数组长度 - 1) & 哈希值;`
 
@@ -299,7 +271,7 @@ Java 中，哈希表的实现：
        - JDK8 以前，老元素挂在新元素下面。
        - JDK8 以后，新元素挂在老元素下面。
 
-4. JDK8 以后，当数组长度大于等于 64，并且数组中的链表长度大于 8 时，该链表会转为红黑树的数据结构。
+4. JDK8 以后，当数组长度大于等于 `64`，并且数组中的链表长度大于 `8` 时，该链表会转为红黑树的数据结构。
 
 ![HashSet底层实现原理](NodeAssets/HashSet底层实现原理.jpg)
 
@@ -310,10 +282,12 @@ Java 中，哈希表的实现：
 
 综上所述：
 
-- `HashSet` 之所以是无序的、无索引的、是因为当遍历哈希表底层数组 table 时，不是按照元素的插入顺序遍历的。
-- `HashSet` 之所以是不重复的，是因为元素插入时，使用该元素的 `equals` 方法进行比较，相同元素会被舍弃。
+- `HashSet` 之所以是无序的、无索引的、是因为当遍历哈希表底层数组 table 时，是按照数组 table 的索引进行遍历的，这个顺序与元素添加顺序无关。
+- `HashSet` 之所以是不重复的，是因为元素插入时，会使用该元素的 `equals` 方法进行比较，相同元素会被舍弃。
 
-案例理解：利用 `HashSet` 集合，去除重复元素；创建一个存储学生对象的集合，学生对象的属性值相同，就认为是重复的对象。
+案例理解：利用 `HashSet` 集合，去除重复元素；
+
+创建一个存储学生对象的集合，学生对象的属性值全部相同，就认为是重复的对象。
 
 JavaBean 类复用上方的 Student 类。
 
@@ -334,6 +308,7 @@ public class SetDemo02 {
         Student stu4 = new Student("zhangsan", 23);
 
         HashSet<Student> stus = new HashSet<>();
+
         stus.add(stu1);
         stus.add(stu2);
         stus.add(stu3);
@@ -346,13 +321,13 @@ public class SetDemo02 {
 
 ## 二、LinkedHashSet 集合
 
-`LinkedHashSet` 集合，继承自 `HashSet` 集合。
+`LinkedHashSet` 集合类，继承自 `HashSet` 集合类。
 
-`LinkedHashSet` 集合，特点是：有序、不重复、无索引；
+`LinkedHashSet` 集合，特点是：**有序**、不重复、无索引；
 
 `LinkedHashSet` 特别的地方在于，它会保证元素的存入、取出（遍历）顺序是一致的。
 
-`LinkedHashSet` 底层原理：底层依然是哈希表的数据结构，只是每个元素在存入哈希表时，又额外被添加进了一个双向链表的机制，用于记录数据存储的顺序。如下图所示：
+`LinkedHashSet` 底层原理：依然使用哈希表的数据结构存储数据，只是每个元素在存入哈希表时，又额外被添加进了一个双向链表的机制，用于记录数据存储的顺序。如下图所示：
 
 ![LinkedHashSet底层原理](NodeAssets/LinkedHashSet底层原理.jpg)
 
@@ -392,11 +367,11 @@ public class SetDemo03 {
 
 `TreeSet` 的特点：**可排序**、不重复、无索引
 
-- 可排序，指的是元素被存入集合后，默认会按照元素值升序排序。
+- 可排序，指的是元素被存入集合后，默认会按照元素值大小升序排序。
 
-`TreeSet` 集合，底层基于红黑树的数据结构实现排序；增、删、改、查性能都比较好。
+`TreeSet` 集合，底层基于红黑树的数据结构实现排序；增、删、改、查性能都比较高。
 
-当自定义对象，添加到 `TreeSet` 集合中，不需要重写 `hashCode` 、`equals` 方法。
+当自定义对象，添加到 `TreeSet` 集合中，不需要重写 `hashCode` 、`equals` 方法。而是需要指定该自定义对象的排序规则，排序规则得到的数值相等，表示是同一个元素，则舍弃；
 
 案例理解，在 `TreeSet` 集合中，存入一些数字（包装类型），打印集合；
 
@@ -420,15 +395,15 @@ public class SetDemo04 {
 }
 ```
 
-对于数据类型 `Integer`、`Double`、……默认都是升序排序的。
+对于 Java 提供的包装类型 `Integer`、`Double`、……默认都是升序排序的。
 
-对于 `Character`（字符），`String`（字符串）类型，会按照字符在 ASCLL 码表中的数字升序进行排序。
+对于字符包装类 `Character`，字符串类 `String`，会按照字符在 ASCLL 码表中的数字，升序排序。
 
 这是因为，上面这些 Java 提供的包装类，都采用了下方 `TreeSet` 默认排序规则。
 
 ### 1.TreeSet 默认排序
 
-`TreeSet` 的默认排序，又称自然排序：它指的是存入 `TreeSet` 集合中的对象，它的类实现了 `Comparable` 接口，用于指定改引用类型对象之间的比较规则。
+`TreeSet` 的默认排序，又称自然排序：指的是存入 `TreeSet` 集合中的对象，它的类实现了 `Comparable` 接口，用于指定该引用类型对象之间的比较规则。
 
 案例理解：创建 `TreeSet` 集合，并添加三个学生 `Student` 对象；
 
@@ -436,7 +411,7 @@ public class SetDemo04 {
 - 要求按照学生的年龄进行排序；
 - 如果同年龄，就按照姓名字母进行排序。
 
-`Student` 类，如果要存入 `TreeSet` 集合，就要实现 `Comparable` （泛型）接口，并实现其中的 `compareTo` 方法。
+`Student` 类，如果要存入 `TreeSet` 集合，就要实现 `Comparable`（泛型）接口，并实现其中的 `compareTo` 方法。
 
 demo-project/base-code/Day23/src/com/kkcf/javabean/Student.java
 
@@ -459,20 +434,11 @@ public class Student implements Comparable<Student> {
 
     // getter、setter……
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return age == student.age && Objects.equals(name, student.name);
-    }
-
     // toString……
 
     @Override
     public int compareTo(Student o) {
         int result = this.getAge() - o.getAge();
-
         if (result == 0) result = this.getName().compareTo(o.getName());
 
         return result;
@@ -482,8 +448,8 @@ public class Student implements Comparable<Student> {
 
 - `compareTo` 方法参数 `o`，表示要比较的元素（在这个场景中，表示已经存在于 `TreeSet` 集合底层红黑树中的元素）。
 - `compareTo` 返回值是：
-  - 负数，认为要添加的元素是小的，存 `TreeSet` 集合底层红黑树左边。
-  - 整数，认为要添加的元素是大的，存 `TreeSet` 集合底层红黑树右边。
+  - 负数，认为要添加的元素是小的，存在 `TreeSet` 集合底层红黑树左边。
+  - 整数，认为要添加的元素是大的，存在 `TreeSet` 集合底层红黑树右边。
   - 0，认为要添加的元素已经存在，舍弃。·
 
 测试类
@@ -520,11 +486,12 @@ public class SetDemo04 {
 
 ### 2.TreeSet 比较器排序
 
-`TreeSet` 比较器排序：指的是创建 `TreeSet` 集合对象的时候，为构造函数传入一个比较器 `Comparator` 对象，指定比较规则；
+`TreeSet` 比较器排序指的是：
 
-即传入一个 `Comparator` 函数式接口的实现类对象。
+- 创建 `TreeSet` 集合对象的时候，为构造函数传入一个比较器 `Comparator` 对象，用于指定比较规则；
+- 即传入一个 `Comparator` 函数式接口的实现类对象。
 
-案例理解：创建 `TreeSet` 集合，在其中存入字符串。按照字符串长度，进行排序。
+案例理解：创建 `TreeSet` 集合，在其中存入字符串。要求按照字符串长度，进行排序。
 
 demo-project/base-code/Day23/src/com/kkcf/set/SetDemo05.java
 
@@ -535,6 +502,7 @@ import java.util.TreeSet;
 
 public class SetDemo05 {
     public static void main(String[] args) {
+        // 使用匿名内部类的方式实现
         /*TreeSet<String> treeSet = new TreeSet<>(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -557,7 +525,6 @@ public class SetDemo05 {
             return i;
         });
 
-
         treeSet.add("qwer");
         treeSet.add("abc");
         treeSet.add("df");
@@ -568,12 +535,12 @@ public class SetDemo05 {
 }
 ```
 
-`Comparator` 函数时接口中：
+`Comparator` 函数式接口中：
 
 - `compare` 方法的参数 `o1` 表示当前要添加的元素；`o2` 表示已经在 `TreeSet` 底层红黑树中存在的元素。
 - `compare` 方法，返回值是：
-  - 负数，认为要添加的元素是小的，存 `TreeSet` 底层红黑树左边。
-  - 整数，认为要添加的元素是大的，存 `TreeSet` 底层红黑树右边。
+  - 负数，认为要添加的元素是小的，存在 `TreeSet` 底层红黑树左边。
+  - 整数，认为要添加的元素是大的，存在 `TreeSet` 底层红黑树右边。
   - 0，认为要添加的元素已经存在，舍弃。·
 
 案例理解：学生类中有属性：姓名，年龄，语文成绩，数学成绩，英语成绩；
@@ -610,51 +577,9 @@ public class Student2 implements Comparable<Student2> {
         this.english = english;
     }
 
-    // getter、setter
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getChinese() {
-        return chinese;
-    }
-
-    public void setChinese(int chinese) {
-        this.chinese = chinese;
-    }
-
-    public int getMath() {
-        return math;
-    }
-
-    public void setMath(int math) {
-        this.math = math;
-    }
-
-    public int getEnglish() {
-        return english;
-    }
-
-    public void setEnglish(int english) {
-        this.english = english;
-    }
-
-    @Override
-    public String toString() {
-        return "Student2{" + "name='" + name + '\'' + ", age=" + age + ", chinese=" + chinese + ", math=" + math + ", english=" + english + '}';
-    }
+    // getter、setter……
+  
+    // toString……
 
     @Override
     public int compareTo(Student2 o) {
@@ -700,4 +625,4 @@ public class Student2 implements Comparable<Student2> {
 
 - 一般使用 `HashSet` 集合；
 - 如果要保证元素的存、取（遍历）顺序，使用 `LinkedHashSet` 集合。
-- 如果要按照元素值排序，使用 `TreeSet` 集合。
+- 如果要按照元素值大小排序，使用 `TreeSet` 集合。

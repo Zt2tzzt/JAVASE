@@ -1,4 +1,4 @@
-package com.kkcf.test;
+package com.kkcf.training;
 
 import java.util.ArrayList;
 import java.util.Scanner;

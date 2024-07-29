@@ -3,13 +3,13 @@
 `Map` 双列集合，有如下特点：
 
 - 每次添加一个键值对（对象），在 Java 中又称为“Entry 对象”。键与值是一一对应的。
-- 在集合中，键不重复，值可以重复。
+- 在 Map 集合中，键不重复，值可以重复。
 
-`Map` 双列结合的体系结构，如下图所示：
+`Map` 双列集合，体系结构，如下图所示：
 
 ![Map双列结合体系结构](NodeAssets/Map双列结合体系结构.jpg)
 
-> `Hashtable` 集合，`Properties` 集合与 I/O 相关，后续详细介绍。
+> `Hashtable` 集合，`Properties` 集合，与 I/O 相关，后续详细介绍。
 
 ## 一、Map 双列集合方法
 
@@ -19,10 +19,10 @@
 
 | 方法名                                | 说明                                 |
 | ------------------------------------- | ------------------------------------ |
-| `V get(Object key);`                  | 获取键对应的值                       |
 | `V put(K key, V value)`               | 添加元素                             |
-| `V remove(Object key)`                | 根据键，删除键值对元素               |
+| `V remove(Object key)`                | 根据键，删除键值对对象元素           |
 | `void clear()`                        | 移除所有的键值对元素                 |
+| `V get(Object key);`                  | 获取键对应的值                       |
 | `boolean containsKey(Object key)`     | 判断集合是否包含指定的键             |
 | `boolean containsValue(Object value)` | 判断集合是否包含指定的值             |
 | `boolean isEmpty()`                   | 判断集合是否为空                     |
@@ -55,11 +55,9 @@ public class MapDemo01 {
         String val3 = map.put("tsukamoto", "kumiko");
 
         System.out.println(val1 + val2 + val3); // nullnullnull
-
         System.out.println(map); // {mochizou=tamako, oreki=chitanda, tsukamoto=kumiko}
 
         String val4 = map.put("oreki", "satoshi");
-
         System.out.println(val4); // chitanda
 
         System.out.println(map); // {mochizou=tamako, oreki=satoshi, tsukamoto=kumiko}
@@ -69,7 +67,7 @@ public class MapDemo01 {
 
 ### 2.remove 方法
 
-`V remove(Object key)` 方法，用于删除集合中的键值对对象元素。返回键值对中的值：
+`V remove(Object key)` 方法，用于删除集合中的键值对对象元素。返回被删除键值对对象中的值：
 
 demo-project/base-code/Day24/src/com/kkcf/map/MapDemo01.java
 
@@ -91,7 +89,6 @@ public class MapDemo01 {
         System.out.println(map); // {mochizou=tamako, oreki=chitanda, tsukamoto=kumiko}
 
         String val1 = map.remove("oreki");
-
         System.out.println(val1); // chitanda
     }
 }
@@ -153,11 +150,9 @@ public class MapDemo01 {
         System.out.println(map); // {mochizou=tamako, oreki=chitanda , tsukamoto =kumiko}
 
         boolean flag1 = map.containsKey("mochizou");
-
         System.out.println(flag1); // true
 
         boolean flag2 = map.containsValue("kumiko");
-
         System.out.println(flag2); // true
     }
 }
@@ -185,11 +180,9 @@ public class MapDemo01 {
         map.put("tsukamoto ", "kumiko");
 
         System.out.println(map); // {mochizou=tamako, oreki=chitanda , tsukamoto =kumiko}
-
         System.out.println(map.isEmpty()); // false
 
         map.clear();
-
         System.out.println(map.isEmpty()); // true
     }
 }
@@ -227,9 +220,9 @@ public class MapDemo01 {
 
 `Map` 双列集合，有三种遍历方式：
 
-- 键找值遍历；
-- 键值对对象遍历；
-- forEach 方法结合 Lambda 表达式遍历。
+- 方式一：键找值遍历；
+- 方式二：键值对对象遍历；
+- 方式三：forEach 方法结合 Lambda 表达式遍历。
 
 ### 1.Map 双列集合遍历-键找值
 
@@ -270,7 +263,7 @@ public class MapDemo02 {
 
 使用 `Map` 集合的 `entrySet` 方法，返回一个 `Entry` 对象组成的 `Set` 集合。
 
-> `Entry` 接口，是 `Map` 接口中的一个内部接口，可以使用 `Map.Entry` 获取：
+> `Entry` 接口，是 `Map` 接口中的一个内部接口，可以使用 `Map.Entry` 表示，如下方所示：
 >
 > ```java
 > Set<Map.Entry<String, String>> entries = map.entrySet();
@@ -375,15 +368,15 @@ public class MapDemo02 {
 - 当使用 `put` 方法，添加键值对时：
   1. 先创建一个 **Entry 对象**，用于记录要添加的键值对。
   2. 再调用键对象的 `hashCode` 方法，计算键的哈希值，用于确定 Entry 对象在数组中存入的位置。如果该位置上：
-     - 为 `null`，直接添加到该索引位置。
-     - 不为 `null`，说明该位置已有键对象，组成的链表（或红黑树），那么会调用键对象的 `equals` 方法，挨个比较，如果
-       - 是重复的键，则覆盖原有的 Entry 对象。
+     - 为 `null`，直接将 Entry 对象添加到该索引位置。
+     - 不为 `null`，说明该位置已有 Entry 对象，组成的链表（或红黑树），那么会调用键对象的 `equals` 方法，挨个比较 Entry 对象中的键对象，如果：
+       - 是重复的键，则**覆盖**原有的 Entry 对象。
        - 不是重复的键，则添加到链表或红黑树上（JDK8 前，老元素会挂在新元素后；JDK8 后，新元素挂在老元素后）；
          - 当链表长度大于 `8`，并且数组长度大于等于 `64`，链表自动转为红黑树。
 
 ![HashSet底层实现原理](NodeAssets/HashSet底层实现原理.jpg)
 
-所以，如果键位置，要存储自定义对象，那么就要重写自定义类的 `hashCode`、`equals` 方法；如果值的位置存储自定义对象，则不需要。
+所以，如果键位置，要存储自定义对象，那么就要重写键自定义类的 `hashCode`、`equals` 方法；如果值的位置存储自定义对象，则不需要。
 
 案例理解：创建一个 `HashMap` 集合，键是学生对象（`Student`），值是籍贯（`String`）。存储三个键值对元素，并遍历。
 
@@ -404,14 +397,12 @@ public class Test1 {
         Student stu1 = new Student("zhagnsan", 23);
         Student stu2 = new Student("lisi", 24);
         Student stu3 = new Student("wangwu", 25);
-        Student stu4 = new Student("wangwu", 25);
 
         HashMap<Student, String> map = new HashMap<>();
 
         map.put(stu1, "北京");
         map.put(stu2, "上海");
         map.put(stu3, "广州");
-        map.put(stu4, "厦门");
 
         // 遍历方式一：键找值
         Set<Student> keys = map.keySet();
@@ -459,7 +450,7 @@ public class Test2 {
         // 景点
         String[] attractions = {"A", "B", "C", "D"};
 
-        // 投票
+        // 投票（用随机数，模拟 80 个学生投票）
         ArrayList<String> votes = new ArrayList<>();
 
         Random r = new Random();
@@ -518,7 +509,7 @@ public class Test2 {
 
 `LinkedHashMap` 集合的原理，与 `LinkedHashSet` 集合的原理类似；底层数据结构仍然是哈希表，只不过每个键值对对象在存入哈希表时，又额外放入了一个双向链表结构，用于记录存、取顺序。
 
-LinkedHashMap 集合中。存储的是键值对对象（**Entry 对象**）
+`LinkedHashMap` 集合中。存储的是键值对对象（**Entry 对象**）
 
 ![LinkedHashSet底层原理](NodeAssets/LinkedHashSet底层原理.jpg)
 
@@ -556,8 +547,6 @@ public class MapDemo03 {
 
 `TreeMap` 集合，存入的键对象，不需要重写其中的 `hashCode` 和 `equals` 方法。而是通过下方的两种比较规则，来判断键是否重复。
 
-`TreeMap` 集合中的键，排序有有两种方式：
-
 - 方式一：在键对象的自定义类中，实现 `Comparable` 接口，指定比较规则（默认方式）。
 - 方式二：创建 `TreeMap` 集合时，传递 `Comparator` 比较器对象，指定比较规则（优先级高）。
 
@@ -573,19 +562,18 @@ demo-project/base-code/Day24/src/com/kkcf/test/Test3.java
 ```java
 package com.kkcf.test;
 
-import java.util.Comparator;
 import java.util.TreeMap;
 
-public class Test2 {
+public class Test3 {
     public static void main(String[] args) {
-        // 升序（Integer 包装类的默认排序规则就是升序）
+        // 升序
         TreeMap<Integer, String> map1 = new TreeMap<>();
 
-        map1.put(1, "a");
-        map1.put(2, "b");
         map1.put(3, "c");
+        map1.put(2, "b");
+        map1.put(1, "a");
 
-        System.out.println(map1);
+        System.out.println(map1); // {1=a, 2=b, 3=c}
 
         // 降序
         TreeMap<Integer, String> map2 = new TreeMap<>((o1, o2) -> o2 - o1);
@@ -594,14 +582,14 @@ public class Test2 {
         map2.put(2, "b");
         map2.put(3, "c");
 
-        System.out.println(map2);
+        System.out.println(map2); // {3=c, 2=b, 1=a}
     }
 }
 ```
 
 案例理解：创建 `TreeMap` 集合，用于存储：
 
-- 键：学生对象；
+- 键：学生对象；其中有属性：姓名，年龄；
 - 值：籍贯；
 
 要求：按照学生年龄的升序排序；如果年龄一样，按照姓名字母排序；同姓名年龄视为同一个人。
@@ -672,7 +660,9 @@ public class Test4 {
 }
 ```
 
-案例理解：请统计字符串“aababcabcdabcde”中，每一个字符出现的次数，并按照以下格式输出结果：a（5）b（4）c（3）d（2）e（1）
+案例理解：请统计字符串“aababcabcdabcde”中，每一个字符出现的次数；
+
+并按照以下格式输出结果：a（5）b（4）c（3）d（2）e（1）
 
 demo-project/base-code/Day24/src/com/kkcf/test/Test5.java
 
@@ -711,4 +701,5 @@ public class Test5 {
 }
 ```
 
-- 当有统计需求时，如果要统计多个指标，那么优先考虑使用 `HashMap` 集合；如果还要对统计的指标，进行排序，那么使用 `TreeMap` 集合。
+- 当有统计需求时，如果要统计多个指标，那么优先考虑使用 `HashMap` 集合；
+- 如果还要对统计的指标，进行大小的排序，那么使用 `TreeMap` 集合。

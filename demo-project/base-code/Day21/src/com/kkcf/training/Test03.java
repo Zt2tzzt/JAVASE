@@ -1,4 +1,4 @@
-package com.kkcf.test;
+package com.kkcf.training;
 
 public class Test03 {
     public static void main(String[] args) {
