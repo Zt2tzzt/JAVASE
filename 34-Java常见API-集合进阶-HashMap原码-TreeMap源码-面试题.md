@@ -2,11 +2,11 @@
 
 ## 一、HashMap 源码
 
-HashMap 中的 Node 内部类，就是存储在哈希表 table 数组中的链表结点。
+`HashMap` 中的 `Node` 内部类，用于表示存储在哈希表 table 数组中的链表结点。
 
-Node 内部类，实现了 Entry 接口，所以 Node 对象，也被称为 Entry 对象。
+`Node` 内部类，实现了 `Entry` 接口，所以 Node 对象，也被称为 Entry 对象。
 
-- 成员变量 `next` 记录了链表结构中，下一个元素的地址值。
+`HashMap` 类中的成员变量 `next` 记录了链表结构中，下一个元素的地址值。
 
 java/util/HashMap.java
 
@@ -49,9 +49,9 @@ static class Node<K,V> implements Map.Entry<K,V> {
 }
 ```
 
-HashMap 中的 TreeNode 内部类，是存储在哈希表 table 数组中的红黑树结点。
+`HashMap` 中的 `TreeNode` 内部类，表示存储在哈希表 table 数组中的红黑树结点。
 
-TreeNode 内部类，也实现了 Entry 接口；
+`TreeNode` 内部类，也实现了 `Entry` 接口；
 
 java/util/HashMap.java
 
@@ -67,7 +67,7 @@ static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
 }
 ```
 
-HashMap 底层的数组 table：
+`HashMap` 底层的数组 `table`：
 
 java/util/HashMap.java
 
@@ -75,7 +75,7 @@ java/util/HashMap.java
 transient Node<K,V>[] table;
 ```
 
-table 默认的长度是 16
+`table` 默认的长度是 `16`
 
 java/util/HashMap.java
 
@@ -83,7 +83,7 @@ java/util/HashMap.java
 static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
 ```
 
-table 默认的加载因子是 0，75
+`table` 默认的加载因子是 `0.75`
 
 java/util/HashMap.java
 
@@ -91,7 +91,7 @@ java/util/HashMap.java
 static final float DEFAULT_LOAD_FACTOR = 0.75f;
 ```
 
-table 数组的最大容量
+`table` 数组的最大容量
 
 java/util/HashMap.java
 
@@ -99,10 +99,10 @@ java/util/HashMap.java
 static final int MAXIMUM_CAPACITY = 1 << 30;
 ```
 
-使用空参构造，创建 HashMap 集合对象：
+使用空参构造，创建 `HashMap` 集合对象：
 
-- 数组 table 默认长度为 0；
-- 加载因子 loadFactor 设为 0.75；
+- 数组 `table` 默认长度为 `0`；
+- 加载因子 `loadFactor` 设为 `0.75`；
 
 java/util/HashMap.java
 
@@ -112,7 +112,7 @@ public HashMap() {
 }
 ```
 
-当在 HashMap 集合对象中，存入元素时，数组 table 才初始化；
+当在 `HashMap` 集合对象中，存入元素时，数组 `table` 才初始化；
 
 java/util/HashMap.java
 
@@ -127,14 +127,14 @@ static final int hash(Object key) {
 }
 ```
 
-- 可见，唯一性仅与键相关，与值无关。
-- putVal 方法，
+- 可见，`HashMap` 集合的唯一性仅与键相关，与值无关。
+- `putVal` 方法，
   - 参数一：键的哈希值；
   - 参数二：键；
   - 参数三：值；
   - 参数四：如果键重复了，是否保留；
-    - 传入 false，表示老元素键保留，不会覆盖。
-    - 传入 true，表示老元素值不保留，会被覆盖。
+    - 传入 `false`，表示老元素保留，不会覆盖。
+    - 传入 `true`，表示老元素不保留，会被覆盖。
 
 HashMap 中 putVal 方法解读：
 
@@ -162,7 +162,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict) {
     tab = table;
 
     if (tab == null || (n = tab.length) == 0){
-        //1.如果当前是第一次添加数据，底层会创建一个默认长度为16，加载因子为0.75的数组
+        //1.如果当前是第一次添加数据，底层会创建一个默认长度为 16，加载因子为 0.75 的数组
         //2.如果不是第一次添加数据，会看数组中的元素是否达到了扩容的条件
         //如果没有达到扩容条件，底层不会做任何操作
         //如果达到了扩容条件，底层会把数组扩容为原先的两倍，并把数据全部转移到新的哈希表中
@@ -251,9 +251,9 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict) {
 
 ## 二、TreeMap 源码
 
-TreeMap 集合中，每一个元素，实际上就是一个 Entry 对象；
+`TreeMap` 集合中，每一个元素，实际上就是一个 `Entry` 对象；
 
-TreeMap 集合类中，有 Entry 内部类；
+`TreeMap` 集合类中，有 `Entry` 内部类；
 
 java/util/TreeMap.java
 
@@ -268,14 +268,14 @@ static final class Entry<K,V> implements Map.Entry<K,V> {
 }
 ```
 
-- key 是键
-- value 是值
-- left 是左子结点；
-- right 是右子结点
-- parent 是父结点
-- color 是
+- `key` 是键
+- `value` 是值
+- `left` 是左子结点；
+- `right` 是右子结点
+- `parent` 是父结点
+- `color` 是
 
-TreeMap 集合类中，有如下部分成员变量：
+`TreeMap` 集合类中，有如下部分成员变量：
 
 ```java
 private final Comparator<? super K> comparator;
@@ -285,11 +285,11 @@ private transient Entry<K,V> root;
 private transient int size = 0;
 ```
 
-- comparator 表示比较器，用于指定比较规则。
-- root 表示红黑树的根节点；
-- size 表示红黑树中的节点个数。
+- `comparator` 表示比较器，用于指定比较规则。
+- `root` 表示红黑树的根节点；
+- `size` 表示红黑树中的节点个数。
 
-TreeMap 集合类的空参构造：
+`TreeMap` 集合类的空参构造：
 
 java/util/TreeMap.java
 
@@ -301,7 +301,7 @@ public TreeMap() {
 
 - 表示没有比较器对象。
 
-TreeMap 集合类的带参构造，传递自定义的比较器：
+`TreeMap` 集合类的带参构造，传递自定义的比较器：
 
 java/util/TreeMap.java
 
@@ -311,7 +311,7 @@ public TreeMap(Comparator<? super K> comparator) {
 }
 ```
 
-TreeMap 集合添加元素，执行 put 方法：
+`TreeMap` 集合添加元素，执行 `put` 方法：
 
 java/util/TreeMap.java
 
@@ -329,9 +329,9 @@ private V put(K key, V value, boolean replaceOld) {
     //如果为null，表示当前是第一次添加，会把当前要添加的元素，当做根节点
     //如果不为null，表示当前不是第一次添加，跳过这个判断继续执行下面的代码
     if (t == null) {
-    //方法的底层，会创建一个Entry对象，把他当做根节点
+        //方法的底层，会创建一个Entry对象，把他当做根节点
         addEntryToEmptyMap(key, value);
-    //表示此时没有覆盖任何的元素
+        //表示此时没有覆盖任何的元素
         return null;
     }
     //表示两个元素的键比较之后的结果
@@ -442,17 +442,17 @@ private void fixAfterInsertion(Entry<K,V> x) {
                 x = parentOf(parentOf(x));
             } else {
                 //叔叔节点为黑色的处理方案
-                /表示判断当前节点是否为父节点的右子节点
-                  if (x == rightOf(parentOf(x))) {
-                      //表示当前节点是父节点的右子节点
-                      x = parentOf(x);
-                      //左旋
-                      rotateLeft(x);
-                    }
-                    setColor(parentOf(x), BLACK);
-                    setColor(parentOf(parentOf(x)), RED);
-                    rotateRight(parentOf(parentOf(x)));
+                //表示判断当前节点是否为父节点的右子节点
+                if (x == rightOf(parentOf(x))) {
+                    //表示当前节点是父节点的右子节点
+                    x = parentOf(x);
+                    //左旋
+                    rotateLeft(x);
                 }
+                setColor(parentOf(x), BLACK);
+                setColor(parentOf(parentOf(x)), RED);
+                rotateRight(parentOf(parentOf(x)));
+            }
         } else {
             //表示当前节点的父节点是爷爷节点的右子节点
             //那么下面就可以用leftOf获取到当前节点的叔叔节点
@@ -483,41 +483,42 @@ private void fixAfterInsertion(Entry<K,V> x) {
 
 ### 1.面试题一
 
-面试题一：`TreeMap` 添加元素的时候，键是否需要重写 hashCode 和 equals 方法？
+面试题一：`TreeMap` 添加元素的时候，键是否需要重写 `hashCode` 和 `equals` 方法？
 
-此时是不需要重写的。
+答：不需要，TreeMap 底层红黑树会对元素键进行比较，如果值相同，则覆盖。
 
 ### 2.面试题二
 
-面试题二：HashMap 是哈希表结构的，JDK8 开始由数组，链表，红黑树组成的。
+面试题二：`HashMap` 是哈希表结构的，JDK8 开始由数组，链表，红黑树组成的。
 
-既然有红黑树，HashMap 的键是否需要实现 Compareable 接口或者传递比较器对象呢？
+既然有红黑树结构，`HashMap` 的键，是否需要实现 `Compareable` 接口或者传递比较器对象呢？
 
-不需要的。因为在HashMap的底层，默认是利用哈希值的大小关系，来创建红黑树的
+答：不需要。因为在 `HashMap` 的底层，默认是利用哈希值的大小关系，来创建红黑树的。
 
 ### 3.面试题三
 
-面试题三：TreeMap 和 HashMap 谁的效率更高？
+面试题三：`TreeMap` 和 `HashMap` 谁的效率更高？
 
-如果是最坏情况，添加了 8 个元素，这 8 个元素形成了链表，此时 TreeMap 的效率要更高
+如果是 `HashMap` 的最坏情况，即添加了 8 个元素，这 8 个元素在哈希表中的一个桶里形成了链表；
 
-但是这种情况出现的几率非常的少。一般而言，还是 HashMap 的效率要更高。
+此时改用 `TreeMap` 的效率要更高。
+
+但是这种情况出现的几率非常小。一般而言，还是 `HashMap` 的效率要更高。
 
 ### 4.面试题四
 
-面试题四：你觉得在 Map 集合中，java 会提供一个如果键重复了，不会覆盖的 put 方法呢？
+面试题四：你觉得在 `Map` 系列集合中，java 会提供一个如果键重复了，不会覆盖的 `put` 方法吗？
 
-有，该方法是 putIfAbsent 方法，它本身不重要。主要传递一个思想：
+答：有，该方法是 `putIfAbsent` 方法，它本身不重要。主要传递一个思想：
 
-代码中的逻辑都有两面性，如果我们只知道了其中的 A 面，而且代码中还发现了有变量可以控制两面性的发生。那么该逻辑一定会有B 面。习惯：
-
-- boolean 类型的变量控制，一般只有AB两面，因为 boolean 只有两个值。
-- int 类型的变量控制，一般至少有三面，因为 int 可以取多个值。
+- 代码中的逻辑都有两面性，如果我们只知道了其中的 A 面，而且代码中还发现了有变量可以控制两面性的发生。那么该逻辑一定会有B 面。一般习惯：
+  - boolean 类型的变量控制只有 A、B 两面的情况，因为 boolean 只有两个值。
+  - int 类型的变量控制至少有三面的情况，因为 int 可以取多个值。
 
 ### 5.面试题五
 
-面试题五：三种双列集合 HashMap、LinkedHashMap、TreeMap，以后如何选择？
+面试题五：三种双列集合 `HashMap`、`LinkedHashMap`、`TreeMap` 如何选择？
 
-- 默认：HashMap（效率最高）；
-- 如果要保证存取有序：LinkedHashMap；
-- 如果要进行排序：TreeMap。
+- 默认：`HashMap`（效率最高）；
+- 如果要保证存、取有序：`LinkedHashMap`；
+- 如果要进行大小排序：`TreeMap`。

@@ -4,7 +4,9 @@
 
 定义一个方法，求若干个数字之和；
 
-此时，不知道该方法传入的参数，有几个；在没有可变参数前，做法是传入一个数组；如下方所示：
+此时，不知道该方法传入的参数，有几个；
+
+在没有可变参数前，做法是传入一个数组；如下方所示：
 
 demo-project/base-code/Day24/src/com/kkcf/variableparam/Demo01.java
 
@@ -31,7 +33,7 @@ public class Demo01 {
 }
 ```
 
-JDK5 出现了可变参数的写法，它指的是方法的形参的个数，是可以发生变化的。
+JDK5 出现了可变参数的写法，使得方法的形参的个数，是可以发生变化的。
 
 Java 可变参数的书写格式：`数据类型...形参名`。
 
@@ -67,14 +69,13 @@ public class Demo02 {
 
 Java 可变参数的特点：
 
-- 方法的形参列表中，只能有一个可变参数；
-- 方法的形参列表中，可变参数要写在最后面。
+- 方法的形参列表中，只能有一个可变参数，且要写在最后面；
 
 ## 二、Collections 工具类
 
-java.util.Collections 是单列集合的工具类。
+`java.util.Collections` 是单列集合的工具类。
 
-Collections 工具类，常用的方法如下：
+`Collections` 工具类，常用的方法如下：
 
 | 方法名                                                       | 说明                                   |
 | ------------------------------------------------------------ | -------------------------------------- |
@@ -104,9 +105,11 @@ public class Test1 {
     public static void main(String[] args) {
         ArrayList<String> list = new ArrayList<>();
 
+        // 为 Collection 单列集合，添加多个元素
         boolean flag = Collections.addAll(list, "abc", "cba", "nba", "yt", "o21", "utr");
         if (flag) System.out.println(list);
 
+        // 打乱 Collection 单列集合中元素的排列顺序
         Collections.shuffle(list);
 
         System.out.println(list);
@@ -194,9 +197,9 @@ public class Test1 {
 
 ### 2.练习二
 
-自动点名器2：班级里有 N 个学生。要求：70% 的概率随机点名到男生；30% 随机点名到女生；
+自动点名器2：班级里有 N 个学生。要求：70% 的概率随机点名到男生；30% 的概率随机点名到女生；
 
-思路：直接使用 Random 类，只能随机点；随即面，要将定义一个用于获取随机数的数组：
+思路：直接使用 `Random` 类，只能随机点；如果要随机面，要定义一个用于获取随机数的数组，把“点”转化为“面”：
 
 demo-project/base-code/Day24/src/com/kkcf/training/Test2.java
 
@@ -218,10 +221,12 @@ public class Test2 {
         Student stu1 = new Student("张三", 16, '男');
         Student stu3 = new Student("王五", 18, '男');
         Student stu5 = new Student("田七", 20, '男');
+
         Collections.addAll(maleStu, stu1, stu3, stu5);
 
         Student stu2 = new Student("李四", 17, '女');
         Student stu4 = new Student("赵六", 19, '女');
+
         Collections.addAll(femaleStu, stu2, stu4);
 
         // 随即面
@@ -289,7 +294,7 @@ public class Test3 {
         // 外循环，轮数
         for (int i = 0; i < 10; i++) {
             System.out.println("开始第 " + (i + 1) + " 轮点名");
-            
+
             // 内循环：点名
             for (int j = 0; j < size; j++) {
                 int index = r.nextInt(stuList.size());
@@ -335,3 +340,49 @@ public class Test3 {
 ![完整的微服务架构](NodeAssets/完整的微服务架构.jpg)
 
 ### 5.练习五
+
+定义一个 Map 集合，键表示省份名称的 province，值表示市 city；但是市会有多个，添加完毕后，遍历结果格式如下；
+
+- 江苏省 = 南京市，扬州市，苏州市，无锡市，常州市
+- 湖北省 = 武汉市，孝感市，十堰市，宜昌市，鄂州市
+- 河北省 = 石家庄市，唐山市，邢台市，保定市，张家口市。
+
+```java
+package com.kkcf.training;
+
+import java.util.*;
+
+public class Test4 {
+    public static void main(String[] args) {
+        // 城市集合
+        ArrayList<String> jiangsuCityList = new ArrayList<>();
+        Collections.addAll(jiangsuCityList, "南京市", "扬州市", "苏州市", "无锡市", "常州市");
+
+        ArrayList<String> hubeiCityList = new ArrayList<>();
+        Collections.addAll(hubeiCityList, "武汉市", "孝感市", "十堰市", "宜昌市", "鄂州市");
+
+        ArrayList<String> hebeiCityList = new ArrayList<>();
+        Collections.addAll(hebeiCityList, "石家庄市", "唐山市", "邢台市", "保定市", "张家口市");
+
+        // 省市集合
+        HashMap<String, ArrayList<String>> map = new HashMap<>();
+
+        map.put("江苏省", jiangsuCityList);
+        map.put("湖北省", hubeiCityList);
+        map.put("河北省", hebeiCityList);
+
+        // 遍历打印
+        for (Map.Entry<String, ArrayList<String>> entries : map.entrySet()) {
+            String province = entries.getKey();
+            ArrayList<String> cityList = entries.getValue();
+
+            StringJoiner sj = new StringJoiner(", ", province + " = ", "");
+
+            for (String city : cityList)
+                sj.add(city);
+
+            System.out.println(sj);
+        }
+    }
+}
+```
