@@ -3,7 +3,7 @@
 `Map` 双列集合，有如下特点：
 
 - 每次添加一个键值对（对象），在 Java 中又称为“Entry 对象”。键与值是一一对应的。
-- 在 Map 集合中，键不重复，值可以重复。
+- 其中键不重复，值可以重复。
 
 `Map` 双列集合，体系结构，如下图所示：
 
@@ -35,7 +35,7 @@
 `V put(K key, V value)` 方法，用于往双列集合中，添加元素。如果：
 
 - 键不存在，那么直接把键值对对象，添加到集合中，并返回 `null`；
-- 键存在，那么会把原有的键值对对象覆盖，并把被覆盖的键值对对象的值返回。
+- 键存在，那么会把原有的键值对对象覆盖，并返回被覆盖的键值对对象的值。
 
 demo-project/base-code/Day24/src/com/kkcf/map/MapDemo01.java
 
@@ -67,7 +67,7 @@ public class MapDemo01 {
 
 ### 2.remove 方法
 
-`V remove(Object key)` 方法，用于删除集合中的键值对对象元素。返回被删除键值对对象中的值：
+`V remove(Object key)` 方法，根据键，删除集合中的键值对对象元素。返回被删除键值对对象中的值：
 
 demo-project/base-code/Day24/src/com/kkcf/map/MapDemo01.java
 
@@ -316,7 +316,7 @@ public class MapDemo02 {
 使用 `Map` 接口中的默认方法 `default void forEach(BiConsumer<? super K, ? super V> action)` 结合 Lambda 表达式，来遍历双列集合。
 
 - 底层使用的是 `entrySet` 方法得到键值对对象集合，
-- 再调用 `BiComsumer` 函数式接口中的 `accept` 方法，传入键值对对象，进行遍历的。
+- 再调用传入的 `BiComsumer` 函数式接口实现类对象中的 `accept` 方法，向其中传入键值对（Entry）对象，进行遍历的。
 
 demo-project/base-code/Day24/src/com/kkcf/map/MapDemo02.java
 
@@ -354,7 +354,7 @@ public class MapDemo02 {
 
 `HashMap` 类，实现了 `Map` 接口，其中有 `Map` 接口中的所有方法。
 
-`HashMap` 集合中，键、值都只能是引用数据类型。
+`HashMap` 集合中，键、值都只能是**引用数据类型**。
 
 `HashMap` 集合中的键，特点是：
 
@@ -362,7 +362,7 @@ public class MapDemo02 {
 - **不重复**：在 `HashMap` 集合中，键是唯一的。
 - **无索引**：在 `HashMap` 集合中，键没有索引。
 
-`HashMap` 集合和 `HashSet` 集合，底层都是使用哈希表结构（JDK8 前：数组 + 链表；JDK8 后：数组 + 链表 + 红黑树）。
+`HashMap` 集合，`HashSet` 集合，底层都是使用哈希表结构（JDK8 前：数组 + 链表；JDK8 后：数组 + 链表 + 红黑树）。
 
 - 当创建一个 `HashMap` 集合对象后，会创建一个长度为 `16`，加载因子为 `0.75` 的数组（table）。
 - 当使用 `put` 方法，添加键值对时：
@@ -376,7 +376,9 @@ public class MapDemo02 {
 
 ![HashSet底层实现原理](NodeAssets/HashSet底层实现原理.jpg)
 
-所以，如果键位置，要存储自定义对象，那么就要重写键自定义类的 `hashCode`、`equals` 方法；如果值的位置存储自定义对象，则不需要。
+所以，如果键位置，要存储自定义对象，那么就要重写键自定义类的 `hashCode`、`equals` 方法；
+
+如果值的位置存储自定义对象，则不需要。
 
 案例理解：创建一个 `HashMap` 集合，键是学生对象（`Student`），值是籍贯（`String`）。存储三个键值对元素，并遍历。
 
@@ -431,7 +433,9 @@ public class Test1 {
 
 案例理解：某个班级 80 名学生，现在需要组织秋游活动，班长提供了四个景点依次是（A、B、C、D），每个学生只能选择一个景点，请统计最终哪个景点想去的人数最多。
 
-要统计的变量比较多，不方便用计数器，此时就需要用到 `HashMap` 集合。思路：判断集合中，是否包含景点；
+要统计的变量比较多，不方便用计数器，此时就需要用到 `HashMap` 集合。
+
+思路：判断集合中，是否包含景点；
 
 - 包含，表示已经出现过；
 - 不包含，表示第一次出现。
@@ -507,7 +511,7 @@ public class Test2 {
 - **不重复**：在 `LinkedHashMap` 集合中，键是唯一的。
 - **无索引**：在 `LinkedHashMap` 集合中，键没有索引。
 
-`LinkedHashMap` 集合的原理，与 `LinkedHashSet` 集合的原理类似；底层数据结构仍然是哈希表，只不过每个键值对对象在存入哈希表时，又额外放入了一个双向链表结构，用于记录存、取顺序。
+`LinkedHashMap` 集合的原理，与 `LinkedHashSet` 集合的原理类似；底层数据结构也是哈希表，只不过每个键值对对象在存入哈希表时，又额外放入了一个双向链表结构，用于记录存、取顺序。
 
 `LinkedHashMap` 集合中。存储的是键值对对象（**Entry 对象**）
 
@@ -537,7 +541,7 @@ public class MapDemo03 {
 
 `TreeMap` 类，实现了 `Map` 接口，其中的方法，它都有；
 
-`TreeMap` 集合，跟 `TreeSet` 集合底层原理一样，都使用了红黑树结构；
+`TreeMap` 集合，跟 `TreeSet` 集合底层原理类似，都使用了红黑树结构；
 
 `TreeMap` 集合，特点是：
 
@@ -545,7 +549,7 @@ public class MapDemo03 {
 - **不重复**：在 `TreeMap` 集合中，键是唯一的。
 - **无索引**：在 `TreeMap` 集合中，键没有索引。
 
-`TreeMap` 集合，存入的键对象，不需要重写其中的 `hashCode` 和 `equals` 方法。而是通过下方的两种比较规则，来判断键是否重复。
+`TreeMap` 集合，存入的键对象，不需要重写其中的 `hashCode` 和 `equals` 方法。而是通过下方的两种比较规则，来判断键是否重复。如果重复则覆盖。
 
 - 方式一：在键对象的自定义类中，实现 `Comparable` 接口，指定比较规则（默认方式）。
 - 方式二：创建 `TreeMap` 集合时，传递 `Comparator` 比较器对象，指定比较规则（优先级高）。
@@ -594,7 +598,7 @@ public class Test3 {
 
 要求：按照学生年龄的升序排序；如果年龄一样，按照姓名字母排序；同姓名年龄视为同一个人。
 
-学生类：实现 `Comparable` 泛型接口。
+学生类：实现 `Comparable` 泛型接口，并实现其中的 `compareTo` 方法。
 
 demo-project/base-code/Day24/src/com/kkcf/javabean/Student.java
 

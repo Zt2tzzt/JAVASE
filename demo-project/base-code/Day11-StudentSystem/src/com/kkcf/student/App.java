@@ -19,7 +19,7 @@ public class App {
         do {
             System.out.println();
             System.out.println("-------------欢迎来到北宇治学生管理系统-------------");
-            System.out.print("请选择操作：1登录；2注册；3忘记密码：4退出");
+            System.out.println("请选择操作：1登录；2注册；3忘记密码：4退出");
             String chose = sc.next();
 
             switch (chose) {

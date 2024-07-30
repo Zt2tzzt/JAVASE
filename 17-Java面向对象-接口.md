@@ -2,7 +2,7 @@
 
 Java 接口，就是一种规则。它是对**行为**的抽象。
 
-Java 抽象类，表示一类事物，Java 接口，表示一系列**行为**。
+Java 抽象类，表示一类事物；Java 接口，表示一系列**行为**。
 
 Java 接口，相比抽象类，是更加彻底的抽象；
 
@@ -55,6 +55,7 @@ public abstract class Animal {
         this.age = age;
     }
 
+    // 抽象方法
     public abstract void eat();
 
     // getter / setter
@@ -96,7 +97,7 @@ public interface Swim {
 }
 ```
 
-青蛙类，继承动物类，并实现游泳接口：
+青蛙 Frog 类，继承动物类，并实现游泳接口：
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee/Frog.java
 
@@ -125,7 +126,7 @@ public class Frog extends Animal implements Swim {
 }
 ```
 
-狗类，继承动物类，并实现游泳接口：
+狗 Dog 类，继承动物类，并实现游泳接口：
 
 demo-project/base-code/Day15/src/com/kkcf/interfacee/Dog.java
 
@@ -185,7 +186,7 @@ public class Rabbit extends Animal {
 
 接口代表一种规则，规则是不允许改变的，所以：
 
-Java 接口中的成员变量，只能是常量；默认修饰符是 `public static final`
+接口中的成员变量，只能是常量；默认修饰符是 `public static final`
 
 接口中的常量，一般使用 `接口名.常量` 访问。
 
@@ -193,7 +194,7 @@ Java 接口中的成员变量，只能是常量；默认修饰符是 `public sta
 
 接口中的成员方法，默认修饰符是 `public abstract`
 
-- JDK7 及之前，接口中只能是抽象方法；
+- JDK7 及之前，接口中只能是**抽象方法**；
 - JDK8 及以后，接口中可以定义有方法体的方法。
 - JDK9 及以后，接口中可以定义私有方法。
 
@@ -203,7 +204,7 @@ Java 接口中的成员变量，只能是常量；默认修饰符是 `public sta
 
 ## 二、Java 接口与类之间的关系
 
-在 Java 中，要分清除接口与类之间的关系，要先分清以下三种关系：
+在 Java 中，要分清楚接口与类之间的关系，要先分清以下三种关系：
 
 ### 1.类与类之间的关系
 
@@ -256,7 +257,7 @@ demo-project/base-code/Day15/src/com/kkcf/interfacee/InterImpl.java
 ```java
 package com.kkcf.interfacee;
 
-public class InterImpl implements Inter1, Inter2{
+public class InterImpl implements Inter1, Inter2 {
     @Override
     public void method1() {
 
@@ -575,7 +576,7 @@ public class Test {
 
 ## 三、Java 接口在 JDK8 及以后的使用
 
-JDK8 及以后接口中允许有方法体的方法存在，是为了在接口升级（增加了很多新的抽象方法）时，提升代码兼容性。
+JDK8 及以后接口中允许**有方法体的方法**存在，是为了在接口升级（增加了很多新的抽象方法）时，提升代码兼容性。
 
 - 接口升级后，实现类不需要立马修改，等以后用到某个规则，再重写接口中的方法即可。
 
@@ -714,7 +715,7 @@ JDK8 及以后接口中的静态方法，要用 `static` 关键字修饰：
 - 格式为：`public static 返回值类型 方法名(参数列表) {}`，比如：`public static void show() {}`
 - `public` 是默认修饰符，可省略。
 
-JDK8 及以后接口中的静态方法，
+JDK8 及以后接口中的静态方法：
 
 - 只能通过接口名调用；
 - 不能通过实现类名，或实例对象调用。
@@ -840,7 +841,7 @@ public interface Inter1 {
 
 ### 1.适配器设计模式
 
-> 设计模式（Design Pattern），指的是一套被反复使用，多数人知晓的，经过分类编目的，代码设计经验的总结。
+> **设计模式（Design Pattern）**，指的是一套被反复使用，多数人知晓的，经过分类编目的，代码设计经验的总结。
 >
 > 使用设计模式，是为了可重用代码，让代码更容易被他人理解，保证代码的可靠性，程序的可复用性。
 
@@ -850,10 +851,10 @@ public interface Inter1 {
 
 使用步骤：
 
-1. 编写中间类 `XxxAdapter`，实现对应的接口。并在其中对接口中的所有抽象方法，进行空实现。
+1. 编写中间类 `XxxAdapter`，实现的接口。在其中**空实现**接口中的所有抽象方法；
 2. 让真正的实现类，继承中间类 `XxxAdapter`，并重写需要用到的方法。
-3. 为避免外界创建中间类 `XxxAdapter` 的实例对象，将中间类 `XxxAdapter` 设为抽象类。
-4. 如果实现类，有父类，那么让中间类 `XxxAdapter` 继承父类，并添加构造方法即可。
+3. 将中间类 `XxxAdapter` 设为抽象类，避免外界创建它的实例对象。
+4. 如果实现类有父类，先让中间类 `XxxAdapter` 继承父类，并添加构造方法即可。
 
 案例理解，接口中有很多抽象方法：
 
