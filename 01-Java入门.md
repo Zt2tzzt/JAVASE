@@ -10,7 +10,7 @@
 
 ### 2.常用 CMD 命令
 
-常见的CMD命令如下：
+常见的 CMD 命令如下：
 
 | 操作               | 说明                                                   |
 | ------------------ | ------------------------------------------------------ |
@@ -76,7 +76,7 @@ qq.exe
 
 ## 三、JDK 下载和安装
 
-在 [Oracle 官网](https://www.oracle.com/java/technologies/downloads/#jdk17-windows) 下载 jdk17。
+在 [Oracle 官网](https://www.oracle.com/java/technologies/downloads/#jdk17-windows) 下载 JDK17。
 
 下载完成后，进行安装，点击下一步即可。默认的安装路径是在 `C:\Program Files` 下。建议更改：
 
@@ -98,7 +98,7 @@ qq.exe
 
 Java 代码不能在操作系统中直接运行。要将它翻译为操作系统能够识别的机器码。
 
-> 新版本的 jdk（比如 JDK17），在无需配置环境变量的情况下，也可以使用 `javac` 命令、`Java` 命令。
+> 新版本的 JDK（比如 JDK17），在无需配置环境变量的情况下，也可以使用 `javac` 命令、`Java` 命令。
 >
 > - `javac` 是 JDK 提供的一个编译工具。
 > - `java` 是 JDK 提供的运行字节码（.class）文件的工具。
@@ -127,7 +127,7 @@ public class HelloWorld {
 
 ### 2.编译 java 文件
 
-使用 jdk 的 bin 目录下 `javac` 工具，去编译这个文件：
+使用 JDK 的 bin 目录下 `javac` 工具，去编译这个文件：
 
 在代码所在目录，打开 cmd 命令窗口，输入命令：
 
@@ -151,9 +151,7 @@ java HelloWorld
 
 来到系统环境变量的设置界面。
 
-> 新版本的 JDK，默认在环境变量 `PATH` 进行了配置；
->
-> 新版本的 JDK，安装后会默认在环境变量 `PATH` 下配置 `C:\Program Files\Common Files\Oracle\Java\javapath`；
+> 新版本的 JDK，安装后会默认在环境变量 `PATH` 下配置 `C:\Program Files\Common Files\Oracle\Java\javapath` 这个路径；
 >
 > 以前下载的老版本的 JDK，是没有自动配置的，而且新版本 JDK 默认配置的这个目录下，只包含了 4 个工具。
 >
@@ -289,7 +287,7 @@ Java 主要有以下特性：
 
 - 编译型语言；
   - 比如：C 语言要针对不同平台进行编译（比如 arm 平台编译器、x86 平台编译器）。
-- 解释性语言；
+- 解释型语言；
   - 比如：python，编写好代码后，边解释，边执行（按行翻译）。
   - Java，C 语言被编译后，都会产生一个编译文件；但 python 是直接使用 .py 文件来运行代码的。也就是说 python 必须要将源代码交给运行环境来运行，而不像 Java、C 语言一样，仅需要将编译好的编译文件交给机器运行。
 

@@ -6,8 +6,12 @@ public class TernaryOperatorTest02 {
         int height2 = 210;
         int height3 = 165;
 
-        int temp = height1 > height2 ? height1 : height2;
-        int max = temp > height3 ? temp : height3;
+        /*int temp = height1 > height2 ? height1 : height2;
+        int max = temp > height3 ? temp : height3;*/
+
+        int max = height1 > height2 ? height1
+                : height2 > height3 ? height2
+                : height3;
 
         System.out.println(max); // 210
     }

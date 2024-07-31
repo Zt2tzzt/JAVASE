@@ -60,7 +60,7 @@ public class Test {
 
 在类的构造方法中，设置界面的一些初始化信息，比如：
 
-- 设置窗口的代销。
+- 设置窗口的大小。
 - 设置窗口标题。
 - 设置窗口始终置顶
 - 设置窗口居中展示
@@ -150,7 +150,7 @@ public class GameJFrame extends JFrame {
 
 ## 三、程序的入口
 
-并创建一个 `App` 类，用于程序的启动。
+创建一个 `App` 类，用于程序的启动。
 
 demo-project/puzzelgame/src/com/kkcf/ui/App.java
 
@@ -301,7 +301,7 @@ public class GameJFrame extends JFrame {
 }
 ```
 
-- `setLayout(null)` 方法，用于取消 jFrame 容器默认的居中设置，这样才能按照 x、y 轴的形式添加组件。为后续添加图片做准备。
+- `setLayout(null)` 方法，用于取消 `JFrame` 容器默认的居中设置，这样才能按照 x、y 轴的形式添加组件。为后续添加图片做准备。
 
 ### 2.游戏主界面图片添加
 
@@ -396,10 +396,10 @@ private void initImage() {
 
 根据二维数组的索引，设置来添加图片容器：
 
-ArrayList 和数组如何选择：
-
-- 长度固定，使用数组；
-- 长度不固定，使用容器。
+> ArrayList 和数组如何选择：
+>
+> - 长度固定，使用数组；
+> - 长度不固定，使用容器。
 
 demo-project/puzzelgame/src/com/kkcf/ui/GameJFrame.java
 
@@ -481,7 +481,7 @@ public class GameJFrame extends JFrame {
 
 ## 五、Java 中的事件
 
-事件，是组件可以识别的操作。触发组件的事件，就会执行对应的代码。
+事件，是可以被组件识别的操作。触发组件的事件，就会执行对应的代码。
 
 事件有以下要素：
 
@@ -730,9 +730,9 @@ public class Test3 {
 
 KeyListener 键盘监听，可以监听键盘的：
 
-- `mousePressed` 按下动作
-- `mouseReleased` 松开动作
-- `mouseExited` 键入动作（有局限性，Ctrl、Alt 等等键不能监听）
+- `keyPressed` 按下动作；
+- `keyReleased` 松开动作；
+- `keyTyped` 键入动作（有局限性，Ctrl、Alt 等等键不能监听）。
 
 案例理解，使用 Java 创建一个窗口，在给这个窗口，添加键盘的事件监听。
 
