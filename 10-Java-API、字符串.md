@@ -149,7 +149,7 @@ package com.kkcf.string;
 public class Demo01 {
     public static void main(String[] args) {
         char[] chs = {'a', 'b', 'c'};
-      
+
         String s1 = new String(chs);
         String s2 = new String(chs);
     }
@@ -497,7 +497,6 @@ public class Test05 {
 
 - `public String substring(int beginIndex)`，返回一个新的字符串，它是此字符串的一个子字符串。
   - 该子字符串从指定索引处的字符开始，直到此字符串末尾。
-
 
 案例理解：将手机号码中间四位数字，用”****“代替。
 
@@ -1215,7 +1214,7 @@ public class Test13 {
 
         // 将最后一位数字，与前面随机一位字母对调。
         int randomIndex = r.nextInt(len);
-      
+
         char temp = resChars[randomIndex];
         resChars[randomIndex] = resChars[len - 1];
         resChars[len - 1] = temp;

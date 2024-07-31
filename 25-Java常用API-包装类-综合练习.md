@@ -109,6 +109,8 @@ public class IntegerDemo02 {
 2. 计算；
 3. 将计算的结果进行装箱，再变回包装类。
 
+> Integer 包赚类拆箱，要用到 `intvalue` 实例方法。
+
 demo-project/base-code/Day20/src/com/kkcf/integer/IntegerDemo03.java
 
 ```java
