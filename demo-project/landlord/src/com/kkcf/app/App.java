@@ -1,5 +1,6 @@
 package com.kkcf.app;
 
+import com.kkcf.game.GameJFrame;
 import com.kkcf.game.LoginJFrame;
 import com.kkcf.game.PokerGame;
 
@@ -8,6 +9,8 @@ public class App {
         // 开启游戏
         //new PokerGame();
 
-        new LoginJFrame();
+        //new LoginJFrame();
+
+        new GameJFrame();
     }
 }
