@@ -108,6 +108,8 @@ public class Test1 {
 }
 ```
 
+### 1.ofEntries 方法
+
 使用 `ofEntries` 方法，创建 Mao 集合的不可变集合：
 
 demo-project/base-code/Day26/src/com/kkcf/test/Test2.java
@@ -185,6 +187,8 @@ public class Test2 {
     }
 }
 ```
+
+### 2.copyOf 方法
 
 使用 JDK10 的新特性 Map 接口的 `copyOf` 方法，传入一个普通 Map 集合对象实例，将它变为一个不可变的集合。
 
