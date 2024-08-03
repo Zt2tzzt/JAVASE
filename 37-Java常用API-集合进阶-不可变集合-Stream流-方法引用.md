@@ -2,24 +2,24 @@
 
 ## 一、不可变集合
 
-不能被修改长度和内容的集合，就是不可变集合。只能进行数据的查询操作。
+不可变集合只能进行数据的查询操作，不能被修改长度、和内容。
 
-不可变集合应用场景：
+不可变集合，应用场景：
 
 - 如果某个数据不能被修改，把它防御性的拷贝到不可变集合中，是个很好的实践。
 - 当集合对象被不可信的库调用时，不可变形式是安全的。
 
-在 List、Set、Map 接口中，都存在静态的 of 方法，可以获取一个不可变的集合。这个集合不能田间、删除、修改。
+在 `List`、`Set`、`Map` 接口中，都存在 `of` 静态方法，可以获取一个不可变的集合。这个集合不能进行添加、删除、修改操作。
 
-| 方法名                                     | 说明                                 |
-| ------------------------------------------ | ------------------------------------ |
-| `static <E> List<E> of(E...elements)`      | 创建一个具有指定元素的 List 集合对象 |
-| `static <E> Set<E> of(E...elements)`       | 创建一个具有指定元素的 Set 集合对象  |
-| `static <K, V> Map<K, V> of(E...elements)` | 创建一个具有指定元素的 Map 集合对象  |
+| 方法名                                     | 说明                                   |
+| ------------------------------------------ | -------------------------------------- |
+| `static <E> List<E> of(E...elements)`      | 创建一个具有指定元素的 `List` 集合对象 |
+| `static <E> Set<E> of(E...elements)`       | 创建一个具有指定元素的 `Set` 集合对象  |
+| `static <K, V> Map<K, V> of(E...elements)` | 创建一个具有指定元素的 `Map` 集合对象  |
 
 ## 二、List 不可变集合
 
-案例理解：创建一个 List 集合的不可变集合，并遍历：
+案例理解：创建一个 `List` 集合的不可变集合，并遍历：
 
 demo-project/base-code/Day26/src/com/kkcf/test/Test1.java
 
@@ -48,9 +48,9 @@ public class Test1 {
 
 ## 三、Set 不可变集合
 
-创建一个不可变的 Set 集合：
+创建一个不可变的 `Set` 集合：
 
-- 细节：当创建一个不可变的 Set 集合时，里面的元素要保持唯一。否则会报错。
+- 初始化集合的元素必须要保持唯一。否则会报错。
 
 demo-project/base-code/Day26/src/com/kkcf/test/Test1.java
 
@@ -73,11 +73,10 @@ public class Test1 {
 
 ## 四、Map 不可变集合
 
-创建一个不可变的 Map 集合
+创建一个不可变的 `Map` 集合
 
-- 细节 1：Map 集合键是不能重复的，否则也会报错。
-- 细节 2：Map 里面的 of 方法，参数是有上限的，最多只能传递 20 个参数，即 10 个键值对（因为 Java 方法的参数列表中，不能写两个可变参数）。
-- 细节 3：如果我们要传递多个键值对对象，数量大于 10 个，在 Map 接口中，还有一个方法 `static <K, V> Map<K, V> ofEntries(Entry<? extends K, ? extends V>... entries)`。
+- 细节 1：初始化 `Map` 集合中键值对对象的键，也是不能重复的，否则会报错。
+- 细节 2：`Map` 里面的 `of` 方法，最多只能传递 20 个参数，即 10 个键值对（原因是 Java 方法的参数列表中，不能写两个可变参数）。
 
 demo-project/base-code/Day26/src/com/kkcf/test/Test1.java
 
@@ -108,9 +107,11 @@ public class Test1 {
 }
 ```
 
+如果要传递数量大于 10 个的键值对对象，，要使用 `Map` 接口中方法 `static <K, V> Map<K, V> ofEntries(Entry<? extends K, ? extends V>... entries)`。
+
 ### 1.ofEntries 方法
 
-使用 `ofEntries` 方法，创建 Mao 集合的不可变集合：
+使用 `ofEntries` 方法，创建 `Mao` 集合的不可变集合：
 
 demo-project/base-code/Day26/src/com/kkcf/test/Test2.java
 
@@ -141,7 +142,7 @@ public class Test2 {
         Map.Entry[] arr = new Map.Entry[0];
 
         // toArray 方法，在底层会比较集合长度，数组长度两者的大小
-        //  - 集合的长度 > 数组的长度，会根据实际数据的个数，重新创建数组；
+        //  - 集合的长度 > 数组的长度，会根据实际 entry 对象的个数，重新创建数组；
         //  - 集合的长度 <= 数组的长度：不会创建新的数组，而是直接用原数组。
         Map.Entry[] entries = entrySet.toArray(arr);
 
@@ -190,7 +191,9 @@ public class Test2 {
 
 ### 2.copyOf 方法
 
-使用 JDK10 的新特性 Map 接口的 `copyOf` 方法，传入一个普通 Map 集合对象实例，将它变为一个不可变的集合。
+JDK10 的新特性：`Map` 接口的 `copyOf` 方法；
+
+传入一个普通 `Map` 集合对象实例，将它变为一个不可变的集合。
 
 再次重构上方代码：
 
