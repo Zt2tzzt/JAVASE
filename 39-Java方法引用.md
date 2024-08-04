@@ -288,20 +288,371 @@ public class LoginJFrame extends MyJFrame {
 
 注意：静态方法中，没有 `this、super` 关键字，在**静态方法**中，使用方法引用时，不能用 `this::stringJudge` 的写法。
 
-
-
-
-
-
-
 ### 3.引用构造方法
 
+格式：`类名::new`；范例：`Student::new`；
+
+案例理解：集合里面存储姓名和年龄的字符串，要求封装成 Student 对象，并收集到 List 集合中。
+
+使用流的 map 方法，结合方法引用的方式：
+
+demo-project/base-code/Day26/src/com/kkcf/methodref/Demo02.java
+
+```java
+package com.kkcf.methodref;
+
+import com.kkcf.javabean.Studnet;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class Demo02 {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>(List.of("张无忌,15", "赵敏,20", "张三丰,100", "张翠山,30", "周芷若,40", "王二麻子,50"));
+
+        List<Studnet> newList = list.stream().map(new Function<String, Studnet>() {
+            @Override
+            public Studnet apply(String s) {
+                String[] split = s.split(",");
+                String name = split[0];
+                int age = Integer.parseInt(split[1]);
+                return new Studnet(name, age);
+            }
+        }).collect(Collectors.toList());
+
+        System.out.println(newList);
+    }
+}
+```
+
+使用方法引用，重构上面的代码：
+
+Student 类中，要新增一个构造方法，用于 `Function` 函数式接口中的 `apply` 抽象方法的方法引用。
+
+```java
+package com.kkcf.javabean;
+
+import java.util.Objects;
+
+public class Studnet {
+    private String name;
+    private int age;
+
+    public Studnet() {
+    }
+
+    public Studnet(String str) {
+        String[] split = str.split(",");
+        this.name = split[0];
+        this.age = Integer.parseInt(split[1]);
+    }
 
 
-### 4.方法引用的其它调用方式
+    public Studnet(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
 
-1.使用类名引用成员方法
+   //……
+}
+```
 
+构造方法没有返回值，构造方法的方法引用，生成的对象，与函数式接口中抽象方法的返回值一致即可。
 
+demo-project/base-code/Day26/src/com/kkcf/methodref/Demo02.java
 
-2.引用数组的构造方法
+```java
+package com.kkcf.methodref;
+
+import com.kkcf.javabean.Studnet;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class Demo02 {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>(List.of("张无忌,15", "赵敏,20", "张三丰,100", "张翠山,30", "周芷若,40", "王二麻子,50"));
+
+        List<Studnet> newList = list.stream()
+                .map(Studnet::new)
+                .collect(Collectors.toList());
+
+        System.out.println(newList);
+    }
+}
+```
+
+## 三、Java 方法引用其它调用方式
+
+### 1.类名引用成员方法
+
+格式：`类名::成员方法`；示例：`String::toUpperCase`；
+
+这种方法引用，有特别的要求：、
+
+- 引用处，必须是函数式接口；
+- 被引用的方法，必须已经存在；
+- 被引用的方法，形参需要跟抽象方法的第二个参数到最后一个参数保持一致；
+- 被引用的方法，需要跟抽象方法的返回值保持一致；
+- 被引用的方法，功能需要满足当前需求；
+
+抽象方法形参的详解：
+
+- 第一个参数：表示被引用方法的调用者，它决定了引用的类名；
+  - 在 Stream 流当中，第一个参数往往表示流里面的数据；
+  - 假设这个数据是字符串类型的，那么就只能引用 `String` 类里的方法。
+- 第二个参数到最后一个参数：跟被引用方法的形参保持一致，如果没有第二个参数，说明被引用的方法是类中的无参成员方法。
+
+案例理解：集合里面添加一些字符串，要求变成大写后再进行输出
+
+demo-project/base-code/Day26/src/com/kkcf/methodref/Demo03.java
+
+```java
+package com.kkcf.methodref;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class Demo03 {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>(List.of("aaa", "bbb", "ccc", "ddd"));
+
+        List<String> newList = list.stream().map(new Function<String, String>() {
+            @Override
+            public String apply(String s) {
+                return s.toUpperCase();
+            }
+        }).collect(Collectors.toList());
+
+        System.out.println(newList);
+    }
+}
+```
+
+使用方法引用重构上方的代码：
+
+demo-project/base-code/Day26/src/com/kkcf/methodref/Demo03.java
+
+```java
+package com.kkcf.methodref;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class Demo03 {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>(List.of("aaa", "bbb", "ccc", "ddd"));
+
+        List<String> newList = list.stream()
+                .map(String::toUpperCase)
+                .collect(Collectors.toList());
+
+        System.out.println(newList);
+    }
+}
+```
+
+### 2.引用数组的构造方法
+
+格式：`数据类型::new`；示例：`int[]::new`。
+
+用于创建一个指定类型的数组。
+
+案例理解：集合中存储了一些整数，收集到数组当中。
+
+使用 toArray 方法，结合匿名内部类的方式：
+
+demo-project/base-code/Day26/src/com/kkcf/methodref/Demo04.java
+
+```java
+package com.kkcf.methodref;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.IntFunction;
+
+public class Demo04 {
+    public static void main(String[] args) {
+        ArrayList<Integer> list = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+
+        Integer[] arr = list.stream().toArray(new IntFunction<Integer[]>() {
+            @Override
+            public Integer[] apply(int value) {
+                return new Integer[value];
+            }
+        });
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+```
+
+使用方法引用，重构上面的代码：
+
+- 细节 1：数组的类型，需要跟流中的数据类型保持一致。
+
+```java
+package com.kkcf.methodref;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.IntFunction;
+
+public class Demo04 {
+    public static void main(String[] args) {
+        ArrayList<Integer> list = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+
+        Integer[] arr = list.stream().toArray(Integer[]::new);
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+```
+
+## 四、Java 方法引用综合练习
+
+练习一：集合中存储一些字符串的数据，比如：张三,23
+
+收集到 Student 类型的数组中（使用方法引用完成）
+
+demo-project/base-code/Day26/src/com/kkcf/methodref/Test3.java
+
+```java
+package com.kkcf.methodref;
+
+import com.kkcf.javabean.Studnet;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Test3 {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>(List.of("张三,23", "李四,24", "王五,25", "赵六,26"));
+
+        Studnet[] stus = list.stream().map(Studnet::new).toArray(Studnet[]::new);
+
+        System.out.println(Arrays.toString(stus));
+    }
+}
+```
+
+练习二：创建集合，添加学生对象，学生对象属性：name、age
+
+只获取姓名并放到数组当中（使用方法引用完成）
+
+demo-project/base-code/Day26/src/com/kkcf/methodref/Test4.java
+
+```java
+package com.kkcf.methodref;
+
+import com.kkcf.javabean.Studnet;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+
+public class Test4 {
+    public static void main(String[] args) {
+        ArrayList<Studnet> stuList = new ArrayList<>(List.of(
+                new Studnet("张三", 18),
+                new Studnet("李四", 19),
+                new Studnet("王五", 20),
+                new Studnet("赵六", 21)
+        ));
+
+        String[] arr = stuList.stream().map(Studnet::getName).toArray(String[]::new);
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+```
+
+练习三：创建集合，添加学生对象，学生对象属性：name、age
+
+把姓名和年龄拼接成："张三-23" 这样的字符串，并放到数组中（使用方法引用完成）
+
+在 `Student` 类中，新增 `getNameAge` 成员方法
+
+demo-project/base-code/Day26/src/com/kkcf/javabean/Studnet.java
+
+```java
+package com.kkcf.javabean;
+
+import java.util.Objects;
+
+public class Studnet {
+    private String name;
+    private int age;
+
+    public Studnet() {
+    }
+
+    public Studnet(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    //……
+
+    /**
+     * 此方法用于，获取“姓名,年龄”g格式的字符串
+     * @return “姓名,年龄”g格式的字符串
+     */
+    public String getNameAge() {
+        return this.getName() + "," + this.getAge();
+    }
+}
+```
+
+测试类：
+
+demo-project/base-code/Day26/src/com/kkcf/methodref/Test4.java
+
+```java
+package com.kkcf.methodref;
+
+import com.kkcf.javabean.Studnet;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Test5 {
+    public static void main(String[] args) {
+        ArrayList<Studnet> stuList = new ArrayList<>(List.of(
+                new Studnet("张三", 18),
+                new Studnet("李四", 19),
+                new Studnet("王五", 20),
+                new Studnet("赵六", 21)
+        ));
+
+        String[] newStuList = stuList.stream().map(Studnet::getNameAge).toArray(String[]::new);
+
+        System.out.println(Arrays.toString(newStuList)); // [张三,18, 李四,19, 王五,20, 赵六,21]
+    }
+}
+```
+
+Java 方法引用使用总结：
+
+1. 先观察，有没有一个已经存在的方法，符合当前的需求；
+2. 再判断，这个方法是否满足方法引用的规则：
+   - 静态方法：`类名::方法名`；
+   - 成员方法：
+     - 普通情况：`对象::方法名`；
+     - 特殊情况：`类名::方法名`；
+     - 方法在本类中：`this::方法名`；
+     - 方法在父类中：`super::方法名`
+   - 构造方法：`类名::new`
