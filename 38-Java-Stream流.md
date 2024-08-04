@@ -66,7 +66,7 @@ public class Demo01 {
 }
 ```
 
-Stream 流，通常结合 Lambda 表达式使用，用于简化集合、数组操作。
+Stream 流，通常结合匿名内部类、Lambda 表达式、或者方法引用使用，用于简化集合、数组操作。
 
 Stream 流的使用步骤：
 
@@ -84,11 +84,11 @@ Stream 流的使用步骤：
 | 集合           | 方法名                                          | 说明                          |
 | -------------- | ----------------------------------------------- | ----------------------------- |
 | 单列集合       | `default Stream<E> stream()`                    | `Collcetion` 接口中的默认方法 |
-| 双列集合       | 无                                              | 无法直接使用 Stream 流        |
+| 双列集合       | 无                                              | 无法直接获取 Stream 流        |
 | 数组           | `public static <T> Stream<T> stream(T[] array)` | `Arrays` 工具类中的静态方法   |
 | 一堆零散的数据 | `public static <T> Stream<T> of(T...values)`    | `Stream` 接口中的静态方法     |
 
-双列集合，要使用 `keySet`，或者 `entrySet` 方法，转为单列集合后，再获取 Stream 流。
+双列集合，要使用 `keySet` 或者 `entrySet` 方法，转为单列集合后，再获取 Stream 流。
 
 ### 1.单列集合获取 Stream 流
 
@@ -106,7 +106,6 @@ import java.util.stream.Stream;
 public class Demo02 {
     public static void main(String[] args) {
         ArrayList<String> list = new ArrayList<>();
-
         Collections.addAll(list, "张无忌", "周芷若", "赵敏", "张强", "张三丰", "张翠山", "张良", "王二麻子", "谢广坤");
 
         // 获取一条 Stream 流水线，并把集合中的数据，放到这条流水线上。
@@ -218,13 +217,15 @@ Stream 流的中间方法，有如下几种：
 | `Stream<T> filter(Predicate<? extends T> predicate)` | 过滤                                                 |
 | `Stream<T> limit(long maxSize)`                      | 获取前几个元素                                       |
 | `Stream<T> skip(long n)`                             | 跳过前几个元素                                       |
-| `Stream<T> distinct()`                               | 元素去重，依赖 `hashCode` 和 `equals` 方法           |
+| `Stream<T> distinct()`                               | 元素去重，依赖元素对象的 `hashCode` 和 `equals` 方法 |
 | `static <T> Stream<T> concat(Stream a, Stream b)`    | 合并 a 和 b 两个流为一个流，注意两个流类型要保持一致 |
 | `Stream<R> map(Function<T, R> mapper)`               | 转换流中的数据类型                                   |
 
 流的中间方法，注意事项：
 
-注意 1：中间方法，返回新的 Stream 流，原来的 Stream 流只能使用一次，建议使用**链式编程**。
+注意 1：中间方法，返回新的 Stream 流，原来的 Stream 流只能使用一次，
+
+所以，Stream 流在使用中间方法时，一般使用**链式编程**。
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo06.java
 
@@ -315,7 +316,8 @@ public class Demo07 {
 
 `Stream<T> distinct()` 方法的使用：
 
-- 在底层利用 `HashSet` 去重，需要重写流中元素的 `hashCode`、`equals` 方法。
+- 在底层利用 `HashSet` 集合去重；
+- 所以需要重写 Stream 流中元素的 `hashCode`、`equals` 方法。
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo08.java
 
@@ -368,7 +370,9 @@ public class Demo09 {
 
 `Stream<R> map(Function<T, R> mapper)` 方法，用于映射转换流中的数据类型。
 
-使用 `map` 方法，集合匿名内部类的方式：
+案例理解：映射集合中字符串中的数字部分，并遍历。
+
+使用 Stream 流的 `map` 方法，结合匿名内部类的方式：
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo10.java
 
@@ -433,7 +437,7 @@ Stream 流有如下终结方法：
 
 `void forEach(Consumer action)` 方法，用于遍历流中的数据。
 
-使用 forEach 方法，结合匿名内部类的方式：
+使用Stream 流的 `forEach` 方法，结合匿名内部类的方式：
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo11.java
 
@@ -492,7 +496,7 @@ public class Demo11 {
 - `toArray` 方法的底层，会依次得到流里面的每一个数组，并把数据放到数组中。
 - `toArray` 方法的返回值，是一个装着流里面所有数据的数组。
 
-使用 `toArray` 方法，将流中的数据，转为数组，不指定类型：
+使用 `toArray` 方法，将流中的数据，转为 `Object` 类型的数组，不指定具体类型：
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo12.java
 
@@ -515,7 +519,7 @@ public class Demo12 {
 }
 ```
 
-使用 `toArray` 方法，将流中的数据，转为数组，指定类型：
+使用 `toArray` 方法，将流中的数据，转为数组，指定数组的类型：
 
 使用 `toArray` 方法，结合匿名内部类的方式：
 
@@ -608,7 +612,7 @@ public class Demo13 {
 
 - `Collectors` 是一个工具类，里面有 `toList` 静态方法，用于创建一个 `ArrayList` 列表集合，
 
-> 一般用字面量或常量来调用 `equals` 方法时，这样能防止空指针异常。
+> 一般用字面量或常量，来调用 `equals` 方法，这样能防止空指针异常。
 
 #### 2.Set 集合收集
 
@@ -651,7 +655,7 @@ public class Demo13 {
 
 - 细节 1：收集到 `Map` 集合中的键值对对象元素，键不能重复。否则会报错。
 
-使用  `Collectors.toMap`  方法，集合匿名内部类的方式：
+使用  `Collectors.toMap`  方法，结合匿名内部类的方式：
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo13.java
 
@@ -690,11 +694,11 @@ public class Demo13 {
 `Collectors` 工具类中的 `toMap` 方法：
 
 - 参数一：表示键的生成规则；
-  - `Function` 泛型一：流中数据的类型；泛型二：`Map` 集合中键的类型。
+  - `Function` 接口泛型一：流中数据的类型；泛型二：`Map` 集合中键的类型。
   - `apply` 方法形参，依次表示流里面的每一个数据；
   - `apply` 方法体，是生成键的代码。
 - 参数二：表示值的生成规则。
-  - `Function` 泛型一：流中数据的类型；泛型二：`Map` 集合中值的类型。
+  - `Function` 接口泛型一：流中数据的类型；泛型二：`Map` 集合中值的类型。
   - `apply` 方法形参，依次表示流里面的每一个数据；
   - `apply` 方法体，是生成值的代码。
 
@@ -731,7 +735,7 @@ public class Demo13 {
 
 ### 1.练习一
 
-定义一个集合，并添加一些整数 1, 2, 3, 4, 5, 6, 7, 8, 9, 10，过滤奇数，只保留偶数。并将结果保存起来
+定义一个集合，并添加一些整数 1, 2, 3, 4, 5, 6, 7, 8, 9, 10，过滤集合中的奇数，只保留偶数。并将结果保存起来。
 
 demo-project/base-code/Day26/src/com/kkcf/test/Test3.java
 
@@ -757,9 +761,9 @@ public class Test3 {
 
 ### 2.练习二
 
-创建一个 ArrayList 集合，并添加 "zhangsan,23"、"lisi,24"，"wangwu,25" 这些字符串，字符串中前面是姓名，后面是年龄：
+创建一个 `ArrayList` 集合，并添加 "zhangsan,23"、"lisi,24"，"wangwu,25" 这些字符串，字符串中前面是姓名，后面是年龄：
 
-保留年龄大于等于 24 岁的人，并将结果收集到 Map 集合中，姓名为键，年龄为值。
+保留年龄大于等于 24 岁的人，并将结果收集到 `Map` 集合中，姓名为键，年龄为值。
 
 demo-project/base-code/Day26/src/com/kkcf/test/Test4.java
 
@@ -786,7 +790,7 @@ public class Test4 {
 
 ### 3.练习三
 
-有两个 ArrayList 集合：第一个集合中，存储 6 名男演员的名字和年龄；第二个集合中，存储 6 名女演员的 名字和年龄；
+有两个 `ArrayList` 集合：第一个集合中，存储 6 名男演员的名字和年龄；第二个集合中，存储 6 名女演员的 名字和年龄；
 
 姓名和年龄中间用逗号隔开；比如："张三,23"
 

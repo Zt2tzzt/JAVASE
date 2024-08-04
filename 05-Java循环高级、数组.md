@@ -71,12 +71,12 @@ public class InfiniteLoop {
 
 条件控制语句，分为两种：
 
-- break 语句；
-- continue 语句；
+- `break` 语句；
+- `continue` 语句；
 
 ### 1.break 语句
 
-break 语句，不能单独存在，它可以用在 switch 语句和循环中，表示结束，跳出的意思。
+`break` 语句，不能单独存在，它可以用在 switch 语句和循环中，表示结束，跳出的意思。
 
 demo-project/base-code/Day05/src/com/kkcf/loop_array/JumpControl.java
 
@@ -98,7 +98,7 @@ public class JumpControl {
 
 ### 2.continue 语句
 
-continue 语句，不能单独存在。它只能存在于循环当中。表示：跳过本次循环，继续执行下次循环。
+`continue` 语句，不能单独存在。它只能存在于循环当中。表示：跳过本次循环，继续执行下次循环。
 
 demo-project/base-code/Day05/src/com/kkcf/loop_array/JumpControl.java
 
@@ -118,7 +118,7 @@ public class JumpControl {
 }
 ```
 
-continue 语句、break 语句执行的流程，分别如下图所示：
+`continue` 语句、`break` 语句执行的流程，分别如下图所示：
 
 ![跳转控制语句](NodeAssets/跳转控制语句.jpg)
 

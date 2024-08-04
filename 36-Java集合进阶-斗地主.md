@@ -169,29 +169,7 @@ public class PokerGame {
     }
 
     public PokerGame() {
-        // 洗牌
-        Collections.shuffle(cardBoxList);
-
-        // 发牌
-        ArrayList<String> lordList = new ArrayList<>(3); // 底牌
-        ArrayList<String> player1 = new ArrayList<>(); // 玩家1
-        ArrayList<String> player2 = new ArrayList<>(); // 玩家2
-        ArrayList<String> player3 = new ArrayList<>(); // 玩家3
-
-        for (int i = 0; i < cardBoxList.size(); i++) {
-            String poker = cardBoxList.get(i);
-
-            // 发底牌
-            if (i <= 2) {
-                lordList.add(poker);
-                continue;
-            }
-
-            // 发 1、2、3 号玩家牌
-            if (i % 3 == 1) player1.add(poker);
-            else if (i % 3 == 2) player2.add(poker);
-            else player3.add(poker);
-        }
+        // ……
 
         // 看牌
         lookPoker("底牌", lordList);
@@ -236,9 +214,9 @@ public class PokerGame {
 > - 序号，就是自然数，规律非常简单；
 > - 当真正要操作原始数据时，再通过序号，找到原始数据。
 
-需要使用到 Map 集合，将序号与牌面一一对应起来
+需要使用到 `Map` 集合，将序号与牌面一一对应起来
 
-此时，不需要对序号进行排序，所以使用 `HashMap` 集合。
+这里选择使用 `HashMap` 集合，因为不需要对序号进行排序。
 
 然后，再创建一个存放牌盒的 `ArrayList` 集合，里面存放着扑克牌的序号。
 
@@ -261,7 +239,9 @@ public class PokerGame {
         String[] color = {"♠", "♣", "♥", "♦"};
         String[] number = {"3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A", "2"};
 
+        // 定义自然数序号
         int serial = 1;
+
         for (String n : number) {
             for (String c : color) {
                 cardBoxList.add(serial);
@@ -329,9 +309,7 @@ public class PokerGame {
 
 ### 2.计算价值再排序
 
-为每个牌面，赋予一个自定义的价值，用于排序；
-
-使用 `HashMap` 集合，将牌面，和价值对应起来。
+为每个牌面，赋予一个自定义的价值，用于排序；使用 `HashMap` 集合，将牌面，和价值对应起来。
 
 额外定义一个用于集合排序的方法，用于给手牌排序。
 
@@ -350,6 +328,15 @@ public class PokerGame {
     static HashMap<String, Integer> pokerValMap = new HashMap<>();
 
     static {
+        // 自定义牌面的价值
+        pokerValMap.put("J", 11);
+        pokerValMap.put("Q", 12);
+        pokerValMap.put("K", 13);
+        pokerValMap.put("A", 14);
+        pokerValMap.put("2", 15);
+        pokerValMap.put("black joker", 50);
+        pokerValMap.put("red joker", 100);
+
         // 准备牌
         String[] color = {"♠", "♣", "♥", "♦"};
         String[] number = {"3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A", "2"};
@@ -364,15 +351,6 @@ public class PokerGame {
         cardBoxList.add(" black joker"); // 在前面加上空格，用于比较时截取牌面大小进行比较
 
         System.out.println(cardBoxList);
-
-        // 自定义牌面的价值
-        pokerValMap.put("J", 11);
-        pokerValMap.put("Q", 12);
-        pokerValMap.put("K", 13);
-        pokerValMap.put("A", 14);
-        pokerValMap.put("2", 15);
-        pokerValMap.put("black joker", 50);
-        pokerValMap.put("red joker", 100);
     }
 
     public PokerGame() {
@@ -626,7 +604,7 @@ public class GameJFrame extends JFrame implements ActionListener {
 
 扑克牌 `Poker` 类的设计：
 
-在某些系统中，不使用“♠”这样的特殊字符，需要使用数字，来替代花色。
+在某些系统中，不能使用“♠”这样的特殊字符，需要使用数字，来替代花色。
 
 因此，一张扑克牌，要使用“数字-数字”的表现方式。
 
@@ -647,7 +625,7 @@ public class GameJFrame extends JFrame implements ActionListener {
 - 使用 `Poker` 类，继承自 `JLabal` 类，表示它本身是一个 `JLabal` 容器。
 - 以上属性都是必填的，所以不需要空参构造，直接写带参构造。
 - 为 `Poker` 类，实现 `MouseListener` 接口，重写里面的抽象方法，用于鼠标事件监听。
-- 编写两个成员方法，用于显示牌的正、反面。
+- 编写两个成员方法 `turnFront` 和 `turnBack`，用于显示牌的正、反面。
 - 编写 `initCard` 方法，用于初始化牌、准备牌，洗牌，发牌
 
 demo-project/landlord/src/com/kkcf/game/GameJFrame.java
@@ -711,6 +689,79 @@ public class Poker extends JLabel implements MouseListener {
         super.setIcon(new ImageIcon("image/poker/rear.png"));
         // 修改牌的状态
         this.side = false;
+    }
+
+    // 初始化牌、准备牌，洗牌，发牌
+    public void initCard() {
+        //准备牌
+        //把所有的牌，包括大小王都添加到牌盒cardList当中
+        for (int i = 1; i <= 5; i++) {
+            for (int j = 1; j <= 13; j++) {
+                if ((i == 5) && (j > 2)) {
+                    break;
+                } else {
+                    Poker poker = new Poker(i + "-" + j, false);
+                    poker.setLocation(350, 150);
+
+                    pokerList.add(poker);
+                    container.add(poker);
+                }
+            }
+        }
+
+        //洗牌
+        Collections.shuffle(pokerList);
+
+        //创建三个集合用来装三个玩家的牌，并把三个小集合放到大集合中方便管理
+        ArrayList<Poker> player0 = new ArrayList<>();
+        ArrayList<Poker> player1 = new ArrayList<>();
+        ArrayList<Poker> player2 = new ArrayList<>();
+
+        for (int i = 0; i < pokerList.size(); i++) {
+            //获取当前遍历的牌
+            Poker poker = pokerList.get(i);
+
+            //发三张底牌
+            if (i <= 2) {
+                //移动牌
+                Common.move(poker, poker.getLocation(), new Point(270 + (75 * i), 10));
+                //把底牌添加到集合中
+                lordList.add(poker);
+                continue;
+            }
+            //给三个玩家发牌
+            if (i % 3 == 0) {
+                //给左边的电脑发牌
+                Common.move(poker, poker.getLocation(), new Point(50, 60 + i * 5));
+                player0.add(poker);
+            } else if (i % 3 == 1) {
+                //给中间的自己发牌
+                Common.move(poker, poker.getLocation(), new Point(180 + i * 7, 450));
+                player1.add(poker);
+                //把自己的牌展示正面
+                poker.turnFront();
+
+            } else if (i % 3 == 2) {
+                //给右边的电脑发牌
+                Common.move(poker, poker.getLocation(), new Point(700, 60 + i * 5));
+                player2.add(poker);
+            }
+            //把三个装着牌的小集合放到大集合中方便管理
+            playerList.add(player0);
+            playerList.add(player1);
+            playerList.add(player2);
+
+            //把当前的牌至于最顶端，这样就会有牌依次错开且叠起来的效果
+            container.setComponentZOrder(poker, 0);
+        }
+
+        //给牌排序
+        for (int i = 0; i < 3; i++) {
+            //排序
+            Common.order(playerList.get(i));
+            //重新摆放顺序
+            Common.rePosition(this, playerList.get(i), i);
+        }
     }
 
     @Override
