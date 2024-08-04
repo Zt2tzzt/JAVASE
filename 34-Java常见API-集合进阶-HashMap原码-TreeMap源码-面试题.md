@@ -4,7 +4,7 @@
 
 `HashMap` 中的 `Node` 内部类，用于表示存储在哈希表 table 数组中的链表结点。
 
-`Node` 内部类，实现了 `Entry` 接口，所以 Node 对象，也被称为 Entry 对象。
+`Node` 内部类，实现了 `Entry` 接口，所以 Node 对象，也被称为 Entry 对象，即键值对对象。
 
 `HashMap` 类中的成员变量 `next` 记录了链表结构中，下一个元素的地址值。
 
@@ -101,8 +101,8 @@ static final int MAXIMUM_CAPACITY = 1 << 30;
 
 使用空参构造，创建 `HashMap` 集合对象：
 
-- 数组 `table` 默认长度为 `0`；
-- 加载因子 `loadFactor` 设为 `0.75`；
+- 这时数组 `table` 默认长度为 `0`；
+- 加载因子 `loadFactor` 被设为 `0.75`；
 
 java/util/HashMap.java
 
@@ -127,16 +127,16 @@ static final int hash(Object key) {
 }
 ```
 
-- 可见，`HashMap` 集合的唯一性仅与键相关，与值无关。
+- 可见，`HashMap` 集合的唯一性，仅与**键**相关，与值无关。
 - `putVal` 方法，
   - 参数一：键的哈希值；
   - 参数二：键；
   - 参数三：值；
   - 参数四：如果键重复了，是否保留；
-    - 传入 `false`，表示老元素保留，不会覆盖。
-    - 传入 `true`，表示老元素不保留，会被覆盖。
+    - 传入 `true`，表示老元素保留，不会覆盖。
+    - 传入 `false`，表示老元素不保留，会被覆盖。
 
-HashMap 中 putVal 方法解读：
+`HashMap` 中 `putVal` 方法解读：
 
 ```java
 //参数一：键的哈希值
@@ -251,7 +251,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict) {
 
 ## 二、TreeMap 源码
 
-`TreeMap` 集合中，每一个元素，实际上就是一个 `Entry` 对象；
+`TreeMap` 集合中，每一个元素，实际上就是一个 `Entry` 对象，即键值对对象；
 
 `TreeMap` 集合类中，有 `Entry` 内部类；
 
@@ -268,12 +268,12 @@ static final class Entry<K,V> implements Map.Entry<K,V> {
 }
 ```
 
-- `key` 是键
-- `value` 是值
+- `key` 是键；
+- `value` 是值；
 - `left` 是左子结点；
-- `right` 是右子结点
-- `parent` 是父结点
-- `color` 是
+- `right` 是右子结点；
+- `parent` 是父结点；
+- `color` 是；
 
 `TreeMap` 集合类中，有如下部分成员变量：
 
@@ -301,7 +301,7 @@ public TreeMap() {
 
 - 表示没有比较器对象。
 
-`TreeMap` 集合类的带参构造，传递自定义的比较器：
+`TreeMap` 集合类的带参构造，传入自定义的比较器对象：
 
 java/util/TreeMap.java
 
@@ -485,7 +485,7 @@ private void fixAfterInsertion(Entry<K,V> x) {
 
 面试题一：`TreeMap` 添加元素的时候，键是否需要重写 `hashCode` 和 `equals` 方法？
 
-答：不需要，TreeMap 底层红黑树会对元素键进行比较，如果值相同，则覆盖。
+答：不需要，`TreeMap` 底层红黑树，会对元素键进行比较，如果比较结果是值相同，则会覆盖。
 
 ### 2.面试题二
 
@@ -493,17 +493,15 @@ private void fixAfterInsertion(Entry<K,V> x) {
 
 既然有红黑树结构，`HashMap` 的键，是否需要实现 `Compareable` 接口或者传递比较器对象呢？
 
-答：不需要。因为在 `HashMap` 的底层，默认是利用哈希值的大小关系，来创建红黑树的。
+答：不需要。因为在 `HashMap` 的底层，默认是利用**哈希值的大小**关系，来创建红黑树的。
 
 ### 3.面试题三
 
 面试题三：`TreeMap` 和 `HashMap` 谁的效率更高？
 
-如果是 `HashMap` 的最坏情况，即添加了 8 个元素，这 8 个元素在哈希表中的一个桶里形成了链表；
+如果是 `HashMap` 的最坏情况，即添加了 8 个元素，这 8 个元素在哈希表中的一个桶里形成了链表；此时改用 `TreeMap` 的效率要更高。
 
-此时改用 `TreeMap` 的效率要更高。
-
-但是这种情况出现的几率非常小。一般而言，还是 `HashMap` 的效率要更高。
+但是，这种情况出现的几率非常小。一般而言，还是 `HashMap` 的效率要更高。
 
 ### 4.面试题四
 
@@ -511,9 +509,9 @@ private void fixAfterInsertion(Entry<K,V> x) {
 
 答：有，该方法是 `putIfAbsent` 方法，它本身不重要。主要传递一个思想：
 
-- 代码中的逻辑都有两面性，如果我们只知道了其中的 A 面，而且代码中还发现了有变量可以控制两面性的发生。那么该逻辑一定会有B 面。一般习惯：
-  - boolean 类型的变量控制只有 A、B 两面的情况，因为 boolean 只有两个值。
-  - int 类型的变量控制至少有三面的情况，因为 int 可以取多个值。
+- 代码中的逻辑都有两面性，如果我们只知道了其中的 A 面，而且代码中还发现了有变量可以控制两面性的发生。那么该逻辑一定会有 B 面。我们一般习惯使用：
+  - boolean 类型的变量，控制只有 A、B 两面的情况，因为 boolean 只有两个值。
+  - int 类型的变量，控制至少有三面的情况，因为 int 可以取多个值。
 
 ### 5.面试题五
 
@@ -521,4 +519,4 @@ private void fixAfterInsertion(Entry<K,V> x) {
 
 - 默认：`HashMap`（效率最高）；
 - 如果要保证存、取有序：`LinkedHashMap`；
-- 如果要进行大小排序：`TreeMap`。
+- 如果要进行键的大小排序：`TreeMap`。
