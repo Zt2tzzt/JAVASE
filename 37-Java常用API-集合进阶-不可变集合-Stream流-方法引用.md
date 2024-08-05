@@ -75,7 +75,6 @@ public class Test1 {
   - `Map` 集合中存储的是键值对对象，需要存储键和值
   - 然而，Java 方法的参数列表中，不能写两个可变参数。
 
-
 demo-project/base-code/Day26/src/com/kkcf/test/Test1.java
 
 ```java
