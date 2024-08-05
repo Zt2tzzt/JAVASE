@@ -125,7 +125,7 @@ Java 带参数的方法，调用格式如下：
 ```java
 方法名(参数)；
 
-方法名(参数1,参数2);
+方法名(参数1, 参数2);
 ```
 
 带参数的方法调用时，传入的实参的数量与类型，必须与方法定义中，小括号里的形参一一对应，否则程序将报错。
@@ -249,13 +249,11 @@ public class MethodTest02 {
 
 ## 三、Java 方法的重载
 
-Java 方法重载，指的是在同一个类中，定义了多个同名的方法，这些同名的方法，具有相同的功能。每个方法具有不同的参数类型，或参数个数，或参数顺序，这些同名的方法，就构成了重载关系。
+在**同一个类**中，定义了多个同名的方法，这些方法具有不同的参数类型，或参数个数，或参数顺序，这些同名的方法，就构成了重载关系。
 
-简单的说：在同一个类中，**方法名相同**，**参数（个数，或类型，或顺序）不同**的方法，就构成了方法重载。与返回值无关。
+简单的说：在**同一个类**中，**方法名相同**，**参数（个数，或类型，或顺序）不同**的方法，就构成了方法重载。与返回值无关。
 
 判断以下类中的方法，是否构成重载关系：
-
-第一个类中的方法，不构成重载关系。
 
 demo-project/base-code/Day06/src/com/kkcf/method/MethodOverloadDemo01.java
 
@@ -273,9 +271,8 @@ public class MethodOverloadDemo01 {
 }
 ```
 
+- 上方类中的方法，不构成重载关系。
 - 因为两个同名方法的形参，完全相同。
-
-第二个类中的方法，构成重载关系：
 
 demo-project/base-code/Day06/src/com/kkcf/method/MethodOverloadDemo01.java
 
@@ -293,7 +290,7 @@ public class MethodOverloadDemo01 {
 }
 ```
 
-第三个类中的方法，不构成重载关系：
+- 上方类中的方法，构成重载关系：
 
 demo-project/base-code/Day06/src/com/kkcf/method/MethodOverloadDemo01.java
 
@@ -314,9 +311,8 @@ public class MethodOverloadDemo02 {
 }
 ```
 
+- 上方的方法，不构成重载关系：
 - 因为这两个同名方法，不在一个类中。
-
-第四个类中的方法，构成重载关系：
 
 demo-project/base-code/Day06/src/com/kkcf/method/MethodOverloadDemo01.java
 
@@ -334,7 +330,7 @@ public class MethodOverloadDemo01 {
 }
 ```
 
-第五个类中的方法，构成重载关系：
+- 上方类中的方法，构成重载关系：
 
 demo-project/base-code/Day06/src/com/kkcf/method/MethodOverloadDemo01.java
 
@@ -352,7 +348,8 @@ public class MethodOverloadDemo01 {
 }
 ```
 
-- 形参顺序的不同，可以构成重载关系，但在开发中一般不这么写，因为意义不大。
+- 上方类中的方法，构成重载关系：
+- 参顺序的不同，可以构成重载关系，但在开发中一般不这么写，因为意义不大。
 
 案例理解；使用方法重载的思想，设计比较两个整数，是否相同的方法，要求兼容全部整数类型（byte, short, int, long）。
 
@@ -436,7 +433,7 @@ public class MethodTest03 {
 
 ### 2.Java 方法传递基本数据类型的内存原理
 
-基本数据类型，存储的是栈内存里的真实的数据。
+基本数据类型，是存储在栈内存里的真实的数据。
 
 - 特点：赋值给其它变量，也是赋的真实值。
 

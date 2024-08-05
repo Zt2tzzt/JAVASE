@@ -10,7 +10,7 @@ Java 方法引用，有如下要求：
 
 - 引用处，必须是要传入**函数式接口**的实现类对象的地方；
 - 被引用的方法，必须**已经存在**；
-- 被引用的方法，**形参**和**返回值**与抽象方法保持一致；
+- 被引用的方法，**形参列表**和**返回值**与抽象方法保持一致；
 - 被引用的方法，功能要满足当前需求；
 
 案例理解：为一个数组进行排序：分别使用匿名内部类，Lambda 表达式，和方法引用的写法：
@@ -43,6 +43,7 @@ public class Demo01 {
         System.out.println(Arrays.toString(arr));
     }
 
+    // 定义一个方法，用于方法引用
     public static int compare(Integer o1, Integer o2) {
         return o1 - o2;
     }
@@ -121,9 +122,9 @@ public class Test1 {
 
 格式：`对象::成员方法`；示例：
 
-- 引用其它类的成员方法，格式：`其它类对象::方法名`
 - 引用本类的成员方法，格式：`this::方法名`
 - 引用父类的成员方法，格式：`super::方法名`
+- 引用其它类的成员方法，格式：`其它类对象::方法名`
 
 > 注意：静态方法中，没有 `this、super` 关键字；
 >
@@ -166,8 +167,6 @@ public class Test2 {
 
 创建一个类 `StringOperator`，里面有一个 `StringOperator` 方法；
 
-再引用  `StringOperator` 类的 `StringOperator` 方法。
-
 StringOperator 类：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/StringOperator.java
@@ -182,7 +181,7 @@ public class StringOperator {
 }
 ```
 
-测试类：
+在测试类中，引用  `StringOperator` 类的 `StringOperator` 方法。：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Test2.java
 
@@ -214,7 +213,9 @@ public class Test2 {
 
 案例理解，在 GUI 界面中，点击事件的方法引用写法：
 
-创建一个类 `LoginJFrame` 类，表示登陆页面；并为它实现 `ActionListener` 接口，用于在页面中监听鼠标点击的事件。
+创建一个类 `LoginJFrame` 类，继承自 `JFrame` 类， 表示登陆页面；
+
+并为它实现 `ActionListener` 接口，用于在页面中监听鼠标点击的事件。
 
 demo-project/base-code/Day26/src/com/kkcf/a02game/LoginJFrame.java
 
@@ -247,7 +248,7 @@ public class LoginJFrame implements ActionListener {
 
 使用方法引用，重构上方代码：
 
-在 `LoginJFrame` 类中，定义 `method1` 方法，用于 `ActionListener` 接口中 `actionPerformed` 的方法引用。
+在 `LoginJFrame` 类中，定义 `method1` 方法，用于 `ActionListener` 接口中 `actionPerformed` 方法的方法引用。
 
 > `ActionListener` 接口虽然没有加 `@FunctionInterface` 注解，但它其中只有一个抽象方法 `actionPerformed`，所以可以使用方法引用。
 
@@ -272,11 +273,13 @@ public class LoginJFrame implements ActionListener {
     }
 
     public void method1(ActionEvent e) {
-        // 不用进行 if (e.getSource() == go) 判断，因为 method1 方法，是固定用于 go.addActionListener 的方法引用。
         System.out.println("go按钮被点击了");
     }
 }
 ```
+
+- 在 `method1` 方法中，不用再进行 `if (e.getSource() == go)` 判断；
+- 因为 `method1` 方法，是固定用于 `go.addActionListener` 的方法引用。
 
 #### 3.引用父类的成员方法
 
@@ -303,7 +306,7 @@ public class MyJFrame extends JFrame {
 
 再用 `LoginJFrame` 类，继承自 `MyJFrame` 类；
 
-并为 `go.addActionListener` 方法，使用方法引用。
+并为里面的 `go.addActionListener` 方法，使用方法引用。
 
 demo-project/base-code/Day26/src/com/kkcf/a02game/LoginJFrame.java
 
@@ -368,7 +371,7 @@ public class Demo02 {
 
 使用方法引用，重构上面的代码：
 
-`Student` 类中，要新增一个构造方法，用于 Stream 流的 `map` 抽象方法中 `Function` 函数式接口中的 `apply` 抽象方法的方法引用。
+要在 `Student` 类中，新增一个构造方法，用于 Stream 流的 `map` 抽象方法中 `Function` 函数式接口中的 `apply` 抽象方法的方法引用。
 
 ```java
 package com.kkcf.javabean;
@@ -441,7 +444,7 @@ public class Demo02 {
 
 抽象方法形参的详解：
 
-- **第一个参数**：表示被引用方法的调用者，它决定了引用的类名；
+- **第一个参数**：表示被引用方法的调用者，它的类型，决定了引用的类名；
   - 在 Stream 流当中使用的方法，传入的函数式接口实现类中的抽象方法第一个参数往往表示流里面的数据；
   - 假设这个数据是字符串类型的，那么就只能引用 `String` 类里的方法。
 - **第二个参数到最后一个参数**：跟被引用方法的形参保持一致，如果没有第二个参数，说明被引用的方法是类中的无参成员方法。
@@ -609,7 +612,7 @@ public class Test3 {
 }
 ```
 
-练习二：创建集合，添加学生对象，学生对象属性：`name`、`age`
+练习二：创建集合，添加 Student 学生对象，学生对象属性：`name`、`age`
 
 只获取姓名并放到数组当中（使用方法引用完成）
 
@@ -673,8 +676,8 @@ public class Studnet {
     //……
 
     /**
-     * 此方法用于，获取“姓名,年龄”g格式的字符串
-     * @return “姓名,年龄”g格式的字符串
+     * 此方法用于，获取“姓名,年龄”格式的字符串
+     * @return “姓名,年龄”格式的字符串
      */
     public String getNameAge() {
         return this.getName() + "," + this.getAge();
