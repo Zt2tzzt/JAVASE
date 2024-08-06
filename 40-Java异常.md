@@ -2,11 +2,11 @@
 
 异常，表示程序运行时，出翔的问题；
 
-学习异常，是为了处理程序中出现的异常。
+学习异常，就是为了处理程序中出现的异常。
 
 Java 异常体系结构，如下图所示：
 
-![Java异常体系结构](/Users/zetian/workshop/tutorial/JAVA/NodeAssets/Java异常体系结构.png)
+![Java异常体系结构](NodeAssets/Java异常体系结构.png)
 
 `Error` 代表系统级错误，属于严重问题；
 
@@ -15,19 +15,19 @@ Java 异常体系结构，如下图所示：
 
 ## 一、Java 异常分类
 
-`Exception` 表示异常，代表程序可能出现的问题。
+`Exception` 表示异常，代表程序编译或运行时，可能出现的问题。
 
-- 开发者，通常使用 `Exception` 或者它的子类，来封装程序中出现的问题。
+- 开发者，通常使用 `Exception` 或者它的子类，来封装程序编译或运行时，可能出现的问题。
 
 `Exception` 有如下分类：
 
-- `RuntimeException` 及其子类，表示**运行时异常**，编译阶段不会出现异常提醒，而是程序运行时出现的异常。
+- `RuntimeException` 及其子类，是**运行时异常**，表示在程序在运行时出现的异常（编译阶段不会出现）。
   - 比如：数组索引越界异常。
 
-- 其它异常，继承自 `Exception`，表示其它所有的**编译时异常**。
+- 其它异常，继承自 `Exception`，是**编译时异常**，表示在程序编译时出现的异常。
   - 比如：日期解析异常；
 
-![编译时异常和运行时异常](/Users/zetian/workshop/tutorial/JAVA/NodeAssets/编译时异常和运行时异常.png)
+![编译时异常和运行时异常](NodeAssets/编译时异常和运行时异常.png)
 
 ### 1.编译时异常
 
@@ -214,9 +214,9 @@ Exception in thread "main" java.lang.RuntimeException: 年龄必须在18-40之�
 
 ### 1.JVM 默认处理方式
 
-在发生异常后，如果代码中，没有进行任何异常处理，那么 Java 会把异常，交给 JVM 虚拟机进行处理。
+在发生异常后，如果代码没有进行任何异常处理，那么 Java 会把异常，交给 JVM 虚拟机进行处理。
 
-- 它会把异常的名称，异常原因，异常出现的位置等信息，输出在了控制台。
+- 它会把异常的名称，原因，出现的位置等信息，输出在控制台。
 - 它会停止程序执行（异常下方的代码，不会再执行了）。
 
 demo-project/base-code/Day27/src/com/kkcf/exception/Demo04.java
@@ -277,26 +277,27 @@ public class Demo05 {
 
 捕获异常的步骤：
 
-1. 当 try 代码块中，出现异常时，程序就会在这里创建一个异常对象（比如：ArrayIndexOutOfBoundsException 对象）；
-2. 然后拿着这个对象，与 catch 小括号中的参数进行对比，看这个参数是否可以接收对象。
-3. 如果能被接收，表示异常被成功捕获；执行 catch 代码块中的代码；
-4. 当 catch 代码块中的代码执行完毕，继续执行后面的代码。
+1. 当 `try` 代码块中，出现异常时，程序就会在这里创建一个异常对象（比如：`ArrayIndexOutOfBoundsException` 对象）；
+2. 然后拿着这个对象，与 `catch` 小括号中的参数进行对比，看这个参数是否可以接收对象。
+3. 如果能被接收，表示异常被成功捕获；执行 `catch` 代码块中的代码；
+4. 当 `catch` 代码块中的代码执行完毕，继续执行后面的代码。
 
-使用 try……catch 代码块，捕获异常，会出现以下几种情况：
+使用 `try……catch` 代码块，捕获异常，会出现以下几种情况：
 
 #### 1.异常捕获情况一
 
-情况一：try 代码块中，没有出现异常：
+情况一：`try` 代码块中，没有出现异常：
 
-- 会把 try 代码块中的代码全部执行完，不会执行 catch 代码块中的代码；
+- 那么会把 `try` 代码块中的代码，全部执行完；
+- 不会执行 `catch` 代码块中的代码。
 
 #### 2.异常捕获情况二
 
-情况二：try 代码块中，遇到了多个异常：
+情况二：`try` 代码块中，遇到了多个异常：
 
-- 只会生成第一个异常的对象，并与 catch 小括号里的参数进行匹配，后面的代码都不会执行。
-- 规范的写法是：写多个 catch 代码块，与 try 代码块中可能会出现的异常对应。
-- 细节 1：多个异常中如果存在父子关系，父类一定要写在下面。
+- 只会生成第一个异常的对象，并与 `catch` 小括号里的异常类型进行匹配，后面的代码都不会执行。
+- 规范的写法是：写多个 `catch` 代码块，与 `try` 代码块中可能会出现的异常对应。
+- 细节 1：多个异常中，如果存在父子关系，父类一定要写在下面。
 
 demo-project/base-code/Day27/src/com/kkcf/exception/Demo06.java
 
@@ -325,7 +326,7 @@ public class Demo06 {
 }
 ```
 
-JDK7 新特性：catch 小括号中的参数类型，可以使用 `|` 逻辑或符号连接，表示多个异常的通用处理方式：
+JDK7 新特性：`catch` 小括号中的异常类型，可以使用逻辑或符号 `|` 连接，表示多个异常类型的通用处理方式：
 
 demo-project/base-code/Day27/src/com/kkcf/exception/Demo06.java
 
@@ -350,13 +351,13 @@ public class Demo06 {
 
 #### 3.异常捕获情况三
 
-情况三：try 代码块中出现的异常，catch 代码块中没有进行捕获。
+情况三：`try` 代码块中出现的异常，`catch` 代码块中没有进行捕获。
 
 - 那么出现的异常，会交给 JVM 虚拟机进行处理。
 
 #### 4.异常捕获情况四
 
-情况四：try 代码块中出现了异常，后面的代码不会再执行了。
+情况四：`try` 代码块中出现了异常，代码块后面的代码，就不会再执行了。
 
 #### 5.异常的方法
 
@@ -368,9 +369,7 @@ public class Demo06 {
 | `public String toString()`      | 返回此 `throwable` 的简短描述。            |
 | `public void printStackTrace()` | 以红色字体把异常的错误信息，输出在控制台。 |
 
-`printStackTrace` 方法，打印的信息，包含了 `getMessage` 和 `toString` 方法中的信息；
-
-`printStackTrace` 方法，不会结束程序的运行。
+`printStackTrace` 方法，不会结束程序的运行，打印的信息，包含了 `getMessage` 和 `toString` 方法中的信息；
 
 demo-project/base-code/Day27/src/com/kkcf/exception/Demo07.java
 
@@ -410,10 +409,10 @@ public void printStackTrace() {
 }
 ```
 
-可见，`printStackTrace` 方法底层，使用了 `System.err`；用于在控制台，以红色字体，输出信息，表示输出错误信息。
+可见，`printStackTrace` 方法底层，使用了 `System.err`，用于在控制台，以红色字体输出信息，表示输出错误信息。
 
-- 一般用于 Java 底层源码，和一些第三方框架中；
-- 当 `System.err` 语句与 `System.out` 输出语句一起使用时，输出的顺序可能有变化，这与多线程有关。
+- `System.err` 一般用于 Java 底层源码，和一些第三方框架中；
+- `System.err` 语句与 `System.out` 输出语句一起使用时，输出的顺序，可能有变化，这与多线程有关。
 
 ```java
 package com.kkcf.exception;
@@ -432,7 +431,7 @@ public class Demo07 {
 
 #### 1.throws 关键字
 
-throws 关键字，写在方法定义处，表示声明一个异常，用于告诉调用者，使用该方法可能会出现哪些（编译时）异常；
+`throws` 关键字，写在方法定义处，表示声明一个异常，用于告诉调用者，使用该方法可能会出现的（编译时）异常；
 
 格式如下：
 
@@ -442,13 +441,13 @@ public void 方法名() throws 异常类名1, 异常类名2…… {
 }
 ```
 
-编译时异常，必须要写；
-
-运行时异常，可以不写。
+编译时异常，必须要写；运行时异常，可以不写。
 
 #### 2.throw 关键字
 
-throw 关键字，写在方法内，用于手动抛出异常对象，交给调用者；方法下面的代码不再执行了，方法结束。
+`throw` 关键字，写在方法内，用于手动抛出异常对象，交给调用者；
+
+使用 `throw` 抛出异常后，下面的代码就不再执行了，方法结束。
 
 格式如下：
 
@@ -469,22 +468,21 @@ public class Demo08 {
     // NullPointerException, ArrayIndexOutOfBoundsException 都是运行时异常，所以没必要使用 throws
     //public static int getMax(int[] arr) throws NullPointerException, ArrayIndexOutOfBoundsException {
     public static int getMax(int[] arr) {
-        if (arr == null) {
+        if (arr == null)
             throw new NullPointerException("数组不能为 null");
-        }
-        if (arr.length == 0) {
+
+        if (arr.length == 0)
             throw new ArrayIndexOutOfBoundsException("数组长度不能为0");
-        }
 
         int max = arr[0];
         for (int i = 0; i < arr.length; i++) {
-            if (max < arr[i]) {
+            if (max < arr[i])
                 max = arr[i];
-            }
         }
 
         return max;
     }
+
     public static void main(String[] args) {
         int[] arr1 = null;
         try {
@@ -512,7 +510,7 @@ public class Demo08 {
 
 需求：键盘录入自己心仪的女朋友姓名、年龄。姓名的长度在 3~10 之间，年龄的范围为 18-40 岁；超出这个范围是异常数据不能赋值，需要重新录入，一直录到正确为止。
 
-提示：需要考虑用户在键盘录入时的所有情况。比如：录入年龄时超出范围，录入年龄时录入了abc等情况
+提示：需要考虑用户在键盘录入时的所有情况。比如：录入年龄时超出范围，录入年龄时录入了"abc"等情况
 
 GirlFriend 类：
 
@@ -609,7 +607,7 @@ public class Test1 {
 
 ## 五、java自定义异常
 
-Java 自定义异常，就是为了在控制台输出的报错信息，能够更加的见名知意。
+Java 自定义异常，是为了在控制台输出的异常信息，能够更加的见名知意。
 
 Java 自定义异常类，有如下几步：
 

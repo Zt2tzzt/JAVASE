@@ -37,7 +37,7 @@ public class Test7 {
         result.forEach(new BiConsumer<String, Integer>() {
             @Override
             public void accept(String key, Integer val) {
-                System.out.println(key + ":" + val);
+                System.out.println(key + ":" + val + "个");
             }
         });
     }

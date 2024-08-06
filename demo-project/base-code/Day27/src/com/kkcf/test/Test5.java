@@ -6,17 +6,17 @@ public class Test5 {
     public static void deleteFile(File src) {
         if (src.isFile()) {
             boolean flag = src.delete();
-            System.out.println((flag ? "删除成功" : "删除失败") + src.getAbsoluteFile());
+            System.out.println("删除文件" + (flag ? "成功" : "失败") + src.getAbsoluteFile());
         } else {
             File[] files = src.listFiles();
 
             if (files == null) return;
 
-            for (File file : files) {
+            for (File file : files)
                 deleteFile(file);
-            }
+
             boolean flag = src.delete();
-            System.out.println((flag ? "删除成功" : "删除失败") + src.getAbsoluteFile());
+            System.out.println("删除文件夹" + (flag ? "成功" : "失败") + src.getAbsoluteFile());
         }
     }
 

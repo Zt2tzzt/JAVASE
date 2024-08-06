@@ -243,13 +243,13 @@ public class Demo03 {
 
 `File` 类常见的成员方法，用于获取并遍历文件：
 
-| 方法名                     | 说明                       |
-| -------------------------- | -------------------------- |
-| `public File[] listFile()` | 获取当前该路径下所有内容。 |
+| 方法名                     | 说明                             |
+| -------------------------- | -------------------------------- |
+| `public File[] listFile()` | 获取当前该 File 对象下所有内容。 |
 
 #### 1.listFile 方法
 
-`public File[] listFile()` 方法，用于获取当前该路径下所有内容。
+`public File[] listFile()` 方法，用于获取 File 对象下所有内容。
 
 demo-project/base-code/Day27/src/com/kkcf/file/Demo03.java
 
@@ -283,10 +283,10 @@ public class Demo03 {
 | 方法名                                           | 说明                                                   |
 | ------------------------------------------------ | ------------------------------------------------------ |
 | `public static File[] listRoots()`               | 列出可用的文件系统根                                   |
-| `public String[] list()`                         | 获取当前该路径下所有内容的字符串路径                   |
-| `public String[] list(FilenameFilter filter)`    | 利用文件名过滤器，获取当前该路径下所有内容的字符串路径 |
-| `public File[] listFiles(FileFilter filter)`     | 利用文件过滤器，获取当前该路径下所有内容               |
-| `public File[] listFiles(FilenameFilter filter)` | 利用文件名过滤器，获取当前该路径下所有内容             |
+| `public String[] list()`                         | 获取 File 对象下所有内容的字符串路径                   |
+| `public String[] list(FilenameFilter filter)`    | 利用文件名过滤器，获取 File 对象下所有内容的字符串路径 |
+| `public File[] listFiles(FileFilter filter)`     | 利用文件过滤器，获取 File 对象下所有内容               |
+| `public File[] listFiles(FilenameFilter filter)` | 利用文件名过滤器，获取 File 对象下所有内容             |
 
 #### 2.listRoots 静态方法
 
@@ -310,7 +310,7 @@ public class Demo04 {
 
 #### 3.list 方法
 
-`public String[] list()` 方法，用于获取文件路径下的所有内容的名字：
+`public String[] list()` 方法，用于获取 File 对象下的所有内容的名字字符串：
 
 demo-project/base-code/Day27/src/com/kkcf/file/Demo04.java
 
@@ -329,7 +329,7 @@ public class Demo04 {
 }
 ```
 
-list 方法，使用文件名过略器，获取文件名。
+`public String[] list(FilenameFilter filter)` 方法，使用文件名过略器，获取 File 对象下指定的文件名。
 
 需求：获取目录下所有 ”.txt“ 结尾的文件。
 
@@ -356,14 +356,14 @@ public class Demo04 {
 }
 ```
 
-- FilenameFilter 是一个函数式接口，其中 accept 方法分析：
-- 参数一：File dir，依次表示 File 对象路径下所有内容的父级路径。
-- 参数二：String name，依次表示 File 对象路径下所有内容的名称。
-- 返回值： true，表示当前路径保留；false，表示当前路径不保留；
+- `FilenameFilter` 是函数式接口，其中 `accept` 方法分析：
+- 参数一：`File dir`，依次表示 File 对象下，所有内容的父级路径。
+- 参数二：`String name`，依次表示 File 对象下，所有内容的名称。
+- 返回值： `true`，表示当前路径保留；`false`，表示当前路径不保留；
 
 #### 4.listFiles 方法
 
-listFiles 方法，使用文件过滤器，获取 File 对象表示的路径下所有的内容：
+`public File[] listFiles(FileFilter filter)` 方法，使用文件过滤器，获取 File 对象下，所有的内容：
 
 需求：获取目录下所有 ”.txt“ 结尾的文件。
 
@@ -392,7 +392,7 @@ public class Demo04 {
 }
 ```
 
-listFiles 方法，使用文件名过滤器，获取 File 对象表示的路径下所有的内容：
+`public File[] listFiles(FilenameFilter filter)` 方法，使用文件名过滤器，获取 File 对象下所有的内容：
 
 需求：获取目录下所有 ”.txt“ 结尾的文件。
 
@@ -440,8 +440,10 @@ public class Test2 {
     public static void main(String[] args) throws IOException {
         File f1 = new File("Day27\\src\\com\\kkcf\\test\\aaa");
 
+        // 创建 aaa 文件夹
         boolean flag = f1.mkdirs();
 
+        // 创建 a.txt 文件
         if (flag) {
             File f2 = new File(f1, "a.txt");
             boolean flag2 = f2.createNewFile();
@@ -453,7 +455,7 @@ public class Test2 {
 
 ### 2.练习二
 
-需求：定义一个方法，找某一个文件在，是否有以 avi 结尾的电影（不考虑子文件夹）
+需求：定义一个方法，找某一个文件下，是否有以 avi 结尾的文件（不考虑子文件夹）
 
 demo-project/base-code/Day27/src/com/kkcf/test/Test3.java
 
@@ -487,7 +489,9 @@ public class Test3 {
 
 ### 3.练习三
 
-需求：找到电脑中所有以 .avi 结尾的电影
+需求：找到电脑中所有以 .avi 结尾的文件。
+
+- 使用递归的方式。
 
 demo-project/base-code/Day27/src/com/kkcf/test/Test4.java
 
@@ -508,7 +512,7 @@ public class Test4 {
             if (file.isDirectory()) {
                 // 3.判断文件夹；
                 findAvi(file);
-            } else if (file.isFile()) {
+            } else {
                 // 4.判断文件。
                 if (file.getName().endsWith(".avi")) {
                     System.out.println(file.getAbsolutePath());
@@ -520,9 +524,8 @@ public class Test4 {
     public static void main(String[] args) {
         File[] pans = File.listRoots();
 
-        for (File pan : pans) {
+        for (File pan : pans)
             findAvi(pan);
-        }
     }
 }
 ```
@@ -539,7 +542,7 @@ public class Test4 {
 需求：删除一个多级文件夹：要分为两步：
 
 1. 先删除文件夹里面所有的内容；
-2. 再删除文件夹本身
+2. 再删除文件夹本身。
 
 demo-project/base-code/Day27/src/com/kkcf/test/Test5.java
 
@@ -552,17 +555,17 @@ public class Test5 {
     public static void deleteFile(File src) {
         if (src.isFile()) {
             boolean flag = src.delete();
-            System.out.println((flag ? "删除成功" : "删除失败") + src.getAbsoluteFile());
+            System.out.println("删除文件" + (flag ? "成功" : "失败") + src.getAbsoluteFile());
         } else {
             File[] files = src.listFiles();
 
             if (files == null) return;
 
-            for (File file : files) {
+            for (File file : files)
                 deleteFile(file);
-            }
+
             boolean flag = src.delete();
-            System.out.println((flag ? "删除成功" : "删除失败") + src.getAbsoluteFile());
+            System.out.println("删除文件夹" + (flag ? "成功" : "失败") + src.getAbsoluteFile());
         }
     }
 
@@ -595,9 +598,9 @@ public class Test6 {
             if (files == null) return 0;
 
             long size = 0;
-            for(File file : files) {
+            for(File file : files)
                 size += getFileSize(file);
-            }
+
             return size;
         }
     }
@@ -630,7 +633,6 @@ package com.kkcf.test;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class Test7 {
@@ -646,11 +648,10 @@ public class Test7 {
                     return getCountMap(file, map);
                 } else {
                     String name = file.getName();
-                    String[] split = name.split("\\."); // 正则表达式切割字符串
+                    String[] split = name.split("\\.");
                     String suffix = split[split.length - 1];
-                    if (map.containsKey(suffix)) {
-                        map.put(suffix, map.get(suffix)+ 1);
-                    }
+
+                    map.put(suffix, map.containsKey(suffix) ? map.get(suffix) + 1 : 1);
                 }
             }
         }
@@ -660,14 +661,14 @@ public class Test7 {
 
     public static void main(String[] args) {
         File src = new File("Day27/src/com/kkcf/test/aaa");
-        HashMap<String, Integer> map = new HashMap<>(Map.of("txt", 0, "doc", 0, "jpg", 0));
+        HashMap<String, Integer> map = new HashMap<>();
 
         HashMap<String, Integer> result = getCountMap(src, map);
         if (result == null) return;
         result.forEach(new BiConsumer<String, Integer>() {
             @Override
             public void accept(String key, Integer val) {
-                System.out.println(key + ":" + val);
+                System.out.println(key + ":" + val + "个");
             }
         });
     }
