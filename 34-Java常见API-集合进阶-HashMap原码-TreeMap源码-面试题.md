@@ -4,7 +4,7 @@
 
 `HashMap` 中的 `Node` 内部类，用于表示存储在哈希表 table 数组中的链表结点。
 
-`Node` 内部类，实现了 `Entry` 接口，所以 Node 对象，也被称为 Entry 对象，即键值对对象。
+`Node` 内部类，实现了 `Entry` 接口，所以 **Node 对象**，也被称为 **Entry 对象**，即**键值对对象**。
 
 `HashMap` 类中的成员变量 `next` 记录了链表结构中，下一个元素的地址值。
 
@@ -251,7 +251,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict) {
 
 ## 二、TreeMap 源码
 
-`TreeMap` 集合中，每一个元素，实际上就是一个 `Entry` 对象，即键值对对象；
+`TreeMap` 集合中，每一个元素，实际上就是一个 Entry 对象，即键值对对象；
 
 `TreeMap` 集合类中，有 `Entry` 内部类；
 
@@ -507,7 +507,7 @@ private void fixAfterInsertion(Entry<K,V> x) {
 
 面试题四：你觉得在 `Map` 系列集合中，java 会提供一个如果键重复了，不会覆盖的 `put` 方法吗？
 
-答：有，该方法是 `putIfAbsent` 方法，它本身不重要。主要传递一个思想：
+答：有，该方法是 `putIfAbsent` 方法，它本身不重要。主要传达一个思想：
 
 - 代码中的逻辑都有两面性，如果我们只知道了其中的 A 面，而且代码中还发现了有变量可以控制两面性的发生。那么该逻辑一定会有 B 面。我们一般习惯使用：
   - boolean 类型的变量，控制只有 A、B 两面的情况，因为 boolean 只有两个值。

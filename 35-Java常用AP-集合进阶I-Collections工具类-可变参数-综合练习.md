@@ -33,7 +33,7 @@ public class Demo01 {
 }
 ```
 
-JDK5 出现了可变参数的写法，使得方法的形参的个数，是可以发生变化的。
+可变参数是 JDK5 的新特性，它使得方法的形参的个数，是可以发生变化的。
 
 Java 可变参数的书写格式：`数据类型...形参名`。
 
@@ -77,17 +77,17 @@ Java 可变参数的特点：
 
 `Collections` 工具类，常用的方法如下：
 
-| 方法名                                                       | 说明                                   |
-| ------------------------------------------------------------ | -------------------------------------- |
-| `static <T> boolean addAll(Collection<? super T> c, T... elements)` | 批量添加元素                           |
-| `static void shuffle(List<?> list)`                          | 打乱 List 集合中元素的顺序             |
-| `static <T extends Comparable<? super T>> void sort(List<T> list)` | 排序                                   |
-| `static <T> void sort(List<T> list, Comparator<? super T> c)` | 根据指定规则进行排序                   |
-| `static <T> int binarySearch(List<? extends Comparable<? super T>> list, T key)` | 以二分查找法查找 List 集合中的指定元素 |
-| `static <T> void copy(List<? super T> dest, List<? extends T> src)` | 拷贝 List 集合中的元素                 |
-| `static <T> void fill(List<? super T> list, T obj)`          | 使用指定的元素，填充 List 集合         |
-| `static <T extends Object & Comparable<? super T>>T max/min(Collection<? extends T> coll)` | 根据默认的自然排序，获取最大/最小值    |
-| `static void swap(List<?> list, int i, int j)`               | 交换 List 集合中指定位置的元素         |
+| 方法名                                                       | 说明                                            |
+| ------------------------------------------------------------ | ----------------------------------------------- |
+| `static <T> boolean addAll(Collection<? super T> c, T... elements)` | 批量添加元素                                    |
+| `static void shuffle(List<?> list)`                          | 打乱 List 集合中元素的顺序                      |
+| `static <T extends Comparable<? super T>> void sort(List<T> list)` | 排序                                            |
+| `static <T> void sort(List<T> list, Comparator<? super T> c)` | 排序，根据指定规则进行排序                      |
+| `static <T> int binarySearch(List<? extends Comparable<? super T>> list, T key)` | 查找，以二分查找法查找 List 集合中的指定元素    |
+| `static <T> void copy(List<? super T> dest, List<? extends T> src)` | 拷贝，拷贝 List 集合中的元素                    |
+| `static <T> void fill(List<? super T> list, T obj)`          | 填充，使用指定的元素，填充 List 集合            |
+| `static <T extends Object & Comparable<? super T>>T max/min(Collection<? extends T> coll)` | 最大最小值，根据默认的自然排序，获取最大/最小值 |
+| `static void swap(List<?> list, int i, int j)`               | 交换，交换 List 集合中指定位置的元素            |
 
 ### 1.addAll、shuffle 方法
 
@@ -121,7 +121,9 @@ public class Test1 {
 
 ### 1.练习一
 
-自动点名器：班级里有 N 个学生，学生有属性：姓名、年龄、性别；实现随机点名器。
+自动点名器：班级里有 N 个学生，学生有属性：姓名、年龄、性别；
+
+实现随机点名器。
 
 学生类：
 
@@ -182,12 +184,12 @@ public class Test1 {
 
         Collections.addAll(stuList, stu1, stu2, stu3, stu4, stu5);
 
-        // 随机点名-方式一：
+        // 方式一
         Random r = new Random();
         Student randomStu1 = stuList.get(r.nextInt(stuList.size()));
         System.out.println(randomStu1.getName());
 
-        // 随机点名-方式二
+        // 方式二
         Collections.shuffle(stuList);
         Student randomStu2 = stuList.get(0);
         System.out.println(randomStu2.getName());
@@ -214,7 +216,7 @@ import java.util.Random;
 
 public class Test2 {
     public static void main(String[] args) {
-        // 男、女学生列表集合
+        // 男学生列表集合
         ArrayList<Student> maleStu = new ArrayList<>();
         ArrayList<Student> femaleStu = new ArrayList<>();
 
@@ -224,6 +226,7 @@ public class Test2 {
 
         Collections.addAll(maleStu, stu1, stu3, stu5);
 
+        // 女学生列表集合
         Student stu2 = new Student("李四", 17, '女');
         Student stu4 = new Student("赵六", 19, '女');
 
@@ -344,7 +347,7 @@ public class Test3 {
 
 ### 5.练习五
 
-定义一个 Map 集合，键表示省份名称的 province，值表示市 city；但是市会有多个，添加完毕后，遍历结果格式如下；
+定义一个 Map 集合，键表示省份 province，值表示城市 city；但是市会有多个，添加完毕后，遍历结果格式如下；
 
 - 江苏省 = 南京市，扬州市，苏州市，无锡市，常州市
 - 湖北省 = 武汉市，孝感市，十堰市，宜昌市，鄂州市

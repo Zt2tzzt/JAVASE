@@ -1,0 +1,553 @@
+# Java IO流向、IO类型、IO字节流
+
+IO 流：是存储、读取数据的解决方案。
+
+IO 流，用于以应用程序（运行在内存中）为参照物，读（Output）写（Input）文件，或网络中的数据。
+
+## 一、Java IO 流向
+
+IO 流的方向：
+
+- 输出流：用于写入（Input）；
+- 输入流：用于读取（Output）
+
+## 二、Java IO 类型
+
+IO 流操作文件的类型：
+
+- 字节流：可以操作所有类型的文件；
+- 字符流：只能操作纯文本文件。
+
+![IO流流向和分类](NodeAssets/IO流流向和分类.jpg)
+
+## 三、Java IO 体系结构
+
+Java IO 流的体系结构：
+
+![IO流体系结构](NodeAssets/IO流体系结构.jpg)
+
+其中字节流分为：
+
+- 字节输入流 InputStream 抽象类；
+- 字节输出流 OutputStream 抽象类；
+
+其中字符流分为：
+
+- 字符输入流 Reader 抽象类；
+- 字符输出流 Writer 抽象类。
+
+## 四、Java IO 字节流
+
+Java IO 字节流的体系结构，如下图所示：
+
+![IO字节流体系结构](NodeAssets/IO字节流体系结构.jpg)
+
+由上图可知，IO 字节流的命名规则是：Xxx + InputStream/OutputStream；比如：FileInputStream
+
+### 1.FileOutputStream 子类
+
+FileOutputStream 是用于操作本地文件的字节输出流，可以把程序中的数据，写入到文件中。使用步骤：
+
+1. 创建字节输出对象；
+2. 写数据；
+3. 释放资源。
+
+#### 1.FileOutputStream 构造方法
+
+| 方法名                                          | 说明                                                     |
+| ----------------------------------------------- | -------------------------------------------------------- |
+| `FileOutputStream(File file)`                   | 根据 File 对象，创建字节输出流对象。                     |
+| `FileOutputStream(String name)`                 | 根据字符串表示的路径，创建字节输出流对象。               |
+| `FileOutputStream(File file, boolean append)`   | 根据 File 对象，创建字节输出流对象，并决定是否续写       |
+| `FileOutputStream(String name, boolean append)` | 根据字符串表示的路径，创建字节输出流对象。并决定是否续写 |
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo01.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Demo01 {
+    public static void main(String[] args) throws IOException {
+        // 1.创建字节输出对象；
+        FileOutputStream fos = new FileOutputStream("Day28/src/com/kkcf/io/a.txt");
+
+        // 2.写数据；
+        fos.write(97); // 在文件中，写入了 'a' 字符
+
+        // 3.释放资源。
+        fos.close();
+    }
+}
+```
+
+- 细节 1：如果文件不存在，会创建一个新的文件，但是要保证父级路径是存在的。
+- 细节 2：如果文件存在，会先清空文件内容，再写入。
+- 细节 3：write 方法的参数是整数，表示写入字符对应的 ASCLL 码。
+- 细节 4：每次使用完流后，都要释放资源。否则文件会出于被占用的状态。
+
+#### 1.FileOutputStream 成员方法
+
+FileOutputStream 成员方法，用于往文件中，写入数据。常用的方法如下：
+
+| 方法名                                   | 说明                         |
+| ---------------------------------------- | ---------------------------- |
+| `void write(int b)`                      | 一次写一个字节数据           |
+| `void write(byte[] b)`                   | 一次写一个字节数组数据       |
+| `void write(byte[] b, int off, int len)` | 一次写一个字节数组的部分数据 |
+
+`void write(byte[] b)` 方法的使用：
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo01.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Demo01 {
+    public static void main(String[] args) throws IOException {
+        // 1.创建字节输出对象；
+        FileOutputStream fos = new FileOutputStream("Day28/src/com/kkcf/io/a.txt");
+
+        // 2.写数据；
+        fos.write(new byte[]{97, 98, 99, 100, 101}); // 写入 abcde
+
+        // 3.释放资源。
+        fos.close();
+    }
+}
+```
+
+`void write(byte[] b, int off, int len)` 方法的使用：
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo01.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Demo01 {
+    public static void main(String[] args) throws IOException {
+        // 1.创建字节输出对象；
+        FileOutputStream fos = new FileOutputStream("Day28/src/com/kkcf/io/a.txt");
+
+        // 2.写数据；
+        fos.write(new byte[]{97, 98, 99, 100, 101}, 1, 2); // 写入 bc
+
+        // 3.释放资源。
+        fos.close();
+    }
+}
+```
+
+输出流换行：
+
+> 字符串获取字节数组的方法：`byte[] getBytes()`
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo01.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Demo01 {
+    public static void main(String[] args) throws IOException {
+        // 1.创建字节输出对象；
+        FileOutputStream fos = new FileOutputStream("Day28/src/com/kkcf/io/a.txt");
+
+        // 2.写入数据
+        String str1 = "ore,MechakuchaTamakoGaSukiTa!";
+        byte[] bytes1 = str1.getBytes();
+        fos.write(bytes1);
+
+        fos.write("\n".getBytes()); // 换行
+
+        String str2 = "watashi,MochizouDaisuki.";
+        byte[] bytes2 = str2.getBytes();
+        fos.write(bytes2);
+
+        // 3.释放资源。
+        fos.close();
+    }
+}
+```
+
+> Windows 换行符：`\r\n`；Linux 换行符：`\n`；Mac 换行符：`\r`；
+>
+> Java 会针对不同的操作系统，进行换行符补全；
+
+输出流续写：
+
+创建一个可以续写的输出流对象：
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo02.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Demo02 {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream fos = new FileOutputStream("Day28/src/com/kkcf/io/a.txt", true);
+
+        fos.write("Dozo!".getBytes());
+
+        fos.close();
+    }
+}
+```
+
+### 2.FileInputStream 子类
+
+FileInputStream 是用于操作本地文件的字节输入流，可以把文件中的数据，读取到程序中。使用步骤：
+
+1. 创建字节输入流对象；
+2. 读数据；
+3. 释放资源。
+
+#### 1.FileInputStream 构造方法
+
+FileInputStream 常用的构造方法如下：
+
+| 方法名                          | 说明                                       |
+| ------------------------------- | ------------------------------------------ |
+| `FileInputStream)(String name)` | 根据字符串表示的路径，创建字节输入流对象。 |
+| `FileInputStream)(File file)`   | 根据 File 对象，创建字节输入流对象。       |
+
+#### 1.FileInputStream 成员方法
+
+FileInputStream 常用的成员方法如下；
+
+| 方法名       | 说明                         |
+| ------------ | ---------------------------- |
+| `int read()` | 从输入流读取一个字节的数据。 |
+
+利用 FileInputStream 输入流，读取文件中的数据。
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo03.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class Demo03 {
+    public static void main(String[] args) throws IOException {
+        FileInputStream fis = new FileInputStream("Day28/src/com/kkcf/io/a.txt");
+
+        int b1 = fis.read();
+
+        System.out.println(b1); // 111
+        System.out.println((char)b1); // o
+    }
+}
+```
+
+- 细节 1：read 方法会**挨个**读取文件中的字符，并返回字符在 ASCLL 码表中对应的数字；
+- 细节 2：read 方法读取完毕后，再进行读取，会返回 -1；
+
+FileInputStream 输入流，读取的文件，如果不存在，那么会直接抛出异常。
+
+- 输入流读取的文件，如果不存在，再创建一个空文件是没有意义的，因为里面没有数据，所有直接抛出异常。
+
+FileInputStream 输入流，循环读取：
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo04.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class Demo04 {
+    public static void main(String[] args) throws IOException {
+        FileInputStream fis = new FileInputStream("Day28/src/com/kkcf/io/a.txt");
+
+        int b;
+        while ((b = fis.read()) != -1)
+            System.out.print((char) b);
+
+        fis.close();
+    }
+}
+```
+
+使用文件输入、输出流，实现文件的拷贝。
+
+- 思路：边读边写
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo05.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Demo05 {
+    public static void main(String[] args) throws IOException {
+        FileInputStream fis = new FileInputStream("Day28/src/com/kkcf/io/a.txt");
+        FileOutputStream fos = new FileOutputStream("Day28/src/com/kkcf/io/b.txt");
+
+        int b;
+        while ((b = fis.read()) != -1)
+            fos.write(b);
+
+        fos.close();
+        fis.close();
+    }
+}
+```
+
+- 释放资源的时候，先开的流，最后关闭
+
+一次读取一个字节，速度太慢。要让 FileInputStream 字节输入流一次读取多个字节，可以使用如下方法：
+
+| 方法名                           | 说明                   |
+| -------------------------------- | ---------------------- |
+| `public int read(byte[] buffer)` | 一次读取一个字节数组数 |
+
+`public int read(byte[] buffer)` 方法，用于一次读取一个字节数组数，返回值表示读到的字节数组长度。
+
+- 每次读取，会尽可能把数组填满；
+- 数组的长度，一般使用 1024 的整数倍；比如：`1024 * 1024 * 5` 表示 5MB 字节数据。
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo06.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class Demo06 {
+    public static void main(String[] args) throws IOException {
+        FileInputStream fis = new FileInputStream("Day28/src/com/kkcf/io/a.txt");
+
+        byte[] bytes = new byte[2];
+
+        int len;
+        while ((len = fis.read(bytes)) != -1) {
+            String str = new String(bytes, 0, len);
+            System.out.println(str);
+        }
+
+        fis.close();
+    }
+}
+```
+
+- 细节 1：读到的字节数组，会覆盖原数组中对应位置的元素。
+
+> String 的构造方法 `String(byte[] bytes, int offset, int length)` 使用字节子数组，来构造一个新的 String。
+
+重构文件拷贝的代码，并记录拷贝使用的时间（毫秒）：
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo05.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Demo05 {
+    public static void main(String[] args) throws IOException {
+        long start = System.currentTimeMillis();
+
+        FileInputStream fis = new FileInputStream("Day28/src/com/kkcf/io/a.txt");
+        FileOutputStream fos = new FileOutputStream("Day28/src/com/kkcf/io/b.txt");
+
+        byte[] bytes = new byte[1024 * 10254 * 5];
+        int len;
+        while ((len = fis.read(bytes)) != -1)
+            fos.write(bytes, 0, len);
+
+        fos.close();
+        fis.close();
+
+        long end = System.currentTimeMillis();
+        System.out.println("用时：" + (end - start) + "ms");
+    }
+}
+```
+
+## 五、Java IO 异常捕获
+
+### 1.try…catch…finally 代码块（了解）
+
+try……catch……finally 代码块中，finally 代码块一定会被执行，除非 JVM 虚拟机停止。
+
+使用 try……catch……finally 代码块，重构上方的代码，使用 Java IO 异常捕获的完整写法：
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo05.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Demo05 {
+    public static void main(String[] args) {
+        long start = System.currentTimeMillis();
+
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        try {
+            fis = new FileInputStream("Day28/src/com/kkcf/io/a.txt");
+            fos = new FileOutputStream("Day28/src/com/kkcf/io/b.txt");
+
+            byte[] bytes = new byte[1024 * 10254 * 5];
+            int len;
+            while ((len = fis.read(bytes)) != -1) fos.write(bytes, 0, len);
+
+            fos.close();
+            fis.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("用时：" + (end - start) + "ms");
+    }
+}
+```
+
+> 一般程序中出现的异常，都会采用抛出来处理，后续介绍 Spring 框架，会将程序中抛出的异常统一处理。
+
+### 2.JDK7 AutoCloseable 接口（了解）
+
+上方关闭连接的代码，写起来非常麻烦，在 JDK7，Java 推出了 AutoCloseable 接口。
+
+实现该接口的类，在特定情况下，可以自动释放资源。
+
+FileInputStream 子类继承自 InputStream 抽象类，它实现类 Closeable 接口，该接口继承自 AutoCloseable 接口；
+
+所以 FileInputStream 、FileOutputStream 这些类，适用于特定情况。
+
+特定情况一：JDK7 格式：
+
+```java
+try (创建流对象1; 创建流对象2) {
+    可能出现异常的代码;
+} catch (异常类名 变量名) {
+    异常的处理代码;
+}
+
+资源自动释放
+```
+
+使用这种格式，重构上方代码：
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo05.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Demo05 {
+    public static void main(String[] args) {
+        long start = System.currentTimeMillis();
+
+        try (FileInputStream fis = new FileInputStream("Day28/src/com/kkcf/io/a.txt"); FileOutputStream fos = new FileOutputStream("Day28/src/com/kkcf/io/b.txt")) {
+
+            byte[] bytes = new byte[1024 * 10254 * 5];
+            int len;
+            while ((len = fis.read(bytes)) != -1) fos.write(bytes, 0, len);
+
+            fos.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("用时：" + (end - start) + "ms");
+    }
+}
+```
+
+特定情况二：JDK9 格式：
+
+```java
+创建流对象1;
+创建流对象2
+try (流对象1; 流对象2) {
+    可能出现异常的代码;
+} catch (异常类名 变量名) {
+    异常的处理代码;
+}
+
+资源自动释放
+```
+
+使用这种格式，重构上方代码：
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo05.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Demo05 {
+    public static void main(String[] args) throws FileNotFoundException {
+        long start = System.currentTimeMillis();
+
+        FileInputStream fis = new FileInputStream("Day28/src/com/kkcf/io/a.txt");
+        FileOutputStream fos = new FileOutputStream("Day28/src/com/kkcf/io/b.txt");
+
+        try (fis; fos) {
+            byte[] bytes = new byte[1024 * 10254 * 5];
+            int len;
+            while ((len = fis.read(bytes)) != -1) fos.write(bytes, 0, len);
+
+            fos.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("用时：" + (end - start) + "ms");
+    }
+}
+```

@@ -15,7 +15,7 @@ File 对象，就表示一个文件，或文件夹的路径；可以是存在，
 
 | 方法名                                     | 说明                                             |
 | ------------------------------------------ | ------------------------------------------------ |
-| `public File(String pathname)`             | 根据文件路径，创建文件对象                       |
+| `public File(String pathname)`             | 根据文件路径字符串，创建文件对象                 |
 | `public File(String parentm String child)` | 根据父路径字符串，和子路径字符串，创建文件对象   |
 | `public File(File parent, String child)`   | 根据父路径文件对象，和子路径字符串，创建文件对象 |
 
@@ -132,7 +132,7 @@ public class Demo02 {
 
 ### 2.创建、删除文件
 
-`File` 类常见的成员方法，用于创建、删除文件：
+`File` 类常见的成员方法，用于创建、删除文件、文件夹：
 
 | 方法名                           | 说明                   |
 | -------------------------------- | ---------------------- |
@@ -168,7 +168,7 @@ public class Demo03 {
 
 #### 2.mkdir 方法
 
-`public boolean mkdir()` 方法。
+`public boolean mkdir()` 方法，用于创建单级文件夹。
 
 - 细节 1：在 Windows 操作系统中，路径一定是唯一的，如果路径重复会返回 `false`，否则返回 `true`。
 - 细节 2：只能创建单级文件夹，不能创建多级文件夹。
@@ -192,7 +192,7 @@ public class Demo03 {
 
 #### 3.mkdirs 方法
 
-`public boolean mkdirs()` 方法。
+`public boolean mkdirs()` 方法，用于创建多级文件夹。
 
 - 细节 1：既可以创建单级文件夹，又可以创建多级文件夹。
 - 斜街 2：如果文件路径已存在，则会创建失败；否则就会创建成功。
@@ -265,18 +265,17 @@ public class Demo03 {
 
         File[] files = f1.listFiles();
 
-        for (File file : files) {
+        for (File file : files)
             System.out.println(file.getName());
-        }
     }
 }
 ```
 
 - 当调用者 File 对象表示的路径：不存在，则返回 `null`；
 - 当调用者 File 对象表示的路径：是文件，则返回 `null`；
+- 当调用者 File 对象表示的路径：需要权限才能访问，则返回 `null`。
 - 当调用者 File 对象表示的路径：是空文件夹，则返回一个长度为 `0` 的数组；
 - 当调用者 File 对象表示的路径：是有内容的文件夹（包含隐藏文件、文件夹），则返回里面所有内容组成的 File 数组。
-- 当调用者 File 对象表示的路径：需要权限才能访问，则返回 `null`。
 
 其它相似的方法，了解即可：
 
@@ -303,6 +302,7 @@ import java.util.Arrays;
 public class Demo04 {
     public static void main(String[] args) {
         File[] files = File.listRoots();
+
         System.out.println(Arrays.toString(files)); // [C:\, D:\, E:\, F:\]
     }
 }
@@ -324,6 +324,7 @@ public class Demo04 {
     public static void main(String[] args) {
         File f1 = new File("D:\\Workshop\\tutorial\\JAVA\\demo-project\\base-code\\Day27\\src\\com\\kkcf\\file");
         String[] list = f1.list();
+
         System.out.println(Arrays.toString(list)); // [a.txt, aaa, b.txt, Demo01.java, Demo02.java, Demo03.java, Demo04.java]
     }
 }
@@ -608,7 +609,6 @@ public class Test6 {
         File src = new File("Day27/src/com/kkcf/test/aaa");
 
         long fileSize = getFileSize(src);
-
         System.out.println("文件大小为：" + fileSize);
     }
 }
