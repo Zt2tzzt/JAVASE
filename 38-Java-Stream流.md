@@ -220,6 +220,8 @@ Stream 流的中间方法，有如下几种：
 | `Stream<T> distinct()`                               | 元素去重，依赖元素对象的 `hashCode` 和 `equals` 方法 |
 | `static <T> Stream<T> concat(Stream a, Stream b)`    | 合并 a 和 b 两个流为一个流，注意两个流类型要保持一致 |
 | `Stream<R> map(Function<T, R> mapper)`               | 转换流中的数据类型                                   |
+| `Stream<T> sorted()`                                 | 升序排序流中的数据                                   |
+| `Stream<T> sorted(Comparator<? super T> comparator)` | 自定义排序流中的数据                                 |
 
 流的中间方法，注意事项：
 
