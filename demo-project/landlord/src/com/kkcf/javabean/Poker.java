@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class Poker extends JLabel implements MouseListener {
-    // 属性，牌的名字，格式：数字-数字
+    // 牌的名字，数字-数字
     private final String name;
 
     // 正面还是反面，正面 true；反面 false

@@ -2,7 +2,7 @@
 
 案例理解：按照下面的要求，完成集合的创建和遍历：
 
-- 创建一个集合，存储多个字符串元素。
+- 创建一个集合，存入多个字符串元素。
 - 把集合中所有以"张"开头的元素，存储到一个新的集合。
 - 把"张"开头的集合中的长度为 3 的元素，存储到一个新的集合。
 - 遍历上一步得到的集合。
@@ -72,8 +72,8 @@ Stream 流的使用步骤：
 
 1. 先得到一条 Stream 流（流水线），并把数据放上去。
 2. 利用 Stream 流中的 API 进行各种操作。其中分为：
-   - **中间方法**：方法调用完毕后，还可以调用其它方法；比如：进行过滤、转换……操作，
-   - **终结方法**：这是流的最后一步，方法调用完毕后，不能调用其它方法；比如进行统计、打印……操作。
+   - **中间方法**：方法调用完毕后，还可以调用其它方法；比如：过滤、类型转换……操作，
+   - **终结方法**：这是流的最后一步，方法调用完毕后，不能调用其它方法；比如：统计、打印……操作。
 
 ![01_Stream流思想](NodeAssets/01_Stream流思想.png)
 
@@ -92,7 +92,7 @@ Stream 流的使用步骤：
 
 ### 1.单列集合获取 Stream 流
 
-案例理解：获取单列集合的流水线，并遍历集合；
+获取单列集合的流水线，并遍历其中的元素；
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo02.java
 
@@ -119,7 +119,7 @@ public class Demo02 {
 
 ### 2.双列集合获取 Stream 流
 
-案例理解：获取双列集合的流水线，并遍历集合：
+获取双列集合的流水线，并遍历其中的元素：
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo03.java
 
@@ -151,7 +151,7 @@ public class Demo03 {
 
 ### 3.数组获取 Stream 流
 
-案例理解：获取数组的流水线，并遍历数组：
+获取数组的流水线，并遍历其中的元素：
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo04.java
 
@@ -168,14 +168,12 @@ public class Demo04 {
         int[] arr1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
         IntStream stream1 = Arrays.stream(arr1);
-
         stream1.forEach(i -> System.out.println(i));
 
         // 引用数据类型数组
         String[] arr2 = {"a", "b", "c", "d", "e"};
 
         Stream<String> stream2 = Arrays.stream(arr2);
-
         stream2.forEach(s -> System.out.println(s));
     }
 }
@@ -183,9 +181,9 @@ public class Demo04 {
 
 ### 4.一堆零散数据获取 Stream 流
 
-案例理解：获取一堆零散数据的流水线，并遍历。
+获取一堆零散数据的流水线，并遍历这些数据。
 
-- 细节 1：`Stream.of` 方法的形参，是一个可变参数，可以传递一堆零散的数据，也可以传递数组；
+- 细节 1：`Stream.of` 静态方法的形参，是一个可变参数，可以传递一堆零散的数据，也可以传递数组；
 - 细节 2：传递的数组，必须是**引用数据类型**的数组，否则，会把整个数组当作一个元素，放到 Stream 流中。
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo05.java
@@ -201,7 +199,7 @@ public class Demo05 {
 
         stream1.forEach(s -> System.out.println(s));
 
-        Stream<Integer> stream2 = Stream.of(1, 2, 3, 4, 5);
+        Stream<Integer> stream2 = Stream.of(new Integer[]{1, 2, 3, 4, 5});
 
         stream2.forEach(i -> System.out.println(i));
     }
@@ -227,7 +225,7 @@ Stream 流的中间方法，有如下几种：
 
 注意 1：中间方法，返回新的 Stream 流，原来的 Stream 流只能使用一次，
 
-所以，Stream 流在使用中间方法时，一般使用**链式编程**。
+因此，Stream 流在使用中间方法时，一般使用**链式编程**。
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo06.java
 
@@ -252,14 +250,15 @@ public class Demo06 {
         });
         stream2.forEach(s -> System.out.println(s));
 
+        // 此时无法再使用 stream1 流
         Stream<String> stream3 = stream1.filter(s -> s.startsWith("张")); // 报错：stream has already been operated upon or closed
     }
 }
 ```
 
-使用 Lambda 表达式，重构 `filter` 方法。
-
 注意 2：修改 Stream 流中的数据，不会影响原来集合或者数组中的数据。
+
+使用 Lambda 表达式，重构 `filter` 方法。
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo06.java
 
@@ -274,7 +273,9 @@ public class Demo06 {
         ArrayList<String> list = new ArrayList<>();
         Collections.addAll(list,"张无忌","张强","张三丰","张翠山","张良","王二麻子","谢广坤");
 
-        list.stream().filter(s -> s.startsWith("张")).forEach(s -> System.out.println(s));
+        list.stream()
+            .filter(s -> s.startsWith("张"))
+            .forEach(s -> System.out.println(s));
 
         System.out.println(list); // [张无忌, 张强, 张三丰, 张翠山, 张良, 王二麻子, 谢广坤]
     }
@@ -341,34 +342,7 @@ public class Demo08 {
 }
 ```
 
-### 3.concat 方法
-
-`Stream` 接口中的静态方法 `static <T> Stream<T> concat(Stream a, Stream b)` 方法，用于拼接流中的元素，返回一个新的流。
-
-demo-project/base-code/Day26/src/com/kkcf/stream/Demo09.java
-
-```java
-package com.kkcf.stream;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.stream.Stream;
-
-public class Demo09 {
-    public static void main(String[] args) {
-        ArrayList<String> list1 = new ArrayList<>();
-        Collections.addAll(list1, "张无忌", "周芷若", "赵敏", "张强", "张三丰", "张翠山", "张良", "王二麻子", "谢广坤");
-
-        ArrayList<String> list2 = new ArrayList<>();
-        Collections.addAll(list2, "你好", "青蛙");
-
-        Stream<String> concatStream = Stream.concat(list1.stream(), list2.stream());
-        concatStream.forEach(s -> System.out.println(s));
-    }
-}
-```
-
-### 4.map 方法
+### 3.map 方法
 
 `Stream<R> map(Function<T, R> mapper)` 方法，用于映射转换流中的数据类型。
 
@@ -424,6 +398,33 @@ public class Demo10 {
 }
 ```
 
+### 4.concat 静态方法
+
+`Stream` 接口中的静态方法 `static <T> Stream<T> concat(Stream a, Stream b)` 方法，用于拼接流中的元素，返回一个新的流。
+
+demo-project/base-code/Day26/src/com/kkcf/stream/Demo09.java
+
+```java
+package com.kkcf.stream;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.stream.Stream;
+
+public class Demo09 {
+    public static void main(String[] args) {
+        ArrayList<String> list1 = new ArrayList<>();
+        Collections.addAll(list1, "张无忌", "周芷若", "赵敏", "张强", "张三丰", "张翠山", "张良", "王二麻子", "谢广坤");
+
+        ArrayList<String> list2 = new ArrayList<>();
+        Collections.addAll(list2, "你好", "青蛙");
+
+        Stream<String> concatStream = Stream.concat(list1.stream(), list2.stream());
+        concatStream.forEach(s -> System.out.println(s));
+    }
+}
+```
+
 ## 三、Stream 流终结方法
 
 Stream 流有如下终结方法：
@@ -439,7 +440,7 @@ Stream 流有如下终结方法：
 
 `void forEach(Consumer action)` 方法，用于遍历流中的数据。
 
-使用Stream 流的 `forEach` 方法，结合匿名内部类的方式：
+使用 Stream 流的 `forEach` 方法，结合匿名内部类的方式：
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo11.java
 
@@ -495,7 +496,7 @@ public class Demo11 {
 `toArray()` 方法，用于将流中的数据转为数组。
 
 - `toArray` 方法的参数的作用，负责创建一个指定类型的数组；
-- `toArray` 方法的底层，会依次得到流里面的每一个数组，并把数据放到数组中。
+- `toArray` 方法的底层，会依次得到流里面的每一个数据，并把数据放到数组中。
 - `toArray` 方法的返回值，是一个装着流里面所有数据的数组。
 
 使用 `toArray` 方法，将流中的数据，转为 `Object` 类型的数组，不指定具体类型：
@@ -539,7 +540,7 @@ public class Demo12 {
         Collections.addAll(list, "张无忌", "张强", "张三丰", "张翠山", "张良", "王二麻子", "谢广坤");
 
         // 转数组时，指定数组的类型
-        // IntFunction 的泛型，具体类型的数组
+        // IntFunction 的泛型，指定数组的具体类型
         // apply 方法的形参 int value：表示流中数据的个数，要跟数组的长度保持一致
         // apply 方法的返回值：表示具体类型的数组
         String[] array = list.stream().toArray(new IntFunction<String[]>() {
@@ -585,7 +586,7 @@ public class Demo12 {
 
 为 `collect()` 方法，传入 `Collectors.toList` 的返回值；
 
-案例理解：收集 `ArrayList` 集合中，的所有带“男”的元素，到一个新的 `ArrayList` 集合中。
+案例理解：收集 `ArrayList` 集合中，的所有带“男”的元素，放到一个新的 `ArrayList` 集合中。
 
 demo-project/base-code/Day26/src/com/kkcf/stream/Demo13.java
 
@@ -696,11 +697,11 @@ public class Demo13 {
 `Collectors` 工具类中的 `toMap` 方法：
 
 - 参数一：表示键的生成规则；
-  - `Function` 接口泛型一：流中数据的类型；泛型二：`Map` 集合中键的类型。
+  - `Function` 接口泛型一：表示流中数据的类型；泛型二：表示 `Map` 集合中键的类型。
   - `apply` 方法形参，依次表示流里面的每一个数据；
   - `apply` 方法体，是生成键的代码。
 - 参数二：表示值的生成规则。
-  - `Function` 接口泛型一：流中数据的类型；泛型二：`Map` 集合中值的类型。
+  - `Function` 接口泛型一：表示流中数据的类型；泛型二：表示 `Map` 集合中值的类型。
   - `apply` 方法形参，依次表示流里面的每一个数据；
   - `apply` 方法体，是生成值的代码。
 
@@ -792,7 +793,7 @@ public class Test4 {
 
 ### 3.练习三
 
-有两个 `ArrayList` 集合：第一个集合中，存储 6 名男演员的名字和年龄；第二个集合中，存储 6 名女演员的 名字和年龄；
+有两个 `ArrayList` 集合：第一个集合中，存储 6 名男演员的名字和年龄；第二个集合中，存储 6 名女演员的名字和年龄；
 
 姓名和年龄中间用逗号隔开；比如："张三,23"
 
@@ -802,7 +803,7 @@ public class Test4 {
 2. 女演员只要姓杨的，并且不要第一个；
 3. 把过滤后的男演员姓名，和女演员姓名合并到一起；
 4. 将上一步的演员信息封装成 `Actor` 对象；
-5. 将所有的演员对象都保存到 `List` 集合中；
+5. 将所有的演员对象，都保存到 `List` 集合中；
 
 演员 `Actor` 类，属性有：`name`、`age`
 

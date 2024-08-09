@@ -8,7 +8,7 @@ public class Demo05 {
 
         stream1.forEach(s -> System.out.println(s));
 
-        Stream<Integer> stream2 = Stream.of(1, 2, 3, 4, 5);
+        Stream<Integer> stream2 = Stream.of(new Integer[]{1, 2, 3, 4, 5});
 
         stream2.forEach(i -> System.out.println(i));
     }

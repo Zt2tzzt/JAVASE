@@ -13,7 +13,7 @@ Java 方法引用，有如下要求：
 - 被引用的方法，**形参列表**和**返回值**与抽象方法保持一致；
 - 被引用的方法，功能要满足当前需求；
 
-案例理解：为一个数组进行排序：分别使用匿名内部类，Lambda 表达式，和方法引用的写法：
+案例理解：为一个数组进行升序排序：分别使用匿名内部类、Lambda 表达式、方法引用的写法：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Demo01.java
 
@@ -126,9 +126,8 @@ public class Test1 {
 - 引用父类的成员方法，格式：`super::方法名`
 - 引用其它类的成员方法，格式：`其它类对象::方法名`
 
-> 注意：静态方法中，没有 `this、super` 关键字；
+> 注意：静态方法中，没有 `this`、`super` 关键字；在**静态方法**中，使用方法引用时，不能用 `this::xxx` 或者 `super::xxx` 的写法。
 >
-> 在**静态方法**中，使用方法引用时，不能用 `this::xxx` 或者 `super::xxx` 的写法。
 
 #### 1.引用其它类的成员方法
 
@@ -165,7 +164,7 @@ public class Test2 {
 
 使用 Stream 流的 `filter` 方法，结合方法引用的方式实现：
 
-创建一个类 `StringOperator`，里面有一个 `StringOperator` 方法；
+创建一个类 `StringOperator`，里面有一个 `stringOperator` 方法；
 
 StringOperator 类：
 
@@ -175,13 +174,13 @@ demo-project/base-code/Day26/src/com/kkcf/methodref/StringOperator.java
 package com.kkcf.methodref;
 
 public class StringOperator {
-    public boolean StringOperator(String s) {
+    public boolean stringOperator(String s) {
         return s.startsWith("张") && s.length() == 3;
     }
 }
 ```
 
-在测试类中，引用  `StringOperator` 类的 `StringOperator` 方法。：
+在测试类中，引用  `StringOperator` 类的 `stringOperator` 方法。：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Test2.java
 
@@ -213,14 +212,12 @@ public class Test2 {
 
 案例理解，在 GUI 界面中，点击事件的方法引用写法：
 
-创建一个类 `LoginJFrame` 类，继承自 `JFrame` 类， 表示登陆页面；
-
-并为它实现 `ActionListener` 接口，用于在页面中监听鼠标点击的事件。
+创建一个类 `LoginJFrame` 类，继承自 `JFrame` 类， 表示登陆页面；并为它实现 `ActionListener` 接口，用于在页面中监听鼠标点击的事件。
 
 demo-project/base-code/Day26/src/com/kkcf/a02game/LoginJFrame.java
 
 ```java
-public class LoginJFrame implements ActionListener {
+public class LoginJFrame extends JFrame implements ActionListener {
     JButton go = new JButton("Go");
 
     public LoginJFrame() {
@@ -250,12 +247,12 @@ public class LoginJFrame implements ActionListener {
 
 在 `LoginJFrame` 类中，定义 `method1` 方法，用于 `ActionListener` 接口中 `actionPerformed` 方法的方法引用。
 
-> `ActionListener` 接口虽然没有加 `@FunctionInterface` 注解，但它其中只有一个抽象方法 `actionPerformed`，所以可以使用方法引用。
+> `ActionListener` 接口虽然没有加函数式接口 `@FunctionInterface` 注解，但它其中只有一个抽象方法 `actionPerformed`，所以可以使用方法引用。
 
 demo-project/base-code/Day26/src/com/kkcf/a02game/LoginJFrame.java
 
 ```java
-public class LoginJFrame implements ActionListener {
+public class LoginJFrame extends JFrame implements ActionListener {
     JButton go = new JButton("Go");
 
     public LoginJFrame() {
@@ -311,7 +308,7 @@ public class MyJFrame extends JFrame {
 demo-project/base-code/Day26/src/com/kkcf/a02game/LoginJFrame.java
 
 ```java
-public class LoginJFrame extends MyJFrame {
+public class LoginJFrame extends MyJFrame implements ActionListener {
     JButton go = new JButton("Go");
 
     public LoginJFrame() {
@@ -336,7 +333,7 @@ public class LoginJFrame extends MyJFrame {
 
 案例理解：集合里面存储姓名和年龄组成的字符串，要求将它们封装成 `Student` 对象，并收集到 `List` 集合中。
 
-使用 Stream 流的 `map` 方法，结合方法引用的方式：
+使用 Stream 流的 `map` 方法，结合匿名内部类的方式：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Demo02.java
 
@@ -401,7 +398,7 @@ public class Studnet {
 }
 ```
 
-构造方法没有返回值，所以方法引用构造方法时，只要保证生成的对象，与函数式接口中抽象方法的返回值一致即可。
+构造方法没有返回值，所以构造方法用于方法引用时，只要保证生成的对象，与函数式接口中抽象方法的返回值一致即可。
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Demo02.java
 
@@ -447,9 +444,12 @@ public class Demo02 {
 - **第一个参数**：表示被引用方法的调用者，它的类型，决定了引用的类名；
   - 在 Stream 流当中使用的方法，传入的函数式接口实现类中的抽象方法第一个参数往往表示流里面的数据；
   - 假设这个数据是字符串类型的，那么就只能引用 `String` 类里的方法。
-- **第二个参数到最后一个参数**：跟被引用方法的形参保持一致，如果没有第二个参数，说明被引用的方法是类中的无参成员方法。
+- **第二个参数到最后一个参数**：跟被引用方法的形参保持一致，
+  - 抽象方法如果没有第二个参数，那么被引用的方法必须是类中的无参成员方法。
 
 案例理解：集合里面添加一些字符串，要求变成大写后再进行输出
+
+使用 Stream 流的 `map` 方法，结合匿名内部类实现。
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Demo03.java
 
@@ -559,9 +559,9 @@ public class Demo04 {
 
 ## 四、Java 方法引用综合练习
 
-练习一：集合中存储一些字符串类型的数据，比如：""张三,23"
+### 1.练习一
 
-收集到 `Student` 类型的数组中（使用方法引用完成）。
+集合中存储一些字符串类型的数据，比如：""张三,23"；将它们收集到 `Student` 类型的数组中（使用方法引用完成）。
 
 在 `Student` 类中，新增一个构造方法：用于方法引用。
 
@@ -612,11 +612,11 @@ public class Test3 {
 }
 ```
 
-练习二：创建集合，添加 Student 学生对象，学生对象属性：`name`、`age`
+### 2.练习二
 
-只获取姓名并放到数组当中（使用方法引用完成）
+创建集合，添加 Student 学生对象，学生对象属性：`name`、`age`，要求只获取姓名，并收集到数组当中（使用方法引用完成）
 
-这里要引用 `Student` 类中，关于 `name` 属性的 getter 方法 `getName`：
+- 思路：这里要引用 `Student` 类中，关于 `name` 属性的 getter 方法 `getName`：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Test4.java
 
@@ -648,11 +648,11 @@ public class Test4 {
 }
 ```
 
-练习三：创建集合，添加学生对象，学生对象属性：`name`、`age`
+### 3.练习三
 
-把姓名和年龄拼接成："张三-23" 这样的字符串，并放到数组中（使用方法引用完成）
+创建集合，添加学生对象，学生对象属性：`name`、`age`；要求把姓名和年龄拼接成："张三-23" 这样的字符串，并收集数组中（使用方法引用完成）
 
-在 `Student` 类中，新增 `getNameAge` 成员方法
+- 思路：在 `Student` 类中，新增 `getNameAge` 成员方法，用于方法引用
 
 demo-project/base-code/Day26/src/com/kkcf/javabean/Studnet.java
 
@@ -720,8 +720,8 @@ Java 方法引用，使用总结：
 2. 再判断，这个方法是否满足方法引用的规则：
    - 静态方法：`类名::方法名`；
    - 成员方法：
-     - 普通情况：`对象::方法名`；
-     - 特殊情况：`类名::方法名`；
      - 方法在本类中：`this::方法名`；
      - 方法在父类中：`super::方法名`；
+     - 普通情况：`对象::方法名`；
+     - 特殊情况：`类名::方法名`；
    - 构造方法：`类名::new`；

@@ -1,4 +1,4 @@
-# Java常用API-集合进阶-不可变集合
+# Java 常用 API 集合进阶之不可变集合
 
 ## 一、不可变集合
 
@@ -101,6 +101,7 @@ public class Test1 {
             System.out.println(entry.getValue());
         }
 
+        // 遍历 Map 集合
         map.forEach((k, v) -> System.out.println(k + ":" + v));
     }
 }
@@ -229,6 +230,8 @@ public class Test2 {
 }
 ```
 
+## 五、HashMap 初始化（补充）
+
 补充：初始化一个 HashMap 集合，并放入一些数据：
 
 方法一：使用匿名内部类初始化
@@ -259,7 +262,7 @@ public class Test6 {
 ```
 
 - 在上面这个示例中，我们使用匿名内部类来初始化 `HashMap` 并添加初始数据。
-- 注意，双大括号 `{{ }}` 语法是为了创建一个匿名子类并在其构造函数中初始化数据。
+- 注意，双大括号 `{{ }}` 语法是为了创建一个匿名子类，并在其构造代码块（在构造函数执行前执行）中初始化数据。
 
 方法二：使用 `Map.of` 方法（Java 9 及以上）
 
@@ -284,4 +287,5 @@ public class Main {
 }
 ```
 
-- 在这个示例中，我们使用 `Map.of` 方法来创建一个不可变的 `Map`。如果需要一个可变的 `HashMap`，你可以使用 `new HashMap<>(Map.of(...))`。
+- 在这个示例中，我们使用 `Map.of` 方法来创建一个不可变的 `Map`。
+- 如果需要一个可变的 `HashMap`，你可以使用 `new HashMap<>(Map.of(...))`。

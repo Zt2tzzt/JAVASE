@@ -135,7 +135,7 @@ public class PokerGame {
             }
 
             if (i % 3 == 1) {
-                player1.add();
+                player1.add(poker);
             } else if (i % 3 == 2) {
                 player2.add(poker);
             } else {
@@ -206,7 +206,7 @@ public class PokerGame {
 
 先将牌按照指定顺序进行排序，然后再与自然数字一一对应；
 
-数字越大，对应的牌也就越大。
+数字越大，对应的牌面也就越大。
 
 > 映射思想：
 >
@@ -309,7 +309,9 @@ public class PokerGame {
 
 ### 2.计算价值再排序
 
-为每个牌面，赋予一个自定义的价值，用于排序；使用 `HashMap` 集合，将牌面，和价值对应起来。
+为每个牌面，赋予一个自定义的价值，用于排序；
+
+使用 `HashMap` 集合，将牌面，和价值对应起来。
 
 额外定义一个用于集合排序的方法，用于给手牌排序。
 
