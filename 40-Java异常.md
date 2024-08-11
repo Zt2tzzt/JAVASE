@@ -31,7 +31,7 @@ Java 异常体系结构，如下图所示：
 
 ### 1.编译时异常
 
-案例理解：使用 `SimpleDateFormat` 类，将字符串类型的时间，转为 `Date` 类型的时间：
+案例理解：使用 `SimpleDateFormat` 类，将字符串类型的时间，转为 `Date` 类型的时间，这个过程，可能会出现编译时异常：
 
 demo-project/base-code/Day27/src/com/kkcf/exception/Demo01.java
 
@@ -55,8 +55,6 @@ public class Demo01 {
 }
 ```
 
-上面的案例，就是一个编译时异常；
-
 编译时异常，必须要在代码中（编译阶段）进行处理，一般做抛出处理。
 
 在编译阶段，Java 不会运行代码，只会检查语法是否错误，或者做一些性能优化。
@@ -64,6 +62,8 @@ public class Demo01 {
 因此，编译时异常，主要是**提醒开发者**，检查本地信息。
 
 ### 2.运行时异常
+
+案例理解：
 
 demo-project/base-code/Day27/src/com/kkcf/exception/Demo02.java
 
@@ -141,11 +141,11 @@ Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 1 out
 
 异常的堆栈信息，应该从下往上看。
 
-### 2.特殊返回值
+### 2.作用二：特殊返回值
 
 作用二：异常可以作为方法内部的一种特殊返回值，以便通知调用者底层的执行情况；
 
-案例理解：为 `Student` 设置年龄，限定一个范围，修改 `setAge` 方法。
+案例理解：为 `Student` 设置年龄，限定一个范围，在 `setAge` 方法中进行限定。
 
 Student 类：
 
@@ -239,7 +239,7 @@ Exception in thread "main" java.lang.ArithmeticException: / by zero
     at com.kkcf.exception.Demo04.main(Demo04.java:6)
 ```
 
-### 2.自行处理异常
+### 2.捕获异常有哪些情况
 
 自行处理异常，又称为**捕获异常**；格式是：
 
@@ -282,20 +282,22 @@ public class Demo05 {
 
 使用 `try……catch` 代码块，捕获异常，会出现以下几种情况：
 
-#### 1.异常捕获情况一
+#### 1.情况一：未出现异常
 
 情况一：`try` 代码块中，没有出现异常：
 
 - 那么会把 `try` 代码块中的代码，全部执行完；
 - 不会执行 `catch` 代码块中的代码。
 
-#### 2.异常捕获情况二
+#### 2.情况二：出现多个异常
 
 情况二：`try` 代码块中，遇到了多个异常：
 
 - 只会生成第一个异常的对象，并与 `catch` 小括号里的异常类型进行匹配，后面的代码都不会执行。
-- 规范的写法是：写多个 `catch` 代码块，与 `try` 代码块中可能会出现的异常对应。
-- 细节 1：多个异常中，如果存在父子关系，父类一定要写在下面。
+
+处理这种清空，规范的做法是：写多个 `catch` 代码块，与 `try` 代码块中可能会出现的所有异常一一对应。
+
+- 细节 1：多个异常对象中，如果存在父子关系，父类一定要写在下面。
 
 demo-project/base-code/Day27/src/com/kkcf/exception/Demo06.java
 
@@ -347,19 +349,19 @@ public class Demo06 {
 }
 ```
 
-#### 3.异常捕获情况三
+#### 3.情况三：未捕获到异常
 
 情况三：`try` 代码块中出现的异常，`catch` 代码块中没有进行捕获。
 
-- 那么出现的异常，会交给 JVM 虚拟机进行处理。
+- 那么异常会被交给 JVM 虚拟机进行处理。
 
-#### 4.异常捕获情况四
+#### 4.情况四：异常给后面的代码
 
 情况四：`try` 代码块中出现了异常，代码块后面的代码，就不会再执行了。
 
-#### 5.异常的方法
+### 3.异常对象的方法
 
-`Throwable` 异常中，常见的方法如下：
+`Throwable` 异常类中，常见的方法如下：
 
 | 方法吗                          | 说明                                       |
 | ------------------------------- | ------------------------------------------ |
@@ -423,7 +425,7 @@ public class Demo07 {
 }
 ```
 
-### 3.向外抛出异常
+### 4.向外抛出异常
 
 抛出异常，有两种处理方式：
 
@@ -443,7 +445,7 @@ public void 方法名() throws 异常类名1, 异常类名2…… {
 
 #### 2.throw 关键字
 
-`throw` 关键字，写在方法内，用于手动抛出异常对象，交给调用者；
+`throw` 关键字，写在方法内，用于手动抛出异常对象，把它交给方法调用者；
 
 使用 `throw` 抛出异常后，下面的代码就不再执行了，方法结束。
 
@@ -508,7 +510,10 @@ public class Demo08 {
 
 需求：键盘录入自己心仪的女朋友姓名、年龄。姓名的长度在 3~10 之间，年龄的范围为 18-40 岁；超出这个范围是异常数据不能赋值，需要重新录入，一直录到正确为止。
 
-提示：需要考虑用户在键盘录入时的所有情况。比如：录入年龄时超出范围，录入年龄时录入了"abc"等情况
+提示：需要考虑用户在键盘录入时的所有情况。比如：
+
+- 录入年龄时超出范围；
+- 录入年龄时录入了"abc"等情况
 
 GirlFriend 类：
 
@@ -617,7 +622,7 @@ Java 自定义异常类，有如下几步：
 3. 写空参构造
 4. 写带参构造
 
-自定义异常类 `NameFormatException`，表示名字格式化异常：
+自定义异常类 `NameFormatException`，表示名字格式化异常，继承自 `RuntimeException` 异常，表示运行时异常：
 
 demo-project/base-code/Day27/src/com/kkcf/exception/NameFormatException.java
 
@@ -636,7 +641,7 @@ public class NameFormatException extends RuntimeException {
 
 - 一般来说，实现上面两个构造方法即可；
 
-自定义异常类 `AgeOutOfBoundException`，表示年龄格式化异常：
+自定义异常类 `AgeOutOfBoundException`，表示年龄格式化异常，继承自 `RuntimeException` 异常：
 
 demo-project/base-code/Day27/src/com/kkcf/exception/AgeOutOfBoundException.java
 

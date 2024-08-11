@@ -145,7 +145,7 @@ public class Demo02 {
 
 `public boolean createNewFile()` 方法，用于创建一个新的文件：
 
-- 细节 1：如果文件路径已存在，则返回 `false`；否则返回 `true`；
+- 细节 1：如果文件路径表示的文件已存在，则返回 `false`；否则返回 `true`；
 - 细节 2：如果父级路径不存在，会出现异常 `IOException`。
 - 细节 3：该方法创建的是文件，如果没有后缀名，会创建一个没有后缀名的文件。
 
@@ -220,7 +220,8 @@ public class Demo03 {
 `public boolean delete()` 方法
 
 - 细节 1：删除的是文件，不放入回收站。
-- 细节 2：删除的是空文件夹，不放入回收站；删除的是有内容的文件夹，则删除失败。
+- 细节 2：删除的是空文件夹，不放入回收站；
+- 细节 3：删除的是有内容的文件夹，则删除失败。
 
 demo-project/base-code/Day27/src/com/kkcf/file/Demo03.java
 
@@ -241,7 +242,7 @@ public class Demo03 {
 
 ### 3.获取并遍历
 
-`File` 类常见的成员方法，用于获取并遍历文件：
+`File` 类，用于获取并遍历文件，常用的成员方法：
 
 | 方法名                     | 说明                             |
 | -------------------------- | -------------------------------- |
@@ -249,7 +250,7 @@ public class Demo03 {
 
 #### 1.listFile 方法
 
-`public File[] listFile()` 方法，用于获取 File 对象下所有内容。
+`public File[] listFile()` 方法，用于获取 File 对象下所有内容的 File 对象。
 
 demo-project/base-code/Day27/src/com/kkcf/file/Demo03.java
 
@@ -310,7 +311,7 @@ public class Demo04 {
 
 #### 3.list 方法
 
-`public String[] list()` 方法，用于获取 File 对象下的所有内容的名字字符串：
+`public String[] list()` 方法，用于获取 File 对象下的所有内容的名字字符串数组：
 
 demo-project/base-code/Day27/src/com/kkcf/file/Demo04.java
 
@@ -330,7 +331,7 @@ public class Demo04 {
 }
 ```
 
-`public String[] list(FilenameFilter filter)` 方法，使用文件名过略器，获取 File 对象下指定的文件名。
+`public String[] list(FilenameFilter filter)` 方法，使用文件名过略器，获取 File 对象下以 .txt 结尾的文件名字符串数组。
 
 需求：获取目录下所有 ”.txt“ 结尾的文件。
 
@@ -357,14 +358,15 @@ public class Demo04 {
 }
 ```
 
-- `FilenameFilter` 是函数式接口，其中 `accept` 方法分析：
-- 参数一：`File dir`，依次表示 File 对象下，所有内容的父级路径。
-- 参数二：`String name`，依次表示 File 对象下，所有内容的名称。
+`FilenameFilter` 是函数式接口，其中 `accept` 方法分析：
+
+- 参数一：`File dir`，依次表示 File 对象下，所有内容的父级路径对象。
+- 参数二：`String name`，依次表示 File 对象下，所有内容的名称字符串。
 - 返回值： `true`，表示当前路径保留；`false`，表示当前路径不保留；
 
 #### 4.listFiles 方法
 
-`public File[] listFiles(FileFilter filter)` 方法，使用文件过滤器，获取 File 对象下，所有的内容：
+`public File[] listFiles(FileFilter filter)` 方法，使用文件过滤器，获取 File 对象下，所有的内容的 File 对象数组：
 
 需求：获取目录下所有 ”.txt“ 结尾的文件。
 
@@ -393,7 +395,7 @@ public class Demo04 {
 }
 ```
 
-`public File[] listFiles(FilenameFilter filter)` 方法，使用文件名过滤器，获取 File 对象下所有的内容：
+`public File[] listFiles(FilenameFilter filter)` 方法，使用文件名过滤器，获取 File 对象下所有的内容的 File 对象数组：
 
 需求：获取目录下所有 ”.txt“ 结尾的文件。
 
@@ -633,7 +635,6 @@ package com.kkcf.test;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.function.BiConsumer;
 
 public class Test7 {
     public static HashMap<String, Integer> getCountMap(File src, HashMap<String, Integer> map) {
@@ -643,17 +644,14 @@ public class Test7 {
 
             if (files == null) return null;
 
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    return getCountMap(file, map);
-                } else {
-                    String name = file.getName();
-                    String[] split = name.split("\\.");
-                    String suffix = split[split.length - 1];
+            for (File file : files)
+                getCountMap(file, map);
+        } else {
+            String name = src.getName();
+            String[] split = name.split("\\.");
+            String suffix = split[split.length - 1];
 
-                    map.put(suffix, map.containsKey(suffix) ? map.get(suffix) + 1 : 1);
-                }
-            }
+            map.put(suffix, map.containsKey(suffix) ? map.get(suffix) + 1 : 1);
         }
 
         return map;
@@ -665,12 +663,8 @@ public class Test7 {
 
         HashMap<String, Integer> result = getCountMap(src, map);
         if (result == null) return;
-        result.forEach(new BiConsumer<String, Integer>() {
-            @Override
-            public void accept(String key, Integer val) {
-                System.out.println(key + ":" + val + "个");
-            }
-        });
+
+        result.forEach((key, val) -> System.out.println(key + ":" + val + "个"));
     }
 }
 ```

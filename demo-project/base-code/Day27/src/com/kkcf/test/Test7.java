@@ -2,7 +2,6 @@ package com.kkcf.test;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.function.BiConsumer;
 
 public class Test7 {
     public static HashMap<String, Integer> getCountMap(File src, HashMap<String, Integer> map) {
@@ -12,17 +11,14 @@ public class Test7 {
 
             if (files == null) return null;
 
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    return getCountMap(file, map);
-                } else {
-                    String name = file.getName();
-                    String[] split = name.split("\\.");
-                    String suffix = split[split.length - 1];
+            for (File file : files)
+                getCountMap(file, map);
+        } else {
+            String name = src.getName();
+            String[] split = name.split("\\.");
+            String suffix = split[split.length - 1];
 
-                    map.put(suffix, map.containsKey(suffix) ? map.get(suffix) + 1 : 1);
-                }
-            }
+            map.put(suffix, map.containsKey(suffix) ? map.get(suffix) + 1 : 1);
         }
 
         return map;
@@ -34,11 +30,7 @@ public class Test7 {
 
         HashMap<String, Integer> result = getCountMap(src, map);
         if (result == null) return;
-        result.forEach(new BiConsumer<String, Integer>() {
-            @Override
-            public void accept(String key, Integer val) {
-                System.out.println(key + ":" + val + "个");
-            }
-        });
+
+        result.forEach((key, val) -> System.out.println(key + ":" + val + "个"));
     }
 }

@@ -2,7 +2,7 @@
 
 IO 流：是存储、读取数据的解决方案。
 
-IO 流，指的是以（运行在内存中的）应用程序为参照物，读（Output）、写（Input）本地文件，或网络中的数据。
+IO 流，指的是以（运行在内存中的）程序为参照物，读（Output）、写（Input）本地文件，或网络中的数据。
 
 ## 一、Java IO 流向
 
@@ -63,7 +63,7 @@ Java IO 字节流的体系结构，如下图所示：
 | `FileOutputStream(File file, boolean append)`   | 根据 File 对象，创建字节输出流对象，并决定是否续写       |
 | `FileOutputStream(String name, boolean append)` | 根据字符串表示的路径，创建字节输出流对象。并决定是否续写 |
 
-创建字节输出流，并写入 a 字符。
+创建字节输出流，并往文件中写入 a 字符。
 
 - `write` 方法的参数是整数，表示写入字符对应的 ASCLL 码。
 
@@ -237,7 +237,7 @@ public class Demo02 {
 | ------------ | ---------------------------- |
 | `int read()` | 从输入流读取一个字节的数据。 |
 
-利用 `FileInputStream` 输入流，读取文件中的数据，返回的是二进制字节数据对应的十进制整数。
+利用 `FileInputStream` 输入流，读取文件中的数据，返回的是二进制字节数据，对应的十进制整数。
 
 demo-project/base-code/Day28/src/com/kkcf/io/Demo03.java
 
@@ -259,12 +259,14 @@ public class Demo03 {
 }
 ```
 
-- 细节 1：`read` 方法，会**挨个**读取文件中的字符，并返回字符在 ASCLL 码表中对应的数字；
+- 细节 1：`read` 方法，会**挨个**读取文件中的二进制字节，并返回二进制字节在 ASCLL 码表中对应的十进制数字；
 - 细节 2：`read` 方法，读取完毕后，再进行调用，会返回 `-1`；
 
-`FileInputStream` 输入流，读取的文件，如果不存在，那么会直接抛出异常。
+`FileInputStream` 输入流与 `FileOutputStream` 输出流不同，读取的文件，如果不存在，那么会直接抛出异常。
 
-- 输入流读取的文件，如果不存在，再创建一个空文件是没有意义的，因为里面没有数据，所以会直接抛出异常。
+- 输入流读取的文件，如果不存在，再创建一个空文件没有意义，因为里面没有数据，所以会直接抛出异常。
+
+> 所有应用程序的意义，都在于对数据的组织和管理。
 
 `FileInputStream` 输入流，循环读取：
 
@@ -319,7 +321,7 @@ public class Demo05 {
 
 - 释放资源的时候，**先开的流，最后关闭**。
 
-一次读取一个字节，速度太慢。要让 `FileInputStream` 字节输入流一次读取多个字节，可以使用如下方法：
+一次读取一个字节，速度太慢。要让 `FileInputStream` 字节输入流，一次读取多个字节，可以使用如下方法：
 
 | 方法名                           | 说明                   |
 | -------------------------------- | ---------------------- |
@@ -342,7 +344,7 @@ public class Demo06 {
     public static void main(String[] args) throws IOException {
         FileInputStream fis = new FileInputStream("Day28/src/com/kkcf/io/a.txt");
 
-        byte[] bytes = new byte[2]; // 创建长度为 2 的 byte 数组，每次读 2 个字节
+        byte[] bytes = new byte[2]; // 创建长度为 2 的 byte 数组，用于字节输入流每次读 2 个字节
 
         int len;
         while ((len = fis.read(bytes)) != -1) {
@@ -395,9 +397,11 @@ public class Demo05 {
 
 ### 1.try…catch…finally 代码块（了解）
 
-try……catch……finally 代码块中，finally 代码块一定会被执行，除非 JVM 虚拟机停止。
+try……catch……finally 代码块中，finally 代码块中的代码，一定会被执行，除非 JVM 虚拟机停止。
 
-使用 try……catch……finally 代码块，重构上方的代码，使用 Java IO 异常捕获的完整写法：
+所有，可以使用 try……catch……finally 代码块，重构上方的代码，来进行关流操作；
+
+这也是 Java IO 流异常捕获的完整写法：
 
 demo-project/base-code/Day28/src/com/kkcf/io/Demo05.java
 
@@ -420,7 +424,8 @@ public class Demo05 {
 
             byte[] bytes = new byte[1024 * 10254 * 5];
             int len;
-            while ((len = fis.read(bytes)) != -1) fos.write(bytes, 0, len);
+            while ((len = fis.read(bytes)) != -1)
+                fos.write(bytes, 0, len);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
@@ -455,7 +460,7 @@ public class Demo05 {
 
 实现该接口的类，在特定情况下，可以**自动释放资源/关流**。
 
-- 比如：`FileInputStream` 子类继承自 `InputStream` 抽象类，它实现了 `Closeable` 接口，该接口又继承自 `AutoCloseable` 接口；
+- 比如：`FileInputStream` 子类继承自 `InputStream` 抽象类，该抽象类又实现了 `Closeable` 接口，该接口又继承自 `AutoCloseable` 接口；
 - 所以 `FileInputStream` 、`FileOutputStream` 这些类，适用于特定情况。
 
 特定情况一：JDK7 格式：
@@ -489,7 +494,8 @@ public class Demo05 {
 
             byte[] bytes = new byte[1024 * 10254 * 5];
             int len;
-            while ((len = fis.read(bytes)) != -1) fos.write(bytes, 0, len);
+            while ((len = fis.read(bytes)) != -1)
+                fos.write(bytes, 0, len);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -536,7 +542,8 @@ public class Demo05 {
         try (fis; fos) {
             byte[] bytes = new byte[1024 * 10254 * 5];
             int len;
-            while ((len = fis.read(bytes)) != -1) fos.write(bytes, 0, len);
+            while ((len = fis.read(bytes)) != -1)
+                fos.write(bytes, 0, len);
         } catch (IOException e) {
             e.printStackTrace();
         }

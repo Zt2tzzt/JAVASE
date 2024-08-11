@@ -9,7 +9,7 @@
 字符流的特点：
 
 - 输入流：默认一次读一个字节，遇到汉字等特殊字符时，一次读多个字节（根据字符集和编码规则改变）；
-- 输出流：底层会把数据，按照指定的字符集和编码方式进行编码，转变成字节，再写到文件中。
+- 输出流：底层会把数据，按照指定的字符集编码方式进行编码，转变成字节，再写到文件中。
 
 字符流，非常适合**纯文本文件**的读、写操作。
 
@@ -35,12 +35,12 @@ Java IO 字符流的体系结构，如下图所示：
 
 `FileReader` 构造方法，用于创建字符输入流对象。
 
-| 方法名                               | 说明                                             |
-| ------------------------------------ | ------------------------------------------------ |
-| `public FileReader(File file)`       | 根据 File 对象，创建字符输入流关联本地文件。     |
-| `public FileReader(String pathname)` | 根据文件路径字符串，创建字符输入流关联本地文件。 |
+| 方法名                               | 说明                                                     |
+| ------------------------------------ | -------------------------------------------------------- |
+| `public FileReader(File file)`       | 根据 File 对象，创建字符输入流并关联本地文件。           |
+| `public FileReader(String pathname)` | 根据字符串表示的文件路径，创建字符输入流并关联本地文件。 |
 
-如果文件不存在，直接报错。
+- 细节 1：如果文件不存在，直接报错。
 
 ### 2.FileReader 成员方法
 
@@ -52,9 +52,9 @@ Java IO 字符流的体系结构，如下图所示：
 | `public int read(char[] buffer)` | 读取多个数据，读到末尾返回 -1 |
 | `public int close()`             | 释放资源/关流                 |
 
-`public int read()` 方法，会**挨个**读取字节，遇到中文字符，会根据编码规则读取多个字节：
+`public int read()` 方法，会**挨个**读取字节，遇到汉字这样的特殊字符字符，会根据特定的字符集编码规则读取多个字节：然后返回一个按照该字符集解码后的二进制对应的**十进制整数**。它也表示在字符集上字符对应的数字。
 
-返回一个解码后的二进制对应的**十进制整数**。它也表示在字符集上字符对应的数字。比如在 Unicode 字符集的 UTF-8 编码规则下：
+比如在 Unicode 字符集的 UTF-8 编码规则下：
 
 - 英文字符，文件里面的二进制数据 0110 0001；`read` 方法读取时，会解码并转成十进制，即 `97`；
 - 中文字符，文件里面的二进制数据 11100110 10110001 10001001，`read` 方法读取时，会解码并转成十进制，即 `2772`；
@@ -82,7 +82,7 @@ public class Demo07 {
 }
 ```
 
-如果要输出字符，还需要做强转。
+如果要输出字符，还需要对返回的整数，进行强转。
 
 demo-project/base-code/Day28/src/com/kkcf/io/Demo07.java
 
@@ -102,15 +102,15 @@ public class Demo07 {
 
         /*我超级超级喜欢玉子！
         我也最喜欢饼藏了，请讲！*/
-        
+
         fr.close();
     }
 }
 ```
 
-`public int read(char[] buffer)` 方法，用于一次读取多个字符，这个数量是传入的 char 数组的长度。
+`public int read(char[] buffer)` 方法，用于一次读取多个字符，读取的字符数量，会尽量填满传入的 char 数组。
 
-- 该方法，将读取数据，解码，强转合并了，把最终得到的字符放到了数组中。
+- 该方法，将读取字节，解码，强转三步操作合并了，并把最终得到的字符放到了数组中。
 - 该方法，返回读取到的字符数组长度。
 
 demo-project/base-code/Day28/src/com/kkcf/io/Demo08.java
@@ -140,7 +140,7 @@ public class Demo08 {
 
 ## 二、FileWriter 子类
 
-`FileWriter` 是用于操作本地文件的字符输出流，可以把程序中的数据，写入到文件中。使用步骤：
+`FileWriter` 是用于操作本地文件的字符输出流，它可以把程序中的数据，写入到文件中。使用步骤：
 
 1. 创建字符输出流对象；
 2. 写入数据；
@@ -157,7 +157,7 @@ public class Demo08 {
 | `public FileWriter(File file, boolean append)`       | 根据 File 对象，创建字符输出流，并决定是否续写     |
 | `public FileWriter(String pathname, boolean append)` | 根据文件路径字符串，创建字符输出流，并决定是否续写 |
 
-- 细节 1：如果文件不存在，会创建一个新的文件，但是要保证父级路径是存在的
+- 细节 1：如果文件不存在，会创建一个新的文件，但是要保证父级路径是存在的。
 - 细节 2：如果文件已存在，则会清空文件再写入，除非开启续写。
 
 ### 2.FileWriter 成员方法
@@ -174,7 +174,7 @@ public class Demo08 {
 
 `void write(int c)` 方法，写入一个字符：
 
-- 细节 1：如果 `write` 方法的参数是 int 类型的整数，实际写入到文件中的是整数在字符集中对应的字符。
+- 细节 1：如果 `write` 方法的参数是 int 类型的整数，实际写入到文件中的，是整数在字符集中对应的字符。
 
 demo-project/base-code/Day28/src/com/kkcf/io/Demo09.java
 
@@ -254,7 +254,7 @@ public class Demo09 {
 
 > 字节输入流（InputSream 没有上面这个特性
 
-理解下方带啊吗：
+理解下方代码：
 
 demo-project/base-code/Day28/src/com/kkcf/test/Test1.java
 
@@ -277,7 +277,7 @@ public class Test1 {
         int ch;
         while ((ch = fr.read()) != -1)
             fw.write(ch); // 只能读取到缓冲区中的字节
-        
+
         fw.close();
         fr.close();
     }
@@ -286,7 +286,7 @@ public class Test1 {
 
 ### 2.Writer 字符输出流底层原理
 
-创建字符输出流（writer）对象时，底层会关联文件，并创建缓冲区（长度为 8192 的字节数组）
+创建字符输出流（Writer）对象时，底层也会关联文件，并创建**缓冲区**（长度为 `8192` 的字节数组）
 
 1. 每次写入（write）操作时，会判断缓冲区中，是否已经被填满；
 2. 如果没有，就会将字节数据写入到缓冲区中。
@@ -397,13 +397,12 @@ public class Test3 {
 
 ### 2.练习二：文件加密
 
-为了保证文件的安全性，需要对原始文件进行加密存储，再使用的时候，再对其进行解密处理。
+为了保证文件的安全性，需要对原始文件进行加密存储，在使用的时候，再对其进行解密处理。
 
-加密原理：对原始文件中的每一个字节数据，进行更改，然后将更改后的数据存储到新的文件中。
+- 加密原理：对原始文件中的每一个字节数据，进行更改，然后将更改后的数据存储到新的文件中。
+- 解密原理：读取加密之后的文件，按照加密的规则反向操作，变成原始文件。
 
-解密原理：读取加密之后的文件，按照加密的规则反向操作，变成原始文件。
-
-> ^ 异或运算符，可用于计算数字，会将运算元转为二进制数字进行运算。
+> `^` 逻辑异或运算符，可用于计算数字，会将运算元，转为二进制数字进行运算。
 >
 > 如果一个数字，^ 异或运算另外一个数字两次，会得到它本身
 >
@@ -412,7 +411,7 @@ public class Test3 {
 > System.out.println(100 ^ 10 ^ 10); // 100
 > ```
 
-使用 ^ 异或运算符，进行加密、解密操作；
+使用 ^ 逻辑异或运算符，进行加密、解密操作；
 
 demo-project/base-code/Day28/src/com/kkcf/test/Test4.java
 
@@ -424,7 +423,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Test4 {
-
     private static void encryption(FileInputStream fis, FileOutputStream fos) throws IOException {
         // 加密
         int b;
@@ -445,7 +443,7 @@ public class Test4 {
         // 解密
         fis = new FileInputStream("Day28/src/com/kkcf/test/encry.txt");
         fos = new FileOutputStream("Day28/src/com/kkcf/test/decry.txt");
-        
+
         encryption(fis, fos);
     }
 }
@@ -462,6 +460,8 @@ public class Test4 {
 
 - 文件不要换行，否则会有换行符；
 - Windows 上的非 UTF-8 编码的文件，可能会有 bom 头，即文件开头隐藏的字符标记，其中记录了一些文件的信息，比如：文件的字符集编码。
+
+可结合 Stream 流来实现：
 
 demo-project/base-code/Day28/src/com/kkcf/test/Test5.java
 
@@ -504,4 +504,3 @@ public class Test5 {
     }
 }
 ```
-
