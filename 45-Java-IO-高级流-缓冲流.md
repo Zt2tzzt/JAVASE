@@ -2,9 +2,7 @@
 
 “File”开头的字节、字符流，是 Java IO 的**基本流**；
 
-在基本流的基础上，进行封装，额外添加一些功能的流，称为**高级流**。
-
-Java IO 高级流有：
+在基本流的基础上，进行封装，额外添加一些功能的流，称为**高级流**。Java IO 高级流有：
 
 - 缓冲流；
 - 转换流；
@@ -18,9 +16,9 @@ Java 缓冲流的体系结构，如下图所示：
 
 ![Java缓冲流的体系结构](NodeAssets/Java缓冲流的体系结构.jpg)
 
-> FileReader、FileWriter 字符流中，已经加入了缓冲的功能；
+> FileReader、FileWriter 字符输入、输出流中，已经加入了缓冲的功能；
 >
-> BufferedReader、BufferedWriter 字符流相较于上面的基本流，性能提升不是很大。
+> BufferedReader、BufferedWriter 字符缓冲输入、输出流相较于上面的基本流，性能提升不是很大。
 
 ## 一、字节缓冲流
 
@@ -61,7 +59,7 @@ public class Demo01 {
 }
 ```
 
-- 字节缓冲输入、输出流，底层都会创建长度为 8192 字节数组的缓冲区，提高读取、写入性能。
+- 字节缓冲输入、输出流，底层会创建长度为 8192 字节数组的缓冲区，提高读取、写入性能。
 - 字节缓冲输入、输出流，调用 `close` 方法关流，会关闭关联的基本流。
 
 重构上方的代码，一次读取多个字节。
@@ -95,7 +93,7 @@ public class Demo01 {
 
 ![字节缓冲流的原理](NodeAssets/字节缓冲流的原理.jpg)
 
-内存中的操作，非常快；所以字节缓冲流相比于基本流来说，实际上节约的是读取本地文件的时间。
+内存中的操作，非常快；所以字节缓冲流，相比于基本流来说，实际上节约的是读取本地文件的时间。
 
 ## 二、字符缓冲流
 
@@ -212,7 +210,7 @@ public class Demo03 {
 
 读取 csb.txt 文本文件中的数据，并按照每行开头的序号，进行排序；将排序后的数据写入到 result.txt 文本文件中。
 
-- 使用字符缓冲输入、输出流，结合 TreeMap 来进行排序。
+- 使用字符缓冲输入、输出流，结合 `TreeMap` 来进行排序。
 
 demo-project/base-code/Day29/src/com/kkcf/test/Test1.java
 
@@ -263,7 +261,7 @@ public class Test1 {
 
 ### 2.练习二：统计程序运行次数
 
-实现一个验证程序运行次数的小程序，要求如下：
+实现一个验证程序运行次数的程序，要求如下：
 
 当程序运行超过 3 次时，给出提示；“本软件只能免费使用 3 次，欢迎注册会员后继续使用”。
 
@@ -278,7 +276,7 @@ import java.io.*;
 
 public class Test2 {
     public static void main(String[] args) throws IOException {
-        // 读取
+        // 读取次数
         BufferedReader br = new BufferedReader(new FileReader("Day29/src/com/kkcf/test/count.txt"));
 
         String s = br.readLine();
@@ -289,7 +287,7 @@ public class Test2 {
         int count = Integer.parseInt(s);
         System.out.println(++count <= 3 ? "欢迎使用本软件，第 " + count + " 次使用免费" : "本软件只能免费使用 3 次，欢迎您注册会员后，继续使用");
 
-        // 写入
+        // 写入次数
         BufferedWriter bw = new BufferedWriter(new FileWriter("Day29/src/com/kkcf/test/count.txt"));
 
         bw.write(String.valueOf(count));
