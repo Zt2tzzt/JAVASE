@@ -1,9 +1,9 @@
 # Java IO 之转换流
 
-转换流，属于字符流，它只有两个实现类；
+转换流，属于**字符流**，它只有两个实现类；
 
-- 字符转换输入流：InputStreamReader
-- 字符转换输出流：OutputStreamWriter
+- 字符转换输入流：`InputStreamReader`
+- 字符转换输出流：`OutputStreamWriter`
 
 转换流，是字节流和字符流之间的桥梁。它的内存原理如图所示：
 
@@ -13,12 +13,12 @@
 
 转换流的作用：
 
-- 作用 1：指定字符集，来读、写文件的内容（JDK11 淘汰）
-- 作用 2：用字节流，调用字符流的方法。
+- 作用 1：为字节流，指定字符集，来读、写文本文件的内容（JDK11 已淘汰）
+- 作用 2：为字节流，调用字符流的方法。
 
-### 1.作用一：指定字符集读写数据
+### 1.作用一：为字节流指定字符集读写文本内容
 
-案例理解：利用转换流，按照指定的字符集编码规则，读取文件中的内容。
+案例理解：利用 `InputStreamReader` 字符转换输入流，为字节流，指定字符集编码规则，读取文本文件中的内容。
 
 demo-project/base-code/Day29/src/com/kkcf/convert/Demo01.java
 
@@ -42,9 +42,9 @@ public class Demo01 {
 }
 ```
 
-- 这种方式，读取文件中的内容，已经在 JDK11 被淘汰了。
+- 这种方式，读取文本文件中的内容，已经在 JDK11 被淘汰了。
 
-在 JDK11，使用 FileReader 字符输入流，已经允许指定字符集编码，来读取数据了。
+在 JDK11 及以后，使用 `FileReader` 字符输入流，已经允许指定字符集编码，来读取数据了。
 
 demo-project/base-code/Day29/src/com/kkcf/convert/Demo01.java
 
@@ -68,7 +68,7 @@ public class Demo01 {
 }
 ```
 
-案例理解：使用字符转换输出流，往文件中写入数据。
+案例理解：使用 `OutputStreamWriter` 字符转换输出流，指定字符集编码，往文件中写入数据。
 
 demo-project/base-code/Day29/src/com/kkcf/convert/Demo02.java
 
@@ -92,7 +92,7 @@ public class Demo02 {
 
 - 这种方式，写出数据到文件中，已经在 JDK11 被淘汰了。
 
-在 JDK11，使用 FileWriter 字符输出流，已经允许指定字符集编码，来写出数据了。
+在 JDK11，使用 `FileWriter` 字符输出流，已经允许指定字符集编码，来写出数据了。
 
 demo-project/base-code/Day29/src/com/kkcf/convert/Demo02.java
 
@@ -165,14 +165,17 @@ public class Demo03 {
 }
 ```
 
-### 2.作用二：用字节流调用字符流的方法
+### 2.作用二：为字节流调用字符流的方法
 
-案例理解：利用字节流，读取文件中的数据，不能出现乱码，每次读一整行。分析：
+案例理解：利用字节流，读取文件中的数据，不能出现乱码，并且每次读一整行。分析：
 
-- 不能出现乱码，只能使用字符流；
-- 每次读一整行，只能使用字符缓冲输入流。
+- 不能出现乱码，意味着要使用 `Reader` 字符输入流；
+- 每次读一整行，意味着要使用 `BufferedReader` 字符缓冲输入流。
 
-思路：所以，要把字节流，转成字符流。
+思路：
+
+1. 利用 `InputStreamReader` 字符转换输入流，把 `FileInputStream` 字节输入流，转成字符转换输入流。
+2. 再基于 `InputStreamReader` 字符转换输入流，封装一个字符缓冲输入流。
 
 demo-project/base-code/Day29/src/com/kkcf/convert/Demo04.java
 
