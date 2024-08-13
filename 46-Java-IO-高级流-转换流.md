@@ -13,12 +13,12 @@
 
 转换流的作用：
 
-- 作用 1：为字节流，指定字符集，来读、写文本文件的内容（JDK11 已淘汰）
+- 作用 1：为字节流，指定字符集，来读、写文本文件的内容（这种做法在 JDK11 已淘汰）
 - 作用 2：为字节流，调用字符流的方法。
 
 ### 1.作用一：为字节流指定字符集读写文本内容
 
-案例理解：利用 `InputStreamReader` 字符转换输入流，为字节流，指定字符集编码规则，读取文本文件中的内容。
+案例理解：利用 `InputStreamReader` 字符转换输入流，为字节输入流，指定字符集编码，读取文本文件中的内容。
 
 demo-project/base-code/Day29/src/com/kkcf/convert/Demo01.java
 
@@ -68,7 +68,7 @@ public class Demo01 {
 }
 ```
 
-案例理解：使用 `OutputStreamWriter` 字符转换输出流，指定字符集编码，往文件中写入数据。
+案例理解：使用 `OutputStreamWriter` 字符转换输出流，为字节输出流，指定字符集编码，往文件中写入数据。
 
 demo-project/base-code/Day29/src/com/kkcf/convert/Demo02.java
 
@@ -113,6 +113,8 @@ public class Demo02 {
     }
 }
 ```
+
+#### 1.文件编码转换
 
 案例理解：将 GBK 编码的文件，转为 UTF-8 编码的文件。
 
@@ -175,7 +177,7 @@ public class Demo03 {
 思路：
 
 1. 利用 `InputStreamReader` 字符转换输入流，把 `FileInputStream` 字节输入流，转成字符转换输入流。
-2. 再基于 `InputStreamReader` 字符转换输入流，封装一个字符缓冲输入流。
+2. 再基于 `InputStreamReader` 字符转换输入流，封装一个 `BufferedReader` 字符缓冲输入流。
 
 demo-project/base-code/Day29/src/com/kkcf/convert/Demo04.java
 
