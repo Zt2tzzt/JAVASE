@@ -94,6 +94,7 @@ public class Demo01 {
 | `public String getAbsolutePath()` | 返回 file 对象的绝对路径                                 |
 | `public String getPath()`         | 返回定义 file 对象时，使用的路径                         |
 | `public String getName()`         | 返回 file 对象的名称（带后缀）                           |
+| `public File getParentFile()`     | 返回 file 对象的父级路径的绝对路径                       |
 | `public long lastModified()`      | 返回 file 对象最后修改时间（时间毫秒值）                 |
 
 demo-project/base-code/Day27/src/com/kkcf/file/Demo02.java

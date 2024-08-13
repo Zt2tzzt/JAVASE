@@ -1,21 +1,21 @@
-# Java IO 之压缩流
+# Java IO 之压缩流、解压缩流
 
-压缩流的应用场景：
+压缩流、解压缩流的应用场景：
 
-- 场景一：当传输的数据比较大，就可以使用压缩流先压缩，再传输；、
+- 场景一：当传输的数据比较大，就可以使用压缩流先压缩，再传输；
 - 场景二：接收到一个压缩包，要先进行解压，才能访问其中的文件。
 
-压缩流属于字节流，它的实现类主要有两个：
+压缩流、解压缩流都属于**字节流**，它的实现类主要有两个：
 
-- 解压缩流（输入流）ZipInputStream；
-- 压缩流（输出流）
+- 解压缩流（输入流）`ZipInputStream`；
+- 压缩流（输出流）`ZipOutputStream`
 
 ## 一、ZipInputStream 解压缩流的使用
 
 解压缩流：
 
-- 解压的压缩包，必须是 .zip 格式的。
-- 解压的压缩包，其中的每一个文件、文件夹，在解压缩流中都是一个 ZipEntry 对象。
+- 解压的压缩包，必须是 zip 格式的。
+- 解压的压缩包，其中的每一个文件、文件夹，在解压缩流中，都是一个 ZipEntry 对象。
 - 解压的本质，就是把每一个 ZipEntry 对象，按照层级，拷贝到本地另一个文件夹中。
 
 demo-project/base-code/Day29/src/com/kkcf/compression/Demo01.java
@@ -39,11 +39,12 @@ public class Demo01 {
      * @throws IOException 抛出异常
      */
     public static void unzip(File src, File dest) throws IOException {
-        // 创建父级目录
+        // 创建解压目录
         String[] split = src.getName().split("\\.");
         StringJoiner sj = new StringJoiner(".", "", "");
         for (int i = 0; i < split.length - 1; i++)
             sj.add(split[i]);
+        
         String dirName = sj.toString();
         File destDir = new File(dest, dirName);
         destDir.mkdirs();
@@ -53,7 +54,7 @@ public class Demo01 {
 
         ZipEntry entry;
         while ((entry = zis.getNextEntry()) != null) {
-            System.out.println(entry);
+            System.out.println(entry); // 得到一个以压缩包为参照的相对路径
             File file = new File(destDir, entry.toString());
 
             if (entry.isDirectory()) {
@@ -62,13 +63,13 @@ public class Demo01 {
             } else {
                 // 读取压缩包中的文件，并把它存放到目的地 destdir 文件夹中
                 FileOutputStream fos = new FileOutputStream(file);
+
                 int b;
                 while ((b = zis.read()) != -1)
                     fos.write(b);
 
                 fos.close();
-                // 表示压缩包中的一个文件处理完毕
-                zis.closeEntry();
+                zis.closeEntry(); // 表示压缩包中的一个文件处理完毕
             }
         }
 
@@ -89,11 +90,13 @@ public class Demo01 {
 
 压缩流：
 
-- 把多个文件，或者文件夹变成一个压缩包。
-- 压缩包中的每一个文件、文件夹，都是一个 ZipEntry 对象。
+- 把多个文件，或文件夹压缩到一个压缩包中。
+- 压缩包中的每一个文件、文件夹，在压缩流中都是一个 ZipEntry 对象。
 - 压缩的本质，就是把每一个文件、文件夹，看作一个 ZipEntry 对象，放入到压缩包中。
 
 压缩单个文件。
+
+- 把指定目录下的 a.txt 文件，压缩为 a.zip 问津
 
 demo-project/base-code/Day29/src/com/kkcf/compression/Demo02.java
 

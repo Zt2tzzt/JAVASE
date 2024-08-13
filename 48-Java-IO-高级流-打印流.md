@@ -1,9 +1,9 @@
 # Java IO 之打印流
 
-打印流，是输出流，没有输入流。它有两个实现类：
+打印流，只有**输出流**，没有输入流。它有两个实现类：
 
-- 字节打印输出流：PrintStream
-- 字符打印输入流：PrintWriter
+- 字节打印输出流：`PrintStream`
+- 字符打印输出流：`PrintWriter`
 
 打印流，有如下特点：
 
@@ -14,27 +14,27 @@
 - 特点 3：特有的写出方法，可以实现自动刷新、自动换行。
   - 打印一次数据，进行了**写出、换行、刷新**操作。
 
-## 一、PrintStream 字节打印流
+## 一、PrintStream 字节打印输出流
 
 ### 1.PrintStream 的构造方法
 
-PrintStream 字节打印流常用的构造方法如下：
+`PrintStream` 字节打印输出流，常用的构造方法如下：
 
-| 方法名                                                       | 说明                                       |
-| ------------------------------------------------------------ | ------------------------------------------ |
-| `public PrintStream(OutputStream os)`                        | 关联字节输出流                             |
-| `public PrintStream(File file)`                              | 关联文件                                   |
-| `public PrintStream(String filename)`                        | 关联文件路径                               |
-| `public PrintStream(String filename, Charset charset)`       | 关联文件路径，并指定字符集编码             |
-| `public PrintStream(OutputStream os, boolean autoFlush)`     | 关联字节输出流，并指定自动刷新             |
+| 方法名                                                                    | 说明                                       |
+| ------------------------------------------------------------------------- | ------------------------------------------ |
+| `public PrintStream(OutputStream os)`                                     | 关联字节输出流                             |
+| `public PrintStream(File file)`                                           | 关联文件                                   |
+| `public PrintStream(String filename)`                                     | 关联文件路径                               |
+| `public PrintStream(String filename, Charset charset)`                    | 关联文件路径，并指定字符集编码             |
+| `public PrintStream(OutputStream os, boolean autoFlush)`                  | 关联字节输出流，并指定自动刷新             |
 | `public PrintStream(OutputStream os, boolean autoFlush, String encoding)` | 关联字节输出流，并指定字符集编码和自动刷新 |
 
 - 无论关联的是 File 对象，还是文件路径字符串，底层都会创建一个字节输出流。
-- 字节打印流底层没有缓冲区，开不开自动刷新，都会直接写出到文件中。
+- 字节打印输出流底层没有缓冲区，开不开自动刷新，都会直接写出到文件中。
 
 ### 2.PrintStream 的成员方法
 
-PrintStream 字节打印流常用的成员方法如下：
+`PrintStream` 字节打印输出流，常用的成员方法如下：
 
 | 方法名                                             | 说明                                         |
 | -------------------------------------------------- | -------------------------------------------- |
@@ -43,9 +43,9 @@ PrintStream 字节打印流常用的成员方法如下：
 | `public void print(Xxx xxx)`                       | **特有方法**，打印任意数据，自动刷新         |
 | `public void printf(String format, Object...args)` | **特有方法**，打印带有占位符的语句，自动刷新 |
 
-- 字节打印流底层没有缓冲区，开不开自动刷新，都会直接写出到文件中。
+- 字节打印输出流，底层没有缓冲区，所以指定或不指定自动刷新，数据都会直接写出到文件中。
 
-案例理解：使用 PrintStream 字节打印流，往文件中写出数据。
+案例理解：使用 `PrintStream` 字节打印输出流，往文件中写出数据。
 
 demo-project/base-code/Day29/src/com/kkcf/print/Demo01.java
 
@@ -84,28 +84,28 @@ public class Demo01 {
 >
 > demo-project/base-code/Day29/src/com/kkcf/print/PrintStreamDemo2.java
 
-## 二、PrintWriter 字符打印流
+## 二、PrintWriter 字符打印输出流
 
-PrintWriter 字符打印流，与 PrintStream 字节打印流类似，它们不同的地方在于：
+`PrintWriter` 字符打印输出流，与 `PrintStream` 字节打印输出流类似，它们不同的地方在于：
 
-- PrintWriter 字符打印流底层有缓冲徐，需要明确指定自动刷新。因此它的效率更高。
+- `PrintWriter` 字符打印输出流底层有缓冲区，需要明确指定自动刷新。因此它的效率更高。
 
 ### 1.PrintWriter 构造方法
 
-PrintWriter 字符打印流常用的构造方法有：
+`PrintWriter` 字符打印输出流，常用的构造方法有：
 
-| 方法名                                                       | 说明           |
-| ------------------------------------------------------------ | -------------- |
-| `public PrintWriter(Writer w)`                               | 关联字符输出流 |
-| `public PrintWriter(File file)`                              | 关联文件               |
-| `public PrintWriter(String s)`                               | 关联文件路径               |
-| `public PrintWriter(String filename, Charset charset)`       | 关联文件路径，并指定字符集编码               |
-| `public PrintWriter(Writer w, boolean autoFlush)`            | 关联字符输出流，并指定自动刷新             |
-| `public PrintWriter(Writer w, boolean autoFlush, String encoding)` | 关联字符输出流，             |
+| 方法名                                                       | 说明                           |
+| ------------------------------------------------------------ | ------------------------------ |
+| `public PrintWriter(Writer w)`                               | 关联字符输出流                 |
+| `public PrintWriter(File file)`                              | 关联文件                       |
+| `public PrintWriter(String filename)`                        | 关联文件路径                   |
+| `public PrintWriter(String filename, Charset charset)`       | 关联文件路径，并指定字符集编码 |
+| `public PrintWriter(Writer w, boolean autoFlush)`            | 关联字符输出流，并指定自动刷新 |
+| `public PrintWriter(Writer w, boolean autoFlush, String encoding)` | 关联字符输出流，               |
 
 ### 2.PrintWriter 成员方法
 
-PrintWriter 字符打印流常用的成员方法有：
+`PrintWriter` 字符打印输出流，常用的成员方法有：
 
 | 方法名                                             | 说明                                         |
 | -------------------------------------------------- | -------------------------------------------- |
@@ -114,7 +114,7 @@ PrintWriter 字符打印流常用的成员方法有：
 | `public void print(Xxx xxx)`                       | **特有方法**，打印任意数据，自动刷新         |
 | `public void printf(String format, Object...args)` | **特有方法**，打印带有占位符的语句，自动刷新 |
 
-案例理解：使用 PrintWriter  字符打印流，往文件中写出数据。
+案例理解：使用 `PrintWriter` 字符打印输出流，往文件中写出数据。
 
 demo-project/base-code/Day29/src/com/kkcf/print/Demo02.java
 
@@ -140,7 +140,7 @@ public class Demo02 {
 
 ## 三、打印流与输出语句的关系
 
-System 类是 Java 中的一个类：
+`System` 类是 Java 中的一个类：
 
 java/lang/System.java
 
@@ -148,19 +148,19 @@ java/lang/System.java
 public final class System {}
 ```
 
-System 类中，有一个静态常量 `out`
+`System` 类中，有一个静态常量 `out`
 
 ```java
 public final class System {
     // ……
-  
+
     public static final PrintStream out = null;
-  
+
     // ……
 }
 ```
 
-- 可以看到，out 常量的类型，是 PrintStream 打印流。
-- 所以 `System.out`，获取的就是一个打印流对象。虚拟机在启动时，自动创建了这个对象。
+- 可以看到，`out` 常量的类型，就是 `PrintStream` 打印流。
+- 所以，使用 `System.out`，获取的就是一个字节打印输出流对象。虚拟机在启动时，自动创建了这个对象。
   - 这个打印流对象，默认指向控制台。
   - 这个打印流对象，也是系统中的**标准输出流**。它不能关闭，因为在系统中它是唯一的。

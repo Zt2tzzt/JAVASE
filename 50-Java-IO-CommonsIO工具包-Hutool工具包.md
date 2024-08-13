@@ -2,7 +2,7 @@
 
 ## 一、Commons-io 工具包
 
-Commons-io 是 apache 开源基金组织提供的有关 Java IO 操作的开源工具包。用于提高 Java IO 操作效率。
+Commons-io 是 apache 开源基金组织，提供的有关 Java IO 操作的开源工具包。用于提高 Java IO 操作效率。
 
 > Apache 开源基金组织，维护了很多 Java 相关的开源项目：
 >
@@ -22,39 +22,39 @@ Commons-io 是 apache 开源基金组织提供的有关 Java IO 操作的开源�
 
 Commons 工具包中，有很多工具，比如：
 
-- StringUtils，字符串工具类；
-- NumberUtils，数字工具类；
-- ArrayUtils，数组工具类；
-- RandomUtils，随机数工具类；
-- DateUtils，日期工具类；
-- StopWatch，秒表工具类；
-- ClassUtils，反射工具类；
-- SystemUtils，系统工具类；
-- MapUtils，集合工具类；
-- BeanUtils，bean 工具类；
+- `StringUtils`，字符串工具类；
+- `NumberUtils`，数字工具类；
+- `ArrayUtils`，数组工具类；
+- `RandomUtils`，随机数工具类；
+- `DateUtils`，日期工具类；
+- `StopWatch`，秒表工具类；
+- `ClassUtils`，反射工具类；
+- `SystemUtils`，系统工具类；
+- `MapUtils`，集合工具类；
+- `BeanUtils`，bean 工具类；
 - ……
 
 其中与 IO 相关的，就是 Commons-io 工具包；
 
-> 第三方提供的 Java 包，通常以压缩包的形式提供，即 jar 包。
+> 第三方提供的 Java 包，一般以压缩包的形式提供，即 jar 包。
 
 在项目中，导入 Commons-io 相关 jar 包；
 
 ### 1.FileUtils 工具类
 
-其中 FileUtils 工具类中，常用的方法有：
+其中 `FileUtils` 工具类中，常用的方法有：
 
 | FileUtils（文件、文件夹相关）                                | 说明                         |
 | ------------------------------------------------------------ | ---------------------------- |
-| `static void copyFile(File srcFile, File destFile)`         | 复制文件                     |
+| `static void copyFile(File srcFile, File destFile)`          | 复制文件                     |
 | `static void copyDirectory(File srcDir, File destDir)`       | 复制文件夹                   |
-| `static void copyDirectoryToDirectory(File srcDir, File destDir)` | 复制文件夹，到有一个文件夹中 |
+| `static void copyDirectoryToDirectory(File srcDir, File destDir)` | 复制文件夹，到另一个文件夹中 |
 | `static void deleteDirectory(File dir)`                      | 删除文件夹                   |
 | `static void cleanDirectory(File dir)`                       | 清空文件夹                   |
 | `static void readFileToString(File fil, Charset encoding)`   | 读取文件中的数据变为字符串   |
 | `static void write(File file, CharSequence data, String encoding)` | 写出数据                     |
 
-copyFile 方法的使用：
+`copyFile` 静态方法的使用：
 
 demo-project/base-code/Day29/src/com/kkcf/commonsio/Demo01.java
 
@@ -94,19 +94,19 @@ Commons-io 跟多用法，参考[commons-io整理的文档](doc\commons-io整理
 
 Hutool 工具包中，有很多工具类：
 
-- DateUtil，日期时间工具类；
-- TimeInterval，计时器工具类
-- StrUtil，字符串工具类；
-- HexUtil，十六进制工具类；
-- HashUtil，哈希工具类；
-- ObjectUtil，对象工具类
-- ReflectUtil，反射工具类；
-- TypeUtil，泛型工具类；
-- PageUtil，分页工具类；
-- NumberUtil，数字工具类
+- `DateUtil`，日期时间工具类；
+- `TimeInterval`，计时器工具类
+- `StrUtil`，字符串工具类；
+- `HexUtil`，十六进制工具类；
+- `HashUtil`，哈希工具类；
+- `ObjectUtil`，对象工具类
+- `ReflectUtil`，反射工具类；
+- `TypeUtil`，泛型工具类；
+- `PageUtil`，分页工具类；
+- `NumberUtil`，数字工具类
 - ……
 
-其中与 [IO 相关](https://doc.hutool.cn/pages/io/)的，有 7 个工具类；它们在 hutool-core-io 包中。
+其中与 [IO 相关](https://doc.hutool.cn/pages/io/)的，有 7 个工具类；它们在 hutool.core.io 包中。
 
 | 类名              | 说明                          |
 | ----------------- | ----------------------------- |
@@ -122,15 +122,17 @@ Hutool 工具包中，有很多工具类：
 
 其中 FileUtil 工具类中，常用的方法有：
 
-| f方法名                                                      | 说明                                      |
-| ------------------------------------------------------------ | ----------------------------------------- |
-| `static File file(String... names)`                          | 通过多层目录创建文件 元素名（多层目录名） |
-| `static File touch(File file)`                               | 创建文件及其父目录                        |
-| `static <T> File writeLines(Collection<T> list, File file, Charset charset)` | 将列表写入文件，覆盖模式                  |
-| `static <T> File appendLines(Collection<T> list, File file, String charset)` | 将列表写入文件，追加模式                  |
-| `static List<String> readLines(File file, Charset charset)`  | 从文件中读取每一行数据                    |
+| f方法名                                                      | 说明                     |
+| ------------------------------------------------------------ | ------------------------ |
+| `static File file(String... names)`                          | 通过多层目录创建文件     |
+| `static File touch(File file)`                               | 创建文件及其父目录       |
+| `static <T> File writeLines(Collection<T> list, File file, Charset charset)` | 将列表写入文件，覆盖模式 |
+| `static <T> File appendLines(Collection<T> list, File file, String charset)` | 将列表写入文件，追加模式 |
+| `static List<String> readLines(File file, Charset charset)`  | 从文件中读取每一行数据   |
 
-file 静态方法的使用：
+`file` 静态方法的使用：
+
+- 通过多层目录创建文件
 
 demo-project/base-code/Day29/src/com/kkcf/hutool/Demo01.java
 
@@ -144,13 +146,17 @@ import java.io.File;
 public class Demo01 {
     public static void main(String[] args) {
         File file = FileUtil.file("D:\\Workshop\\tutorial\\JAVASE\\demo-project\\base-code\\Day29\\src\\com\\kkcf\\hutool", "haha", "aaa"); // 必须是绝对路径
+
         boolean flag = file.mkdirs();
+
         System.out.println(file);
     }
 }
 ```
 
-touch 静态方法的使用：
+`touch` 静态方法的使用：
+
+- 创建文件及其父目录
 
 demo-project/base-code/Day29/src/com/kkcf/hutool/Demo01.java
 
@@ -164,12 +170,15 @@ import java.io.File;
 public class Demo01 {
     public static void main(String[] args) {
         File file = FileUtil.file("D:\\Workshop\\tutorial\\JAVASE\\demo-project\\base-code\\Day29\\src\\com\\kkcf\\hutool", "haha", "aaa", "a.txt"); // 必须是绝对路径
+
         FileUtil.touch(file);
     }
 }
 ```
 
-writeLines 静态方法的使用：
+`writeLines` 静态方法的使用：
+
+- 将列表写入文件，覆盖模式
 
 demo-project/base-code/Day29/src/com/kkcf/hutool/Demo01.java
 
@@ -185,6 +194,7 @@ import java.util.List;
 public class Demo01 {
     public static void main(String[] args) {
         File file = FileUtil.file("D:\\Workshop\\tutorial\\JAVASE\\demo-project\\base-code\\Day29\\src\\com\\kkcf\\hutool", "haha", "aaa", "a.txt"); // 必须是绝对路径
+
         ArrayList<String> list = new ArrayList<>(List.of("abc", "cba", "nba"));
 
         FileUtil.writeLines(list, file, "UTF-8");
@@ -192,7 +202,9 @@ public class Demo01 {
 }
 ```
 
-appendLines 静态方法的使用：
+`appendLines` 静态方法的使用：
+
+- 将列表写入文件，追加模式
 
 demo-project/base-code/Day29/src/com/kkcf/hutool/Demo01.java
 
@@ -208,6 +220,7 @@ import java.util.List;
 public class Demo01 {
     public static void main(String[] args) {
         File file = FileUtil.file("D:\\Workshop\\tutorial\\JAVASE\\demo-project\\base-code\\Day29\\src\\com\\kkcf\\hutool", "haha", "aaa", "a.txt"); // 必须是绝对路径
+
         ArrayList<String> list1 = new ArrayList<>(List.of("wee", "yui", "mio"));
 
         FileUtil.appendLines(list1, file, "UTF-8");
@@ -215,7 +228,9 @@ public class Demo01 {
 }
 ```
 
-readLines 静态方法的使用
+`readLines` 静态方法的使用
+
+- 从文件中读取每一行数据
 
 demo-project/base-code/Day29/src/com/kkcf/hutool/Demo01.java
 

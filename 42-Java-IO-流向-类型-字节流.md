@@ -8,7 +8,7 @@ IO 流，指的是以（运行在内存中的）程序为参照物，读（Outpu
 
 IO 流的方向：
 
-- 输出流：用于写入（Output、Writer）；
+- 输出流：用于写出（Output、Writer）；
 - 输入流：用于读取（Input，Reader）
 
 ## 二、Java IO 类型
@@ -42,7 +42,7 @@ Java IO 字节流的体系结构，如下图所示：
 
 ![IO字节流体系结构](NodeAssets/IO字节流体系结构.jpg)
 
-由上图可知，IO 字节流的命名规则是：Xxx + InputStream / OutputStream；比如：`FileInputStream`
+由上图可知，Java IO 字节流的命名规则是：Xxx + InputStream / OutputStream；比如：`FileInputStream`
 
 ### 1.FileOutputStream 子类
 
@@ -63,9 +63,7 @@ Java IO 字节流的体系结构，如下图所示：
 | `FileOutputStream(File file, boolean append)`   | 根据 File 对象，创建字节输出流对象，并决定是否续写       |
 | `FileOutputStream(String name, boolean append)` | 根据字符串表示的路径，创建字节输出流对象。并决定是否续写 |
 
-创建字节输出流，并往文件中写入 a 字符。
-
-- `write` 方法的参数是整数，表示写入字符对应的 ASCLL 码。
+创建字节输出流，并往文件中写入“a”字符。
 
 demo-project/base-code/Day28/src/com/kkcf/io/Demo01.java
 
@@ -90,8 +88,9 @@ public class Demo01 {
 ```
 
 - 细节 1：如果文件不存在，会创建一个新的文件，但是要保证**父级路径存在**，否则会报错。
-- 细节 2：如果文件存在，默认会先清空文件内容，再写入，除非开启续写。
+- 细节 2：如果文件存在，默认会在写入时覆盖文件内容，除非开启续写。
 - 细节 3：每次使用完流后，都要释放资源。否则文件会处于被占用的状态。
+- 细节 4：`write` 方法的参数是整数，表示写入字符对应的 ASCLL 码。
 
 #### 1.FileOutputStream 成员方法
 
@@ -151,9 +150,9 @@ public class Demo01 {
 }
 ```
 
-字节输出流，写出换行符，进行换行：
+使用字节输出流，写出换行符，进行换行：
 
-> String 字符串获取字节数组的方法：`byte[] getBytes()`
+> String 字符串对象，获取字节数组的方法：`byte[] getBytes()`
 
 demo-project/base-code/Day28/src/com/kkcf/io/Demo01.java
 
@@ -185,7 +184,11 @@ public class Demo01 {
 }
 ```
 
-> Windows 换行符：`\r\n`；Linux 换行符：`\n`；Mac 换行符：`\r`；
+> 不同操作系统，换行符不同：
+>
+> - Windows 换行符：`\r\n`；
+> - Linux 换行符：`\n`；
+> - Mac 换行符：`\r`；
 >
 > Java 会针对不同的操作系统，进行换行符补全；
 
@@ -237,7 +240,7 @@ public class Demo02 {
 | ------------ | ---------------------------- |
 | `int read()` | 从输入流读取一个字节的数据。 |
 
-利用 `FileInputStream` 输入流，读取文件中的数据，返回的是二进制字节数据，对应的十进制整数。
+利用 `FileInputStream` 输入流，读取文件中的数据，返回的是二进制字节数据，在 ASCLL 码表中对应的十进制整数。
 
 demo-project/base-code/Day28/src/com/kkcf/io/Demo03.java
 
@@ -254,7 +257,7 @@ public class Demo03 {
         int b1 = fis.read();
 
         System.out.println(b1); // 111
-        System.out.println((char)b1); // o
+        System.out.println((char) b1); // o
     }
 }
 ```
@@ -262,13 +265,13 @@ public class Demo03 {
 - 细节 1：`read` 方法，会**挨个**读取文件中的二进制字节，并返回二进制字节在 ASCLL 码表中对应的十进制数字；
 - 细节 2：`read` 方法，读取完毕后，再进行调用，会返回 `-1`；
 
-`FileInputStream` 输入流与 `FileOutputStream` 输出流不同，读取的文件，如果不存在，那么会直接抛出异常。
+`FileInputStream` 输入流，与 `FileOutputStream` 输出流不同，读取的文件，如果不存在，那么会直接抛出异常。
 
 - 输入流读取的文件，如果不存在，再创建一个空文件没有意义，因为里面没有数据，所以会直接抛出异常。
 
 > 所有应用程序的意义，都在于对数据的组织和管理。
 
-`FileInputStream` 输入流，循环读取：
+使用 `FileInputStream` 字节输入流，循环读取文件中的数据：
 
 demo-project/base-code/Day28/src/com/kkcf/io/Demo04.java
 
@@ -290,6 +293,8 @@ public class Demo04 {
     }
 }
 ```
+
+## 五、字节流实现文件拷贝
 
 使用字节输入、输出流，实现文件的拷贝。
 
@@ -327,7 +332,7 @@ public class Demo05 {
 | -------------------------------- | ---------------------- |
 | `public int read(byte[] buffer)` | 一次读取一个字节数组数 |
 
-`public int read(byte[] buffer)` 方法，用于一次读取一个字节数组，返回值表示**读到的字节数组长度**。
+上面方法，用于一次读取一个字节数组，返回值表示**读到的字节数组长度**。
 
 - 每次读取，会尽可能把数组填满；
 - 数组的长度，一般使用 1024 的整数倍；比如：`1024 * 1024 * 5` 表示 5MB 字节数据。
@@ -357,7 +362,7 @@ public class Demo06 {
 }
 ```
 
-- 细节 1：读到的字节数组，会覆盖原数组中对应位置的元素。
+- 细节 1：读到的字节数组，会覆盖传入的原数组中对应位置的元素。
 
 > String 的构造方法 `String(byte[] bytes, int offset, int length)` 可以使用字节子数组，来构造一个新的 String。
 
@@ -393,13 +398,13 @@ public class Demo05 {
 }
 ```
 
-## 五、Java IO 异常捕获
+## 六、Java IO 异常捕获
 
 ### 1.try…catch…finally 代码块（了解）
 
-try……catch……finally 代码块中，finally 代码块中的代码，一定会被执行，除非 JVM 虚拟机停止。
+try…catch…finally 代码块，其中 finally 代码块中的代码，一定会被执行，除非 JVM 虚拟机停止。
 
-所有，可以使用 try……catch……finally 代码块，重构上方的代码，来进行关流操作；
+所有，可以使用 try…catch…finally 代码块，重构上方的代码，来进行关流操作；
 
 这也是 Java IO 流异常捕获的完整写法：
 
@@ -452,15 +457,15 @@ public class Demo05 {
 }
 ```
 
-> 程序中出现的异常，一般都会抛出处理，因为后续介绍的 Spring 框架，会将程序中抛出的异常统一处理。
+> 程序中出现的异常，一般都会直接抛出处理，因为后续介绍的 Spring 框架，会将程序中抛出的异常统一处理。
 
 ### 2.JDK7 AutoCloseable 接口（了解）
 
-上方关闭连接的代码，写起来非常麻烦，在 JDK7，Java 推出了 `AutoCloseable` 接口。
+可以发现，上方关流的代码，写起来非常麻烦；
 
-实现该接口的类，在特定情况下，可以**自动释放资源/关流**。
+在 JDK7，Java 推出了 `AutoCloseable` 接口。实现该接口的类，在特定情况下，可以**自动释放资源/关流**。
 
-- 比如：`FileInputStream` 子类继承自 `InputStream` 抽象类，该抽象类又实现了 `Closeable` 接口，该接口又继承自 `AutoCloseable` 接口；
+- 比如：`FileInputStream` 子类，继承自 `InputStream` 抽象类，该抽象类，又实现了 `Closeable` 接口，该接口，又继承自 `AutoCloseable` 接口；
 - 所以 `FileInputStream` 、`FileOutputStream` 这些类，适用于特定情况。
 
 特定情况一：JDK7 格式：

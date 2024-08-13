@@ -4,12 +4,12 @@
 
 字符流的底层，基于字节流：
 
-- 字符流 = 字节流 + 字符集；
+- 字符流 = 字节流 + 字符集编码；
 
 字符流的特点：
 
-- 输入流：默认一次读一个字节，遇到汉字等特殊字符时，一次读多个字节（根据字符集和编码规则改变）；
-- 输出流：底层会把数据，按照指定的字符集编码方式进行编码，转变成字节，再写到文件中。
+- 输入流：默认一次读一个字节，遇到汉字这样的特殊字符时，根据字符集编码规则，一次读多个字节；
+- 输出流：底层会把数据，按照指定的字符集编码规则进行编码，转变成字节，再写到文件中。
 
 字符流，非常适合**纯文本文件**的读、写操作。
 
@@ -52,12 +52,12 @@ Java IO 字符流的体系结构，如下图所示：
 | `public int read(char[] buffer)` | 读取多个数据，读到末尾返回 -1 |
 | `public int close()`             | 释放资源/关流                 |
 
-`public int read()` 方法，会**挨个**读取字节，遇到汉字这样的特殊字符字符，会根据特定的字符集编码规则读取多个字节：然后返回一个按照该字符集解码后的二进制对应的**十进制整数**。它也表示在字符集上字符对应的数字。
+`public int read()` 方法，会**挨个**读取字节，遇到汉字这样的特殊字符，会根据字符集编码规则读取多个字节：然后返回一个按照该字符集解码后的二进制对应的**十进制整数**。它也表示在字符集上字符对应的数字。
 
 比如在 Unicode 字符集的 UTF-8 编码规则下：
 
-- 英文字符，文件里面的二进制数据 0110 0001；`read` 方法读取时，会解码并转成十进制，即 `97`；
-- 中文字符，文件里面的二进制数据 11100110 10110001 10001001，`read` 方法读取时，会解码并转成十进制，即 `2772`；
+- 英文字符，文件里面存储了字符’a‘，它的二进制数据 0110 0001；`read` 方法读取时，会解码并转成十进制，即 `97`；
+- 中文字符，文件里面存储了字符‘静’，它的二进制数据 11101001 10011101 10011001，`read` 方法读取时，会解码并转成十进制，即 `38745`；
 
 案例理解：创建字符输入流，读取文件中的数据。
 
@@ -174,7 +174,7 @@ public class Demo08 {
 
 `void write(int c)` 方法，写入一个字符：
 
-- 细节 1：如果 `write` 方法的参数是 int 类型的整数，实际写入到文件中的，是整数在字符集中对应的字符。
+- 细节 1：如果 `write` 方法的参数是 int 类型的整数，实际写入到文件中的，是 int 整数在字符集中对应的字符。
 
 demo-project/base-code/Day28/src/com/kkcf/io/Demo09.java
 
@@ -244,7 +244,7 @@ public class Demo09 {
 
 ### 1.Reader 字符输入流底层原理
 
-创建字符输入流（Reader）对象时，底层会关联文件，并创建**缓冲区**（长度为 `8192` 的字节数组）
+创建字符输入流（Reader）对象时，底层会关联文件，并创建**缓冲区**（长度为 `8192` 的**字节数组**）
 
 1. 每次读取（read）操作时，会判断缓冲区中，是否有数据可以被读取；
 2. 如果没有，就会从文件中读取数据，尽可能的装满缓冲区。
@@ -252,7 +252,7 @@ public class Demo09 {
 
 ![字符输入流底层原理一](NodeAssets/字符输入流底层原理一.jpg)
 
-> 字节输入流（InputSream 没有上面这个特性
+> 字节输入流（InputSream 没有缓冲区的特性
 
 理解下方代码：
 
@@ -271,7 +271,7 @@ public class Test1 {
         // 从文件中读取数据，尽可能装满缓冲区
         fr.read();
 
-        // 创建字符输出流，会清空文件
+        // 创建字符输出流，关联文件，会清空文件
         FileWriter fw = new FileWriter("Day28/src/com/kkcf/test/b.txt");
 
         int ch;
@@ -289,8 +289,8 @@ public class Test1 {
 创建字符输出流（Writer）对象时，底层也会关联文件，并创建**缓冲区**（长度为 `8192` 的字节数组）
 
 1. 每次写入（write）操作时，会判断缓冲区中，是否已经被填满；
-2. 如果没有，就会将字节数据写入到缓冲区中。
-3. 缓冲区中的字符数据，写入到文件有三种情况：
+2. 如果没有，就会将字节数据，写入到缓冲区中。
+3. 缓冲区中的字符数据，被写入到文件中有三个时机：
    - 缓冲区装满的时候；
    - 手动刷新（调用 `flush` 方法）的时候；
    - 释放资源的时候。
@@ -418,13 +418,17 @@ demo-project/base-code/Day28/src/com/kkcf/test/Test4.java
 ```java
 package com.kkcf.test;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Test4 {
-    private static void encryption(FileInputStream fis, FileOutputStream fos) throws IOException {
-        // 加密
+
+    private static void encryption(File src, File dest) throws IOException {
+        FileInputStream fis = new FileInputStream(src);
+        FileOutputStream fos = new FileOutputStream(dest);
+        
         int b;
         while((b = fis.read()) != -1)
             fos.write(b ^ 2);
@@ -435,19 +439,18 @@ public class Test4 {
 
     public static void main(String[] args) throws IOException {
         // 加密
-        FileInputStream fis = new FileInputStream("Day28/src/com/kkcf/test/secret.txt");
-        FileOutputStream fos = new FileOutputStream("Day28/src/com/kkcf/test/encry.txt");
+        File src = new File("Day28/src/com/kkcf/test/secret.txt");
+        File dest = new File("Day28/src/com/kkcf/test/encry.txt");
 
-        encryption(fis, fos);
+        encryption(src, dest);
 
         // 解密
-        fis = new FileInputStream("Day28/src/com/kkcf/test/encry.txt");
-        fos = new FileOutputStream("Day28/src/com/kkcf/test/decry.txt");
+        src = new File("Day28/src/com/kkcf/test/encry.txt");
+        dest = new File("Day28/src/com/kkcf/test/decry.txt");
 
-        encryption(fis, fos);
+        encryption(src, dest);
     }
 }
-
 ```
 
 > encryption 单词，表示加密。
