@@ -12,11 +12,17 @@
 
 ## 一、ZipInputStream 解压缩流的使用
 
-解压缩流：
+压缩流，和解压缩流是**字符流**。
+
+字节解压缩输入流：
 
 - 解压的压缩包，必须是 zip 格式的。
 - 解压的压缩包，其中的每一个文件、文件夹，在解压缩流中，都是一个 ZipEntry 对象。
 - 解压的本质，就是把每一个 ZipEntry 对象，按照层级，拷贝到本地另一个文件夹中。
+
+### 1.解压 zip 压缩包
+
+案例理解：将 aaa.zip 压缩包，解压到同目录下同名的文件夹中：
 
 demo-project/base-code/Day29/src/com/kkcf/compression/Demo01.java
 
@@ -75,6 +81,7 @@ public class Demo01 {
 
         zis.close();
     }
+
     public static void main(String[] args) throws IOException {
         // 解压的压缩包
         File src = new File("Day29/src/com/kkcf/compression/aaa.zip");
@@ -88,9 +95,9 @@ public class Demo01 {
 
 ## 二、ZipOutputStream 压缩流的使用
 
-压缩流：
+字节压缩输出流：
 
-- 把多个文件，或文件夹压缩到一个压缩包中。
+- 把多个文件，或文件夹压，缩到一个压缩包中。
 - 压缩包中的每一个文件、文件夹，在压缩流中都是一个 ZipEntry 对象。
 - 压缩的本质，就是把每一个文件、文件夹，看作一个 ZipEntry 对象，放入到压缩包中。
 
@@ -121,9 +128,9 @@ public class Demo02 {
 
         sj.add("zip");
         String zipName = sj.toString();
+        File destFile = new File(dest, zipName);
 
         // 创建压缩流，关联压缩包
-        File destFile = new File(dest, zipName);
         ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(destFile));
 
         // 创建 ZipEntry 对象
@@ -154,9 +161,11 @@ public class Demo02 {
 }
 ```
 
+### 1.压缩目录下所有内容
+
 压缩一个文件夹下的所有内容：
 
-- ZipEntry 构造函数中的字符串路径，表示以压缩包为根目录的相对路径
+- `ZipEntry` 构造函数中的字符串路径，表示以压缩包为根目录的相对路径
 
 demo-project/base-code/Day29/src/com/kkcf/compression/Demo03.java
 
@@ -183,6 +192,7 @@ public class Demo03 {
                 zos.putNextEntry(zipEntry);
 
                 FileInputStream fis = new FileInputStream(file);
+
                 int b;
                 while ((b = fis.read()) != -1)
                     zos.write(b);

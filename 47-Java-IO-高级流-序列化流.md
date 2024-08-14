@@ -2,12 +2,12 @@
 
 序列化流，属于**字节流**，它只有两个实现类：
 
-- 序列化流（输出流）`ObjectOutputStream`
+- 序列化流（输出流）：`ObjectOutputStream`
 - 反序列化流（输入流）：`ObjectInputStream`
 
 ## 一、ObjectOutputStream 序列化流
 
-`ObjectOutputStream` 序列化流，又称为“对象操作输出流”，它可以把程序中的 Java 对象，写入到文件中。
+`ObjectOutputStream` 序列化流，又称为“对象操作输出流”，它可以把 Java 程序中的实例对象，写入到文件中。
 
 ### 1.ObjectOutputStream 构造方法
 
@@ -23,11 +23,11 @@
 
 ### 3.Serializable 接口
 
-案例理解，使用 `ObjectOutputStream ` 序列化流，将 Student 对象，写出到文件中。
+案例理解，使用 `ObjectOutputStream ` 字节序列化输出流，将 Student 对象，写出到文件中。
 
-要使用序列化流，写出对象到文件，要先为对象的 JavaBean 类，实现 `Serializable` 接口。否则会抛出 `NotSerializableException` 异常。
+要使用字节序列化输出流，写出对象到文件，要先为对象的 JavaBean 类，实现 `Serializable` 接口。否则会抛出 `NotSerializableException` 异常。
 
-- `Serializable` 接口，是一个标记型接口，里面没有抽象方法。
+- `Serializable` 接口，是一个**标记型接口**，里面没有抽象方法。
 
 为 Student 类，实现 `Serializable` 接口。
 
@@ -82,7 +82,7 @@ public class Demo01 {
 
 ## 二、ObjectInputStream 反序列化流
 
-`ObjectInputStream` 反序列化流，又称为“对象操作输入流”，它可以把文件中保存的序列化后的 Java 对象，读取到程序（内存）中。
+`ObjectInputStream` 字节输入反序列化流，又称为“对象操作输入流”，它可以把文件中保存的序列化的 Java 对象，读取到程序（内存）中。
 
 ### 1.ObjectInputStream  构造方法
 
@@ -128,11 +128,39 @@ public class Demo02 {
 
 如果一个 JavaBean 类，实现了 `Serializable` 接口，就表示这个类是可被序列化的。
 
-Java 底层，会根据这个类的成员变量、静态变量，构造方法、成员方法计算出一个 long 类型的**序列号**。这个序列号，也是这个类的**版本号**。
+Java 底层，会根据这个类的成员变量、静态变量，构造方法、成员方法，计算出一个 long 类型的**序列号**。这个序列号，也是这个类的**版本号**。
 
 该类的对象，被序列化写出到文件中时，版本号也会被写入到文件中。
 
 此时，如果修改 JavaBean 类中的成员，反序列化文件中保存的对象到程序中时，就会抛出异常 `InvalidClassException`：如下方所示：
+
+修改 Student 类，在其中加入成员变量 `address`：
+
+demo-project/base-code/Day29/src/com/kkcf/serialization/Student.java
+
+```java
+package com.kkcf.serialization;
+
+import java.io.Serializable;
+
+public class Student implements Serializable {
+    private String name;
+    private int age;
+    private String address;
+
+    public Student() {
+    }
+
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // getter、setter
+
+    // toString
+}
+```
 
 在测试类中，进行反序列化：
 
@@ -198,7 +226,7 @@ public class Student implements Serializable {
 
 ### 2.transient 关键字
 
-序列化一个对象时，如果它的某一个数学，不允许被序列化，应在该属性前，加上 `transient` 关键字，表示瞬态的。
+序列化一个对象时，如果它的某一个属性，不允许被序列化，应在该属性前，加上 `transient` 关键字，表示瞬态的。
 
 demo-project/base-code/Day29/src/com/kkcf/serialization/Student.java
 
@@ -224,7 +252,7 @@ public class Student implements Serializable {
 
 思路：将要序列化的多个对象，放入一个 ArrayList 集合中，然后再对该集合进行序列化。
 
-ArrayList 也实现了 Serializable 接口：
+ArrayList 类，也实现了 Serializable 接口：
 
 java/util/ArrayList.java
 

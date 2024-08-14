@@ -6,19 +6,19 @@ Commons-io 是 apache 开源基金组织，提供的有关 Java IO 操作的开�
 
 > Apache 开源基金组织，维护了很多 Java 相关的开源项目：
 >
-> - Tomcat Web 应用服务器；
-> - Maven 项目管理工具；
-> - Shiro 安全框架；
-> - Dubbo 分布式框架
-> - ActiveMQ 消息中间件；
-> - RocketMQ 消息中间件；
-> - Kafka 大数据消息中间件；
-> - zookeeper 分布式框架配置中心；
-> - Apache Pig 大数据分析平台
-> - Hadoop 大数据开发框架
-> - spark 大数据开发框架
-> - Flink 大数据开发框架
-> - Lucene 分布式搜索（已被 Elasticsearch 替代）
+> - Tomcat，Web 应用服务器；
+> - Maven，项目管理工具；
+> - Shiro，安全框架；
+> - Dubbo，分布式框架
+> - ActiveMQ，消息中间件；
+> - RocketMQ，消息中间件；
+> - Kafka，大数据消息中间件；
+> - zookeeper，分布式框架配置中心；
+> - Apache Pig，大数据分析平台
+> - Hadoop，大数据开发框架
+> - spark，大数据开发框架
+> - Flink，大数据开发框架
+> - Lucene，分布式搜索（已被 Elasticsearch 替代）
 
 Commons 工具包中，有很多工具，比如：
 
@@ -70,6 +70,7 @@ public class Demo01 {
     public static void main(String[] args) throws IOException {
         File src = new File("Day29/src/com/kkcf/commonsio/a.txt");
         File dest = new File("Day29/src/com/kkcf/commonsio/b.txt");
+
         FileUtils.copyFile(src, dest);
     }
 }
@@ -86,7 +87,7 @@ public class Demo01 {
 | `static String readLine(Reader r)`               | 读取数据   |
 | `static void write(String data, OutputStream o)` | 写出数据   |
 
-Commons-io 跟多用法，参考[commons-io整理的文档](doc\commons-io整理的文档.md)
+Commons-io 更多用法，参考[commons-io整理的文档](doc\commons-io整理的文档.md)
 
 ## 二、Hutool 工具包
 

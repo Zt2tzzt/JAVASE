@@ -20,16 +20,16 @@
 
 `PrintStream` 字节打印输出流，常用的构造方法如下：
 
-| 方法名                                                                    | 说明                                       |
-| ------------------------------------------------------------------------- | ------------------------------------------ |
-| `public PrintStream(OutputStream os)`                                     | 关联字节输出流                             |
-| `public PrintStream(File file)`                                           | 关联文件                                   |
-| `public PrintStream(String filename)`                                     | 关联文件路径                               |
-| `public PrintStream(String filename, Charset charset)`                    | 关联文件路径，并指定字符集编码             |
-| `public PrintStream(OutputStream os, boolean autoFlush)`                  | 关联字节输出流，并指定自动刷新             |
+| 方法名                                                       | 说明                                       |
+| ------------------------------------------------------------ | ------------------------------------------ |
+| `public PrintStream(OutputStream os)`                        | 关联字节输出流                             |
+| `public PrintStream(File file)`                              | 关联 File 对象                             |
+| `public PrintStream(String filename)`                        | 关联文件路径字符串                         |
+| `public PrintStream(String filename, Charset charset)`       | 关联文件路径字符串，并指定字符集编码       |
+| `public PrintStream(OutputStream os, boolean autoFlush)`     | 关联字节输出流，并指定自动刷新             |
 | `public PrintStream(OutputStream os, boolean autoFlush, String encoding)` | 关联字节输出流，并指定字符集编码和自动刷新 |
 
-- 无论关联的是 File 对象，还是文件路径字符串，底层都会创建一个字节输出流。
+- 无论关联的是 File 对象，还是文件路径字符串，底层都会创建一个**字节输出流**。
 - 字节打印输出流底层没有缓冲区，开不开自动刷新，都会直接写出到文件中。
 
 ### 2.PrintStream 的成员方法
@@ -88,7 +88,7 @@ public class Demo01 {
 
 `PrintWriter` 字符打印输出流，与 `PrintStream` 字节打印输出流类似，它们不同的地方在于：
 
-- `PrintWriter` 字符打印输出流底层有缓冲区，需要明确指定自动刷新。因此它的效率更高。
+- `PrintWriter` 字符打印输出流，底层有**缓冲区**，需要明确指定自动刷新。因此它的效率更高。
 
 ### 1.PrintWriter 构造方法
 

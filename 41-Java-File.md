@@ -245,13 +245,13 @@ public class Demo03 {
 
 `File` 类，用于获取并遍历文件，常用的成员方法：
 
-| 方法名                     | 说明                             |
-| -------------------------- | -------------------------------- |
-| `public File[] listFile()` | 获取当前该 File 对象下所有内容。 |
+| 方法名                      | 说明                             |
+| --------------------------- | -------------------------------- |
+| `public File[] listFiles()` | 获取当前该 File 对象下所有内容。 |
 
-#### 1.listFile 方法
+#### 1.listFiles 方法
 
-`public File[] listFile()` 方法，用于获取 File 对象下所有内容的 File 对象。
+`public File[] listFiles()` 方法，用于获取 File 对象下所有内容的 File 对象。
 
 demo-project/base-code/Day27/src/com/kkcf/file/Demo03.java
 
