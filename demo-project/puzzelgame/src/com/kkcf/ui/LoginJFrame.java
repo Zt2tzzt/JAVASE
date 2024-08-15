@@ -1,13 +1,14 @@
 package com.kkcf.ui;
 
+import cn.hutool.core.io.FileUtil;
 import com.kkcf.javabean.User;
+import com.kkcf.util.VerificationCode;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-
-import com.kkcf.util.VerificationCode;
+import java.util.List;
 
 public class LoginJFrame extends JFrame implements MouseListener {
     // 登录、注册按钮
@@ -24,14 +25,18 @@ public class LoginJFrame extends JFrame implements MouseListener {
     JTextField codeInput = new JTextField();
 
     //创建一个集合存储正确的用户名和密码
-    static ArrayList<User> list = new ArrayList<>();
+    //static ArrayList<User> list = new ArrayList<>();
+    ArrayList<User> allUsers = new ArrayList<>();
 
-    static {
+    /*static {
         list.add(new User("zhangsan", "123"));
         list.add(new User("lisi", "1234"));
-    }
+    }*/
 
     public LoginJFrame() {
+        // 读取文笔文件中的用户信息
+        readUserInfo();
+
         // 初始化界面
         initJFrame();
 
@@ -40,6 +45,20 @@ public class LoginJFrame extends JFrame implements MouseListener {
 
         // 设置窗口可见
         this.setVisible(true);
+    }
+
+    private void readUserInfo() {
+        // 读取文件中的用户信息
+        List<String> userInfoList = FileUtil.readUtf8Lines("D:\\Workshop\\tutorial\\JAVASE\\demo-project\\puzzelgame\\src\\com\\kkcf\\ui\\userinfo.txt");
+
+        for (String userinfo : userInfoList) {
+            String[] arr = userinfo.split("&");
+            String[] arr1 = arr[0].split("=");
+            String[] arr2 = arr[1].split("=");
+
+            allUsers.add(new User(arr1[1], arr2[1]));
+        }
+        System.out.println(allUsers);
     }
 
     /**
@@ -162,8 +181,8 @@ public class LoginJFrame extends JFrame implements MouseListener {
      * @param password 密码
      * @return true 表示登录失败，false 表示登录成功
      */
-    public static boolean checkLogin(String username, String password) {
-        for (User user : list) {
+    public boolean checkLogin(String username, String password) {
+        for (User user : allUsers) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password))
                 return false;
         }
@@ -224,6 +243,10 @@ public class LoginJFrame extends JFrame implements MouseListener {
 
         } else if (obj == registerBtn) {
             registerBtn.setIcon(new ImageIcon("image/login/注册按钮.png"));
+            // 关闭当前登陆页面
+            this.setVisible(false);
+            // 打开注册界面
+            new RegisterJFrame(allUsers);
         } else if (obj == rightCode) {
             System.out.println("验证码点击了");
             codeStr = VerificationCode.getVerificationCode();

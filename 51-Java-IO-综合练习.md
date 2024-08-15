@@ -1,4 +1,4 @@
-# Java IO 综合练习
+# Java IO 综合练习（一）
 
 ## 一、制造假数据
 
@@ -276,6 +276,8 @@ public class Test2 {
 - 第三次小A概率：0.3125%，其它人概率：1.261867%
 - ……
 
+### 1.带权重的随机思想
+
 思路：带权重的随机。
 
 - 为每一个学生，设置一个权重，它的权重占比为：个人权重 / 总权重。
@@ -285,3 +287,194 @@ public class Test2 {
 ![随机数的权重占比思想](NodeAssets/带权重的随机占比思想.jpg)
 
 创建一个 JavaBean 类 Student，里面有属性：姓名、性别、年龄、权重；
+
+学生类：
+
+demo-project/base-code/Day30/src/com/kkcf/iopractice/Student.java
+
+```java
+package com.kkcf.iopractice;
+
+public class Student {
+    private String name;
+    private int age;
+    private char gender;
+    private double weight;
+
+    public Student() {
+    }
+
+    public Student(String name, int age, char gender, double weight) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.weight = weight;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public char getGender() {
+        return gender;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return name + "-" + gender + "-" + age + "-" + weight;
+    }
+}
+```
+
+测试类：
+
+demo-project/base-code/Day30/src/com/kkcf/iopractice/Test3.java
+
+```java
+package com.kkcf.iopractice;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Test3 {
+    public static void main(String[] args) throws IOException {
+        // 读取学生信息，并初始化学生对象
+        ArrayList<Student> stus = new ArrayList<>();
+
+        BufferedReader br = new BufferedReader(new FileReader("Day30/src/com/kkcf/iopractice/name.txt"));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] str = line.split("-");
+            Student stu = new Student(str[0], Integer.parseInt(str[2]), str[1].charAt(0), Double.parseDouble(str[3]));
+            stus.add(stu);
+        }
+
+        br.close();
+
+        // 计算权重总和
+        double weightSum = 0;
+        for (Student stu : stus)
+            weightSum += stu.getWeight();
+
+        // 计算每一个人的权重占比
+        double[] arr = new double[stus.size()];
+        for (int i = 0; i < stus.size(); i++)
+            arr[i] = stus.get(i).getWeight() / weightSum;
+
+        // 计算每一个人的权重占比范围
+        for (int i = 1; i < arr.length; i++)
+            arr[i] = arr[i] + arr[i - 1];
+
+        // System.out.println(Arrays.toString(arr)); // [0.1, 0.2, 0.30000000000000004, 0.4, 0.5, 0.6, 0.7, 0.7999999999999999, 0.8999999999999999, 0.9999999999999999]
+
+        // 随机抽取
+        double random = Math.random(); // 0.0 - 1.0 之间的小数
+        int i = Arrays.binarySearch(arr, random); // 返回一个 (-插入点 - 1) 整数
+        int index = -i - 1;
+
+        Student student = stus.get(index);
+        System.out.println("随机点名到学生：" + student.getName());
+
+        // 修改权重
+        double newWeight = student.getWeight() / 2;
+        student.setWeight(newWeight);
+
+        // 把集合中的学生数据，再次写入到文件中
+        BufferedWriter bw = new BufferedWriter(new FileWriter("Day30/src/com/kkcf/iopractice/name.txt"));
+
+        for (Student stu : stus) {
+            bw.write(stu.toString());
+            bw.newLine();
+        }
+
+        bw.close();
+    }
+}
+```
+
+## 三、登陆注册
+
+写一个登录程序，将正确的用户名和密码，手动保存在本地 Userinfo.txt 文本文件中。
+
+保存格式为：username=zhangsan%password=123&count=0
+
+让用户键盘录入用户名、密码；
+
+如果与文本文件中一致，则显示登陆成功；否则显示登陆失败。连续错三次，则锁定用户。
+
+demo-project/base-code/Day30/src/com/kkcf/iopractice/Test4.java
+
+```java
+package com.kkcf.iopractice;
+
+import java.io.*;
+import java.util.Scanner;
+
+public class Test4 {
+    public static void main(String[] args) throws IOException {
+        // 读取文件中的数据
+        BufferedReader br = new BufferedReader(new FileReader("Day30/src/com/kkcf/iopractice/userinfo.txt"));
+        String line = br.readLine();
+        br.close();
+
+        String[] split = line.split("&");
+        String[] arr1 = split[0].split("=");
+        String[] arr2 = split[1].split("=");
+        String[] arr3 = split[2].split("=");
+        String accurateUsername = arr1[1];
+        String accuratePassword = arr2[1];
+        int count = Integer.parseInt(arr3[1]);
+
+        Scanner sc = new Scanner(System.in);
+
+        if (count > 2) {
+            System.out.println("账号已被锁定");
+            return;
+        }
+        count++;
+
+        System.out.println("请输入用户名：");
+        String username = sc.nextLine();
+
+        System.out.println("请输入密码：");
+        String password = sc.nextLine();
+
+        if (username.equals(accurateUsername) && password.equals(accuratePassword)) {
+            System.out.println("登录成功");
+            count = 0;
+        } else {
+            System.out.println(count == 3 ? "登录失败，账号已被锁定" : "登录失败，还剩下 " + (3 - count) + " 次机会");
+        }
+
+        BufferedWriter bw = new BufferedWriter(new FileWriter("Day30/src/com/kkcf/iopractice/userinfo.txt"));
+        bw.write("username=" + accurateUsername + "&password=" + accuratePassword + "&count=" + count);
+        bw.close();
+    }
+}
+```

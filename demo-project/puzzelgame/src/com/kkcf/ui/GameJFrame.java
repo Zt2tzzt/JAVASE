@@ -1,10 +1,15 @@
 package com.kkcf.ui;
 
+import com.kkcf.javabean.GameInfo;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+import java.util.Objects;
+import java.util.Properties;
 import java.util.Random;
+import java.util.Set;
 
 public class GameJFrame extends JFrame implements KeyListener, ActionListener, MouseListener {
     // 用于存放图片的随即索引
@@ -38,6 +43,21 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
     JMenuItem beautyItem = new JMenuItem("美女");
     JMenuItem animalItem = new JMenuItem("动物");
     JMenuItem sportItem = new JMenuItem("运动");
+
+    JMenu saveJMenu = new JMenu("存档");
+    JMenu loadJMenu = new JMenu("读档");
+
+    JMenuItem saveItem0 = new JMenuItem("存档0（空）");
+    JMenuItem saveItem1 = new JMenuItem("存档1（空）");
+    JMenuItem saveItem2 = new JMenuItem("存档2（空）");
+    JMenuItem saveItem3 = new JMenuItem("存档3（空）");
+    JMenuItem saveItem4 = new JMenuItem("存档4（空）");
+
+    JMenuItem loadItem0 = new JMenuItem("读档0（空）");
+    JMenuItem loadItem1 = new JMenuItem("读档1（空）");
+    JMenuItem loadItem2 = new JMenuItem("读档2（空）");
+    JMenuItem loadItem3 = new JMenuItem("读档3（空）");
+    JMenuItem loadItem4 = new JMenuItem("读档4（空）");
 
     public GameJFrame() {
         // 初始化界面窗口
@@ -101,11 +121,25 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
         animalItem.addMouseListener(this);
         sportItem.addMouseListener(this);
 
+        saveJMenu.add(saveItem0);
+        saveJMenu.add(saveItem1);
+        saveJMenu.add(saveItem2);
+        saveJMenu.add(saveItem3);
+        saveJMenu.add(saveItem4);
+
+        loadJMenu.add(loadItem0);
+        loadJMenu.add(loadItem1);
+        loadJMenu.add(loadItem2);
+        loadJMenu.add(loadItem3);
+        loadJMenu.add(loadItem4);
+
         // 将菜单条目，添加到惨选项中
         functionMenu.add(moreMenu);
         functionMenu.add(replayItem);
         functionMenu.add(reLoginItem);
         functionMenu.add(closeItem);
+        functionMenu.add(saveJMenu);
+        functionMenu.add(loadJMenu);
         aboutMenu.add(accountItem);
 
         // 给条目绑定事件
@@ -114,12 +148,54 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
         closeItem.addActionListener(this);
         accountItem.addActionListener(this);
 
+        saveItem0.addActionListener(this);
+        saveItem1.addActionListener(this);
+        saveItem2.addActionListener(this);
+        saveItem3.addActionListener(this);
+        saveItem4.addActionListener(this);
+        loadItem0.addActionListener(this);
+        loadItem1.addActionListener(this);
+        loadItem2.addActionListener(this);
+        loadItem3.addActionListener(this);
+        loadItem4.addActionListener(this);
+
         // 将菜单选项，添加到菜单栏中
         jMenuBar.add(functionMenu);
         jMenuBar.add(aboutMenu);
 
+        initGameinfo();
+
         // 给整个界面，设置菜单
         this.setJMenuBar(jMenuBar);
+    }
+
+    /**
+     * 此方法用于，加载存档，取每一个存档中，记录的步数
+     */
+    private void initGameinfo() {
+        File file = new File("save\\");
+
+        for (File f : Objects.requireNonNull(file.listFiles())) {
+            GameInfo gi = null;
+            try {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+                gi = (GameInfo) ois.readObject();
+                ois.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
+
+            int stepCount1 = gi.getStepCount();
+
+            String fname = f.getName();
+            int index = fname.charAt(4) - '0';
+            saveJMenu.getItem(index).setText("存档" + index + "(" + stepCount1 + ")");
+            loadJMenu.getItem(index).setText("读档" + index + "(" + stepCount1 + ")");
+        }
     }
 
     /**
@@ -349,7 +425,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
             // 创建一个弹框对象
             JDialog jDialog = new JDialog();
             // 创建一个管理图片的容器对象 JLabel
-            JLabel jLabel = new JLabel(new ImageIcon("image/damie.jpg"));
+            JLabel jLabel = new JLabel(new ImageIcon(loadAccountPath()));
             // 设置位置和宽高
             jLabel.setBounds(0, 0, 100, 100);
             // 把图片添加到弹框当中
@@ -364,7 +440,71 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
             jDialog.setModal(true);
             // 让弹框显示出来
             jDialog.setVisible(true);
+        } else if (obj == saveItem0 || obj == saveItem1 || obj == saveItem2 || obj == saveItem3 || obj == saveItem4) {
+            // 获取点击存档的序号
+            JMenuItem item = (JMenuItem) obj;
+            String text = item.getText();
+            int index = text.charAt(2) - '0'; // 获取存档的索引
+
+            // 写出存档数据
+            try {
+                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("save\\save" + index + ".data"));
+                GameInfo gi = new GameInfo(data, x, y, path, stepCount);
+                oos.writeObject(gi);
+                oos.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+            // 修改存档的展示信息
+            item.setText("存档" + index + "（" + stepCount + "步）");
+
+            // 修改读档的展示信息
+            loadJMenu.getItem(index).setText("读档" + index + "（" + stepCount + "步）");
+        } else if (obj == loadItem0 || obj == loadItem1 || obj == loadItem2 || obj == loadItem3 || obj == loadItem4) {
+            // 获取点击读档的序号
+            JMenuItem item = (JMenuItem) obj;
+            String text = item.getText();
+            int index = text.charAt(2) - '0';
+
+            GameInfo gi = null;
+            try {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("save\\save" + index + ".data"));
+                gi = (GameInfo) ois.readObject();
+                ois.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+            data = gi.getData();
+            x = gi.getX();
+            y = gi.getY();
+            path = gi.getPath();
+            stepCount = gi.getStepCount();
+
+            initImage();
         }
+    }
+
+    /**
+     * 此方法用于，从 account.properties 配置文件中，加载公众号图片路径
+     * @return
+     */
+    public String loadAccountPath() {
+        Properties p = new Properties();
+
+        try {
+            FileInputStream fis = new FileInputStream("account.properties");
+            p.load(fis);
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+        return (String) p.get("account");
     }
 
     @Override

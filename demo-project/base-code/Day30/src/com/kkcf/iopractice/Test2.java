@@ -112,7 +112,7 @@ public class Test2 {
         ArrayList<String> femaleNameList = getFemaleNameData((ArrayList<String>) femaleNameTempList);
 
         // 姓氏和名字拼接;
-        ArrayList<String> namelist = mockNameList(lastNameList, maleNameList, femaleNameList, 70, 70);
+        ArrayList<String> namelist = mockNameList(lastNameList, maleNameList, femaleNameList, 5, 5);
 
         // 写出数据
         FileUtil.writeLines(namelist, "name.txt", "UTF-8");

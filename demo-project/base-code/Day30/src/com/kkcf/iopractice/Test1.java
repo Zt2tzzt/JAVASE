@@ -168,7 +168,7 @@ public class Test1 {
         ArrayList<String> femaleNameList = getFemaleNameData(femaleNameTempList);
 
         // 姓氏和名字拼接;
-        ArrayList<String> namelist = mockNameList(lastNameList, maleNameList, femaleNameList, 70, 70);
+        ArrayList<String> namelist = mockNameList(lastNameList, maleNameList, femaleNameList, 5, 5);
 
         // 写出数据
         BufferedWriter bw = new BufferedWriter(new FileWriter("Day30/src/com/kkcf/iopractice/name.txt"));
