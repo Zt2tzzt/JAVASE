@@ -208,7 +208,7 @@ public class App {
         } while (true);
 
         System.out.println("username：" + username + "，personId：" + password + "，code：" + codeInput);
-        System.out.println("登陆成功！");
+        System.out.println("登录成功！");
         // 进入学生管理系统
         StudentSystem.startStudentSystem();
     }

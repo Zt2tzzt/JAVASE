@@ -193,8 +193,8 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
 
             String fname = f.getName();
             int index = fname.charAt(4) - '0';
-            saveJMenu.getItem(index).setText("存档" + index + "(" + stepCount1 + ")");
-            loadJMenu.getItem(index).setText("读档" + index + "(" + stepCount1 + ")");
+            this.saveJMenu.getItem(index).setText("存档" + index + "(" + stepCount1 + ")");
+            this.loadJMenu.getItem(index).setText("读档" + index + "(" + stepCount1 + ")");
         }
     }
 
@@ -440,7 +440,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
             jDialog.setModal(true);
             // 让弹框显示出来
             jDialog.setVisible(true);
-        } else if (obj == saveItem0 || obj == saveItem1 || obj == saveItem2 || obj == saveItem3 || obj == saveItem4) {
+        } else if (obj == this.saveItem0 || obj == this.saveItem1 || obj == this.saveItem2 || obj == this.saveItem3 || obj == this.saveItem4) {
             // 获取点击存档的序号
             JMenuItem item = (JMenuItem) obj;
             String text = item.getText();
@@ -449,7 +449,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
             // 写出存档数据
             try {
                 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("save\\save" + index + ".data"));
-                GameInfo gi = new GameInfo(data, x, y, path, stepCount);
+                GameInfo gi = new GameInfo(this.data, this.x, this.y, this.path, this.stepCount);
                 oos.writeObject(gi);
                 oos.close();
             } catch (IOException ex) {
@@ -457,11 +457,11 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
             }
 
             // 修改存档的展示信息
-            item.setText("存档" + index + "（" + stepCount + "步）");
+            item.setText("存档" + index + "（" + this.stepCount + "步）");
 
             // 修改读档的展示信息
-            loadJMenu.getItem(index).setText("读档" + index + "（" + stepCount + "步）");
-        } else if (obj == loadItem0 || obj == loadItem1 || obj == loadItem2 || obj == loadItem3 || obj == loadItem4) {
+            this.loadJMenu.getItem(index).setText("读档" + index + "（" + this.stepCount + "步）");
+        } else if (obj == this.loadItem0 || obj == this.loadItem1 || obj == this.loadItem2 || obj == this.loadItem3 || obj == this.loadItem4) {
             // 获取点击读档的序号
             JMenuItem item = (JMenuItem) obj;
             String text = item.getText();
@@ -478,11 +478,11 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
                 ex.printStackTrace();
             }
 
-            data = gi.getData();
-            x = gi.getX();
-            y = gi.getY();
-            path = gi.getPath();
-            stepCount = gi.getStepCount();
+            this.data = gi.getData();
+            this.x = gi.getX();
+            this.y = gi.getY();
+            this.path = gi.getPath();
+            this.stepCount = gi.getStepCount();
 
             initImage();
         }

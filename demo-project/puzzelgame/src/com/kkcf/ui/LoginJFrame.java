@@ -243,7 +243,7 @@ public class LoginJFrame extends JFrame implements MouseListener {
 
         } else if (obj == registerBtn) {
             registerBtn.setIcon(new ImageIcon("image/login/注册按钮.png"));
-            // 关闭当前登陆页面
+            // 关闭当前登录页面
             this.setVisible(false);
             // 打开注册界面
             new RegisterJFrame(allUsers);

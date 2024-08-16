@@ -1,0 +1,191 @@
+# Java 多线程
+
+## 一、生产者消费者模式
+
+**生产者消费者模式**，又称为**等待唤醒机制**，是一个十分经典的多线程写作模式。
+
+等待唤醒机制，会让两个随机执行的线程，有规律的执行，比如：交替执行。
+
+- 其中一个线程，被视为生产者，用于生产数据；
+- 另一个线程，被视为消费者，用于消费数据。
+
+将生产者消费者模式，抽象为“顾客-厨师”模型：顾客作为消费者，厨师作为生产者：
+
+- 消费者顾客：
+  1. 判断桌子上是否有食物；
+  2. 如果没有，则等待；
+  3. 如果有，则吃完食物；
+  4. 唤醒等待的厨师制作食物；
+
+- 生产者厨师：
+  1. 判断桌子上是否有事务：
+  2. 如果有，则等待；
+  3. 如果没有，则制作食物；
+  4. 把食物放在桌子上；
+  5. 唤醒等待的顾客吃食物。
+
+- 控制生产者和消费者执行的第三者：桌子
+
+其中涉及到的方法有
+
+| 方法名             | 声明                             |
+| ------------------ | -------------------------------- |
+| `void wait()`      | 当前线程等待，直到被其它线程唤醒 |
+| `void notify()`    | 随机唤醒单个线程                 |
+| `void notifyAll()` | 唤醒所有线程                     |
+
+> 回顾：编写多线程代码，遵循 4 步操作：
+>
+> 1. 循环；
+> 2. 同步代码块；
+> 3. 判断共享数据，是否到了末尾；
+>    - 到末尾，跳出循环
+>    - 没到末尾，执行核心逻辑
+
+### 1.基本实现
+
+使用代码，实现上面的模型：
+
+桌子类 Desk：
+
+demo-project/base-code/Day31/src/com/kkcf/producer_consumer/Desk.java
+
+```java
+package com.kkcf.producer_consumer;
+
+public class Desk {
+    // 是否有面条：0 表示没有，1 表示有
+    public static int foodFlag = 0;
+
+    // 表示顾客对多吃 10 碗面条
+    public static int count = 10;
+
+    // 锁对象
+    public static final Object lock = new Object();
+}
+```
+
+厨师类：Cook，继承自 Thread
+
+demo-project/base-code/Day31/src/com/kkcf/producer_consumer/Cook.java
+
+```java
+package com.kkcf.producer_consumer;
+
+public class Cook extends Thread {
+    @Override
+    public void run() {
+        while (true) {
+            synchronized (Desk.lock) {
+                if (Desk.count > 0) {
+                    // 核心逻辑
+                    if (Desk.foodFlag == 1) {
+                        // 桌子上有面条，则等待
+                        try {
+                            Desk.lock.wait(); // 锁对象，与线程绑定
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        // 桌子上没有面条，则做面条；
+                        System.out.println("厨师做了一碗面条");
+
+                        // 将面条放在桌上，修改桌子的状态
+                        Desk.foodFlag = 1;
+
+                        // 面条做完，唤醒顾客，吃面条
+                        Desk.lock.notifyAll();
+                    }
+
+                } else {
+                    break;
+                }
+            }
+        }
+
+    }
+}
+```
+
+顾客类，继承自 Thread：
+
+demo-project/base-code/Day31/src/com/kkcf/producer_consumer/Foodie.java
+
+```java
+package com.kkcf.producer_consumer;
+
+public class Foodie extends Thread {
+    @Override
+    public void run() {
+        while (true) {
+            synchronized (Desk.lock) {
+                if (Desk.count > 0) {
+                    // 核心逻辑
+                    if (Desk.foodFlag == 0) {
+                        // 桌子上没有面条，则等待
+                        try {
+                            Desk.lock.wait(); // 锁对象，与线程绑定
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        // 桌子上有面条，则吃
+                        System.out.println("顾客正在吃面条，还嫩再吃" + (--Desk.count) + "碗面条");
+
+                        // 桌上的面条被吃完了，修改桌子的状态
+                        Desk.foodFlag = 0;
+
+                        // 吃完后，唤醒厨师，做面条
+                        Desk.lock.notifyAll();
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+}
+```
+
+测试类：
+
+demo-project/base-code/Day31/src/com/kkcf/producer_consumer/Test.java
+
+```java
+package com.kkcf.producer_consumer;
+
+public class Test {
+    public static void main(String[] args) {
+        Foodie foodie = new Foodie();
+        Cook cook = new Cook();
+
+        foodie.setName("顾客");
+        cook.setName("厨师");
+
+        foodie.start();
+        cook.start();
+    }
+}
+```
+
+### 2.阻塞队列实现
+
+可以将上面案例中的桌子，看成一个队列：
+
+- 队列中只有一个元素时，就是上面的情况。
+- 队列中有多个元素时，先放入的元素先被取出。
+
+如果队列中有多个元素，那么：
+
+- 厨师会将做好的面条，放入（put）队列中，直到队列放满后，会等待，也称为**阻塞**。
+- 顾客从队列中取（take）一碗面条，直到队列中为空后，会等待，也称为**阻塞**。
+
+阻塞队列，实现了 Iterable、Collection、Queue、BlockingQueue 接口；
+
+- 可知，阻塞队列，是一个实现了迭代器的单列集合。
+
+阻塞队列，常见的实现类有
+
+- ArrayBlockingQueue，底层是数组，有界（必须指定长度）。
+- LinkedBlockingQueue，底层是链表，无界（无需指定长度），最大长度为 int 类型的最大值。

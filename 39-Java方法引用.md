@@ -127,7 +127,6 @@ public class Test1 {
 - 引用其它类的成员方法，格式：`其它类对象::方法名`
 
 > 注意：静态方法中，没有 `this`、`super` 关键字；在**静态方法**中，使用方法引用时，不能用 `this::xxx` 或者 `super::xxx` 的写法。
->
 
 #### 1.引用其它类的成员方法
 
@@ -180,7 +179,7 @@ public class StringOperator {
 }
 ```
 
-在测试类中，引用  `StringOperator` 类的 `stringOperator` 方法。：
+在测试类中，引用 `StringOperator` 类的 `stringOperator` 方法。：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Test2.java
 
@@ -212,7 +211,7 @@ public class Test2 {
 
 案例理解，在 GUI 界面中，点击事件的方法引用写法：
 
-创建一个类 `LoginJFrame` 类，继承自 `JFrame` 类， 表示登陆页面；并为它实现 `ActionListener` 接口，用于在页面中监听鼠标点击的事件。
+创建一个类 `LoginJFrame` 类，继承自 `JFrame` 类， 表示登录页面；并为它实现 `ActionListener` 接口，用于在页面中监听鼠标点击的事件。
 
 demo-project/base-code/Day26/src/com/kkcf/a02game/LoginJFrame.java
 

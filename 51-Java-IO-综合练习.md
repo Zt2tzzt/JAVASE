@@ -28,7 +28,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Test1 {
-
     /**
      * 此方法用于：爬取网页数据
      *
@@ -46,10 +45,9 @@ public class Test1 {
         // 打开 url
         URLConnection urlConnection = url1.openConnection();
 
-        // 获取字节流，又因为网站上有中文，所以要转成字符流
+        // 获取字节流读取数据，又因为网站上有中文，所以要转成字符流
         InputStreamReader isr = new InputStreamReader(urlConnection.getInputStream());
 
-        // 读取数据
         char[] chs = new char[1024 * 1024 * 5];
         int len;
         while ((len = isr.read(chs)) != -1)
@@ -107,7 +105,7 @@ public class Test1 {
     }
 
     /**
-     * 此方法用于：处理女性名字数据
+     * 此方法用于：处理女性名字数据（分隔）
      *
      * @param femaleNameTempList 女性名字数据
      * @return 女性名字
@@ -137,7 +135,8 @@ public class Test1 {
         Random r = new Random();
 
         HashSet<String> tempSet = new HashSet<>();
-        // 生成男性名字
+
+        // 生成男性名字（姓氏 + 名字）
         for (int i = 0; i < maleCount; ) {
             int index = r.nextInt(lastNameList.size());
             String name = lastNameList.get(index) + maleNameList.get(i);
@@ -148,7 +147,7 @@ public class Test1 {
             }
         }
 
-        // 生成女性名字
+        // 生成女性名字（姓氏 + 名字）
         for (int i = 0; i < femaleCount; ) {
             int index = r.nextInt(lastNameList.size());
             String name = lastNameList.get(index) + femaleNameList.get(i);
@@ -200,11 +199,11 @@ public class Test1 {
 }
 ```
 
-- 正则表达式匹配器 `matcher.group(index)`，`index` 为 `0`，默认获取匹配到的所有；
+- 正则表达式匹配器 `matcher.group(index)`，参数 `index` 为 `0` 时，默认获取匹配到的所有字符串；
 
 ### 1.Hutool 包中的爬取工具
 
-利用 Hutool 包中的工具类，进行爬取，详见[示例](https://www.hutool.cn/docs/#/http/%E6%A1%88%E4%BE%8B1-%E7%88%AC%E5%8F%96%E5%BC%80%E6%BA%90%E4%B8%AD%E5%9B%BD%E7%9A%84%E5%BC%80%E6%BA%90%E8%B5%84%E8%AE%AF)
+利用 Hutool 包中的工具类，进行网络爬取，详见[示例](https://www.hutool.cn/docs/#/http/%E6%A1%88%E4%BE%8B1-%E7%88%AC%E5%8F%96%E5%BC%80%E6%BA%90%E4%B8%AD%E5%9B%BD%E7%9A%84%E5%BC%80%E6%BA%90%E8%B5%84%E8%AE%AF)
 
 ```java
 //请求列表页
@@ -218,6 +217,8 @@ for (String title : titles) {
 ```
 
 重构上方的代码：
+
+demo-project/base-code/Day30/src/com/kkcf/iopractice/Test2.java
 
 ```java
 package com.kkcf.iopractice;
@@ -265,7 +266,7 @@ public class Test2 {
 
 有一个文本文件中，存储了班级里同学的信息，每一个信息占一行；
 
-格式为：张三-男-23
+格式为：张三-男-23-1，分别表示姓名、性别、年龄、权重
 
 要求，每次被点到的学生，再次被点到的概率，在原先的基础上，降低一半；
 
@@ -280,7 +281,7 @@ public class Test2 {
 
 思路：带权重的随机。
 
-- 为每一个学生，设置一个权重，它的权重占比为：个人权重 / 总权重。
+- 为每一个学生，设置一个**权重**，它的**权重占比**为：`个人权重 / 总权重`。
 - 假设有 10 个学生，那么每个学生的权重占比就是 0.1；
 - 在数轴上，可以把 0.0 - 1.0 分成 10 等份，每一个学生占据其中的一份；
 
@@ -310,43 +311,10 @@ public class Student {
         this.gender = gender;
         this.weight = weight;
     }
+  
+    // getter、setter……
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public char getGender() {
-        return gender;
-    }
-
-    public void setGender(char gender) {
-        this.gender = gender;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    @Override
-    public String toString() {
-        return name + "-" + gender + "-" + age + "-" + weight;
-    }
+    // toString……
 }
 ```
 
@@ -363,12 +331,12 @@ import java.util.Arrays;
 
 public class Test3 {
     public static void main(String[] args) throws IOException {
-        // 读取学生信息，并初始化学生对象
         ArrayList<Student> stus = new ArrayList<>();
 
+        // 读取学生信息，并初始化学生对象
         BufferedReader br = new BufferedReader(new FileReader("Day30/src/com/kkcf/iopractice/name.txt"));
 
-        String line;
+        String line; // 张三-男-23-1
         while ((line = br.readLine()) != null) {
             String[] str = line.split("-");
             Student stu = new Student(str[0], Integer.parseInt(str[2]), str[1].charAt(0), Double.parseDouble(str[3]));
@@ -420,7 +388,7 @@ public class Test3 {
 
 ## 三、登陆注册
 
-写一个登录程序，将正确的用户名和密码，手动保存在本地 Userinfo.txt 文本文件中。
+写一个登录程序，将正确的用户名和密码，手动保存在本地 userinfo.txt 文本文件中。
 
 保存格式为：username=zhangsan%password=123&count=0
 
@@ -443,6 +411,7 @@ public class Test4 {
         String line = br.readLine();
         br.close();
 
+        // 获取正确的用户名、密码、登录次数
         String[] split = line.split("&");
         String[] arr1 = split[0].split("=");
         String[] arr2 = split[1].split("=");
@@ -472,6 +441,7 @@ public class Test4 {
             System.out.println(count == 3 ? "登录失败，账号已被锁定" : "登录失败，还剩下 " + (3 - count) + " 次机会");
         }
 
+        // 写出数据
         BufferedWriter bw = new BufferedWriter(new FileWriter("Day30/src/com/kkcf/iopractice/userinfo.txt"));
         bw.write("username=" + accurateUsername + "&password=" + accuratePassword + "&count=" + count);
         bw.close();

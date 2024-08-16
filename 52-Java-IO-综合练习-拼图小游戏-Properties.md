@@ -2,22 +2,23 @@
 
 ## 一、拼图小游戏-登录界面完善
 
-只要登录界面不关闭，那么就不会修改文件中的数据；
+将拼图小游戏中用户登录的信息，保存在本地文件 userinfo.txt 中。读取这些信息的时机：
 
-所以，一般在打开登录界面时，读取文件中的数据；而不是点击登录按钮后读取。
+- 因为，只要登录界面不关闭，那么就不会修改文件中的数据；
+- 所以，一般在打开登录界面时，读取文件中的数据；而不是点击登录按钮后读取。
 
 ### 1.静态代码块和构造方法的选择
 
 加载文件中用户信息的逻辑，可以写在静态代码块，或者构造方法中；
 
 - 静态代码块，随着类的加载而加载，只执行一次；
-- 构造方法，每次创建登陆对象界面（打开登录界面）时，都会执行。
+- 构造方法，每次创建登录界面对象（打开登录界面）时，都会执行。
 
-所以，如果要加入注册逻辑，那么登陆界面加载用户信息的逻辑，就要写在构造方法里。
+分析可知，如果要加入注册逻辑，那么登录界面加载用户信息的逻辑，就要写在构造方法里。
 
 重构 `LoginFrame` 类，
 
-- 将 User 列表集合，改为非静态的；
+- 将 User 列表集合 `allUsers`，改为非静态的；
 - 并注释掉静态方法：
 - 将加载用户信息的逻辑，放在构造方法中。
 
@@ -75,7 +76,7 @@ public class LoginJFrame extends JFrame implements MouseListener {
             // ……
         } else if (obj == registerBtn) {
             registerBtn.setIcon(new ImageIcon("image/login/注册按钮.png"));
-            // 关闭当前登陆页面
+            // 关闭当前登录页面
             this.setVisible(false);
             // 打开注册界面
             new RegisterJFrame(allUsers);
@@ -170,7 +171,7 @@ public class RegisterJFrame extends JFrame implements MouseListener {
             // 添加用户
             allUsers.add(new User(username, password));
 
-            // 写入文件
+            // 写出到文件
             FileUtil.writeLines(allUsers, "D:\\Workshop\\tutorial\\JAVASE\\demo-project\\puzzelgame\\src\\com\\kkcf\\ui\\userinfo.txt", "UTF-8");
 
             // 提示注册成功。
@@ -179,12 +180,8 @@ public class RegisterJFrame extends JFrame implements MouseListener {
             // 关闭注册界面，打开登录界面
             this.setVisible(false);
             new LoginJFrame();
-
-        } else if (e.getSource() == reset) {
-            username.setText("");
-            password.setText("");
-            rePassword.setText("");
         }
+        // ……
     }
 
     private boolean containUser(String username) {
@@ -219,6 +216,8 @@ public class User {
 ### 1.添加“存档”、”读档“菜单
 
 在游戏界面的菜单中，添加”存档“和”读档“。
+
+demo-project/puzzelgame/src/com/kkcf/ui/GameJFrame.java
 
 ```java
 public class GameJFrame extends JFrame implements KeyListener, ActionListener, MouseListener {
@@ -298,7 +297,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
 }
 ```
 
-创建一个 JavaBean 类 GameInfo，用于封装上面的信息；
+创建一个 JavaBean 类 `GameInfo`，用于封装上面的信息；
 
 为它实现 `Serializable` 接口，用于字节序列化输出流写入文件。
 
@@ -326,11 +325,11 @@ public class GameInfo implements Serializable {
     // 记录玩了多少步
     int stepCount = 0;
 
-    // constructor
+    // constructor……
 
-    // getter、setter
+    // getter、setter……
 
-    // toString
+    // toString……
 }
 ```
 
@@ -346,7 +345,7 @@ public void actionPerformed(ActionEvent e) {
 
     if (……) {
         // ……
-    } else if (obj == saveItem0 || obj == saveItem1 || obj == saveItem2 || obj == saveItem3 || obj == saveItem4) {
+    } else if (obj == this.saveItem0 || obj == this.saveItem1 || obj == this.saveItem2 || obj == this.saveItem3 || obj == this.saveItem4) {
         // 获取点击存档的序号
         JMenuItem item = (JMenuItem) obj;
         String text = item.getText();
@@ -355,21 +354,20 @@ public void actionPerformed(ActionEvent e) {
         // 写出存档数据
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("save\\save" + index + ".data"));
-            GameInfo gi = new GameInfo(data, x, y, path, stepCount);
+            GameInfo gi = new GameInfo(this.data, this.x, this.y, this.path, this.stepCount);
             oos.writeObject(gi);
             oos.close();
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            ex.printStackTrace();
         }
 
         // 修改存档的展示信息
-        item.setText("存档" + index + "（" + stepCount + "步）");
+        item.setText("存档" + index + "（" + this.stepCount + "步）");
 
         // 修改读档的展示信息
-        loadJMenu.getItem(index).setText("读档" + index + "（" + stepCount + "步）");
-    } else if (obj == loadItem0 || obj == loadItem1 || obj == loadItem2 || obj == loadItem3 || obj == loadItem4) {
-        System.out.println("读档");
+        this.loadJMenu.getItem(index).setText("读档" + index + "（" + this.stepCount + "步）");
     }
+    // ……
 }
 ```
 
@@ -387,13 +385,13 @@ public void actionPerformed(ActionEvent e) {
 
     if (……) {
         // ……
-    } else if (obj == loadItem0 || obj == loadItem1 || obj == loadItem2 || obj == loadItem3 || obj == loadItem4) {
+    } else if (obj == this.loadItem0 || obj == this.loadItem1 || obj == this.loadItem2 || obj == this.loadItem3 || obj == this.loadItem4) {
         // 获取点击读档的序号
         JMenuItem item = (JMenuItem) obj;
         String text = item.getText();
         int index = text.charAt(2) - '0';
 
-        // 读取数据
+        // 使用字节反序列化输入流，读取存档数据
         GameInfo gi = null;
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream("save\\save" + index + ".data"));
@@ -405,13 +403,13 @@ public void actionPerformed(ActionEvent e) {
             ex.printStackTrace();
         }
 
-        data = gi.getData();
-        x = gi.getX();
-        y = gi.getY();
-        path = gi.getPath();
-        stepCount = gi.getStepCount();
+        this.data = gi.getData();
+        this.x = gi.getX();
+        this.y = gi.getY();
+        this.path = gi.getPath();
+        this.stepCount = gi.getStepCount();
 
-        // 刷新界面
+        // 刷新页面
         initImage();
     }
 }
@@ -461,8 +459,8 @@ private void initGameinfo() {
 
         String fname = f.getName();
         int index = fname.charAt(4) - '0';
-        saveJMenu.getItem(index).setText("存档" + index + "(" + stepCount1 + ")");
-        loadJMenu.getItem(index).setText("读档" + index + "(" + stepCount1 + ")");
+        this.saveJMenu.getItem(index).setText("存档" + index + "(" + stepCount1 + ")");
+        this.loadJMenu.getItem(index).setText("读档" + index + "(" + stepCount1 + ")");
     }
 }
 ```
@@ -493,9 +491,9 @@ wechat=about.png
 
 - 左边是键，右边是值。
 
-在 Java 中，可以使用 Properties 类，从 properties 配置文件中，读取、写出数据。
+在 Java 中，可以使用 `Properties` 类，从 properties 配置文件中，读取、写出数据。
 
-Properties 类，属于 Map 集合体系结构
+`Properties` 类，属于 Map 集合体系结构
 
 ![Properties类](NodeAssets/Properties类.jpg)
 
@@ -568,8 +566,8 @@ public class Test2 {
             bw.newLine();
         }*/
 
-        // 写出数据 - store 方法
-        p.store(bw, "This is a test");
+        // 写出数据 - store 方法，可传入字节、字符输出流。
+        p.store(bw, "This is a test"); // 第二个参数是备注
 
         bw.close();
     }
@@ -578,7 +576,7 @@ public class Test2 {
 
 ### 3.load 特有方法
 
-利用 Properties 集合，读取 properties 文件中的数据，使用 `load` 方法。
+利用 Properties 集合，读取 .properties 配置文件中的数据，使用 `load` 方法。
 
 demo-project/base-code/Day24/src/com/kkcf/properties/Test3.java
 
@@ -594,6 +592,8 @@ public class Test3 {
         Properties p = new Properties();
 
         FileInputStream fis = new FileInputStream("Day24/src/com/kkcf/properties/a.properties");
+      
+        // 可传入字节、字符输入流。
         p.load(fis);
         fis.close();
 
