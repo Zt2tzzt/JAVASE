@@ -74,7 +74,7 @@ public class Demo01 {
         MyThread mt1 = new MyThread();
         MyThread mt2 = new MyThread();
 
-        // 为线程设置名称 
+        // 为线程设置名称
         mt1.setName("线程1");
         mt2.setName("线程2");
 
@@ -521,7 +521,7 @@ public class MyThread3 extends Thread {
     public void run() {
         for (int i = 0; i < 100; i++) {
             System.out.println(Thread.currentThread().getName() + ":" + i);
-            
+
             Thread.yield();
         }
     }
@@ -727,8 +727,8 @@ public class MovieTicketSaleThread extends Thread {
 
 - 特点 1：同步方法，可以锁住方法里面的所有代码；
 - 特点 2：同步方法的锁对象，不能自己指定。
-  - 如果是静态方法，锁对象是当前类的字节码文件对象；
-  - 如果是非静态方法，锁对象是 `this`，即调用方法的对象。
+  - 如果是**静态方法**，锁对象是当前类的字节码文件对象；
+  - 如果是**非静态方法**，锁对象是 `this`，即调用方法的对象。
 
 使用 `Runable` 接口，和同步方法，重构上面的 `MovieTicketSaleThread` 类；
 
@@ -764,9 +764,8 @@ public class MovieTicketSaleRunable implements Runnable {
 ```
 
 - 使用实现 `Runable` 接口的方式实现多线程，在测试类中，只会创建一个`MovieTicketSaleRunable` 对象，所以
-  -  `int ticketCount = 0;` 可以不使用 `static` 修饰。
+  - `int ticketCount = 0;` 可以不使用 `static` 修饰。
   - 同步方法的锁，被设为 `this`，是唯一的。
-
 
 测试类：
 

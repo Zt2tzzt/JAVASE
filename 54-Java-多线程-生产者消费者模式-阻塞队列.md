@@ -222,10 +222,10 @@ public class Cook extends Thread {
 }
 ```
 
-- `put` 方法底层使用了锁，自己不用再定义锁，否则会造成锁的嵌套。
-- `System.out.println("厨师放了一碗面条");` 输出语句代码，写在了锁的外面，在打印时，可能会造成连续打印的效果；但是对共享数据不会产生影响
+- `put` 方法底层使用了锁，不用自行再定义锁，否则会造成锁的嵌套。
+- `System.out.println("厨师放了一碗面条");` 输出语句代码，写在了锁的外面，在打印时，可能会造成连续打印的效果；但是对共享数据不会产生影响。
 
-顾客类 Foodie：
+顾客类 `Foodie`：
 
 demo-project/base-code/Day31/src/com/kkcf/blocking_queues/Foodie.java
 
@@ -257,8 +257,8 @@ public class Foodie extends Thread {
 }
 ```
 
-- `take` 方法底层使用了锁，自己不用再定义锁，否则会造成锁的嵌套。
-- `System.out.println("顾客拿到一个" + food);` 输出语句代码，写在了锁的外面，在打印时，可能会造成连续打印的效果；但是对共享数据不会产生影响
+- `take` 方法底层使用了锁，不用再自行定义锁，否则会造成锁的嵌套。
+- `System.out.println("顾客拿到一个" + food);` 输出语句代码，写在了锁的外面，在打印时，可能会造成连续打印的效果；但是对共享数据不会产生影响。
 
 测试类：
 
@@ -287,12 +287,12 @@ public class Test {
 
 在 Java 中，线程六种状态使用 [Thread.State](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.State.html) 来表示，分别有：
 
-1. NEW（新建状态），表示线程对象创建。
-2. RUNNABLE（就绪状态），表示 start 方法调用；
-3. BLOCKED（阻塞状态）， 表示无法获得锁对象。
-4. WAITING（等待状态），表示 wait 方法调用。
-5. TIMED_WAITING（计时等待状态），表示 sleep 方法调用。
-6. TERMINATIED（结束状态），表示全部代码运行完毕。
+1. `NEW`（新建状态），表示线程对象创建。
+2. `RUNNABLE`（就绪状态），表示 `start` 方法调用；
+3. `BLOCKED`（阻塞状态）， 表示无法获得锁对象。
+4. `WAITING`（等待状态），表示 `wait` 方法调用。
+5. `TIMED_WAITING`（计时等待状态），表示 `sleep` 方法调用。
+6. `TERMINATIED`（结束状态），表示全部代码运行完毕。
 
 如下图所示：
 
