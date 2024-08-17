@@ -1,12 +1,14 @@
 # Java 多线程之并发并行、实现方式、Thread类和方法、生命周期、线程安全、锁和死锁
 
-**线程**是操作系统，能够进行运算调度的最小单位，它被包含在**进程**之中，是进程中的实际运作单位。
+**线程**是操作系统，能够进行运算调度的**最小单位**；
+
+线程被包含在**进程**之中，是进程中的实际运作单位。
 
 进程是程序的基本执行实体。一个软件运行，就会产生至少一个进程：
 
 ![进程](NodeAssets/进程.jpg)
 
-线程可理解为，引用软件中互相独立，又可同时运行的功能。这样的功能比较多，就形成了**多线程**。
+线程可理解为，应用软件中，互相独立，又可同时运行的功能。这样的功能比较多，就形成了**多线程**。
 
 多线程的应用场景：
 
@@ -32,19 +34,19 @@
 
 计算机中，并发、并行有可能同时发生。
 
-## 二、多线程实现方式
+## 二、Java 多线程实现方式
 
 ### 1.继承 Thread 类
 
-Thread 类，表示线程，JVM 虚拟机允许应用程序，并发地运行多个线程。
+在 Java 中，`Thread` 类，表示线程，JVM 虚拟机允许应用程序，并行地运行多个线程。
 
-使用 Thread 类，实现多线程的步骤：
+使用 `Thread` 类，实现多线程的步骤：
 
-1. 自定义一个类，继承 Thread 类；
-2. 重写 run 方法；
-3. 创建子类对象，并启动线程
+1. 自定义一个类，继承 `Thread` 类；
+2. 在自定义类中，重写 `run` 方法；
+3. 创建自定义类对象，并启动线程。
 
-自定义 MyThread 类，继承 Thread 类：
+自定义 `MyThread` 类，继承 `Thread` 类：
 
 demo-project/base-code/Day31/src/com/kkcf/thread/MyThread.java
 
@@ -72,6 +74,7 @@ public class Demo01 {
         MyThread mt1 = new MyThread();
         MyThread mt2 = new MyThread();
 
+        // 为线程设置名称 
         mt1.setName("线程1");
         mt2.setName("线程2");
 
@@ -83,14 +86,15 @@ public class Demo01 {
 
 ### 2.实现 Runnable 接口
 
-使用 Runable 接口，实现多线程的步骤：
+使用 `Runable` 接口，实现多线程的步骤：
 
-1. 自定义类，实现 Runable 接口；
-2. 在自定义类，实现 run 方法；
-3. 创建自定义类对象，再创建 Thread 类对象；
-4. 开启线程。
+1. 自定义类，实现 `Runable` 接口；
+2. 在自定义类，实现 `run` 方法；
+3. 创建自定义类对象；
+4. 传入自定义类的对象，再创建 `Thread` 类对象；
+5. 开启线程。
 
-自定义 MyRun 类，实现 Runnable 接口
+自定义 `MyRun` 类，实现 `Runnable` 接口
 
 demo-project/base-code/Day31/src/com/kkcf/runable/MyRun.java
 
@@ -138,21 +142,21 @@ public class Demo01 {
 
 ### 3.实现 Callable、Future 接口
 
-以上两种多线程的实现方式，run 方法都没有返回值。
+继承 `Thread` 类、实现 `Runnable` 接口这两种多线程的实现方式，在 `run` 方法中都没有返回值。
 
-如果想要获取多线程运行的结果，就要使用实现 Callable、Futrure 接口的方式。
+如果想要获取多线程运行的结果，就要使用实现 `Callable`、`Futrure` 接口的方式。
 
-使用 Callable、Futrure 接口，实现多线程的步骤：
+使用 `Callable`、`Futrure` 接口，实现多线程的步骤：
 
-1. 自定义类，实现 Callable 泛型接口，泛型表示返回值的类型。
-2. 重写 call 方法，该方法有返回值，表示多线程运行的结果。
+1. 自定义类，实现 `Callable` 泛型接口，泛型表示返回值的类型。
+2. 在自定义类中，重写 `call` 方法，该方法有返回值，表示多线程运行的结果。
 3. 创建自定义类的实例对象，表示多线程要实现的任务。
-4. 创建 Future 接口实现类 FutureTask 类的实例对象，用于管理多线程任务运行的结果。
-5. 创建 Thread 类的实例对象，并启动线程。
+4. 传入自定义类对象，创建 `Future` 接口实现类 `FutureTask` 类的实例对象，用于管理多线程任务运行的结果。
+5. 创建 `Thread` 类的实例对象，并启动线程。
 
 开启两个线程，求 1-100 的和。
 
-自定义类 MyCallable
+自定义类 `MyCallable`
 
 demo-project/base-code/Day31/src/com/kkcf/callable/MyCallable.java
 
@@ -201,13 +205,13 @@ public class Demo01 {
 }
 ```
 
-三种方式，如何选择：
+总结：三种方式，如何选择：
 
 - 要得到返回值，选择：
-  - 实现 Callable 接口（优点：编程比较简单；缺点：可扩展性差，不能继承其它类）。
+  - 实现 `Callable` 接口（优点：扩展性强，可以继承其它类，编程比较复杂）。
 - 不需要得到返回值：选择：
-  - 继承 Thread 类（优点：扩展性强，可以继承其它类，编程比较复杂）；
-  - 实现 Runable 接口（优点：扩展性强，可以继承其它类，编程比较复杂）；
+  - 继承 `Thread` 类（优点：编程比较简单；缺点：可扩展性差，不能继承其它类）；
+  - 实现 `Runable` 接口（优点：扩展性强，可以继承其它类，编程比较复杂）；
 
 ## 三、Thread 类常用方法
 
@@ -222,19 +226,19 @@ Thread 类常用方法如下：
 | `void setPriority(int newPriority)` | 设置线程优先级                       |
 | `final int getPriority`             | 获取线程的优先级                     |
 | `final void setDaemon(boolean on)`  | 设置守护进程                         |
-| `static void yield()`               | 出让线程/礼让线程                    |
-| `static void join()`                | 插入线程/插队线程                    |
+| `static void yield()`               | 设置礼让线程 / 出让线程              |
+| `void join()`                       | 设置插入线程 / 插队线程              |
 
-- 线程优先级越高，抢占到 CPU 的概率越高
-- 线程有默认名字，格式 `Thread-xxx`，xxx 是以 0 开始的序号
+- 线程优先级越高，抢占到 CPU 执行权的概率越高。
+- 线程有默认名字，格式 `Thread-xxx`，`xxx` 是以 0 开始的序号
 
 ### 1.getName、setName 方法
 
-上面的示例中，演示了 getName、setName 方法的使用；
+上面的示例中，演示了 `getName`、`setName` 方法的使用；
 
-还可以使用 Thread 的构造方法，为线程设置名字。
+还可以使用 `Thread` 类的构造方法，为线程设置名字。
 
-自定义类 MyThread：
+自定义类 `MyThread`：
 
 demo-project/base-code/Day31/src/com/kkcf/thread/MyThread.java
 
@@ -257,7 +261,7 @@ public class MyThread extends Thread {
 }
 ```
 
-- 构造方法不能被继承，要使用 super 关键字调用。
+- 构造方法不能被继承，要使用 `super` 关键字调用。
 
 测试类：
 
@@ -279,9 +283,9 @@ public class Demo02 {
 
 ### 2.currentThread 静态方法
 
-currentThread 静态方法，用于获取当前线程的对象。
+`currentThread` 静态方法，用于获取当前线程的对象。
 
-在测试类的 main 方法中，直接获取线程的名称。
+在测试类的 `main` 方法中，直接获取线程的名称。
 
 demo-project/base-code/Day31/src/com/kkcf/thread/Demo03.java
 
@@ -297,11 +301,11 @@ public class Demo03 {
 
 1. 在 JVM 虚拟机启动之后，会自动启动多条线程；
 2. 其中一个就是 main 线程，它的作用是调用 main 方法，执行里面的代码。
-3. 所以在测试了 main 方法中的代码，都是运行在 main 线程中的。
+3. 所以在测试类 `main` 方法中的代码，都是运行在 main 线程中的。
 
 ### 3.sleep 静态方法
 
-sleep 静态方法，用于指定线程休眠的时间（单位：毫秒）
+`sleep` 静态方法，用于指定线程休眠的时间（单位：毫秒）
 
 - 哪条线程执行到这个方法，就会在执行处停留相应的时间；
 - 当时间到了后，线程会自动醒来，执行下面的其它代码。
@@ -324,9 +328,9 @@ public class Demo04 {
 }
 ```
 
-为交替执行了两个线程，进行休眠：
+为交替执行的两个线程，进行休眠：
 
-自定义类 MyThread；
+自定义类 `MyThread`；
 
 demo-project/base-code/Day31/src/com/kkcf/thread/MyThread.java
 
@@ -378,14 +382,14 @@ public class Demo02 {
 
 计算机中，线程的调度分为两种：
 
-- **抢占式调度**，指的是多个线程，在抢夺 CPU 的执行权，CPU 在什么时候，执行哪个线程，执行多长时间都是不确定的；所以线程执行具有**随机性**。
+- **抢占式调度**，指的是多个线程，在抢夺 CPU 的执行权，CPU 在什么时候，执行哪个线程，执行多长时间，都是不确定的；所以线程执行具有**随机性**。
 - **非抢占式调度**，指的是多个线程，轮流被 CPU 执行。
 
-在 Java 中，采用的是抢占式调度的方式，
+在 Java 中，线程执行采用的是**抢占式调度**的方式，
 
 Java 线程的优先级越大，抢到 CPU 执行权的概率就越大。
 
-Java 线程的优先级分为 10 挡；最小 1，最大 10；默认 5；
+Java 线程的优先级分为 10 挡；最小 `1`，最大 `10`；默认 `5`；
 
 获取线程的默认优先级：
 
@@ -408,7 +412,7 @@ public class Demo02 {
 }
 ```
 
-设置线程的优先级：
+在线程创建后，设置线程的优先级：
 
 demo-project/base-code/Day31/src/com/kkcf/runable/Demo02.java
 
@@ -433,11 +437,11 @@ public class Demo02 {
 
 ### 5.setDaemon 方法（守护线程）
 
-setDaemon 方法，用于设置守护进程；
+`setDaemon` 方法，用于设置守护进程；
 
 当其它的非守护线程执行完毕后，守护线程也没有继续执行的必要了，它会**陆续**结束（不是立刻结束）。
 
-创建两个自定义类：MyThread1、MyThread2；
+创建两个自定义类：`MyThread1`、`MyThread2`；
 
 demo-project/base-code/Day31/src/com/kkcf/thread/MyThread1.java
 
@@ -469,7 +473,7 @@ public class MyThread2 extends Thread {
 }
 ```
 
-在测试类，设置第二个线程，为守护进程：
+在测试类，设置 `MyThread2` 类创建的线程，为守护进程：
 
 demo-project/base-code/Day31/src/com/kkcf/thread/Demo05.java
 
@@ -494,22 +498,20 @@ public class Demo05 {
 
 守护线程的应用场景：
 
-在连天软件中，发送文件；
+在聊天软件中，发送文件；
 
-- 可将发送文件的线程，设置为聊天线程的搜狐线程；
+- 可将发送文件的线程，设置为聊天线程的守护线程；
 - 当聊天窗口关闭后，发送文件也会被终止。
 
 ![守护线程应用场景](NodeAssets/守护线程应用场景.jpg)
 
 ### 6.yield 静态方法（礼让线程）
 
-yield 方法，用于礼让（出让）线程；
+`yield` 方法，用于设置礼让（出让）线程；
 
-出让后的线程，会被多个线程抢夺；
+礼让线程会交还 CPU 执行权，给多个线程抢夺；这会尽可能的让多个线程执行的更加均匀。
 
-出让线程，会尽可能的让多个线程执行的更加均匀。
-
-自定义类 MyThread3，在 run 方法中，出让线程。
+自定义类 `MyThread3`，在 `run` 方法中，设置礼让线程。
 
 ```java
 package com.kkcf.thread;
@@ -548,9 +550,9 @@ public class Demo06 {
 }
 ```
 
-### 7.join 静态方法（插队线程）
+### 7.join 方法（插队线程）
 
-join 静态方法，用于设置插队线程。
+`join` 静态方法，用于设置插队线程。
 
 一个线程，设置了插队线程，会在当前线程之前执行。
 
@@ -587,13 +589,13 @@ public class Demo07 {
 - 执行资格，表示抢夺 CPU 执行权的资格；
 - 执行权，表示被 CPU 执行。
 
-注意：sleep 方法设置的睡眠时间到期后，不会立即执行线程中的代码，而是要先抢夺 CPU 的执行权。
+注意：`sleep` 静态方法设置的睡眠时间到期后，不会立即执行线程中的代码，而是要先抢夺 CPU 的执行权。
 
 ## 五、线程安全问题
 
 案例理解：电影院有三个窗口卖票，总共有 100 张票：
 
-自定义类 MovieTicketSaleThread，继承自 Thread 类。
+自定义类 `MovieTicketSaleThread`，继承自 `Thread` 类。
 
 demo-project/base-code/Day31/src/com/kkcf/test/MovieTicketSaleThread.java
 
@@ -605,9 +607,11 @@ public class MovieTicketSaleThread extends Thread {
 
     public MovieTicketSaleThread() {
     }
+
     public MovieTicketSaleThread(String name) {
         super(name);
     }
+
     @Override
     public void run() {
 
@@ -623,7 +627,7 @@ public class MovieTicketSaleThread extends Thread {
 }
 ```
 
-- `static int ticketCount = 0;` 表示电影院总共要卖 100 张票。
+- `static int ticketCount = 0;` 表示电影院已经卖了 0 张票。
 
 测试类：
 
@@ -645,18 +649,16 @@ public class Test01 {
 }
 ```
 
-这种做法，会出现两个问题：
+以上做法，会出现两个问题：
 
 - 问题 1：两个不同窗口，会卖出同一张票；
 - 问题 2：卖出的总票数，会超出 100 张。
 
-这是因为，线程在执行每行代码的时候，CPU 的使用权，随时都有可能被其它线程抢走。这体现了线程执行的**随机性**。
+这是因为，线程在执行**每行代码**的时候，CPU 的使用权，随时都有可能被其它线程抢走。这体现了线程执行的**随机性**。
 
 ### 1.同步代码块和锁
 
-解决以上问题，要用到**同步代码块**，即把一个代码块**锁住**。
-
-- 要用到 `synchronized` 关键字，格式为：
+解决以上问题，要用到**同步代码块**，即把一个代码块**锁住**。使用 `synchronized` 关键字和锁对象，格式为：
 
 ```java
 synchronized (锁对象) {
@@ -664,11 +666,11 @@ synchronized (锁对象) {
 }
 ```
 
-- 锁对象，可以是任意 Java  对象，但必须要是唯一的，否则同步代码块无效。
+- 锁对象，可以是任意 Java  对象，但要求必须是唯一的，否则同步代码块无效。
 - 特点 1：锁默认打开，当有一个线程进入，则关闭；
 - 特点 2：锁里面的代码全部执行完，线程出来，锁自动打开；
 
-使用同步代码块，重构 MovieTicketSaleThread 里面的代码：
+使用同步代码块，重构 `MovieTicketSaleThread` 里面的代码：
 
 demo-project/base-code/Day31/src/com/kkcf/test/MovieTicketSaleThread.java
 
@@ -708,12 +710,12 @@ public class MovieTicketSaleThread extends Thread {
 }
 ```
 
-- 细节 1：同步代码块，不能下载循环的外面，否则循环体会被一个进程执行完毕，锁才会开放。
-- 细节 2：锁对象，一般会用当前类的字节码文件对象，即 `MovieTicketSaleThread.class`，它是唯一的。
+- 细节 1：同步代码块，不能写在循环的外面，否则循环体会被一个进程执行完毕，锁才会开放。
+- 细节 2：锁对象，一般会用当前类的字节码文件对象，即 `MovieTicketSaleThread.class`，因为它是唯一的。
 
 ### 2.同步方法
 
-如果要把一个方法中的所有代码，都是用同步代码块包裹，那么可以直接使用**同步方法**。
+如果要把一个方法中的所有代码，都使用同步代码块包裹，那么可以直接使用**同步方法**。
 
 同步方法的格式：
 
@@ -725,10 +727,10 @@ public class MovieTicketSaleThread extends Thread {
 
 - 特点 1：同步方法，可以锁住方法里面的所有代码；
 - 特点 2：同步方法的锁对象，不能自己指定。
-  - 静态方法，锁对象是当前类的字节码文件对象；
-  - 非静态方法，锁对象是 `this`，即调用方法的对象。
+  - 如果是静态方法，锁对象是当前类的字节码文件对象；
+  - 如果是非静态方法，锁对象是 `this`，即调用方法的对象。
 
-使用 Runable 接口，和同步方法，重构上面的 MovieTicketSaleThread 类；
+使用 `Runable` 接口，和同步方法，重构上面的 `MovieTicketSaleThread` 类；
 
 demo-project/base-code/Day31/src/com/kkcf/test/MovieTicketSaleRunable.java
 
@@ -737,13 +739,6 @@ package com.kkcf.test;
 
 public class MovieTicketSaleRunable implements Runnable {
     int ticketCount = 0;
-
-    @Override
-    public void run() {
-        while (true) {
-            if (goooo()) break;
-        }
-    }
 
     private synchronized boolean goooo() {
         try {
@@ -758,11 +753,20 @@ public class MovieTicketSaleRunable implements Runnable {
         }
         return false;
     }
+
+    @Override
+    public void run() {
+        while (true) {
+            if (goooo()) break;
+        }
+    }
 }
 ```
 
-- 在测试类中，只会创建一个MovieTicketSaleRunable 对象，所以 `int ticketCount = 0;` 可以不使用 static 修饰。
-- 在测试类中，只会创建一个MovieTicketSaleRunable 对象，所以同步方法的锁，被设为 this，是被允许的。
+- 使用实现 `Runable` 接口的方式实现多线程，在测试类中，只会创建一个`MovieTicketSaleRunable` 对象，所以
+  -  `int ticketCount = 0;` 可以不使用 `static` 修饰。
+  - 同步方法的锁，被设为 `this`，是唯一的。
+
 
 测试类：
 
@@ -788,32 +792,32 @@ public class Test02 {
 
 #### 1.StringBuffer 类
 
-StringBuffer 类，相比于 StringBuilder 类，它们的功能都是一样的，只不过 StringBuffer 是线程安全的，StringBuilder 是线程不安全的
+Java 的 `StringBuffer` 类，相比于 `StringBuilder` 类，它们的功能都是一样的，只不过 `StringBuffer` 是线程安全的。
 
-StringBuffer 类，里面的所有成员方法，都被 synchronized 修饰，它们都是同步方法。
+`StringBuffer` 类，里面的所有成员方法，都被 `synchronized` 关键字修饰，它们都是同步方法。
 
-> 总结：编写多线程代码，遵循 4 步操作：
+> 总结：编写多线程代码，遵循 3 步操作：
 >
 > 1. 循环；
 > 2. 同步代码块；
-> 3. 判断共享数据，是否到了末尾；
->    - 到末尾，跳出循环
->    - 没到末尾，执行核心逻辑
+> 3. 判断共享数据的逻辑，是否到了末尾；
+>    - 到末尾，跳出循环；
+>    - 没到末尾，执行核心逻辑。
 
 ## 六、Lock 锁
 
-以上同步代码块，同步方法中的锁，都是自动上锁，自动解锁的。
+同步代码块，同步方法中的锁，都是自动上锁，自动解锁的。
 
-为了更清晰的表达如何加锁，如何解锁；JDK5 以后，提供了一个新的锁对象 Lock。
+为了更清晰的表达如何加锁，如何解锁；JDK5 以后，提供了一个锁接口 `Lock`。
 
-Lock 是一个接口，它相比 synchronized 关键字声明的同步代码块、同步方法，可以获得更加广泛的锁定操作。其中有方法：
+`Lock` 是一个接口，它相比 `synchronized` 关键字声明的同步代码块、同步方法，可以获得更加广泛的锁定操作。其中有方法：
 
-- `void lock()`，用于获得锁；
-- `void unlock()`，用于释放锁；
+- `void lock()`，用于上锁；
+- `void unlock()`，用于解锁；
 
-这里使用 Lock 接口的实现类 ReentrantLock，来进行实例化，重构上方的 MovieTicketSaleThread 类。
+这里使用 `Lock` 接口的实现类 `ReentrantLock`，来进行锁对象的实例化，重构上方的 `MovieTicketSaleThread` 类。
 
-自定义类 MovieTicketSaleThread1：
+自定义类 `MovieTicketSaleThread1`：
 
 demo-project/base-code/Day31/src/com/kkcf/test/MovieTicketSaleThread1.java
 
@@ -857,9 +861,9 @@ public class MovieTicketSaleThread1 extends Thread {
 }
 ```
 
-- 在继承 Thred 类的自定义类中，lock 锁的实例对象，要加 `static` 关键字修饰，表示唯一的一把锁。
-- 线程在执行循环中的 break 语句时，会跳出循环，如果此时处于上锁状态，其它线程会卡在上锁状态等待锁的释放，导致程序不能停止；
-  - 此时，就要利用 try…catch…finally 代码块的 finally 代码块必会执行的特性，把释放锁的代码 `lock.unlock();` 放入其中执行。
+- 细节 1：在继承 `Thread` 类的自定义类中，`Lock` 锁的实例对象，要加 `static` 关键字修饰，表示唯一的一把锁。
+- 细节 2：线程在执行循环中的 `break` 语句时，会跳出循环，如果执行跳出循环代码的线程，此时处于上锁状态，其它线程会卡在上锁处，等待锁的释放，这会导致程序不能停止；
+  - 解决上面的问题，就要利用 `try…catch…finally` 代码块的 `finally` 代码块必会执行的特性，把解锁的代码 `lock.unlock();` 放入其中执行。
 
 测试类：
 
@@ -881,13 +885,13 @@ public class Test01 {
 }
 ```
 
-## 七、死锁
+## 七、死锁问题
 
 死锁，是一个代码错误情况，指的是锁里面嵌套了锁。导致程序卡死；
 
-理解下方代码
+理解下方代码：
 
-自定义类 DeadThread，继承自 Thread 类
+自定义类 `DeadThread`，继承自 `Thread` 类
 
 demo-project/base-code/Day31/src/com/kkcf/test/DeadThread.java
 
@@ -896,7 +900,9 @@ package com.kkcf.test;
 
 public class DeadThread extends Thread{
     static final Object obja = new Object();
+
     static final Object objb = new Object();
+
     @Override
     public void run() {
         while (true) {
