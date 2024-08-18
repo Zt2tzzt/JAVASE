@@ -210,16 +210,17 @@ public class Demo05 {
 
 Stream 流的中间方法，有如下几种：
 
-| 方法名                                               | 说明                                                 |
-| ---------------------------------------------------- | ---------------------------------------------------- |
-| `Stream<T> filter(Predicate<? extends T> predicate)` | 过滤                                                 |
-| `Stream<T> limit(long maxSize)`                      | 获取前几个元素                                       |
-| `Stream<T> skip(long n)`                             | 跳过前几个元素                                       |
-| `Stream<T> distinct()`                               | 元素去重，依赖元素对象的 `hashCode` 和 `equals` 方法 |
-| `static <T> Stream<T> concat(Stream a, Stream b)`    | 合并 a 和 b 两个流为一个流，注意两个流类型要保持一致 |
-| `Stream<R> map(Function<T, R> mapper)`               | 转换流中的数据类型                                   |
-| `Stream<T> sorted()`                                 | 升序排序流中的数据                                   |
-| `Stream<T> sorted(Comparator<? super T> comparator)` | 自定义排序流中的数据                                 |
+| 方法名                                                | 说明                                                         |
+| ----------------------------------------------------- | ------------------------------------------------------------ |
+| `Stream<T> filter(Predicate<? extends T> predicate)`  | 过滤                                                         |
+| `Stream<T> limit(long maxSize)`                       | 获取前几个元素                                               |
+| `Stream<T> skip(long n)`                              | 跳过前几个元素                                               |
+| `Stream<T> distinct()`                                | 元素去重，依赖元素对象的 `hashCode` 和 `equals` 方法         |
+| `static <T> Stream<T> concat(Stream a, Stream b)`     | 合并 a 和 b 两个流为一个流，注意两个流类型要保持一致         |
+| `Stream<R> map(Function<T, R> mapper)`                | 转换流中的数据类型                                           |
+| `Stream<T> sorted()`                                  | 升序排序流中的数据                                           |
+| `Stream<T> sorted(Comparator<? super T> comparator)`  | 自定义排序流中的数据                                         |
+| `T reduce(T identity, BinaryOperator<T> accumulator)` | 使用提供的标识值和关联累积函数对此流的元素执行缩减，并返回缩减后的值 |
 
 流的中间方法，注意事项：
 
