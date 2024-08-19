@@ -2,8 +2,8 @@
 
 序列化流，属于**字节流**，它只有两个实现类：
 
-- 序列化流（输出流）：`ObjectOutputStream`
-- 反序列化流（输入流）：`ObjectInputStream`
+- 字节序列化输出流：`ObjectOutputStream`
+- 字节反序列化输入流：`ObjectInputStream`
 
 ## 一、ObjectOutputStream 序列化流
 
@@ -128,11 +128,11 @@ public class Demo02 {
 
 如果一个 JavaBean 类，实现了 `Serializable` 接口，就表示这个类是可被序列化的。
 
-Java 底层，会根据这个类的成员变量、静态变量，构造方法、成员方法，计算出一个 long 类型的**序列号**。这个序列号，也是这个类的**版本号**。
+Java 底层，会根据这个类的成员变量、静态变量，构造方法、成员方法，计算出一个 long 类型的**序列号**。这个序列号，也称为这个类的**版本号**。
 
 该类的对象，被序列化写出到文件中时，版本号也会被写入到文件中。
 
-此时，如果修改 JavaBean 类中的成员，反序列化文件中保存的对象到程序中时，就会抛出异常 `InvalidClassException`：如下方所示：
+此时，如果修改 JavaBean 类中的成员，反序列化文件中保存的对象，读取到程序中时，就会抛出异常 `InvalidClassException`：如下方所示：
 
 修改 Student 类，在其中加入成员变量 `address`：
 

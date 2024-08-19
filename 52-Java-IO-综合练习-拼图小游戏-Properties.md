@@ -5,7 +5,7 @@
 将拼图小游戏中用户登录的信息，保存在本地文件 userinfo.txt 中。读取这些信息的时机：
 
 - 因为，只要登录界面不关闭，那么就不会修改文件中的数据；
-- 所以，一般在打开登录界面时，读取文件中的数据；而不是点击登录按钮后读取。
+- 所以，一般在**打开登录界面时**，读取文件中的数据；而不是点击登录按钮后读取。
 
 ### 1.静态代码块和构造方法的选择
 
@@ -19,7 +19,7 @@
 重构 `LoginFrame` 类，
 
 - 将 User 列表集合 `allUsers`，改为非静态的；
-- 并注释掉静态方法：
+- 并注释掉静态代码块：
 - 将加载用户信息的逻辑，放在构造方法中。
 
 demo-project/puzzelgame/src/com/kkcf/ui/LoginJFrame.java
@@ -28,8 +28,8 @@ demo-project/puzzelgame/src/com/kkcf/ui/LoginJFrame.java
 public class LoginJFrame extends JFrame implements MouseListener {
     // ……
 
-    //创建一个集合存储正确的用户名和密码
-    //static ArrayList<User> list = new ArrayList<>();
+    // 创建一个集合存储正确的用户名和密码
+    // static ArrayList<User> list = new ArrayList<>();
     ArrayList<User> allUsers = new ArrayList<>();
 
     /*static {
@@ -38,7 +38,7 @@ public class LoginJFrame extends JFrame implements MouseListener {
     }*/
 
     public LoginJFrame() {
-        // 读取文笔文件中的用户信息
+        // 读取文本文件中的用户信息
         readUserInfo();
 
         // ……
@@ -118,7 +118,7 @@ public class RegisterJFrame extends JFrame implements MouseListener {
 - 写入文件；
 - 提示注册成功。
 
-在 RegisterJFrame 类的构造方法中，接收 user 用户列表。
+在 `RegisterJFrame` 类的构造方法中，接收 user 用户列表。
 
 demo-project/puzzelgame/src/com/kkcf/ui/RegisterJFrame.java
 
@@ -193,7 +193,7 @@ public class RegisterJFrame extends JFrame implements MouseListener {
 }
 ```
 
-重写 User 类中的 toString 方法，使得写出数据到 userinfo.txt 文本文件时，格式是正确的。
+重写 User 类中的 `toString` 方法，使得写出数据到 userinfo.txt 文本文件时，格式是正确的。
 
 demo-project/puzzelgame/src/com/kkcf/javabean/User.java
 
@@ -299,9 +299,9 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
 
 创建一个 JavaBean 类 `GameInfo`，用于封装上面的信息；
 
-为它实现 `Serializable` 接口，用于字节序列化输出流写入文件。
+为它实现 `Serializable` 接口，用于**字节序列化输出流**写入文件。
 
-GameInfo 类：
+JavaBean `GameInfo` 类：
 
 demo-project/puzzelgame/src/com/kkcf/javabean/GameInfo.java
 
@@ -333,7 +333,7 @@ public class GameInfo implements Serializable {
 }
 ```
 
-GameJFrame 类：
+`GameJFrame` 类：
 
 demo-project/puzzelgame/src/com/kkcf/ui/GameJFrame.java
 
@@ -417,7 +417,7 @@ public void actionPerformed(ActionEvent e) {
 
 ### 4.加载“存档”，“读档”菜单
 
-在游戏启动时，要根据存档文件，加载“存档”，“读档”菜单。
+在**游戏启动时**，要根据存档文件，加载“存档”，“读档”菜单。
 
 demo-project/puzzelgame/src/com/kkcf/ui/GameJFrame.java
 
@@ -448,10 +448,8 @@ private void initGameinfo() {
             gi = (GameInfo) ois.readObject();
             ois.close();
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
@@ -493,16 +491,16 @@ wechat=about.png
 
 在 Java 中，可以使用 `Properties` 类，从 properties 配置文件中，读取、写出数据。
 
-`Properties` 类，属于 Map 集合体系结构
+`Properties` 类，属于 Map 双列集合体系结构
 
 ![Properties类](NodeAssets/Properties类.jpg)
 
-Properties 是一个双列集合， 拥有 Map 集合的所有特点。它有一些特有的方法：
+`Properties` 是一个双列集合， 拥有 Map 集合的所有特点。它有一些特有的方法：
 
 - 可以把集合中的数据，按照键值对的形式，写到配置文件当中。
-- 也可以把配置文件中的数据，读取到双列集合中来。
+- 也可以把配置文件中的数据，读取到程序的双列集合中来。
 
-Properties 不是一个泛型类，原则上可以添加任意类型的键和值，但在实际开发中，一般只添加 String 类型的键和值。
+`Properties` 不是一个泛型类，原则上可以添加任意类型的键和值，但在实际开发中，一般只添加 String 类型的键和值。
 
 ### 1.Map 中的方法
 
@@ -538,7 +536,7 @@ public class Test1 {
 
 ### 2.store 特有方法
 
-将 Properties 集合中的数据，写出到文件中，使用 `store` 方法
+将 `Properties` 集合中的数据，写出到文件中，使用 `store` 方法
 
 demo-project/base-code/Day24/src/com/kkcf/properties/Test2.java
 
@@ -576,7 +574,7 @@ public class Test2 {
 
 ### 3.load 特有方法
 
-利用 Properties 集合，读取 .properties 配置文件中的数据，使用 `load` 方法。
+利用 `Properties` 集合，读取 .properties 配置文件中的数据，使用 `load` 方法。
 
 demo-project/base-code/Day24/src/com/kkcf/properties/Test3.java
 
@@ -606,12 +604,14 @@ public class Test3 {
 
 把点击“关于我们”要展示的图片，放到配置文件中。
 
-在项目根目录下 ，创建一个 account.properties 配置文件，在其中配置公众号图片的路径：
+在项目根目录下 ，创建一个 account.properties 配置文件，在其中配置公众号图片的路径，格式如下：
 
 ```properties
 #account=image/damie.jpg
 account=image/girl/girl11/all.jpg
 ```
+
+在 `GameJFrame` 类中，加载配置文件
 
 demo-project/puzzelgame/src/com/kkcf/ui/GameJFrame.java
 
@@ -644,7 +644,6 @@ public String loadAccountPath() {
         p.load(fis);
         fis.close();
     } catch (IOException e) {
-        e.printStackTrace();
         throw new RuntimeException(e);
     }
 

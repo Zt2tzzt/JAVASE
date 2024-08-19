@@ -1,4 +1,4 @@
-# Java 多线程
+# Java 多线程之生产者消费者模式、阻塞对列
 
 ## 一、生产者消费者模式
 
@@ -9,7 +9,7 @@
 - 其中一个线程，被视为生产者，用于生产数据；
 - 另一个线程，被视为消费者，用于消费数据。
 
-将生产者消费者模式，抽象为“顾客-厨师”模型：顾客作为消费者，厨师作为生产者：
+将生产者消费者模式，抽象为“顾客-厨师”模型后：顾客作为消费者，厨师作为生产者：
 
 - 消费者顾客：
   1. 判断桌子上是否有食物；
@@ -125,7 +125,6 @@ public class Foodie extends Thread {
                         try {
                             Desk.lock.wait(); // 锁对象，与线程绑定
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
                             throw new RuntimeException(e);
                         }
                     } else {
@@ -178,7 +177,7 @@ public class Test {
 如果队列中有多个元素，那么：
 
 - 厨师会将做好的面条，放入（`put`）队列中，直到队列放满后，会等待，也称为**阻塞**。
-- 顾客从队列中取（`take`）一碗面条，直到队列中为空后，会等待，也称为**阻塞**。
+- 顾客从队列中取（`take`）一碗面条，直到队列为空后，会等待，也称为**阻塞**。
 
 阻塞队列，实现了 `Iterable`、`Collection`、`Queue`、`BlockingQueue` 接口；
 
@@ -192,6 +191,8 @@ public class Test {
 使用阻塞队列，重构上面的代码：
 
 厨师类 `Cook`：
+
+- 将阻塞对列 `queue` 定义在最为成员属性，定义在类中，使用构造方法初始化，保证数据的唯一。
 
 demo-project/base-code/Day31/src/com/kkcf/blocking_queues/Cook.java
 

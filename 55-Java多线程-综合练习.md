@@ -4,9 +4,9 @@
 
 一共有 1000 张电影票，可以在两个窗口领取，假设每次领取的时间为 3000 毫秒；
 
-要求，请用多线程模拟卖票过程，并打印剩余点银票的数量。
+要求，请用多线程模拟卖票过程，并打印剩余电影票的数量。
 
-MovieTicketSaleThread2 线程类。
+`MovieTicketSaleThread2` 线程类。
 
 demo-project/base-code/Day31/src/com/kkcf/test/MovieTicketSaleThread2.java
 
@@ -62,7 +62,7 @@ public class Test4 {
 
 利用多线程模拟该过程，并将线程的名字和礼物的剩余数量打印出来。
 
-SendGiftsThread 线程类：
+自定义 `SendGiftsThread` 线程类：
 
 demo-project/base-code/Day31/src/com/kkcf/test/SendGiftsThread.java
 
@@ -115,9 +115,9 @@ public class Test05 {
 
 同时开启两个线程，共同获取 1-100 之间的所有数字。
 
-要求：将输出所有的奇数。
+要求：输出所有的奇数。
 
-OddThread 线程类：
+自定义 `OddThread` 线程类：
 
 demo-project/base-code/Day31/src/com/kkcf/test/OddThread.java
 
@@ -170,13 +170,15 @@ public class Test06 {
 
 抢红包也用到了多线程，假设 100 块，分成了 3 个红包，现在有 5 个人去枪；
 
-其中，红包是共享数据。5 个人是 5 条数据。打印结果如下：
+其中，红包是共享数据。5 个人是 5 条线程。打印结果如下：
 
 - xxx 抢到了 xxx 元
 - xxx 抢到了 xxx 元
 - xxx 抢到了 xxx 元
 - xxx 没有抢到，
 - xxx 没有抢到，
+
+为实现精确计算，使用 `BigDecimal` 表示小数。
 
 ```java
 package com.kkcf.test;
@@ -210,12 +212,13 @@ public class RedEnvelopeThread extends Thread {
                 // 最后一个红包，剩余所有的钱，都是中奖金额
                 price = money;
             } else {
+                // 计算红包金额
                 BigDecimal bounds = money.subtract(MIN.multiply(BigDecimal.valueOf((count - 1))));
                 price = BigDecimal.valueOf(r.nextDouble(bounds.doubleValue()));
 
-                // 抽取到红包的金额，不能小于最小值
+                // 红包的金额，不能小于最小值
                 if (price.compareTo(MIN) < 0) price = MIN;
-                price = price.setScale(2, RoundingMode.HALF_UP);
+                price = price.setScale(2, RoundingMode.HALF_UP); // 四舍五入
             }
 
             // 从 money 中，去掉当前中奖金额
@@ -226,13 +229,11 @@ public class RedEnvelopeThread extends Thread {
 
             System.out.println(Thread.currentThread().getName() + "抢到了" + price + "元");
         }
-
     }
 }
 ```
 
-- `r.nextDouble` 只有 JDK17 才能用。
-- 使用 `BigDecimal` 进行精确运算。
+- `r.nextDouble` 方法，只有 JDK17 才能用。
 
 测试类：
 
@@ -268,12 +269,12 @@ public class Test07 {
 
 有一个抽奖池，其中存放了奖励的金额 {10, 5, 20, 50, 100, 200, 500, 800, 2, 80, 300, 700};
 
-创建两个抽奖箱（线程）设置线程名称分别为”抽奖箱1”、“抽奖箱2”，随机从抽奖池中获取奖项元素并打印在控制台上，格式如下：
+创建两个抽奖箱（线程），设置线程名称分别为”抽奖箱1”、“抽奖箱2”，随机从抽奖池中，获取奖项元素并打印在控制台上，格式如下：
 
 - 抽奖箱 1 又产生了一个 10 元大奖
 - ……
 
-思路：使用 ArrayList 集合，来进行抽奖的去重。
+思路：使用 ArrayList 集合，其中有 remove 方法，用于抽奖和去重。
 
 demo-project/base-code/Day31/src/com/kkcf/test/LotteryThread.java
 
@@ -284,6 +285,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class LotteryThread extends Thread {
+    // 抽奖池，使用构造方法来初始化，保证多线程共享的数据是唯一的
     public ArrayList<Integer> list;
 
     public LotteryThread(ArrayList<Integer> list) {
@@ -296,11 +298,13 @@ public class LotteryThread extends Thread {
             synchronized (LotteryThread.class) {
                 if (list.isEmpty()) return;
 
+                // 打乱抽奖池，并抽奖
                 Collections.shuffle(list);
                 Integer price = list.remove(0);
                 System.out.println(super.getName() + "又产生了一个大 " + price + "元大奖");
             }
 
+            // 让多线程执行更加均匀
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -350,10 +354,12 @@ public class Test08 {
 
 每次抽奖的过程中，不打印，抽完一次性打印。格式：
 
-- 在此次抽奖过程中，抽奖箱 1 总共产生了 6 个奖项，分别为：10,20,100,500,2,300 最高奖项为 300 元，总计额为 932 元
+- 在此次抽奖过程中，抽奖箱1总共产生6个奖项，分别为：10,20,100,500,2,300 最高奖项为 300 元，总计额为 932 元
 - ……
 
-重构 LotteryThread 类：
+重构 `LotteryThread` 类：
+
+- 需要增加两个静态属性，用于表示两个抽奖箱抽中的奖。
 
 demo-project/base-code/Day31/src/com/kkcf/test/LotteryThread.java
 
@@ -366,7 +372,7 @@ import java.util.Collections;
 public class LotteryThread extends Thread {
     public static ArrayList<Integer> list1 = new ArrayList<>(); // 抽奖箱 1
     public static ArrayList<Integer> list2 = new ArrayList<>(); // 抽奖箱 2
-    public ArrayList<Integer> list;
+    public ArrayList<Integer> list; // 抽奖池，使用构造方法初始化
 
     public LotteryThread(ArrayList<Integer> list) {
         this.list = list;
@@ -409,7 +415,9 @@ public class LotteryThread extends Thread {
 }
 ```
 
-如果有多个抽奖箱，上方代码是不适用的，再次重构 LotteryThread 类：
+如果有多个抽奖箱，上方代码是不适用的，再次重构 `LotteryThread` 类：
+
+- 在 `run` 方法中，定义一个 `boxList` 集合，用于表示执行 `run` 方法的线程（抽奖箱）抽中的奖。
 
 demo-project/base-code/Day31/src/com/kkcf/test/LotteryThread.java
 
@@ -446,7 +454,6 @@ public class LotteryThread extends Thread {
                 Integer price = list.remove(0);
 
                 boxList.add(price);
-                //System.out.println(name + "又产生了一个大 " + price + "元大奖");
             }
 
             try {
@@ -475,11 +482,11 @@ Java 多线程内存原理图，如下图所示：
 - ……
 - 在此次抽奖过程中，抽奖箱2产生最大奖项，该奖金额为 800 元。
 
-思路，比较两个线程的奖项时，要等待两个线程运行完毕，才能比较；不知道哪个线程先执行完，
+思路，比较两个线程的奖项时，要等待两个线程**运行完毕**，才能比较；
 
 将线程奖项中的最大值，看作线程运行的结果，进行返回。
 
-创建 LotteryCallable 类，实现 Callable 接口
+创建 `LotteryCallable` 类，实现 `Callable` 接口
 
 demo-project/base-code/Day31/src/com/kkcf/test/LotteryCallable.java
 
@@ -527,6 +534,8 @@ public class LotteryCallable implements Callable<Integer> {
 ```
 
 测试类：
+
+- 创建两个 FutureTask 对象，用于接收两个线程返回的结果，
 
 demo-project/base-code/Day31/src/com/kkcf/test/Test09.java
 

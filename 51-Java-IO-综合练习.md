@@ -200,6 +200,7 @@ public class Test1 {
 ```
 
 - 正则表达式匹配器 `matcher.group(index)`，参数 `index` 为 `0` 时，默认获取匹配到的所有字符串；
+- 数组转集合的方法：`Arrays.asList(array)`
 
 ### 1.Hutool 包中的爬取工具
 
@@ -208,8 +209,10 @@ public class Test1 {
 ```java
 //请求列表页
 String listContent = HttpUtil.get("https://www.oschina.net/action/ajax/get_more_news_list?newsType=&p=2");
+
 //使用正则获取所有标题
 List<String> titles = ReUtil.findAll("<span class=\"text-ellipsis\">(.*?)</span>", listContent, 1);
+
 for (String title : titles) {
     //打印标题
     Console.log(title);
@@ -272,7 +275,7 @@ public class Test2 {
 
 举例：80 个学生，点名 5 次，每次都点到小A，概率变化情况如下：
 
-- 第一次每人概率：1.25%
+- 第一次点到每人（小 A）概率：1.25%
 - 第二次小A概率：0.625%，其它人概率：1.2579%
 - 第三次小A概率：0.3125%，其它人概率：1.261867%
 - ……
@@ -287,9 +290,11 @@ public class Test2 {
 
 ![随机数的权重占比思想](NodeAssets/带权重的随机占比思想.jpg)
 
-创建一个 JavaBean 类 Student，里面有属性：姓名、性别、年龄、权重；
+创建一个 JavaBean 类 `Student`，用于封装学生类：
 
-学生类：
+- 里面有属性：姓名、性别、年龄、**权重**；
+
+学生类 `Student`：
 
 demo-project/base-code/Day30/src/com/kkcf/iopractice/Student.java
 
@@ -350,7 +355,7 @@ public class Test3 {
         for (Student stu : stus)
             weightSum += stu.getWeight();
 
-        // 计算每一个人的权重占比
+        // 计算每一个人的权重占比，放入 arr 数组中
         double[] arr = new double[stus.size()];
         for (int i = 0; i < stus.size(); i++)
             arr[i] = stus.get(i).getWeight() / weightSum;
@@ -361,7 +366,7 @@ public class Test3 {
 
         // System.out.println(Arrays.toString(arr)); // [0.1, 0.2, 0.30000000000000004, 0.4, 0.5, 0.6, 0.7, 0.7999999999999999, 0.8999999999999999, 0.9999999999999999]
 
-        // 随机抽取
+        // 在权重范围内，随机抽取一个数字，将它与权占比数组映射得到学生对象集合索引
         double random = Math.random(); // 0.0 - 1.0 之间的小数
         int i = Arrays.binarySearch(arr, random); // 返回一个 (-插入点 - 1) 整数
         int index = -i - 1;
@@ -385,6 +390,8 @@ public class Test3 {
     }
 }
 ```
+
+- `Arrays.binarySearch` 方法，返回一个 `(-插入点索引 - 1)` 整数
 
 ## 三、登陆注册
 

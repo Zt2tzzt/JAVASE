@@ -3,11 +3,11 @@
 之前多线程的实践中：
 
 - 用到线程的时候，就创建；
-- 用完之后，线程小时；
+- 用完之后，线程消失；
 
 这么做，会造成系统资源的浪费。
 
-可以准备一个容器，用于存放创建好的线程，这个容器就是线程池。
+可以准备一个容器，用于存放创建好的线程，用于以后任务的复用，这个容器就是**线程池**。
 
 ## 一、线程池的核心逻辑
 
@@ -26,7 +26,7 @@
 
 > 实际开发中，线程池很少关闭，因为服务器都是 24h 运行的。
 
-Executor 是线程池的工具类，可以调用其中的静态方法，获取不同类型的线程池对象。
+`Executor` 是线程池的工具类，可以调用其中的静态方法，获取不同类型的线程池对象。
 
 | 方法名                                                       | 上面                                                |
 | ------------------------------------------------------------ | --------------------------------------------------- |
@@ -35,7 +35,7 @@ Executor 是线程池的工具类，可以调用其中的静态方法，获取�
 
 ### 1.newCachedThreadPool 方法使用
 
-创建自定义类，继承 Runnable 类。
+创建自定义类，继承 `Runnable` 类。
 
 demo-project/base-code/Day31/src/com/kkcf/threadpoll/MyRunnable.java
 
@@ -54,6 +54,8 @@ public class MyRunnable implements Runnable {
 ```
 
 测试类：
+
+- 创建 5 个线程，放在线程池中。
 
 demo-project/base-code/Day31/src/com/kkcf/threadpoll/Demo01.java
 
@@ -84,7 +86,7 @@ public class Demo01 {
 }
 ```
 
-每次提交前，让线程睡眠 1s，这样线程池中的线程就可以进行复用。
+每次提交前，让线程睡眠 1s，这样线程池中的线程就可以看到复用的效果。
 
 demo-project/base-code/Day31/src/com/kkcf/threadpoll/Demo01.java
 
@@ -152,21 +154,21 @@ public class Demo01 {
 }
 ```
 
-- 提交 5 个 Runnable 实例对象作为任务，但只会运行在 3 个线程上。
+- 提交 5 个 Runnable 实例对象作为任务，但只会运行在 3 个线程上。因为线程池的容量就是 3 个。
 - 前 3 个任务在提交时，分别会创建 1 个线程，后 2 个任务在提交时，会进入排队状态。
 
 ## 三、自定义线程池
 
-使用工具类 Executor 创建的线程池，不够灵活：线程池的大小，被固定住了。
+使用工具类 `Executor` 创建的线程池，不够灵活：线程池的大小，被固定住了。
 
-这时需要用到 ThreadPoolExecutor 类，自定义线程池：
+这时需要用到 `ThreadPoolExecutor` 类，自定义线程池：
 
 自定义线程池，有如下七个核心元素：
 
 - 核心线程数量（不能小于 0）
 - 线程池中最大线程数量（最大数量 >= 核心线程数量）
 - 空闲时间（值）（不能小于 0）
-- 空闲时间（单位）（用 TimeUnit 指定）
+- 空闲时间（单位）（用 `TimeUnit` 指定）
 - 阻塞队列（不能为 null）
 - 创建线程的方式（不能为 null）
 - 要执行的任务过多时的解决方案（不能为 null）
@@ -179,7 +181,7 @@ public class Demo01 {
 
 如果提交的任务，超过了核心线程数 + 阻塞队列长度 + 临时线程数，那么超过部分的任务，就会触发任务拒绝策略。
 
-- 任务拒绝策略默认就是舍弃。
+- 任务拒绝策略默认就是 `ThreadPoolExecutor.AbortPolicy` 舍弃。
 
 ![自定义线程池触发任务拒绝策略](NodeAssets/自定义线程池触发任务拒绝策略.jpg)
 
@@ -192,7 +194,7 @@ public class Demo01 {
 | ThreadPoolExecutor.DiscardOldestPolicy | 抛弃阻塞队列中，等待最久的任务，然后把当前任务加入到队列中 |
 | ThreadPoolExecutor.DiscardPolicy       | 调用任务的 run 方法，绕过线程池直接执行                    |
 
-在测试类中3，创建自定义线程池。
+在测试类中，创建自定义线程池。
 
 demo-project/base-code/Day31/src/com/kkcf/threadpoll/Demo02.java
 
@@ -212,7 +214,7 @@ public class Demo02 {
                 60, // 空闲线程存活时间
                 TimeUnit.SECONDS, // 时间单位
                 new ArrayBlockingQueue<>(3), // 任务阻塞队列
-                Executors.defaultThreadFactory(), // 线程工厂
+                Executors.defaultThreadFactory(), // 线程工厂创建线程
                 new ThreadPoolExecutor.AbortPolicy() // 任务拒绝策略
         );
 
@@ -261,7 +263,7 @@ public class Demo03 {
 - CPU 密集型：计算比较多；
 - I/O 密集型：读取文件、读取数据库、发送网络请求比较多。
 
-线程池中合适的线程数，要根据任务的类型，由公式计算而来：
+线程池中合适的线程数，要根据**任务的类型**，由**公式**计算而来：
 
 - CPU 密集型：`最大并行数 + 1`
 - I/O 密集性：`最大并行数 * 期望 CPU 利用率 * (总时间（CPU 计算时间 + 等待时间）/ CPU 计算时间)`

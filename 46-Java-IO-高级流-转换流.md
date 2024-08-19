@@ -11,7 +11,7 @@
 
 ## 一、转换流的作用
 
-转换流的作用：
+转换流的作用有两个：
 
 - 作用 1：为字节流，指定字符集，来读、写文本文件的内容（这种做法在 JDK11 已淘汰）
 - 作用 2：为字节流，调用字符流的方法。
@@ -42,9 +42,9 @@ public class Demo01 {
 }
 ```
 
-- 这种方式，读取文本文件中的内容，已经在 JDK11 被淘汰了。
+以上这种方式，读取文本文件中的内容，已经在 JDK11 被淘汰了。
 
-在 JDK11 及以后，使用 `FileReader` 字符输入流，已经允许指定字符集编码，来读取数据了。
+在 JDK11 及以后，已经允许 `FileReader` 字符输入流，指定字符集编码，来读取数据了。
 
 demo-project/base-code/Day29/src/com/kkcf/convert/Demo01.java
 
@@ -90,9 +90,9 @@ public class Demo02 {
 }
 ```
 
-- 这种方式，写出数据到文件中，已经在 JDK11 被淘汰了。
+以上这种方式，写出数据到文件中，已经在 JDK11 被淘汰了。
 
-在 JDK11，使用 `FileWriter` 字符输出流，已经允许指定字符集编码，来写出数据了。
+在 JDK11，已经允许 `FileWriter` 字符输出流，指定字符集编码，来写出数据了。
 
 demo-project/base-code/Day29/src/com/kkcf/convert/Demo02.java
 
