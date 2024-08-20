@@ -180,6 +180,8 @@ public class Test06 {
 
 为实现精确计算，使用 `BigDecimal` 表示小数。
 
+demo-project/base-code/Day31/src/com/kkcf/test/RedEnvelopeThread.java
+
 ```java
 package com.kkcf.test;
 
@@ -274,7 +276,7 @@ public class Test07 {
 - 抽奖箱 1 又产生了一个 10 元大奖
 - ……
 
-思路：使用 ArrayList 集合，其中有 remove 方法，用于抽奖和去重。
+思路：使用 ArrayList 集合，其中有 `remove` 方法，用于抽奖和去重。
 
 demo-project/base-code/Day31/src/com/kkcf/test/LotteryThread.java
 
@@ -319,7 +321,7 @@ public class LotteryThread extends Thread {
 
 > 同一个线程连续执行，通常是因为数据量比较小；
 >
-> 为了让线程执行的更加均匀，通常会把 `Thread.sleep()` 方法，写在同步代码块的**外面**。
+> 为了让线程执行的更加均匀，通常会在同步代码块的**外面**。使用 `Thread.sleep()` 方法。
 
 测试类：
 
@@ -468,7 +470,12 @@ public class LotteryThread extends Thread {
 
 ### 1.多线程内存原题
 
-在 JVM 虚拟机中，堆内存是唯一的，栈内存不是唯一的。每一条线程，都有自己的栈。
+在 JVM 虚拟机中：
+
+- 堆内存是唯一的；
+- 栈内存不是唯一的。
+
+每一条线程，都有自己的栈。
 
 Java 多线程内存原理图，如下图所示：
 
@@ -482,7 +489,7 @@ Java 多线程内存原理图，如下图所示：
 - ……
 - 在此次抽奖过程中，抽奖箱2产生最大奖项，该奖金额为 800 元。
 
-思路，比较两个线程的奖项时，要等待两个线程**运行完毕**，才能比较；
+思路，要等待两个线程都**运行完毕**，才能比较；
 
 将线程奖项中的最大值，看作线程运行的结果，进行返回。
 
@@ -535,7 +542,7 @@ public class LotteryCallable implements Callable<Integer> {
 
 测试类：
 
-- 创建两个 FutureTask 对象，用于接收两个线程返回的结果，
+- 创建两个 `FutureTask` 对象，用于接收两个线程返回的结果，
 
 demo-project/base-code/Day31/src/com/kkcf/test/Test09.java
 
@@ -563,8 +570,8 @@ public class Test09 {
         t1.start();
         t2.start();
 
-        Integer max1 = ft1.get();
-        Integer max2 = ft2.get();
+        Integer max1 = ft1.get(); // 阻塞
+        Integer max2 = ft2.get(); // 阻塞
 
         boolean flag = max1 > max2;
         Integer max = flag ? max1 : max2;
