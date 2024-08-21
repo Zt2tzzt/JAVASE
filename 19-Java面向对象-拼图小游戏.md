@@ -675,6 +675,7 @@ public class MyFrame2 extends JFrame implements MouseListener {
 
         // 设置按钮位置和宽高
         jbtn1.setBounds(0, 0, 100, 50);
+
         // 给按钮绑定鼠标事件
         jbtn1.addMouseListener(this);
 
@@ -728,7 +729,7 @@ public class Test3 {
 
 ### 3.KeyListener 键盘监听
 
-KeyListener 键盘监听，可以监听键盘的：
+`KeyListener` 键盘监听，可以监听键盘的：
 
 - `keyPressed` 按下动作；
 - `keyReleased` 松开动作；
