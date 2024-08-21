@@ -13,10 +13,10 @@ public class SendMessage {
         // 打包数据
         String str = "你很勇哦";
         byte[] bytes = str.getBytes();
-        InetAddress ip = InetAddress.getByName("127.0.0.1");
+        InetAddress address = InetAddress.getByName("127.0.0.1");
         int port = 10086;
 
-        DatagramPacket dp = new DatagramPacket(bytes, bytes.length, ip, port);
+        DatagramPacket dp = new DatagramPacket(bytes, bytes.length, address, port);
 
         // 发送数据
         ds.send(dp);

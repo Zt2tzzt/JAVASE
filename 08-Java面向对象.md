@@ -157,7 +157,7 @@ public class Test01 {
         int len = s.length(); // 获取字符串的长度
         System.out.println(len);
 
-        String ss = s.toUpperCase(); // 将字符串转为大写，并反问一个新的字符串
+        String ss = s.toUpperCase(); // 将字符串转为大写，并返回一个新的字符串
         System.out.println(ss);
     }
 }
@@ -167,7 +167,7 @@ public class Test01 {
 
 `private` 是 Java 中的关键字，它
 
-- 表示一个权限的修饰符；可以修饰类中的成员（成员变量、成员方法）；被修饰的成员，只能在本类中才嫩访问。
+- 表示一个权限的修饰符；可以修饰类中的成员（成员变量、成员方法）；被修饰的成员，只能在本类中才能访问。
 - 针对 `private` 修饰的成员变量，如果需要被其它类使用，要提供相应的 getter、setter 操作：
   - 提供 `setXxx(参数)` 方法，用于给成员变量赋值，方法用 `public` 修饰。
   - 提供 `getXxx()` 方法，用于获取成员变量的值，方法用 `public` 修饰。
@@ -273,7 +273,8 @@ public class GirlFriend {
 
 `this` 关键字，修饰的变量用于指代成员变量，其主要作用是（区分重名的局部变量和成员变量）
 
-- 方法的形参与成员变量同名，不带 `this` 关键字的变量，指的是形参，而不是成员变量；否则，不带 `this` 关键字的变量，指的是成员变量。
+- 方法的形参与成员变量同名时，根据就近原则，不带 `this` 关键字的变量，指的是形参，而不是成员变量；
+- 否则，不带 `this` 关键字的变量，指的是成员变量。
 
 demo-project/base-code/Day08/src/com/kkcf/object_riented/GirlFriend.java
 
@@ -556,6 +557,8 @@ public class Student {
     }
 }
 ```
+
+测试类：
 
 demo-project/base-code/Day08/src/com/kkcf/object_riented/Test03.java
 

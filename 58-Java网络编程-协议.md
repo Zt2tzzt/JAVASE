@@ -10,12 +10,12 @@
 | 应用层       | 应用层          | HTTP, FTP, Telnet, DNS, ……  | 应用程序比如：浏览器，邮箱，开发者一般在这一层开发 |
 | 表示层       |                 |                             |                                                    |
 | 会话层       |                 |                             |                                                    |
-| 传输层       | 传输层          | TCP、UDP, ……                | 选择传输使用的 TCP、UDP 协议。                     |
+| 传输层       | 传输层          | TCP, UDP, ……                | 传输使用的协议。                                   |
 | 网络层       | 网络层          | IP, ICMP, ARP, ……           | 封装自己的 IP，对方的 IP 等信息                    |
 | 数据链路层   | 物理链路层      | 硬件设备：01010010101……     | 转换成二进制利用物理设备传输。                     |
 | 物理层       |                 |                             |                                                    |
 
-> HTTP, FTP, Telnet, DNS, ……协议，基于 TCP、UDP, ……协议封装；
+> HTTP, FTP, Telnet, DNS, ……协议，基于 TCP, UDP, ……协议封装；
 >
 > TCP、UDP, ……协议又基于 IP, ICMP, ARP, …… 协议封装。
 >
@@ -27,9 +27,9 @@
 
 UDP（User Datagram Protocol）用户数据报协议。是面向无连接的通信协议。
 
-- 两个通信的计算机之间，发送方不管是否与接收方建立连接成功，都会发送数据。
+- 无连接的通信协议，指的是两个通信的计算机之间，不论发送方是否与接收方建立连接成功，发送方都会发送数据。
 
-UDP 协议，特点是：通信速度快，有大小限制（64k），数据不安全、易丢失。
+UDP 协议，特点是通信速度快，有大小限制（64k），数据不安全、易丢失。
 
 UDP 协议，适用于丢失一点数据，不会有很大影响的场景。
 
@@ -39,8 +39,8 @@ UDP 协议，适用于丢失一点数据，不会有很大影响的场景。
 
 UDP 通信程序，发送数据的过程，就好比寄快递，有如下几步：
 
-1. 找快递公司；--> 创建发送端的 DatagramSocket 对象。
-2. 打包礼物；--> 数据打包 DatagramPacked。
+1. 找快递公司；--> 创建发送端的 `DatagramSocket` 对象。
+2. 打包礼物；--> 数据打包 `DatagramPacked`。
 3. 快递公司发送包裹；--> 发送数据。
 4. 肤浅走人。--> 释放资源。
 
@@ -62,10 +62,10 @@ public class SendMessage {
         // 打包数据
         String str = "你很勇哦";
         byte[] bytes = str.getBytes();
-        InetAddress ip = InetAddress.getByName("127.0.0.1");
+        InetAddress address = InetAddress.getByName("127.0.0.1");
         int port = 10086;
 
-        DatagramPacket dp = new DatagramPacket(bytes, bytes.length, ip, port);
+        DatagramPacket dp = new DatagramPacket(bytes, bytes.length, address, port);
 
         // 发送数据
         ds.send(dp);
@@ -78,8 +78,8 @@ public class SendMessage {
 
 UDP 通信程序，接受数据的过程，就好比取快递，有如下几步：
 
-1. 找快递公司；--> 创建接受端的 DatagramSocket 对象。
-2. 接受快递箱子；--> 接收打包好的数据。
+1. 找快递公司；--> 创建接受端的 `DatagramSocket` 对象。
+2. 接收快递箱子；--> 接收打包好的数据。
 3. 从箱子里面获取礼物；--> 解析数据包。
 4. 签收走人。--> 释放资源。
 
@@ -173,7 +173,7 @@ public class ChatroomSend {
 
 - 将这个类，设置为可重复运行的类，用于创建多个聊天窗口。
 
-> 在 IDEA 中，设置一个类，可以重复运行多次：
+> 在 IDEA 中，设置一个类可以重复运行多次：
 >
 > - 右上角选中类文件 -> Edit Configuration -> Modify Option -> Allow Multiple Instance
 
@@ -355,9 +355,9 @@ public class BroadcastSend {
 
 TCP（Transmission Control Protocol）传输控制协议，是面向连接的通信协议。
 
-- 两个通信的计算机之间，确保连接成功后，才能发送数据。
+- 面向连接的通信协议，指的是两个通信的计算机之间，确保连接成功后，才能发送数据。
 
-TCP 协议，特点是：通讯速度慢，没有大小限制，数据安全。
+TCP 协议，特点是通讯速度慢，没有大小限制，数据安全。
 
 TCP 协议，适用于不能有数据丢失的应用场景，比如：下载软件，文字聊天、发送邮件。
 
@@ -368,9 +368,11 @@ TCP 协议，是一种可靠的网络通信协议，它要求在通信的两端�
 
 ![TCP客户端发送数据给服务端](NodeAssets/TCP客户端发送数据给服务端.png)
 
+### 1.Java TCP 通信
+
 TCP 协议，发送数据的步骤：
 
-1. 创建客户端的 Socket 对象（Socket），与指定服务器连接。
+1. 创建客户端的 Socket 对象（`Socket`），与指定服务器连接。
 2. 获取输出流，写出数据；
 3. 释放资源
 
@@ -406,7 +408,7 @@ public class Client {
 
 TCP 协议，接收数据的步骤：
 
-1. 创建服务器的 Socket 对象（ServerSocket）；
+1. 创建服务器的 Socket 对象（`ServerSocket`）；
 2. 监听客户端连接，返回一个 Socket 对象；
 3. 获取输入流，读数据，并把数据显示在控制台。
 4. 释放资源。
@@ -443,7 +445,7 @@ public class Server {
 }
 ```
 
-上面的做法，不能处理汉子这样的特殊字符。使用字符转换输入流和字符缓冲输入流，优化上面的代码：
+上面的做法，不能处理汉字这样的特殊字符。使用字符转换输入流和字符缓冲输入流，优化上面的代码：
 
 demo-project/base-code/Day33/src/com/kkcf/tcp/Server.java
 
@@ -467,8 +469,8 @@ public class Server {
 
         // 从连接通道中，获取字节输入流，读取数据
         InputStream is = socket.getInputStream();
-
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
         String line;
         while ((line = br.readLine()) != null)
             System.out.println(line);
@@ -481,7 +483,7 @@ public class Server {
 }
 ```
 
-### 1.三次握手
+#### 2.三次握手
 
 TCP 通信协议中，客户端与服务端建立连接，会经过三次握手，这是为了确保连接建立。
 
@@ -491,7 +493,7 @@ TCP 通信协议中，客户端与服务端建立连接，会经过三次握手�
 
 三次握手，就是一个为了建立连接，反复确认的过程。
 
-### 2.四次挥手
+#### 2.四次挥手
 
 TCP 通信协议中，客户端与服务端断开，会经过四次挥手，这是为了确保连接断开，并保证数据处理完毕。。
 

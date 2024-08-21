@@ -6,8 +6,8 @@
 
 程序运行之后创建了两个角色：
 
-- 姓名：:乔峰；血量：100
-- 姓名：:鸠摩智；血量：100
+- 姓名：乔峰；血量：100
+- 姓名：鸠摩智；血量：100
 
 程序运行的过程如下：
 
@@ -144,15 +144,14 @@ public class Role {
     public void attack(Role role) {
         // 攻击的伤害从 1-20 随机取数
         Random r = new Random();
-
         int hurt = r.nextInt(19) + 1;
 
+        // 计算剩余血量，并设置
         int remainBlood = role.blood - hurt;
-
         if (remainBlood < 0) remainBlood = 0;
-
         role.setBlood(remainBlood);
 
+        // 输出骚话
         int index1 = r.nextInt(attacks_desc.length);
         String desc1 = attacks_desc[index1];
         System.out.printf(desc1, this.getName(), role.getName());
@@ -188,6 +187,8 @@ public class Role {
 }
 ```
 
+测试类：
+
 demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/GameTest.java
 
 ```java
@@ -221,6 +222,8 @@ public class GameTest {
 ```
 
 ## 二、对象数组
+
+将对象，放入熟组中。
 
 ### 1.对象数组-商品
 
@@ -291,6 +294,8 @@ public class Goods {
 }
 ```
 
+测试类：
+
 demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/GameTest.java
 
 ```java
@@ -319,9 +324,9 @@ public class GoodsTest {
 
 ### 2.对象数组-汽车
 
-#### 1.键盘录入的补充
+#### 1.Java 键盘录入的补充
 
-第一套体系：
+Java 键盘录，第一套体系写法：
 
 - 遇到空格，制表符，回车就停止接收（后面的数据就不会接收了）。
 - 这些符号后面的键盘录入，会交给下一个键盘录入语句接收。
@@ -334,7 +339,7 @@ sc.nextDouble(); // 键盘录入一个浮点数
 sc.next(); // 键盘录入一个字符串
 ```
 
-第二套体系：
+Java 键盘录，第二套体系写法：
 
 - 可以接收空格，制表符；遇到回车才停止接收。
 
@@ -350,6 +355,8 @@ sc.nextLine(); // 键盘录入一个字符串
 - 因为：`nextInt` 键盘录入完成后，输入的 Enter，被 `nextLine` 接收了。
 
 需求 2：定义数组存储 3 部汽车对象。汽车的属性：品牌，价格，颜色。创建三个汽车对象，数据通过键盘录入而来，并把数据存入到数组当中。
+
+汽车类：Car
 
 demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/Car.java
 
@@ -405,6 +412,8 @@ public class Car {
 }
 ```
 
+测试类：
+
 demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/CarTest.java
 
 ```java
@@ -433,9 +442,8 @@ public class CarTest {
 
         sc.close();
 
-        for (int i = 0; i < cars.length; i++) {
+        for (int i = 0; i < cars.length; i++)
             System.out.println(cars[i].toString());
-        }
     }
 }
 ```
@@ -443,6 +451,8 @@ public class CarTest {
 ### 3.对象数组-手机
 
 需求 :  定义数组存储 3 部手机对象。手机的属性：品牌，价格，颜色。要求，计算出三部手机的平均价格。
+
+手机类 Phone
 
 demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/Phone.java
 
@@ -498,6 +508,8 @@ public class Phone {
 }
 ```
 
+测试类：
+
 demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/PhoneTest.java
 
 ```java
@@ -525,6 +537,8 @@ public class PhoneTest {
 需求：定义数组存储 4 个女朋友的对象；女朋友的属性：姓名、年龄、性别、爱好；
 
 要求 1：计算出 4 个女朋友的平均年龄；要求 2：统计年龄比平均值低的女朋友有几个？并把她们的所有信息打印出来。
+
+女朋友类 GirlFriend
 
 demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/GirlFriend.java
 
@@ -590,6 +604,8 @@ public class GirlFriend {
     }
 }
 ```
+
+测试类；
 
 demo-project/base-code/Day09/src/com/kkcf/object_oriented_exercises/GirlFriendTest.java
 

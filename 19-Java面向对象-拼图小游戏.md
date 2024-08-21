@@ -175,7 +175,7 @@ public class App {
 
 ![菜单JMenu](NodeAssets/菜单JMenu.jpg)
 
-在游游戏界面（窗口），进行设置。
+在游戏界面（窗口），进行设置。
 
 demo-project/puzzelgame/src/com/kkcf/ui/GameJFrame.java
 
