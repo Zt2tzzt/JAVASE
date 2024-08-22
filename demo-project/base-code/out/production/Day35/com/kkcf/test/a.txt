@@ -1,0 +1,5 @@
+name=zzt
+age=18
+gender=男
+height=1.88
+hobby=咖啡

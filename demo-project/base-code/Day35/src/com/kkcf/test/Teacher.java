@@ -45,6 +45,10 @@ public class Teacher {
         this.salary = salary;
     }
 
+    public void teach() {
+        System.out.println("老师正在教书");
+    }
+
     public String toString() {
         return "Teacher{name = " + name + ", salary = " + salary + "}";
     }

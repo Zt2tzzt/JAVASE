@@ -99,6 +99,10 @@ public class Student {
         this.hobby = hobby;
     }
 
+    public void study() {
+        System.out.println("学生正在学习~");
+    }
+
     public String toString() {
         return "Student{name = " + name + ", age = " + age + ", gender = " + gender + ", height = " + height + ", hobby = " + hobby + "}";
     }

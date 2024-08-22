@@ -490,9 +490,9 @@ public class Student {
     public String gender;
     private String name;
     private int age;
-  
+
     // constructors……
-  
+
     // getter、setter……
 
     public void sleep() {
@@ -503,7 +503,7 @@ public class Student {
         System.out.println("吃饭" + somthing);
         return "奥利给!";
     }
-  
+
     // toString……
 }
 ```
@@ -619,7 +619,7 @@ public class Demo09 {
         Parameter[] params = eatMethod.getParameters();
         for (Parameter param : params)
             System.out.println(param);
-        
+
         // java.lang.String arg0
     }
 }
@@ -693,7 +693,104 @@ public class Demo09 {
 - 作用一：获取一个类里面的所有信息，在执行其它业务逻辑；
 - 作用二：结合配置文件，动态的创建对象和调用方法。
 
-案例联系：对于任意一个对象，把对象所有的字段名和值，保存到文件中去。
+### 1.作用一：获取类里的信息
 
+案例联系：对于任意一个对象，把其中所有的字段名和值，保存到文件中去。
 
+demo-project/base-code/Day35/src/com/kkcf/test/Test1.java
 
+```java
+package com.kkcf.test;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Field;
+
+public class Test1 {
+
+    /**
+     * 此方法用于：保存对象中所有字段的值到本地文件
+     *
+     * @param obj 实例对象
+     */
+    private static void saveObj(Object obj) throws IllegalAccessException, IOException {
+        // 获取字节码文件对象
+        Class<?> clazz = obj.getClass();
+
+        BufferedWriter bw = new BufferedWriter(new FileWriter("Day35/src/com/kkcf/test/a.txt"));
+
+        // 获取所有成员变量
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true); // 暴力反射
+
+            // 获取成员变量名称和保存的值
+            String name = field.getName();
+            Object val = field.get(obj);
+
+            // 写出数据
+            bw.write(name + "=" + val);
+            bw.newLine();
+        }
+
+        bw.close();
+    }
+
+    public static void main(String[] args) throws IllegalAccessException, IOException {
+        Student stu = new Student("zzt", 18, "男", 1.88, "咖啡");
+
+        saveObj(stu);
+    }
+}
+```
+
+### 2.作用二：结合配置文件动态创建对象调用方法
+
+案例理解：读取配置文件 prop.properties 文件中的信息。根据 classname 创建对象，根据 method 调用方法
+
+配置文件 prop.properties
+
+```properties
+classname=com.kkcf.test.Student
+method=study
+```
+
+测试类
+
+demo-project/base-code/Day35/src/com/kkcf/test/Test2.java
+
+```java
+package com.kkcf.test;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Properties;
+
+public class Test2 {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        // 加载配置文件
+        Properties p = new Properties();
+        FileInputStream fis = new FileInputStream("Day35/src/com/kkcf/test/prop.properties");
+        p.load(fis);
+        fis.close();
+
+        // 获取全类名，方法名
+        String classname = (String) p.get("classname");
+        String method = (String) p.get("method");
+
+        // 利用反射，创建对象
+        Class<?> clazz = Class.forName(classname);
+        Constructor<?> con = clazz.getDeclaredConstructor();
+        Object o = con.newInstance();
+
+        // 利用反射，并调用方法
+        Method meth = clazz.getDeclaredMethod(method);
+        meth.setAccessible(true);
+        meth.invoke(o);
+    }
+}
+```
