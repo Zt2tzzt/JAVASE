@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 public class Test1 {
-
     /**
      * 此方法用于：保存对象中所有字段的值到本地文件
      *

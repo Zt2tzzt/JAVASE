@@ -2,31 +2,31 @@
 
 反射，允许对类中的成员方法，成员变量，构造方法的信息，进行编程访问。可以获取到他们的所有信息。比如：
 
-- 类中的成员变量（字段），可以获取到它本身，它的修饰符，它的名字，它的类型。值或赋值……。
+- 类中的成员变量（字段），可以获取到它本身，它的修饰符，它的名字，它的类型。取值或赋值……。
 - 类中的构造方法：可以获取它本身，它的修饰符，它的名字，它的形参列表，用它创建对象……。
 - 类中的成员方法，可以获取它的本身，它的修饰符，它的名字，它的形参列表，它的返回值，抛出的异常，获取注解，运行的方法……。
 
 IDEA 中的语法提示，实际上就是利用反射实现的。
 
-上面的操作，分为“获取”和“解刨”两个。先从 .class 文件中“获取”到成员变量、成员方法、构造方法；再对它们进行解刨。
+上面的操作，分为“获取”和“解刨”两部分。先从 .class 文件中“获取”到成员变量（Field）、成员方法（Method）、构造方法（Constructor）的实例对象；再对它们进行解刨。
 
 ## 一、获取 Class 对象
 
 获取 class 字节码文件对象的三种方式：
 
-- 方式一：Class.forName("全类名")
-- 方式二：类名.class
-- 方式三：对象.getClass()
+- 方式一：`Class.forName("全类名")` 最常使用。
+- 方式二：`类名.class` 通常作为参数传递。
+- 方式三：`对象.getClass()`
 
-这三种方式，如何选择？更具编写代码的时机来选择。
+这三种方式，要根据编写代码的时机来选择。
 
-- 源代码阶段：.java 文件，还没有编译成 .class 文件。用第一种方式（最常使用）。
-- 加载阶段：.class 文件，加载到了内存当中。用第二种方式（通常作为参数传递）。
+- 源代码阶段：.java 文件，还没有编译成 .class 文件。用第一种方式。
+- 加载阶段：.class 文件，加载到了内存当中。用第二种方式。
 - 运行阶段；类的对象被创建了。用第三种方式。
 
 Class 是 Java 中用于描述 class 字节码文件的类。
 
-创建一个学生类 Student，用于反射测试：
+创建一个学生类 Student
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Student.java
 
@@ -107,11 +107,11 @@ public class Demo01 {
 
 在 Java 中，万物皆对象：
 
-- Constructors、Filed、Method 三个类，分别表示构造方法，成员变量，成员方法。
+- `Constructors`、`Filed`、`Method` 三个类，分别表示构造方法，成员变量，成员方法。
 
-## 二、获取构造方法
+## 二、获取构造方法（Constructor）
 
-Class 类中，用于获取构造方法的方法有：
+Class 类中，用于获取构造方法实例对象的方法有：
 
 | 方法名                                                       | 说明                           |
 | ------------------------------------------------------------ | ------------------------------ |
@@ -131,7 +131,7 @@ public class Demo02 {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException {
         Class<?> clazz = Class.forName("com.kkcf.reflect.Student");
 
-        // 获取 public 修饰的构造方法
+        // 获取 public 修饰的构造方法数组
         Constructor<?>[] cons = clazz.getConstructors();
         for (Constructor<?> con : cons)
             System.out.println(con);
@@ -153,7 +153,7 @@ public class Demo02 {
         Constructor<?> con1 = clazz.getConstructor();
         System.out.println(con1); // public com.kkcf.reflect.Student()
 
-        // 获取带参构造放啊翻，传入的参数，与带参构造的参数类型一致
+        // 获取指定的带参构造方法，传入的参数，与带参构造的参数类型一致
         Constructor<?> con2 = clazz.getDeclaredConstructor(String.class);
         System.out.println(con2); // protected com.kkcf.reflect.Student(java.lang.String)
 
@@ -168,7 +168,10 @@ public class Demo02 {
 
 ### 1.解刨构造方法获取权限修饰符
 
-使用 Constructor 类的 getModifiers 方法。
+使用 `Constructor` 类的 `getModifiers` 方法。
+
+- `java.lang.reflect.Modifier` 类，用于表示权限修饰符。
+- 权限修饰符常量，见[此处](https://docs.oracle.com/en/java/javase/17/docs/api/constant-values.html#java.lang.reflect.Modifier.PUBLIC)
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo03.java
 
@@ -189,11 +192,11 @@ public class Demo03 {
 }
 ```
 
-权限修饰符常量，见[此处](https://docs.oracle.com/en/java/javase/17/docs/api/constant-values.html#java.lang.reflect.Modifier.PUBLIC)
-
 ### 2.解刨构造方法获取它的参数列表
 
-使用 Constructor 类的 getParameters 方法。
+使用 `Constructor` 类的 `getParameters` 方法。
+
+- `java.lang.reflect.Parameter` 类，用于表示形参。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo03.java
 
@@ -221,7 +224,7 @@ public class Demo03 {
 
 ### 3.调用构造方法创建对象
 
-通过反射获取到的 private 修饰的构造方法，不能直接用于创建对象，需要进行暴力反射。
+通过反射获取到的 private 修饰的构造方法，不能直接用于创建对象，需要进行**暴力反射**。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo04.java
 
@@ -249,9 +252,9 @@ public class Demo04 {
 }
 ```
 
-- `con2.setAccessible(true);` 用于设置暴力反射，表示表示临时取消权限校验。
+- `con2.setAccessible(true);` 用于设置暴力反射，表示临时取消权限校验。
 
-## 三、获取成员变量
+## 三、获取成员变量（Field）
 
 在 Student 类中，添加使用 public 修饰的成员变量 gender。
 
@@ -264,61 +267,10 @@ public class Student {
     public String gender;
     private String name;
     private int age;
-
-    public Student() {
-    }
-
-    public Student(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    public Student(String name, int age, String gender) {
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
-    }
-
-    protected Student(String name) {
-        this.name = name;
-    }
-
-    private Student(int age) {
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", gender='" + gender + '\'' +
-                '}';
-    }
+  
+    // constructors……
+  
+    // getter、setter……
 }
 ```
 
@@ -371,7 +323,7 @@ public class Demo05 {
 
 ### 1.解刨成员变量获取权限修饰符
 
-使用 Field 类的 getModifiers 方法，获取成员变量的修饰符。
+使用 `Field` 类的 `getModifiers` 方法，获取成员变量的修饰符。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo06.java
 
@@ -395,7 +347,7 @@ public class Demo06 {
 
 ### 2.解刨成员变量获取成员变量名
 
-使用 Field 类的 getName 方法，获取成员变量的修饰符。
+使用 `Field` 类的 `getName` 方法，获取成员变量的修饰符。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo06.java
 
@@ -419,7 +371,7 @@ public class Demo06 {
 
 ### 3.解刨成员变量获取成员变量类型
 
-使用 Field 类的 getType 方法，获取成员变量的类型。
+使用 `Field` 类的 `getType` 方法，获取成员变量的类型。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo06.java
 
@@ -441,11 +393,11 @@ public class Demo06 {
 }
 ```
 
-### 4.获取成员变量记录的值
+### 4.成员变量取值和设置
 
-使用 Field 类的 get、set 方法，获取、设置成员变量的值。
+使用 `Field` 类的 `get`、`set` 方法，获取、设置成员变量的值。
 
-通过反射获取到的 private 修饰的成员变量，不能直接获取它记录的值，需要设置暴力反射。
+通过反射获取到的 private 修饰的成员变量，不能直接获取它记录的值，需要设置**暴力反射**。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo07.java
 
@@ -459,10 +411,9 @@ public class Demo07 {
         Class<?> clazz = Class.forName("com.kkcf.reflect.Student");
 
         Field nameField = clazz.getDeclaredField("name");
+        nameField.setAccessible(true); // 暴力反射
 
         Student stu = new Student("张三", 23, "男");
-
-        nameField.setAccessible(true); // 暴力反射
 
         // 获取 private 修饰的属性记录的值
         String nameVal = (String) nameField.get(stu);
@@ -477,9 +428,9 @@ public class Demo07 {
 
 - `nameField.setAccessible(true);` 用于设置暴力反射。
 
-## 四、获取成员方法
+## 四、获取成员方法（Method）
 
-在 Student 类中，加入 sleep，eat 方法
+在 Student 类中，加入 `sleep`，`eat` 方法
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Student.java
 
@@ -508,7 +459,7 @@ public class Student {
 }
 ```
 
-Class 类中，用于获取成员方法的方法有：
+Class 类中，用于获取成员方法实例对象的方法有：
 
 | 方法名                                                       | 说明                                       |
 | ------------------------------------------------------------ | ------------------------------------------ |
@@ -555,7 +506,7 @@ public class Demo08 {
 
 ### 1.解刨成员方法获取权限修饰符
 
-使用 Method 类的 getModifiers 方法，获取成员方法的修饰符。
+使用 `Method` 类的 `getModifiers` 方法，获取成员方法的修饰符。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo09.java
 
@@ -577,7 +528,7 @@ public class Demo09 {
 
 ### 2.解刨成员方法获取成员方法名
 
-使用 Method 类的 getName 方法，获取成员方法的名称。
+使用 `Method` 类的 `getName` 方法，获取成员方法的名称。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo09.java
 
@@ -600,7 +551,7 @@ public class Demo09 {
 
 ### 3.解刨成员方法获取成员方法形参列表
 
-使用 Method 类的 getParameters 方法，获取成员方法的形参列表。
+使用 `Method` 类的 `getParameters` 方法，获取成员方法的形参列表。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo09.java
 
@@ -627,7 +578,7 @@ public class Demo09 {
 
 ### 3.解刨成员方法获取抛出的异常
 
-使用 Method 类的 getExceptionTypes 方法，获取成员方法抛出的异常。
+使用 `Method` 类的 `getExceptionTypes` 方法，获取成员方法抛出的异常。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo09.java
 
@@ -655,7 +606,7 @@ public class Demo09 {
 
 ### 4.执行成员方法并获取返回值
 
-使用 Method 类的 invoke 方法，执行成员方法，获取返回值。
+使用 `Method` 类的 `invoke` 方法，执行成员方法，获取返回值。
 
 - 参数一：实例对象；
 - 参数二：成员方法方法参数
@@ -747,7 +698,7 @@ public class Test1 {
 
 ### 2.作用二：结合配置文件动态创建对象调用方法
 
-案例理解：读取配置文件 prop.properties 文件中的信息。根据 classname 创建对象，根据 method 调用方法
+案例理解：读取配置文件 prop.properties 文件中的信息。根据 `classname` 字段创建对象，根据 `method` 字段调用方法
 
 配置文件 prop.properties
 

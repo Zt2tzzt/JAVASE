@@ -58,7 +58,7 @@ public class Test1 {
     }
 
     /**
-     * 此方法用于：正则表达式匹配
+     * 此方法用于：处理数据，正则表达式匹配
      *
      * @param str   网站数据
      * @param regex 正则表达式
@@ -105,7 +105,7 @@ public class Test1 {
     }
 
     /**
-     * 此方法用于：处理女性名字数据（分隔）
+     * 此方法用于：处理女性名字数据（分割）
      *
      * @param femaleNameTempList 女性名字数据
      * @return 女性名字
@@ -395,9 +395,9 @@ public class Test3 {
 
 ## 三、登陆注册
 
-写一个登录程序，将正确的用户名和密码，手动保存在本地 userinfo.txt 文本文件中。
+写一个登录程序，将正确的用户名和密码，手动保存在本地 `userinfo.txt` 文本文件中。
 
-保存格式为：username=zhangsan%password=123&count=0
+保存格式为：`username=zhangsan%password=123&count=0`
 
 让用户键盘录入用户名、密码；
 

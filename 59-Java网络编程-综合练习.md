@@ -2,7 +2,7 @@
 
 ## 一、练习一：多发多收
 
-需求，客户端多次发送数据；服务端多次接收数据。
+需求，客户端多次发送数据；服务端多次接收数据。使用 TCP 协议。
 
 客户端 Client1
 
@@ -76,7 +76,8 @@ public class Server1 {
 }
 ```
 
-- 如果客户端不发送结束标记，上方的 while 循环会一直进行下去。
+- 如果客户端不发送**结束标记**，上方的 `while` 循环会一直进行下去。
+- `read` 方法，从连接通道中读取数据，发送的数据需要有一个结束标记，否则会一直停留在 `read` 方法这里，等待读取下面的数据。
 
 在浏览器地址栏，输入 `127.0.0.1:10086` 查看控制台输出：
 
@@ -186,7 +187,7 @@ public class Server2 {
 
 需求：客户端：将本地文件上传到服务器，接收服务器的反馈；服务端：接收客户端上传的文件保存到本地，上传完毕之后给出反馈。
 
-思路：客户端，使用 `FileInputSream` 字节输入流，读取本地文件到内容到内存中，再将文件数据发送给服务器端；服务器端接收到文件数据后，使用 `FileOutputStream` 字节输出流，保存文件到本地，并向客户端返回消息。
+思路：客户端，使用 `FileInputSream` 字节输入流，读取本地文件的内容到内存中，再将文件数据发送给服务器端；服务器端接收到文件数据后，使用 `FileOutputStream` 字节输出流，保存文件到本地，并向客户端返回消息。
 
 客户端：Client3
 
@@ -203,7 +204,7 @@ public class Client3 {
         // 创建 socket 对象，并连接服务器
         Socket socket = new Socket("127.0.0.1", 10086);
 
-        // 读取本地文件中到数据，并发送给服务端
+        // 读取本地文件中到数据，边读边发送给服务端
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream("Day33/src/com/kkcf/test/upload/baja(1).jpg"));
         BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
         byte[] buffer = new byte[1024];
@@ -246,7 +247,7 @@ public class Sever3 {
         // 等待用户端到连接
         Socket socket = serverSocket.accept();
 
-        // 读取数据并保存到本地
+        // 读取数据并保存到本地，边读边保存。
         BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("Day33/src/com/kkcf/test/upload/a.jpg"));
         byte[] buffer = new byte[1024];
@@ -296,7 +297,7 @@ public class UUIDTest {
 }
 ```
 
-优化上方服务端代码：
+使用 `UUID` 类，优化上方服务端代码：
 
 demo-project/base-code/Day33/src/com/kkcf/test/Sever3.java
 
@@ -382,7 +383,7 @@ public class UploadRunnable implements Runnable {
             while ((len = bis.read(buffer)) != -1)
                 bos.write(buffer, 0, len);
 
-            // 回血消息
+            // 回写消息
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             bw.write("上传成功");
             bw.newLine();
@@ -442,7 +443,7 @@ public class Sever3 {
         ServerSocket serverSocket = new ServerSocket(10086);
 
         while (true) {
-            // 等待用户端到连接
+            // 等待用户端的连接
             Socket socket = serverSocket.accept();
 
             //new Thread(new UploadRunnable(socket)).start();
