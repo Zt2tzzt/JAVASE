@@ -267,9 +267,9 @@ public class Student {
     public String gender;
     private String name;
     private int age;
-  
+
     // constructors……
-  
+
     // getter、setter……
 }
 ```

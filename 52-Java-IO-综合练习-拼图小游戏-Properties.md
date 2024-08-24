@@ -2,7 +2,7 @@
 
 ## 一、拼图小游戏-登录界面完善
 
-将拼图小游戏中用户登录的信息，保存在本地文件 userinfo.txt 中。读取这些信息的时机：
+将拼图小游戏中用户登录的信息，保存在本地文件 userinfo.txt 中。读取这些信息的时机应该在哪？
 
 - 因为，只要登录界面不关闭，那么就不会修改文件中的数据；
 - 所以，一般在**打开登录界面时**，读取文件中的数据；而不是点击登录按钮后读取。
@@ -16,10 +16,11 @@
 
 分析可知，如果要加入注册逻辑，那么登录界面加载用户信息的逻辑，就要写在构造方法里。
 
+- 因为注册逻辑，会改变 userinfo.txt 中保存的用户信息。
+
 重构 `LoginFrame` 类，
 
-- 将 User 列表集合 `allUsers`，改为非静态的；
-- 并注释掉静态代码块：
+- 并注释掉静态代码块：将 User 列表集合 `allUsers`，改为非静态的；
 - 将加载用户信息的逻辑，放在构造方法中。
 
 demo-project/puzzelgame/src/com/kkcf/ui/LoginJFrame.java
@@ -299,7 +300,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
 
 创建一个 JavaBean 类 `GameInfo`，用于封装上面的信息；
 
-为它实现 `Serializable` 接口，用于**字节序列化输出流**写入文件。
+- 为它实现 `Serializable` 接口，用于**字节序列化输出流**写入文件。
 
 JavaBean `GameInfo` 类：
 
@@ -469,7 +470,7 @@ private void initGameinfo() {
 
 如果要修改参数，不需要改动代码，直接修改配置文件就可以了。
 
-- 只要修改代码，就要重新打包、重新发布。
+- 只要修改代码，就要重新打包、重新发布，非常麻烦。
 
 > 常见的配置文件有：
 >
@@ -478,7 +479,7 @@ private void initGameinfo() {
 > - ini
 > - YAML
 
-properties 配置文件，以 `.properties` 后缀名结尾；其中的数据，以键值对的新式存储，比如：
+properties 配置文件，以 `.properties` 后缀名结尾；其中的数据，以键值对的形式存储，比如：
 
 ```properties
 width=603

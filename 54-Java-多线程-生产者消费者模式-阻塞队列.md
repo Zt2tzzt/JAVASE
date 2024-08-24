@@ -192,7 +192,7 @@ public class Test {
 
 厨师类 `Cook`：
 
-- 将阻塞对列 `queue` 定义在最为成员属性，定义在类中，使用构造方法初始化，保证数据的唯一。
+- 将阻塞对列 `queue` 作为成员属性，定义在类中，使用构造方法初始化，保证它的唯一。
 
 demo-project/base-code/Day31/src/com/kkcf/blocking_queues/Cook.java
 

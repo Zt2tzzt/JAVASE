@@ -235,6 +235,8 @@ public class RedEnvelopeThread extends Thread {
 }
 ```
 
+- `BigDecimal.valueOf` 静态方法，奖一个数字，转为 BigDecimal 类型。
+- BigDecimal 类的 `doubleValue` 方法，将 BigDemical 类型，转为 double 类型的数字。
 - `r.nextDouble` 方法，只有 JDK17 才能用。
 
 测试类：
@@ -517,12 +519,10 @@ public class LotteryCallable implements Callable<Integer> {
 
         while (true) {
             synchronized (LotteryThread.class) {
-                String name = Thread.currentThread().getName();
-
                 if (list.isEmpty()) {
                     Integer max = Collections.max(boxList);
                     //抽奖箱 1 总共产生了 6 个奖项，分别为：10,20,100,500,2,300 最高奖项为 300 元，总计额为 932 元
-                    System.out.println(name + "共产生了" + boxList.size() + "个奖项，分别为" + boxList + "，其中最高奖项为" + max + "元，总计额为：" + boxList.stream().reduce(0, Integer::sum) + " 元");
+                    System.out.println(Thread.currentThread().getName() + "共产生了" + boxList.size() + "个奖项，分别为" + boxList + "，其中最高奖项为" + max + "元，总计额为：" + boxList.stream().reduce(0, Integer::sum) + " 元");
 
                     return boxList.isEmpty() ? null : max;
                 }

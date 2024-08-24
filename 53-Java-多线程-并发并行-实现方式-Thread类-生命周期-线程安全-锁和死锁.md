@@ -38,7 +38,7 @@
 
 ### 1.继承 Thread 类
 
-在 Java 中，`Thread` 类，表示线程，JVM 虚拟机允许应用程序，并行地运行多个线程。
+在 Java 中，`Thread` 类，表示线程，JVM 虚拟机允许应用程序，**并行**地运行多个线程。
 
 使用 `Thread` 类，实现多线程的步骤：
 
@@ -90,7 +90,7 @@ public class Demo01 {
 
 1. 自定义类，实现 `Runable` 接口；
 2. 在自定义类，实现 `run` 方法；
-3. 创建自定义类对象；
+3. 创建自定义类实例对象；
 4. 传入自定义类的对象，再创建 `Thread` 类对象；
 5. 开启线程。
 
@@ -122,7 +122,7 @@ package com.kkcf.runable;
 
 public class Demo01 {
     public static void main(String[] args) {
-        // 创建 MyRun 类的示例对象，表示多线程要实现的任务
+        // 创建 MyRun 类的实例对象，表示多线程要实现的任务
         MyRun mr = new MyRun();
 
         // 创建线程对象
@@ -140,13 +140,13 @@ public class Demo01 {
 }
 ```
 
-### 3.实现 Callable、Future 接口
+### 3.实现 Callable 接口、使用 Future 接口
 
 继承 `Thread` 类、实现 `Runnable` 接口这两种多线程的实现方式，在 `run` 方法中都没有返回值。
 
-如果想要获取多线程运行的结果，就要使用实现 `Callable`、`Futrure` 接口的方式。
+如果想要获取多线程运行的结果，就要使用实现 `Callable` 接口、使用 `Futrure` 接口的方式。
 
-使用 `Callable`、`Futrure` 接口，实现多线程的步骤：
+具体步骤如下：
 
 1. 自定义类，实现 `Callable` 泛型接口，泛型表示返回值的类型。
 2. 在自定义类中，重写 `call` 方法，该方法有返回值，表示多线程运行的结果。
@@ -208,14 +208,14 @@ public class Demo01 {
 总结：三种方式，如何选择：
 
 - 要得到返回值，选择：
-  - 实现 `Callable` 接口（优点：使用接口的方式实现，扩展性强，可以继承其它类，编程比较复杂）。
+  - 实现 `Callable` 接口，使用 Future 接口（优点：使用接口的方式实现，扩展性强，可以继承其它类，编程比较复杂）。
 - 不需要得到返回值：选择：
   - 继承 `Thread` 类（优点：使用继承的方式实现，编程比较简单；缺点：可扩展性差，不能继承其它类）；
   - 实现 `Runable` 接口（优点：使用接口的方式实现，扩展性强，可以继承其它类，编程比较复杂）；
 
 ## 三、Thread 类常用方法
 
-Thread 类常用方法如下：
+`Thread` 类常用方法如下：
 
 | 方法名                              | 说明                                 |
 | ----------------------------------- | ------------------------------------ |
@@ -240,7 +240,7 @@ Thread 类常用方法如下：
 
 自定义类 `MyThread`：
 
-- 构造方法不能被继承，要使用 `super` 关键字调用。
+- 构造方法不能被继承，要使用 super 关键字调用。
 
 demo-project/base-code/Day31/src/com/kkcf/thread/MyThread.java
 
@@ -300,8 +300,8 @@ public class Demo03 {
 ```
 
 1. 在 JVM 虚拟机启动之后，会自动启动多条线程；
-2. 其中一个就是 main 线程，它的作用是调用 main 方法，执行里面的代码。
-3. 所以在测试类 `main` 方法中的代码，都是运行在 main 线程中的。
+2. 其中一个就是 main 线程，它的作用是调用 `main` 方法，执行里面的代码。
+3. 所以在测试类 `main` 方法中的代码，都是运行在 `main` 线程中的。
 
 ### 3.sleep 静态方法
 
@@ -310,7 +310,7 @@ public class Demo03 {
 - 线程执行到这个静态方法，就会在执行处停留相应的时间；
 - 当时间到了后，线程会自动醒来，执行下面的其它代码。
 
-将 main 线程，休眠 5s
+案例 1：将 main 线程，休眠 5s
 
 demo-project/base-code/Day31/src/com/kkcf/thread/Demo04.java
 
@@ -328,7 +328,7 @@ public class Demo04 {
 }
 ```
 
-为交替执行的两个线程，进行休眠：
+案例 2：为交替执行的两个线程，进行休眠：
 
 - 这种做法，可以让多线程任务执行的更加均匀。
 
@@ -436,7 +436,7 @@ public class Demo02 {
 }
 ```
 
-### 5.setDaemon 方法（守护线程）
+### 5.setDaemon 方法（守护线程）用的少
 
 `setDaemon` 方法，用于设置守护进程；
 
@@ -548,7 +548,7 @@ public class Demo06 {
 }
 ```
 
-### 7.join 静态方法（插队线程）
+### 7.join 静态方法（插队线程）用的少
 
 `join` 静态方法，用于设置插队线程。
 
@@ -763,9 +763,9 @@ public class MovieTicketSaleRunable implements Runnable {
 }
 ```
 
-- 使用实现 `Runable` 接口的方式实现多线程，在测试类中，只会创建一个`MovieTicketSaleRunable` 对象，所以
+- 使用实现 `Runable` 接口的方式实现多线程，在测试类中，只会创建一个 `MovieTicketSaleRunable` 对象，所以
   - `int ticketCount = 0;` 可以不使用 `static` 修饰。
-  - 同步方法的锁，被设为 `this`，是唯一的。
+  - 同步方法的锁，被设为 `this`，也是唯一的。
 
 测试类：
 
@@ -814,7 +814,9 @@ Java 的 `StringBuffer` 类，相比于 `StringBuilder` 类，它们的功能都
 - `void lock()`，用于上锁；
 - `void unlock()`，用于解锁；
 
-这里使用 `Lock` 接口的实现类 `ReentrantLock`，来进行锁对象的实例化，重构上方的 `MovieTicketSaleThread` 类。
+这里使用 `Lock` 接口的实现类 `ReentrantLock`，来进行锁对象的实例化。
+
+重构上方的 `MovieTicketSaleThread` 类。
 
 自定义类 `MovieTicketSaleThread1`：
 
@@ -861,7 +863,7 @@ public class MovieTicketSaleThread1 extends Thread {
 ```
 
 - 细节 1：在继承 `Thread` 类的自定义类中，`Lock` 锁的实例对象，要加 `static final` 关键字修饰，表示唯一的一把锁。
-- 细节 2：线程在执行循环中的 `break` 语句时，会跳出循环，如果执行跳出循环代码的线程，此时处于上锁状态，那么其它线程会卡在上锁处，等待上锁线程锁的释放，这会导致程序不能停止；
+- 细节 2：如果执行 break 语句跳出循环代码的线程，正处于上锁状态，那么其它线程会卡在上锁处，等待上锁线程锁的释放，然而跳出循环（上锁）的线程，不会执行释放锁的代码。这会导致程序不能停止；
   - 解决上面的问题，就要利用 `try…catch…finally` 代码块的 `finally` 代码块必会执行的特性，把解锁的代码 `lock.unlock();` 放入其中执行。
 
 测试类：
