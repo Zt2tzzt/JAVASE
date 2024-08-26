@@ -22,6 +22,8 @@
 
 案例理解：将 aaa.zip 压缩包，解压到同目录下同名的文件夹中：
 
+- `ZipEntry getNextEntry()` 方法，用于读取下一个 ZIP 文件条目并将流定位在条目数据的开头。
+
 demo-project/base-code/Day29/src/com/kkcf/compression/Demo01.java
 
 ```java
@@ -43,7 +45,7 @@ public class Demo01 {
      * @throws IOException 抛出异常
      */
     public static void unzip(File src, File dest) throws IOException {
-        // 创建解压目录
+        // 创建一个同名的目录
         String[] split = src.getName().split("\\.");
         StringJoiner sj = new StringJoiner(".", "", "");
         for (int i = 0; i < split.length - 1; i++)
@@ -58,7 +60,7 @@ public class Demo01 {
 
         ZipEntry entry;
         while ((entry = zis.getNextEntry()) != null) {
-            System.out.println(entry); // 得到一个以压缩包为参照的相对路径
+            System.out.println(entry); // 打印一个以压缩包为参照的相对路径
             File file = new File(destDir, entry.toString());
 
             if (entry.isDirectory()) {
@@ -103,6 +105,8 @@ public class Demo01 {
 
 把指定目录下的 a.txt 文件，压缩为 a.zip 文件。
 
+- `void putNextEntry(ZipEntry throws IOException` 方法，用于开始写入新的 ZIP 文件条目并将流定位到条目数据的开头。
+
 demo-project/base-code/Day29/src/com/kkcf/compression/Demo02.java
 
 ```java
@@ -118,7 +122,7 @@ import java.util.zip.ZipOutputStream;
 
 public class Demo02 {
     public static void toZip(File src, File dest) throws IOException {
-        // 压缩包名称
+        // 获取压缩包名称
         StringJoiner sj = new StringJoiner(".", "", "");
         String[] split = src.getName().split("\\.");
         for (int i = 0; i < split.length - 1; i++)
@@ -161,9 +165,9 @@ public class Demo02 {
 
 ### 1.压缩目录下所有内容
 
-压缩一个文件夹下的所有内容：
+压缩一个文件夹下的所有内容，使用递归：
 
-- `ZipEntry` 构造函数中的字符串路径，表示以压缩包为根目录的相对路径
+- `ZipEntry` 构造函数中的字符串路径，表示以压缩包为根目录的相对路径。
 
 demo-project/base-code/Day29/src/com/kkcf/compression/Demo03.java
 

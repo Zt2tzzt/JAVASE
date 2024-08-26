@@ -135,11 +135,9 @@ Java 中，使用 `InetAddress` 类，来表示 IP 地址；它有两个子类�
 - `Inet4Address` 类；表示 IPv4 地址。
 - `Inet6Address` 类，表示 IPv6 地址。
 
-`InetAddress` 类没有提供构造方法，用于 `new` 操作符创建对象。
+`InetAddress` 类没有提供构造方法，用于 `new` 操作符创建对象。如果要创建它的实例对象，要使用它的静态方法，比如
 
-如果要创建它的实例对象，要使用它的静态方法，比如  `getByName` ：
-
-- 会判断当前使用的是 IPv4 还是 IPv6 地址，并返回对应的 `InetAddress` 子类实例对象。
+-  `getByName` 静态方法：会判断当前使用的是 IPv4 还是 IPv6 地址，并返回对应的 `InetAddress` 子类实例对象。
 
 demo-project/base-code/Day33/src/com/kkcf/ip/Demo01.java
 
