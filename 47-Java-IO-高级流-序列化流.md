@@ -192,7 +192,7 @@ public class Demo02 {
 Exception in thread "main" java.io.InvalidClassException: com.kkcf.serialization.Student; local class incompatible: stream classdesc serialVersionUID = -4392380043550236176, local class serialVersionUID = -527847733620412698
 ```
 
-为了避免以上错误，通常会在 JavaBean 类中，固定版本号，有三种方式：
+为了避免以上错误，通常会在 JavaBean 类中，固定版本号，主要有两种方式：
 
 方式一：在 JavaBean 类中，手动指定版本号。
 
@@ -246,13 +246,13 @@ public class Student implements Serializable {
 
 序列化对象，写出到文件中的数据，不能被修改；否则反序列化时将抛出异常。
 
-## 四、序列化流综合练习
+## 四、序列化列表集合对象
 
 需求：将多个自定义对象，序列化到文件中，但是由于对象的个数不确定，反序列化流该如何读取呢？
 
 思路：将要序列化的多个对象，放入一个 ArrayList 集合中，然后再对该集合进行序列化。
 
-ArrayList 类，也实现了 Serializable 接口：
+ArrayList 类，也实现了 Serializable 接口：并有一个固定的版本号（序列号）。
 
 java/util/ArrayList.java
 

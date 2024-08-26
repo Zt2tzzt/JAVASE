@@ -22,10 +22,10 @@ public class Demo08 {
 
         // 获取单个指定的公共方法对象
         Method sleepMethod = clazz.getMethod("sleep");
-        System.out.println(sleepMethod);
+        System.out.println(sleepMethod); // public void com.kkcf.reflect.Student.sleep()
 
         // 获取单个指定的方法对象
         Method eatMethod = clazz.getDeclaredMethod("eat", String.class);
-        System.out.println(eatMethod);
+        System.out.println(eatMethod); // private java.lang.String com.kkcf.reflect.Student.eat(java.lang.String) throws java.io.IOException,java.lang.NullPointerException
     }
 }

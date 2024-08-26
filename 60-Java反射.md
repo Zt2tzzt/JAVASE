@@ -317,7 +317,7 @@ public class Demo05 {
 
 ### 1.解刨成员变量获取权限修饰符
 
-使用 `Field` 类的 `getModifiers` 方法，获取成员变量的修饰符。
+使用 `Field` 类的 `int getModifiers()` 方法，获取成员变量的修饰符。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo06.java
 
@@ -341,7 +341,7 @@ public class Demo06 {
 
 ### 2.解刨成员变量获取成员变量名
 
-使用 `Field` 类的 `getName` 方法，获取成员变量的修饰符。
+使用 `Field` 类的 `String getName()` 方法，获取成员变量的修饰符。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo06.java
 
@@ -365,7 +365,7 @@ public class Demo06 {
 
 ### 3.解刨成员变量获取成员变量类型
 
-使用 `Field` 类的 `getType` 方法，获取成员变量的类型。
+使用 `Field` 类的 `Class<?> getType()` 方法，获取成员变量的类型。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo06.java
 
@@ -389,7 +389,7 @@ public class Demo06 {
 
 ### 4.成员变量取值和设置
 
-使用 `Field` 类的 `get`、`set` 方法，获取、设置成员变量的值。
+使用 `Field` 类的 `Object get(Object obj)`、`void set(Object obj, Object value)` 方法，用于获取、设置成员变量的值。
 
 通过反射获取到的 private 修饰的成员变量，不能直接获取它记录的值，需要设置**暴力反射**。
 
@@ -453,7 +453,7 @@ public class Student {
 }
 ```
 
-Class 类中，用于获取成员方法实例对象的方法有：
+`Class` 类中，用于获取成员方法实例对象的方法有：
 
 | 方法名                                                       | 说明                                       |
 | ------------------------------------------------------------ | ------------------------------------------ |
@@ -489,18 +489,18 @@ public class Demo08 {
 
         // 获取单个指定的公共方法对象
         Method sleepMethod = clazz.getMethod("sleep");
-        System.out.println(sleepMethod);
+        System.out.println(sleepMethod); // public void com.kkcf.reflect.Student.sleep()
 
         // 获取单个指定的方法对象
         Method eatMethod = clazz.getDeclaredMethod("eat", String.class);
-        System.out.println(eatMethod);
+        System.out.println(eatMethod); // private java.lang.String com.kkcf.reflect.Student.eat(java.lang.String) throws java.io.IOException,java.lang.NullPointerException
     }
 }
 ```
 
 ### 1.解刨成员方法获取权限修饰符
 
-使用 `Method` 类的 `getModifiers` 方法，获取成员方法的修饰符。
+使用 `Method` 类的 `int getModifiers()` 方法，获取成员方法的修饰符。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo09.java
 
@@ -522,7 +522,7 @@ public class Demo09 {
 
 ### 2.解刨成员方法获取成员方法名
 
-使用 `Method` 类的 `getName` 方法，获取成员方法的名称。
+使用 `Method` 类的 `String getName()` 方法，获取成员方法的名称。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo09.java
 
@@ -545,7 +545,7 @@ public class Demo09 {
 
 ### 3.解刨成员方法获取成员方法形参列表
 
-使用 `Method` 类的 `getParameters` 方法，获取成员方法的形参列表。
+使用 `Method` 类的 `public Parameter[] getParameters()` 方法，获取成员方法的形参列表。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo09.java
 
@@ -572,7 +572,7 @@ public class Demo09 {
 
 ### 3.解刨成员方法获取抛出的异常
 
-使用 `Method` 类的 `getExceptionTypes` 方法，获取成员方法抛出的异常。
+使用 `Method` 类的 `Class<?>[] getExceptionTypes()` 方法，获取成员方法抛出的异常。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo09.java
 
@@ -600,10 +600,10 @@ public class Demo09 {
 
 ### 4.执行成员方法并获取返回值
 
-使用 `Method` 类的 `invoke` 方法，执行成员方法，获取返回值。
+使用 `Method` 类的 `Object invoke(Object obj, Object... args)` 方法，执行成员方法，获取返回值。
 
 - 参数一：实例对象；
-- 参数二：成员方法方法参数
+- 参数二：成员方法的参数列表
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo09.java
 
@@ -640,7 +640,7 @@ public class Demo09 {
 
 ### 1.作用一：获取类里的信息
 
-案例联系：对于任意一个对象，把其中所有的字段名和值，保存到文件中去。
+案例理解：对于任意一个对象，把其中所有的字段名和值，保存到文件中去。
 
 demo-project/base-code/Day35/src/com/kkcf/test/Test1.java
 
@@ -653,7 +653,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 public class Test1 {
-
     /**
      * 此方法用于：保存对象中所有字段的值到本地文件
      *
@@ -727,15 +726,15 @@ public class Test2 {
         String classname = (String) p.get("classname");
         String method = (String) p.get("method");
 
-        // 利用反射，创建对象
+        // 利用反射，创建类的实例对象
         Class<?> clazz = Class.forName(classname);
         Constructor<?> con = clazz.getDeclaredConstructor();
-        Object o = con.newInstance();
+        Object obj = con.newInstance();
 
         // 利用反射，并调用方法
         Method meth = clazz.getDeclaredMethod(method);
         meth.setAccessible(true);
-        meth.invoke(o);
+        meth.invoke(obj);
     }
 }
 ```

@@ -4,7 +4,7 @@
 
 一共有 1000 张电影票，可以在两个窗口领取，假设每次领取的时间为 3000 毫秒；
 
-要求，请用多线程模拟卖票过程，并打印剩余电影票的数量。
+要求，请用多线程模拟卖票过程。
 
 `MovieTicketSaleThread2` 线程类。
 
@@ -215,7 +215,9 @@ public class RedEnvelopeThread extends Thread {
                 price = money;
             } else {
                 // 计算红包金额
+                // bounds = money - (MIN * (count - 1))
                 BigDecimal bounds = money.subtract(MIN.multiply(BigDecimal.valueOf((count - 1))));
+                // price = r.nextDouble(bounds)
                 price = BigDecimal.valueOf(r.nextDouble(bounds.doubleValue()));
 
                 // 红包的金额，不能小于最小值
@@ -235,8 +237,8 @@ public class RedEnvelopeThread extends Thread {
 }
 ```
 
-- `BigDecimal.valueOf` 静态方法，奖一个数字，转为 BigDecimal 类型。
-- BigDecimal 类的 `doubleValue` 方法，将 BigDemical 类型，转为 double 类型的数字。
+- `BigDecimal.valueOf` 静态方法，将一个数字，转为 BigDecimal 类型。
+- `BigDecimal` 类的 `doubleValue` 方法，将 BigDemical 类型，转为 double 类型的数字。
 - `r.nextDouble` 方法，只有 JDK17 才能用。
 
 测试类：
@@ -278,7 +280,9 @@ public class Test07 {
 - 抽奖箱 1 又产生了一个 10 元大奖
 - ……
 
-思路：使用 ArrayList 集合，其中有 `remove` 方法，用于抽奖和去重。
+思路：抽奖池使用 ArrayList 集合，其中有 `remove` 方法，用于抽奖和去重。
+
+- 使用构造方法，来初始化抽奖池集合，保证多线程共享的数据是唯一的
 
 demo-project/base-code/Day31/src/com/kkcf/test/LotteryThread.java
 
@@ -289,7 +293,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class LotteryThread extends Thread {
-    // 抽奖池，使用构造方法来初始化，保证多线程共享的数据是唯一的
     public ArrayList<Integer> list;
 
     public LotteryThread(ArrayList<Integer> list) {
@@ -319,11 +322,9 @@ public class LotteryThread extends Thread {
 }
 ```
 
-- 使用构造方法，传入集合对象，来实现数据共享
-
-> 同一个线程连续执行，通常是因为数据量比较小；
+> 同一个线程，连续执行，通常是因为数据量比较小；
 >
-> 为了让线程执行的更加均匀，通常会在同步代码块的**外面**。使用 `Thread.sleep()` 方法。
+> 为了让多个线程执行的更加均匀，通常会在同步代码块的**外面**。使用 `Thread.sleep()` 方法。
 
 测试类：
 
@@ -363,7 +364,7 @@ public class Test08 {
 
 重构 `LotteryThread` 类：
 
-- 需要增加两个静态属性，用于表示两个抽奖箱抽中的奖。
+- 需要增加两个静态属性 `list1`、`list2`，用于表示两个抽奖箱抽中的奖。
 
 demo-project/base-code/Day31/src/com/kkcf/test/LotteryThread.java
 

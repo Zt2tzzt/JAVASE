@@ -141,7 +141,7 @@ public class Client2 {
 }
 ```
 
-- `socket.shutdownOutput();` 用于给服务端，写出一个结束标记。
+- `socket.shutdownOutput();` 用于给服务端，发送（写出）一个结束标记。
 
 服务端 Server2
 
@@ -187,7 +187,7 @@ public class Server2 {
 
 需求：客户端：将本地文件上传到服务器，接收服务器的反馈；服务端：接收客户端上传的文件保存到本地，上传完毕之后给出反馈。
 
-思路：客户端，使用 `FileInputSream` 字节输入流，读取本地文件的内容到内存中，再将文件数据发送给服务器端；服务器端接收到文件数据后，使用 `FileOutputStream` 字节输出流，保存文件到本地，并向客户端返回消息。
+思路：客户端，使用 `FileInputSream` 字节输入流，读取本地文件的内容到内存中，再将文件数据发送（写出）给服务器端；服务器端接收到文件数据后，使用 `FileOutputStream` 字节输出流，保存文件到本地，并向客户端返回消息。
 
 客户端：Client3
 
@@ -299,6 +299,8 @@ public class UUIDTest {
 
 使用 `UUID` 类，优化上方服务端代码：
 
+- 为写出到的本地文件，起一个随机的名称。
+
 demo-project/base-code/Day33/src/com/kkcf/test/Sever3.java
 
 ```java
@@ -352,6 +354,7 @@ public class Sever3 {
 
 自定义 `UploadRunnable` 类，实现 `Runnable` 接口
 
+- 然后使用构造函数，初始化 socket 对象。
 - 这种方式，对于要共享的 socket 对象，更加灵活。
 
 demo-project/base-code/Day33/src/com/kkcf/test/UploadRunnable.java
