@@ -2,11 +2,9 @@
 
 继承，是面向对象三大特征之一。
 
-Java 中提供一个关键字 `extend`，用它可以让一个类和另一个类，建立起继承关系。格式为：`public class 子类 extends 父类 {}`
+Java 中提供一个关键字 `extend`，用它可以让一个类和另一个类，建立起继承关系。格式为：`public class 子类 extends 父类 {}`；比如：`public class Student extends Person {}`，其中：
 
-比如：`public class Student extends Person {}`，其中
-
-- `Student`，称为子类（或派生类）
+- `Student` 称为子类（或派生类）
 - `Person` 称为父类（或基类、超类）。
 
 Java 继承，可用于：
@@ -161,7 +159,6 @@ public class Test {
         CatPlus cp = new CatPlus();
         cp.eat(); // 动物吃食物
         cp.drink(); //动物喝水
-        cp.eat(); // 动物吃食物
         cp.catchmice(); // 猫在抓老鼠
 
         // 创建哈士奇对象
@@ -193,7 +190,7 @@ Java 继承中，存在以下误区：
 
 | 成员     | 非私有             | 私有                          |
 | -------- | ------------------ | ----------------------------- |
-| 构造方法 | public（不能）     | private（不能）               |
+| 构造方法 | 不能               | 不能                          |
 | 成员变量 | public（能）       | private（能，但不能直接使用） |
 | 成员方法 | 在虚方法表中（能） | 不在虚方法表中（不能）        |
 
@@ -261,7 +258,7 @@ public class TestStudent {
 
 ![继承内存表现2](NodeAssets/继承内存表现2.jpg)
 
-> 事实上，JVM 虚拟机会先加载父类的字节码文件（.class）
+> 事实上，JVM 虚拟机会先加载父类的字节码文件（.class），再加载子类的。
 
 Ⅲ、`new` 操作符创建 `Zi` 类的对象，会在堆内存中开辟一块空间；因为现在 `Zi` 类继承自 `Fu` 类，所以该空间会分为两部分：
 
@@ -272,8 +269,8 @@ public class TestStudent {
 
 Ⅳ、给 `z.name`，`z.age`，`z.game` 赋值，
 
-- 先找引用指向的堆内存中子类区域有没有对应的成员变量；
-- 如果没有，再找引用指向的堆内存中父类区域有没有对应的成员变量。
+- 先找引用指向的堆内存地址中，子类区域有没有对应的成员变量；
+- 如果没有，再找引用指向的堆内存地址中，父类区域有没有对应的成员变量。
 
 ![继承内存表现4](NodeAssets/继承内存表现4.jpg)
 
@@ -315,7 +312,7 @@ C 类是最上层的父类，它其中满足以下条件的方法，会被放入
 
 所以，使用 A 类创建的对象，调用方法 c 时，就能在 A 类自己的虚方法表中，直接找到方法 c。
 
-总结：只有父类中的虚方法，才能被子类继承。
+总结：只有父类虚方法表中的方法，才能被子类继承。
 
 现有如下代码：
 
@@ -449,6 +446,8 @@ public class TestStudent {
 ```
 
 就近原则案例理解：
+
+测试类：
 
 demo-project/base-code/Day12/src/com/kkcf/extendss/Test2.java
 
@@ -761,7 +760,7 @@ public class ChineseDog extends Dog1{
 
 现有如下代码：
 
-人类：
+父类 Person2：
 
 demo-project/base-code/Day12/src/com/kkcf/extendss/Person2.java
 
@@ -783,7 +782,7 @@ public class Person2 {
 }
 ```
 
-学生类
+学生类 Student2：
 
 demo-project/base-code/Day12/src/com/kkcf/extendss/Student2.java
 
@@ -859,12 +858,12 @@ public class Student2 extends Person2 {
 
 案例理解：设计带有继承结构的标准 JavaBean 类：
 
-1.经理类
+1.经理类：Manager
 
 - 成员变量：工号，姓名，工资，管理奖金。
 - 成员方法：工作（管理其他人），吃饭（吃米饭）。
 
-2.厨师类
+2.厨师类 Cooker
 
 - 成员变量：工号，姓名，工资。
 - 成员方法;：工作（炒菜），吃饭（吃米饭）

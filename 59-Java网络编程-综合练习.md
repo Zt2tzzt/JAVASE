@@ -95,6 +95,8 @@ Sec-Fetch-Dest: document
 Accept-Encoding: gzip, deflate
 ```
 
+- 发现服务端能接收到浏览器发送的 get 请求。
+
 ## 二、练习二：接收并反馈
 
 需求：客户端发送一条数据，接收服务端反馈的消息，并打印；服务端：接收数据并打印，再给客户端反馈消息。
@@ -354,8 +356,7 @@ public class Sever3 {
 
 自定义 `UploadRunnable` 类，实现 `Runnable` 接口
 
-- 然后使用构造函数，初始化 socket 对象。
-- 这种方式，对于要共享的 socket 对象，更加灵活。
+- 然后使用构造函数，初始化 socket 对象。这种方式，对于要共享的 socket 对象，更加灵活。
 
 demo-project/base-code/Day33/src/com/kkcf/test/UploadRunnable.java
 

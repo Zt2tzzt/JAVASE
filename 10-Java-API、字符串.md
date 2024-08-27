@@ -25,9 +25,9 @@ Java 字符串相关的类有 `String`、`StringBuilder`、`StringJonier`（JDK 
 
 `String` 类用于创建字符串对象。
 
-Java 程序中的所有字符串（例如“abc”）都被实现为此类的实例对象；
+Java 程序中的所有字符串（例如`“abc”`）都被实现为此类的实例对象；
 
-也就是说，Java 程序中所有的双引号包裹的字符串，都是 `String` 类的实例对象。
+也就是说，Java 程序中，所有的双引号包裹的字符串，都是 `String` 类的实例对象。
 
 ### 1.String 类特点
 
@@ -52,9 +52,9 @@ String abc = "abc";
 abc = "cba";
 ```
 
-特点二：虽然 `String` 类对象中字符串的值是不可变的，但是它们可以被共享。
+特点二：虽然 `String` 类的实例对象的值是不可变的，但是它们可以被共享。
 
-特点三：字符串效果上相当于字符数组（`char[]`），但是底层原理是字节数组（`byte[]`）。
+特点三：字符串效果上相当于字符数组（`char[]`），但是底层原理是字节数组（`byte[]`）根据字符集编码进行转换。
 
 ### 2.String 类创建对象
 
@@ -164,10 +164,10 @@ public class Demo01 {
 
 ### 4.String 类字符串对象内存地址比较
 
-== 号在比较数据的时候，分两种情况：
+`==` 号在比较数据的时候：
 
-- 第一种情况：比较两个基本数据类型，比较的是值。
-- 第二种情况，比较两个引用数据类型，比较的是地址值。
+- 比较两个基本数据类型，比较的是值。
+- 比较两个引用数据类型，比较的是地址值。
 
 下方代码，比较了 String 类的字符串对象。结合上文【String 类创建对象的内存表现】来理解比较结果。
 
@@ -308,7 +308,7 @@ public class Demo03 {
 }
 ```
 
-案例理解：键盘录入一个字符串，统计其中的大写字母字符，小写字母字符，数字字符出现的次数。
+案例理解：键盘录入一个字符串，分别统计其中的大写字母、小写字母，数字字符出现的次数。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test02.java
 
@@ -386,7 +386,9 @@ public class Test03 {
 
 案例理解：定义一个方法，实现字符串的反转：
 
-键盘录入一个字符串，调用该方法后，在控制台输出结果，例如键盘录入“abc”，输出结果“cba”。
+键盘录入一个字符串，调用该方法后，在控制台输出结果，
+
+例如：键盘录入“abc”，输出结果“cba”。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test04.java
 
@@ -498,7 +500,7 @@ public class Test05 {
 - `public String substring(int beginIndex)`，返回一个新的字符串，它是此字符串的一个子字符串。
   - 该子字符串从指定索引处的字符开始，直到此字符串末尾。
 
-案例理解：将手机号码中间四位数字，用”****“代替。
+案例理解：将手机号码中间四位数字，用 `****` 代替。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Demo04.java
 
@@ -547,7 +549,7 @@ public class Test06 {
         char c = id.charAt(id.length() - 1);
         int num = c - '0';
 
-        System.out.println("性别码：" + (num % 2 == 0 ? "女" : "男"));
+        System.out.println("性别：" + (num % 2 == 0 ? "女" : "男"));
     }
 }
 ```
@@ -558,7 +560,7 @@ public class Test06 {
 
 - `public String replace(CharSequence target, CharSequence replacement)`，使用指定的字面值替换序列替换此字符串所有匹配字面值目标序列的子字符串。该替换从字符串的开头朝末尾执行，例如，用 "b" 替换字符串 "aaa" 中的 "aa" 将生成 "ba" 而不是 "ab"。
 
-案例理解：将一些敏感词，替换为”***“
+案例理解：将一些敏感词，替换为 `***`
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test07.java
 
@@ -590,7 +592,7 @@ public class Test07 {
 `StringBuilder` 类常用的构造方法有两个：
 
 - `public StringBuilder()`，构造一个其中不带字符的字符串生成器，初始容量为 16 个字符。
-- `public StringBuilder(String str)`，构造一个字符串生成器，并初始化为指定的字符串内容。该字符串生成器的初始容量为 16 加上字符串参数的长度。
+- `public StringBuilder(String str)`，构造一个字符串生成器，并初始化为指定的字符串内容。初始容量为 16 加上字符串参数的长度。
 
 ### 2.StringBuilder 成员方法
 
@@ -601,7 +603,7 @@ public class Test07 {
 - `public int length()`，返回长度（字符出现的个数）。
 - `public String toString()`，把 StringBuilder 类型的字符串对象，转为 String 类型的字符串对象。
 
-StringBuilder 是 Java 已经写好的类，Java 在底层对它做了一些特殊处理，使得打印对象时输出的不是地址值，而是属性值。
+StringBuilder 是 Java 已经写好的类，Java 在底层对它做了一些特殊处理，使得打印对象时，输出的不是地址值，而是属性值。
 
 ```java
 package com.kkcf.string;
@@ -626,17 +628,20 @@ public class Demo05 {
     public static void main(String[] args) {
         StringBuilder sb = new StringBuilder();
 
+        // 字符串拼接
         sb.append("aaa");
         sb.append("bbb");
         sb.append("ccc");
         sb.append("ddd");
 
+        // 反转
         sb.reverse();
 
+        // 获取长度
         System.out.println(sb.length()); // 12
 
+        // 生成字符串
         String str = sb.toString();
-
         System.out.println(str); // dddcccbbbaaa
     }
 }
@@ -644,7 +649,7 @@ public class Demo05 {
 
 ### 3.链式编程思想
 
-链式编程，指的是在调用一个方法的时候，不需要用变量接收它的结果，可以继续调用其它方法。
+链式编程，指的是在调用一个方法的时候，不用变量接收它的结果，而是继续调用其它方法。
 
 使用链式编程，重构上方的代码：
 
@@ -657,6 +662,7 @@ public class Demo05 {
     public static void main(String[] args) {
         StringBuilder sb = new StringBuilder();
 
+        // 字符串拼接、反转，生成字符串
         String str = sb.append("aaa").append("bbb").append("ccc").append("ddd").reverse().toString();
 
         System.out.println(str.length()); // 12
@@ -680,13 +686,10 @@ public class Test08 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("请输入一个字符串：");
-
         String str = sc.nextLine();
-
-        sc.close();;
+        sc.close();
 
         String strReverse = new StringBuilder().append(str).reverse().toString();;
-
         System.out.println((str.equals(strReverse) ? "是" : "不是") + "对称字符串");
     }
 }
@@ -743,6 +746,14 @@ public class Test09 {
 - `public StringJoiner(CharSequence delimiter)`，创建一个 StringJoiner 对象，指定间隔符号。
 - `public StringJoiner(CharSequence delimiter, CharSequence prefix, CharSequence suffix)`，创建一个 StringJonier 对象，指定拼接时的间隔符号，开始符号，结束符号。
 
+> 在 Java 中，`CharSequence` 是一个接口，表示一个可读的字符序列。它是字符串类（如 `String`、`StringBuilder`、`StringBuffer`）的父接口，提供了字符序列的一般化表示。主要特点有：
+>
+> - 它定义了几个方法允许访问和操作字符序列：比如 
+>   - `length()`
+>   - `charAt(int index)`
+>   - subSequence(int start, int end)` 和 `toString()`，
+> - `CharSequence` 接口的实现类包括 `String`、`StringBuilder`、`StringBuffer`、`CharBuffer`……。
+
 ### 2.StringJoiner 成员方法
 
 `StringJoiner` 类常用的成员方法有以下几个：
@@ -785,7 +796,6 @@ public class Demo06 {
         sj.add("aaa").add("bbb").add("ccc");
 
         System.out.println(sj.length()); // 15
-
         System.out.println(sj.toString()); // [aaa, bbb, ccc]
     }
 }
@@ -793,9 +803,7 @@ public class Demo06 {
 
 ### 1.StringJoiner 使用场景
 
-`StringJoiner` 的使用场景主要有：
-
-- 场景一：字符串的拼接；
+`StringJoiner` 的使用场景主要就是字符串的拼接；
 
 ## 五、Java 字符串原理
 
@@ -895,7 +903,7 @@ public class Demo07 {
 
 StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼接时，会将所有的字符串对象，都放入其中。步骤如下：
 
-Ⅰ、StringBuilder 使用空参构造方法，创建对象时，会创建一个长度为 `0`，默认容量为 `16` 的字节（byte）数组。
+Ⅰ、StringBuilder 使用空参构造方法创建对象时，会创建一个长度为 `0`，默认容量为 `16` 的字节（byte）数组。
 
 > 长度和容量是不一样的：
 >
@@ -911,7 +919,7 @@ StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼
 - 字节数组中，实际存储的是：字符对应的 ASCLL 码表数值。
 - 此时字节数组的长度为 `3`，容量为 `16`.
 
-Ⅲ、如果把"a"-"z"，26 个英文字母字符组成的字符串，添加到 StringBuilder 对象中；
+Ⅲ、如果把"a"-"z"，26 个英文字母组成的字符串，添加到 StringBuilder 对象中；
 
 这时超出了 StringBuilder 字符串对象原来 `16` 的容量，那么它会自动扩容，即 `老容量(16) * 2 + 2 = 34`。
 
@@ -919,7 +927,7 @@ StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼
 
 - 此时字节数组的长度为 `26`，容量为 `34`.
 
-Ⅳ、如果把"a"-"z"，"0"-"9" 共 36 个字符组成的字符串，添加到空参构造创建的 StringBuilder 对象中，这时超出了 StringBuilder 字符串对象自动扩容的最大容量 `16`，那么他会按照实际要存储的字符串长度，来创建字节数组的容量。
+Ⅳ、如果把"a"-"z"，"0"-"9" 共 36 个字符组成的字符串，添加到空参构造方法创建的 StringBuilder 容器中，这时超出了 StringBuilder 容器自动扩容的最大容量 `16`，那么他会按照实际要存储的字符串长度，来创建字节数组的容量。
 
 ![StringBuilder容器3](NodeAssets/StringBuilder容器3.jpg)
 
@@ -960,7 +968,7 @@ public class Demo07 {
 }
 ```
 
-总的来说，使用 StringBuilder 创建的对象，会将所有字符串放在一个容器中，不会创建很多无用的空间，节约内存。
+总的来说，使用 StringBuilder 创建的对象，会将所有字符串放在一个容器中，不会创建很多无用的空间，可以节约内存。
 
 ## 六、Java 字符串综合练习
 
@@ -1070,7 +1078,7 @@ public static String changeRoman(int num) {
 
 - 例如：若 A = "abcde"，在旋转一次之后，结果就是 "bcdea"。
 
-如果在若干次旋转操作之后，A 能变成 B，那么返回 true，否则返回 false。
+如果在若干次旋转操作之后，A 能变成 B，那么返回 `true`，否则返回 `false`。
 
 > String 类创建的字符串是不可修改的，如果要修改字符串，有两种办法：
 >

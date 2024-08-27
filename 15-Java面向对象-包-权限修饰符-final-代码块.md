@@ -23,9 +23,11 @@ public class Person {
 
 ### 2.Java 类的全类名
 
-加上包名的类名，在项目中应该是唯一的，比如上面的 Java 类可写作：`com.kkcf.domain.Person`。
+加上包名的类名，在项目中应该是唯一的：
 
-以上这种写法，又称为类的“**全类名**”，或者“**全限定名**”
+- 比如：上面的 Java 类可写作：`com.kkcf.domain.Person`。
+
+这种写法，又称为类的“**全类名**”，或者“**全限定名**”
 
 所以，创建上方类的对象实例的完整写法，如下：
 
@@ -64,7 +66,7 @@ public class Test {
 
 需要使用导包（`import`）的情况有：
 
-- 情况一：在使用 Java 非核心包（`java.lang`）中的类时。
+- 情况一：在使用 Java 非核心包中的类时。
 - 情况二：使用其它包中的类时。
 
 ## 二、final 关键字
@@ -78,6 +80,8 @@ public class Test {
 - 类，表示该类是最终类，**不能被继承**。
 
 ### 1.final 修饰方法
+
+final 修饰方法的方法，不能被重写。
 
 demo-project/base-code/Day13-14/src/com/kkcf/a01finaldemo01/Test.java
 
@@ -107,9 +111,11 @@ class zi extends Fu {
 
 当一个方法，表示一种既定的规则时，应该使用 `final` 修饰，表示不能被改变。
 
-- 比如 `java.lang.Object` 类中的 `getClass` 方法，就使用 `final` 修饰。
+- 比如 `java.lang.Object` 类中的 `getClass` 方法，就使用 `final` 修饰，用于获取类的字节码文件对象，
 
 ### 2.final 修饰类
+
+final 修饰类，不能被继承。
 
 demo-project/base-code/Day13-14/src/com/kkcf/a01finaldemo01/Test.java
 
@@ -145,6 +151,8 @@ class zi extends Fu {
 
 ### 3.final 修饰变量
 
+final 修饰变量，表示常量，不能被修改。
+
 demo-project/base-code/Day13-14/src/com/kkcf/a01finaldemo01/Test.java
 
 ```java
@@ -177,8 +185,8 @@ Java 代码中，常量的命名规范如下：
 
 Java 中，`final` 修饰的常量，有如下特点：
 
-- `final` 修饰的变量是基本数据类型时，那么其中存储的数据值，不能发生改变。
-- `final` 修饰的变量是引用数据类型时，那么其中存储的地址值，不能发生改变，对象内部的属性可以改变。
+- `final` 修饰的变量是基本数据类型时，那么其中存储的**数据值**，不能发生改变。
+- `final` 修饰的变量是引用数据类型时，那么其中存储的**地址值**，不能发生改变，对象内部的属性可以改变。
 
 demo-project/base-code/Day13-14/src/com/kkcf/a01finaldemo01/Test.java
 
@@ -268,12 +276,12 @@ Java 中，有四种权限修饰符：它们的作用范围，从大到小是 `p
 
 实际开发中，一般只用 `private` 和 `public`。比如：
 
-- JavaBean 类中的成员变量一般都要私有化；
-- JavaBean 类中的成员方法一般都要公开。
+- JavaBean 类中的成员变量一般都要使用 private 修饰，来私有化；
+- JavaBean 类中的成员方法一般都要使用 public 修饰，来公开。
 
 特例：如果方法中的代码，是抽取其它方法的共性代码，那么这个方法一般也私有化。
 
-- 比如：`ArrayList` 类中的 `grow` 方法，用于给集合列表扩容，该方法表示一种共性的规则，不需要给外界调用，所以用 `private` 修饰。
+- 比如：`ArrayList` 类中的 `grow` 方法，用于给列表集合扩容，该方法表示一种共性的规则，不需要给外界调用，所以用 `private` 修饰。
 
 ## 四、Java 代码块
 
@@ -285,9 +293,7 @@ Java 中的代码块，根据出现位置不同，可以分为三类：
 
 ### 1.Java 局部代码块
 
-Java 中的局部代码块，通常用于提前结束变量的生命周期：本质上是为了节约内存。
-
-实际开发中用的很少。
+Java 中的局部代码块，通常用于提前结束变量的生命周期：本质上是为了节约内存。实际开发中用的很少。
 
 demo-project/base-code/Day13-14/src/com/kkcf/a01codeblockdemo01/CodeBlockDemo1.java
 
@@ -310,9 +316,9 @@ public class CodeBlockDemo1 {
 
 Java 中的构造代码块，就是写在成员位置的代码块；
 
-Java 中的构造代码块，它会优先于类的构造方法执行，每次使用类创建对象时，都会执行。
+它会优先于类的构造方法执行，每次使用类创建对象时，都会执行。
 
-Java 中的构造代码块，一般把多个构造方法中重复的代码，抽取在构造代码块里。
+一般把多个构造方法中重复的代码，抽取在构造代码块里。
 
 实际开发中用的很少，因为不够灵活。
 
@@ -395,7 +401,7 @@ Java 中的静态代码块，书写格式为 `static {}`，它**随着类的加�
 
 Java 中的静态代码块，在实际开发中，一般用于在类加载的时候，做一些数据初始化。
 
-案例理解：重构学生管理系统中，登录模块，初始化一些用户对象，放入用户集合列表中。
+案例理解：重构学生管理系统中，登录模块，初始化一些用户对象，放入用户列表集合中。
 
 demo-project/base-code/Day11-StudentSystem/src/com/kkcf/student/App.java
 

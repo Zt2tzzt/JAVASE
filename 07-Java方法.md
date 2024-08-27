@@ -486,3 +486,27 @@ public class MethodDemo06 {
     }
 }
 ```
+
+## 六、Java 方法签名
+
+在 Java 中，**方法签名**是用来唯一标识一个方法的元素，主要包含：
+
+1. **方法名称**（Method Name）：方法的名字。
+2. **参数列表**（Parameter List）：参数的类型和顺序。
+
+方法签名，不包括方法的**返回类型**和**访问修饰符**。这意味着两个方法可以有相同的名称和返回类型，但只要参数类型或顺序不同，它们就会被认为是不同的重载方法。
+
+```java
+public void exampleMethod(int a, String b) { }
+
+public int exampleMethod(int a) { }
+```
+
+上面两个方法的签名分别是：
+
+1. `exampleMethod(int, String)`
+2. `exampleMethod(int)`
+
+因为参数列表不同，所以这两个方法是重载的，不会冲突。
+
+**注意：**Java 中的重载（Overloading）就是基于方法签名来区分不同的方法的。

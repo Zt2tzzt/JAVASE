@@ -17,8 +17,8 @@ IDEA 中的语法提示，实际上就是利用反射实现的。
 
 获取 class 字节码文件对象的三种方式：
 
-- 方式一：`Class.forName("全类名")` 最常使用。
-- 方式二：`类名.class` 通常作为参数传递。
+- 方式一：`Class.forName("全类名")`，最常使用。
+- 方式二：`类名.class`，通常作为参数传递。
 - 方式三：`对象.getClass()`
 
 这三种方式，要根据编写代码的时机，来选择。
@@ -106,8 +106,8 @@ public class Demo01 {
 
 | 方法名                                                       | 说明                           |
 | ------------------------------------------------------------ | ------------------------------ |
-| `Constructor<?>[] getConstructors()`                         | 返回所有公共构造方法对象的熟组 |
-| `Constructor<?>[] getDeclaredConstructors()`                 | 返回所有构造方法对象的熟组。   |
+| `Constructor<?>[] getConstructors()`                         | 返回所有公共构造方法对象的数组 |
+| `Constructor<?>[] getDeclaredConstructors()`                 | 返回所有构造方法对象的数组。   |
 | `Constructor<T> getConstructor(Class<?>... parameterTypes)`  | 返回单个公共构造方法对象       |
 | `Constructor<T> getDeclaredConstructor(Class<?>... parameterTypes)` | 返回单个构造方法对象           |
 
@@ -157,7 +157,7 @@ public class Demo02 {
 }
 ```
 
-### 1.解刨构造方法获取权限修饰符
+### 1.getModifiers 方法获取构造方法权限修饰符
 
 使用 `Constructor` 类的 `int getModifiers()` 方法。
 
@@ -183,7 +183,7 @@ public class Demo03 {
 }
 ```
 
-### 2.解刨构造方法获取它的参数列表
+### 2.getParameters 方法获取构造方法参数列表
 
 使用 `Constructor` 类的 `public Parameter[] getParameters()` 方法。
 
@@ -213,7 +213,7 @@ public class Demo03 {
 }
 ```
 
-### 3.调用构造方法创建对象
+### 3.newInstance 方法调用构造方法创建对象
 
 通过反射获取到的 `private` 修饰的构造方法，不能直接用于创建对象，需要进行**暴力反射**。
 
@@ -315,7 +315,7 @@ public class Demo05 {
 }
 ```
 
-### 1.解刨成员变量获取权限修饰符
+### 1.getModifiers 方法获取成员变量权限修饰符
 
 使用 `Field` 类的 `int getModifiers()` 方法，获取成员变量的修饰符。
 
@@ -339,7 +339,7 @@ public class Demo06 {
 }
 ```
 
-### 2.解刨成员变量获取成员变量名
+### 2.getName 方法获取成员变量名
 
 使用 `Field` 类的 `String getName()` 方法，获取成员变量的修饰符。
 
@@ -363,7 +363,7 @@ public class Demo06 {
 }
 ```
 
-### 3.解刨成员变量获取成员变量类型
+### 3.getType 方法获取成员变量类型
 
 使用 `Field` 类的 `Class<?> getType()` 方法，获取成员变量的类型。
 
@@ -387,7 +387,7 @@ public class Demo06 {
 }
 ```
 
-### 4.成员变量取值和设置
+### 4.get、set 方法取值和设值成员变量
 
 使用 `Field` 类的 `Object get(Object obj)`、`void set(Object obj, Object value)` 方法，用于获取、设置成员变量的值。
 
@@ -498,7 +498,7 @@ public class Demo08 {
 }
 ```
 
-### 1.解刨成员方法获取权限修饰符
+### 1.getModifiers 方法获取成员方法权限修饰符
 
 使用 `Method` 类的 `int getModifiers()` 方法，获取成员方法的修饰符。
 
@@ -520,7 +520,7 @@ public class Demo09 {
 }
 ```
 
-### 2.解刨成员方法获取成员方法名
+### 2.getName 方法获取成员方法名
 
 使用 `Method` 类的 `String getName()` 方法，获取成员方法的名称。
 
@@ -543,7 +543,7 @@ public class Demo09 {
 }
 ```
 
-### 3.解刨成员方法获取成员方法形参列表
+### 3.getParameters 获取成员方法形参列表
 
 使用 `Method` 类的 `public Parameter[] getParameters()` 方法，获取成员方法的形参列表。
 
@@ -570,7 +570,7 @@ public class Demo09 {
 }
 ```
 
-### 3.解刨成员方法获取抛出的异常
+### 4.getExceptionTypes 方法获取成员方法抛出的异常
 
 使用 `Method` 类的 `Class<?>[] getExceptionTypes()` 方法，获取成员方法抛出的异常。
 
@@ -598,7 +598,7 @@ public class Demo09 {
 }
 ```
 
-### 4.执行成员方法并获取返回值
+### 4.invoke 方法执行成员方法并获取返回值
 
 使用 `Method` 类的 `Object invoke(Object obj, Object... args)` 方法，执行成员方法，获取返回值。
 
@@ -635,12 +635,14 @@ public class Demo09 {
 
 在开发中，反射主要有两个作用：
 
-- 作用一：获取一个类里面的所有信息，在执行其它业务逻辑；
+- 作用一：获取一个类里面的所有信息，再执行其它业务逻辑；
 - 作用二：结合配置文件，动态的创建对象和调用方法。
 
 ### 1.作用一：获取类里的信息
 
 案例理解：对于任意一个对象，把其中所有的字段名和值，保存到文件中去。
+
+- 使用字符缓冲流输出流 BufferWriter 写出数据到本地文件 a,txt。
 
 demo-project/base-code/Day35/src/com/kkcf/test/Test1.java
 
@@ -701,6 +703,8 @@ method=study
 ```
 
 测试类
+
+- 使用 Properties 类，加载本地 .properties 配置文件。
 
 demo-project/base-code/Day35/src/com/kkcf/test/Test2.java
 

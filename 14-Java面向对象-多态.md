@@ -19,7 +19,7 @@
 
 理解下方代码：
 
-人类：
+人类：Person
 
 demo-project/base-code/Day13-14/src/com/kkcf/a01polymorphismdemo1/Person.java
 
@@ -180,7 +180,7 @@ public class Test {
 
 ![多态的内存变现](NodeAssets/多态的内存变现.jpg)
 
-> JVM 虚拟机在加载字节码文件到方法区时，永远是先加载父类的字节码文件。
+> JVM 虚拟机在加载字节码文件到方法区时，永远是先加载父类的字节码文件。再加载子类的。
 
 ## 三、Java 多态的优势
 

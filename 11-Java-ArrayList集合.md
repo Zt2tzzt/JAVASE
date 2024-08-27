@@ -41,6 +41,8 @@ ArrayList<String> strings = new ArrayList<>();
 System.out.println(strings); // []
 ```
 
+- 直接打印熟组对象时，会输出它在内存中的地址值。
+
 ### 2.ArraylList 成员方法
 
 ArrayList 类，常用的成员方法有：
@@ -75,27 +77,20 @@ public class Demo01 {
 
         // 删
         boolean isRemove1 = list.remove("aaa");
-
         System.out.println(isRemove1); // true
-
         System.out.println(list); // [bbb, ccc, ddd]
 
         String removeString = list.remove(0);
-
         System.out.println(removeString); // bbb
-
         System.out.println(list); // [ccc, ddd]
 
         // 改
         String settedString = list.set(1, "xxx");
-
         System.out.println(settedString); // ddd
-
         System.out.println(list); // [ccc, xxx]
 
         // 查
         String s = list.get(1);
-
         System.out.println(s); // xxx
 
         // 遍历
@@ -233,6 +228,8 @@ public class Student {
 }
 ```
 
+测试类：
+
 demo-project/base-code/Day11/src/com/kkcf/ArrayList/Demo04.java
 
 ```java
@@ -334,7 +331,7 @@ public class Demo05 {
 
 ## 七、ArrayList 返回一个集合列表
 
-需求：定义 JavaBean 类 `Phone，它有属性：品牌、价格。
+需求：定义 JavaBean 类 `Phone`，它有属性：品牌、价格。
 
 main 方法中，定义一个集合列表，存入三个手机对象。分别为：小米，1000；苹果：8000；锤子：2999；
 
@@ -382,6 +379,8 @@ public class Phone {
     }
 }
 ```
+
+测试类：
 
 demo-project/base-code/Day11/src/com/kkcf/ArrayList/Demo06.java
 
