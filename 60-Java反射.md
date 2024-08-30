@@ -23,9 +23,9 @@ IDEA 中的语法提示，实际上就是利用反射实现的。
 
 这三种方式，要根据编写代码的时机，来选择。
 
-- 源代码阶段：.java 文件，还没有编译成 .class 文件。用第一种方式。
-- 加载阶段：.class 文件，加载到了内存当中。用第二种方式。
-- 运行阶段；类的对象被创建了。用第三种方式。
+- 源代码阶段：.java 文件，还没有编译成 .class 文件。用方式一。
+- 加载阶段：.class 文件，加载到了内存当中。用方式二。
+- 运行阶段；类的对象被创建了。用方式三。
 
 `Class` 是 Java 中用于描述 class 字节码文件的类。
 
@@ -161,8 +161,7 @@ public class Demo02 {
 
 使用 `Constructor` 类的 `int getModifiers()` 方法。
 
-- `java.lang.reflect.Modifier` 类，用于表示权限修饰符。
-- 权限修饰符常量，见[此处](https://docs.oracle.com/en/java/javase/17/docs/api/constant-values.html#java.lang.reflect.Modifier.PUBLIC)
+- `java.lang.reflect.Modifier` 类，用于表示权限修饰符，里面有很多数字类型的常量，详见[此处](https://docs.oracle.com/en/java/javase/17/docs/api/constant-values.html#java.lang.reflect.Modifier.PUBLIC)
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo03.java
 
@@ -268,7 +267,7 @@ public class Student {
 }
 ```
 
-`Class` 类中，用于获取成员变量的方法有：
+`Class` 类中，用于获取成员变量实例对象的方法有：
 
 | 方法名                                | 说明                           |
 | ------------------------------------- | ------------------------------ |
@@ -638,7 +637,7 @@ public class Demo09 {
 - 作用一：获取一个类里面的所有信息，再执行其它业务逻辑；
 - 作用二：结合配置文件，动态的创建对象和调用方法。
 
-### 1.作用一：获取类里的信息
+### 1.作用一：获取类的实例对象里的信息
 
 案例理解：对于任意一个对象，把其中所有的字段名和值，保存到文件中去。
 

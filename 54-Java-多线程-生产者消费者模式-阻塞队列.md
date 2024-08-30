@@ -26,7 +26,7 @@
 
 - 控制生产者和消费者执行的第三者是：桌子。
 
-其中涉及到的锁对象（`Object` 类）中的方法有
+其中涉及到的锁对象（任意且唯一的对象，`Object` 类）中的方法有
 
 | 方法名             | 声明                             |
 | ------------------ | -------------------------------- |
@@ -36,8 +36,8 @@
 
 > 回顾：编写多线程代码，遵循 4 步操作：
 >
-> 1. 循环；
-> 2. 同步代码块；
+> 1. 写循环体；
+> 2. 写同步代码块；
 > 3. 判断共享数据，是否到了末尾；
 >    - 到末尾，跳出循环
 >    - 没到末尾，执行核心逻辑
@@ -54,10 +54,10 @@ demo-project/base-code/Day31/src/com/kkcf/producer_consumer/Desk.java
 package com.kkcf.producer_consumer;
 
 public class Desk {
-    // 是否有面条：0 表示没有，1 表示有
-    public static int foodFlag = 0;
+    // 是否有咖啡：0 表示没有，1 表示有
+    public static int coffeFlag = 0;
 
-    // 表示顾客最多吃 10 碗面条
+    // 表示顾客最多喝 10 杯咖啡
     public static int count = 10;
 
     // 锁对象
@@ -79,23 +79,24 @@ public class Cook extends Thread {
             synchronized (Desk.lock) {
                 if (Desk.count > 0) {
                     // 核心逻辑
-                    if (Desk.foodFlag == 1) {
-                        // 桌子上有面条，则等待
+                    if (Desk.coffeFlag == 1) {
+                        // 桌子上有咖啡，则等待
                         try {
                             Desk.lock.wait(); // 锁对象，与线程绑定
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     } else {
-                        // 桌子上没有面条，则做面条；
-                        System.out.println("厨师做了一碗面条");
+                        // 桌子上没有咖啡，则做咖啡；
+                        System.out.println("厨师做了一杯咖啡");
 
-                        // 将面条放在桌上，修改桌子的状态
-                        Desk.foodFlag = 1;
+                        // 将咖啡放在桌上，修改桌子的状态
+                        Desk.coffeFlag = 1;
 
-                        // 面条做完，唤醒顾客，吃面条
+                        // 咖啡做完，唤醒顾客，喝咖啡
                         Desk.lock.notifyAll();
                     }
+
                 } else {
                     break;
                 }
@@ -105,6 +106,10 @@ public class Cook extends Thread {
     }
 }
 ```
+
+- `Desk.lock` 时 Desk 类里面的一个静态常量，表示唯一锁对象。
+- `Desk.lock.wait()` 表示使用锁对象唤醒。
+- `Desk.lock.notifyAll()` 表示同唤醒锁对象锁住的所有线程。
 
 顾客类 `Foodie`，继承自 `Thread`：
 
@@ -120,21 +125,22 @@ public class Foodie extends Thread {
             synchronized (Desk.lock) {
                 if (Desk.count > 0) {
                     // 核心逻辑
-                    if (Desk.foodFlag == 0) {
-                        // 桌子上没有面条，则等待
+                    if (Desk.coffeFlag == 0) {
+                        // 桌子上没有咖啡，则等待
                         try {
                             Desk.lock.wait(); // 锁对象，与线程绑定
                         } catch (InterruptedException e) {
+                            e.printStackTrace();
                             throw new RuntimeException(e);
                         }
                     } else {
-                        // 桌子上有面条，则吃
-                        System.out.println("顾客正在吃面条，还嫩再吃" + (--Desk.count) + "碗面条");
+                        // 桌子上有咖啡，则喝
+                        System.out.println("顾客正在喝咖啡，还能再喝" + (--Desk.count) + "杯咖啡");
 
-                        // 桌上的面条被吃完了，修改桌子的状态
-                        Desk.foodFlag = 0;
+                        // 桌上的咖啡被喝完了，修改桌子的状态
+                        Desk.coffeFlag = 0;
 
-                        // 吃完后，唤醒厨师，做面条
+                        // 喝完后，唤醒厨师，做咖啡
                         Desk.lock.notifyAll();
                     }
                 } else {
@@ -171,13 +177,13 @@ public class Test {
 
 可以将上面案例中的桌子，看成一个队列：
 
-- 队列中只有一个元素时，就是上面的情况。
-- 队列中有多个元素时，先放入的元素先被取出。
+- 队列中，只有一个元素时，就是上面的情况。
+- 队列中，有多个元素时，先放入的元素先被取出。
 
 如果队列中有多个元素，那么：
 
 - 厨师会将做好的面条，放入（`put`）队列中，直到队列放满后，会等待，也称为**阻塞**。
-- 顾客从队列中取（`take`）一碗面条，直到队列为空后，会等待，也称为**阻塞**。
+- 顾客从队列中取（`take`）一杯咖啡，直到队列为空后，会等待，也称为**阻塞**。
 
 阻塞队列，实现了 `Iterable`、`Collection`、`Queue`、`BlockingQueue` 接口；
 
@@ -211,10 +217,10 @@ public class Cook extends Thread {
     @Override
     public void run() {
         while (true) {
-            // 不断把面条，放到阻塞队列中
+            // 不断把咖啡，放到阻塞队列中
             try {
-                queue.put("面条");
-                System.out.println("厨师放了一碗面条");
+                queue.put("咖啡");
+                System.out.println("厨师放了一杯咖啡");
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -224,7 +230,7 @@ public class Cook extends Thread {
 ```
 
 - `put` 方法底层使用了锁，不用自行再定义锁，否则会造成锁的嵌套。
-- `System.out.println("厨师放了一碗面条");` 输出语句代码，写在了锁的外面，在打印时，可能会造成连续打印的效果；但是对共享数据不会产生影响。
+- `System.out.println("厨师放了一杯咖啡");` 输出语句代码，写在了锁的外面，在打印时，可能会造成连续打印的效果；但是对共享数据不会产生影响。
 
 顾客类 `Foodie`：
 
@@ -245,7 +251,7 @@ public class Foodie extends Thread {
     @Override
     public void run() {
         while (true) {
-            // 不断从队列中，取出面条
+            // 不断从队列中，取出咖啡
             String food = null;
             try {
                 food = queue.take();

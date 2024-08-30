@@ -44,6 +44,8 @@ UDP 通信程序，发送数据的过程，就好比寄快递，有如下几步�
 3. 快递公司发送包裹 --> 发送数据。
 4. 付钱走人 --> 释放资源。
 
+客户端 SendMessage：
+
 demo-project/base-code/Day33/src/com/kkcf/udp/SendMessage.java
 
 ```java
@@ -82,6 +84,8 @@ UDP 通信程序，接受数据的过程，就好比取快递，有如下几步�
 2. 接收快递箱子 --> 接收打包好的数据。
 3. 从箱子里面获取礼物 --> 解析数据包。
 4. 签收走人 --> 释放资源。
+
+服务端 ReciveMessage：
 
 demo-project/base-code/Day33/src/com/kkcf/udp/ReciveMessage.java
 
@@ -375,6 +379,8 @@ TCP 协议，发送数据的步骤：
 2. 从 socket 对象中，获取输出流，写出数据；
 3. 释放资源
 
+客户端 Client：
+
 demo-project/base-code/Day33/src/com/kkcf/tcp/Client.java
 
 ```java
@@ -412,6 +418,8 @@ TCP 协议，接收数据的步骤：
 3. 从 socket 对象中，获取输入流，读数据，并把数据显示在控制台。
 4. 释放资源。
 
+服务端 Server：
+
 demo-project/base-code/Day33/src/com/kkcf/tcp/Server.java
 
 ```java
@@ -444,7 +452,7 @@ public class Server {
 }
 ```
 
-上面的做法，不能处理汉字这样的特殊字符。使用字符转换输入流和字符缓冲输入流，优化上面的代码：
+上面的做法，不能处理汉字这样的特殊字符。使用**字符转换输入流**和**字符缓冲输入流**，优化上面的代码：
 
 demo-project/base-code/Day33/src/com/kkcf/tcp/Server.java
 
@@ -488,7 +496,7 @@ TCP 通信协议中，客户端与服务端建立连接，会经过三次握手�
 
 如下图所示：
 
-![三次握手](/Users/zetian/workshop/tutorial/JAVASE/NodeAssets/三次握手.png)
+![三次握手](NodeAssets/三次握手.png)
 
 三次握手，就是一个为了建立连接，反复确认的过程。
 
@@ -496,4 +504,4 @@ TCP 通信协议中，客户端与服务端建立连接，会经过三次握手�
 
 TCP 通信协议中，客户端与服务端断开，会经过四次挥手，这是为了确保连接断开，并保证数据处理完毕。。
 
-![四次挥手](/Users/zetian/workshop/tutorial/JAVASE/NodeAssets/四次挥手.png)
+![四次挥手](NodeAssets/四次挥手.png)

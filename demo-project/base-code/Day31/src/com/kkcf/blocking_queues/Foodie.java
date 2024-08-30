@@ -12,7 +12,7 @@ public class Foodie extends Thread {
     @Override
     public void run() {
         while (true) {
-            // 不断从队列中，取出面条
+            // 不断从队列中，取出咖啡
             String food = null;
             try {
                 food = queue.take();
