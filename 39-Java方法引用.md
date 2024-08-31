@@ -10,7 +10,7 @@ Java 方法引用，有如下要求：
 
 - 引用处，必须是要传入**函数式接口**的实现类对象的地方；
 - 被引用的方法，必须**已经存在**；
-- 被引用的方法，**形参列表**和**返回值**与抽象方法保持一致；
+- 被引用的方法，它的**形参列表**和**返回值**与函数式接口中抽象方法的保持一致；
 - 被引用的方法，功能要满足当前需求；
 
 案例理解：为一个数组进行升序排序：分别使用匿名内部类、Lambda 表达式、方法引用的写法：
@@ -52,17 +52,19 @@ public class Demo01 {
 
 `::` 双冒号，是**方法引用符**，
 
-被引用的方法，可以是自己写的，也可以是第三方工具类写的。
+被引用的方法，可以是自己写的，也可以是第三方工具类中存在的。
 
 ## 二、Java 方法引用的分类
 
 ### 1.引用静态方法
 
-格式：`类名::静态方法`；示例：`Integer::parseInt`
+格式：`类名::静态方法`；
 
-案例理解：集合中有以下数字，将它们转为 int 类型。
+示例：`Integer::parseInt`
 
-使用 Stream 流的 `map` 方法，结合匿名内部类的方式实现：
+案例理解：集合中有一些 String 类型的数字，将它们转为 int 类型。
+
+实现方式一：使用 Stream 流的 `map` 方法，结合匿名内部类的方式实现：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Test1.java
 
@@ -90,7 +92,7 @@ public class Test1 {
 }
 ```
 
-使用 Stream 流的 `map` 方法，结合方法引用的方式实现：
+实现方式二：使用 Stream 流的 `map` 方法，结合方法引用的方式实现：
 
 - 引用 `Integer.parseInt` 静态方法。
 
@@ -124,15 +126,17 @@ public class Test1 {
 
 - 引用本类的成员方法，格式：`this::方法名`
 - 引用父类的成员方法，格式：`super::方法名`
-- 引用其它类的成员方法，格式：`其它类对象::方法名`
+- 引用其它类的成员方法，格式：`其它类实例对象::方法名`
 
-> 注意：静态方法中，没有 `this`、`super` 关键字；在**静态方法**中，使用方法引用时，不能用 `this::xxx` 或者 `super::xxx` 的写法。
+> 注意：静态方法中，没有 `this`、`super` 关键字；
+>
+> 在**静态方法**中，使用方法引用时，不能用 `this::xxx` 或者 `super::xxx` 的写法。
 
 #### 1.引用其它类的成员方法
 
-案例理解：集合中有一些字符串类型的名字，按照要求过滤数据。
+案例理解：集合中有一些 String 类型的名字，按照要求过滤数据。
 
-使用 Stream 流的 `filter` 方法，结合匿名内部类的方式实现：
+实现方式一：使用 Stream 流的 `filter` 方法，结合匿名内部类的方式实现：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Test2.java
 
@@ -161,7 +165,7 @@ public class Test2 {
 }
 ```
 
-使用 Stream 流的 `filter` 方法，结合方法引用的方式实现：
+实现方式二：使用 Stream 流的 `filter` 方法，结合方法引用的方式实现：
 
 创建一个类 `StringOperator`，里面有一个 `stringOperator` 方法；
 
@@ -209,7 +213,7 @@ public class Test2 {
 
 #### 2.引用本类的成员方法
 
-案例理解，在 GUI 界面中，点击事件的方法引用写法：
+案例理解，在 Java GUI 界面中，点击事件的方法引用写法：
 
 创建一个类 `LoginJFrame` 类，继承自 `JFrame` 类， 表示登录页面；并为它实现 `ActionListener` 接口，用于在页面中监听鼠标点击的事件。
 
@@ -246,7 +250,7 @@ public class LoginJFrame extends JFrame implements ActionListener {
 
 在 `LoginJFrame` 类中，定义 `method1` 方法，用于 `ActionListener` 接口中 `actionPerformed` 方法的方法引用。
 
-> `ActionListener` 接口虽然没有加函数式接口 `@FunctionInterface` 注解，但它其中只有一个抽象方法 `actionPerformed`，所以可以使用方法引用。
+> `ActionListener` 接口，虽然没有加函数式接口注解 `@FunctionInterface`，但它其中只有一个抽象方法 `actionPerformed`，所以可以使用方法引用。
 
 demo-project/base-code/Day26/src/com/kkcf/a02game/LoginJFrame.java
 
@@ -328,11 +332,13 @@ public class LoginJFrame extends MyJFrame implements ActionListener {
 
 ### 3.引用构造方法
 
-格式：`类名::new`；范例：`Student::new`；
+格式：`类名::new`；
+
+范例：`Student::new`；
 
 案例理解：集合里面存储姓名和年龄组成的字符串，要求将它们封装成 `Student` 对象，并收集到 `List` 集合中。
 
-使用 Stream 流的 `map` 方法，结合匿名内部类的方式：
+实现方式一：使用 Stream 流的 `map` 方法，结合匿名内部类的方式：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Demo02.java
 
@@ -365,9 +371,13 @@ public class Demo02 {
 }
 ```
 
-使用方法引用，重构上面的代码：
+实现方式二：使用 Stream 流的 `map` 方法，结合方法引用的方式：
 
-要在 `Student` 类中，新增一个构造方法，用于 Stream 流的 `map` 抽象方法中 `Function` 函数式接口中的 `apply` 抽象方法的方法引用。
+要在 `Student` 类中，新增一个构造方法；
+
+- 用于 Stream 流的 `map` 抽象方法中传入的 `Function` 函数式接口实现类对象中的 `apply` 抽象方法的方法引用。
+
+demo-project/base-code/Day26/src/com/kkcf/javabean/Studnet.java
 
 ```java
 package com.kkcf.javabean;
@@ -397,7 +407,10 @@ public class Studnet {
 }
 ```
 
-构造方法没有返回值，所以构造方法用于方法引用时，只要保证生成的对象，与函数式接口中抽象方法的返回值一致即可。
+构造方法没有返回值，所以构造方法用于方法引用时，
+
+- 要保证生成的对象类型，与函数式接口中抽象方法的返回值类型一致。
+- 要保证参数类型，与函数式接口中抽象方法的参数类型一致。
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Demo02.java
 
@@ -434,21 +447,21 @@ public class Demo02 {
 
 - 引用处，必须是**函数式接口**；
 - 被引用的方法，必须**已经存在**；
-- 被引用的方法，**形参列表**需要跟抽象方法的**第二个参数到最后一个参数**保持一致；
-- 被引用的方法，需要跟抽象方法的**返回值**保持一致；
+- 被引用的方法的**形参列表**，需要跟抽象方法的**第二个参数到最后一个参数**保持一致；
+- 被引用的方法的**返回值**，需要跟抽象方法的**返回值**保持一致；
 - 被引用的方法，功能需要满足当前需求；
 
 抽象方法形参的详解：
 
 - **第一个参数**：表示被引用方法的调用者，它的类型，决定了引用的类名；
-  - 在 Stream 流当中使用的方法，传入的函数式接口实现类中的抽象方法第一个参数往往表示流里面的数据；
-  - 假设这个数据是字符串类型的，那么就只能引用 `String` 类里的方法。
+  - 在 Stream 流当中使用的方法，传入的函数式接口实现类中的抽象方法，第一个参数往往表示流里面的数据；
+  - 假设这个数据是字符串类型的，那么就只能引用 `String` 类里的成员方法。
 - **第二个参数到最后一个参数**：跟被引用方法的形参保持一致，
   - 抽象方法如果没有第二个参数，那么被引用的方法必须是类中的无参成员方法。
 
 案例理解：集合里面添加一些字符串，要求变成大写后再进行输出
 
-使用 Stream 流的 `map` 方法，结合匿名内部类实现。
+实现方式一：使用 Stream 流的 `map` 方法，结合匿名内部类实现。
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Demo03.java
 
@@ -476,7 +489,7 @@ public class Demo03 {
 }
 ```
 
-使用方法引用重构上方的代码：
+实现方式二：使用 Stream 流的 `map` 方法，结合方法引用实现。
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Demo03.java
 
@@ -499,13 +512,15 @@ public class Demo03 {
 
 ### 2.引用数组的构造方法
 
-格式：`数据类型::new`；示例：`int[]::new`。
+格式：`数据类型::new`；
+
+示例：`int[]::new`。
 
 用于创建一个指定类型的数组。
 
 案例理解：集合中存储了一些整数，将它们收集到数组当中。
 
-使用 Stream 流的 `toArray` 方法，结合匿名内部类的方式：
+实现方式一：使用 Stream 流的 `toArray` 方法，结合匿名内部类的方式：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Demo04.java
 
@@ -533,7 +548,7 @@ public class Demo04 {
 }
 ```
 
-使用方法引用，重构上面的代码：
+实现方式二：使用 Stream 流的 `toArray` 方法，结合方法引用的方式：
 
 - 细节 1：数组的类型，需要跟流中的数据类型保持一致。
 
@@ -649,7 +664,9 @@ public class Test4 {
 
 ### 3.练习三
 
-创建集合，添加学生对象，学生对象属性：`name`、`age`；要求把姓名和年龄拼接成："张三-23" 这样的字符串，并收集数组中（使用方法引用完成）
+创建集合，添加学生对象，学生对象属性：`name`、`age`；
+
+要求把姓名和年龄拼接成："张三-23" 这样的字符串，并收集数组中（使用方法引用完成）
 
 - 思路：在 `Student` 类中，新增 `getNameAge` 成员方法，用于方法引用
 
@@ -706,7 +723,9 @@ public class Test5 {
                 new Studnet("赵六", 21)
         ));
 
-        String[] newStuList = stuList.stream().map(Studnet::getNameAge).toArray(String[]::new);
+        String[] newStuList = stuList.stream()
+            .map(Studnet::getNameAge)
+            .toArray(String[]::new);
 
         System.out.println(Arrays.toString(newStuList)); // [张三,18, 李四,19, 王五,20, 赵六,21]
     }
