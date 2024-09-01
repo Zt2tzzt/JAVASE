@@ -122,8 +122,10 @@ public class Test1 {
         HashSet<String> tempSet = new HashSet<>();
         // 生成男性名字
         for (int i = 0; i < maleCount; ) {
-            int index = r.nextInt(lastNameList.size());
-            String name = lastNameList.get(index) + maleNameList.get(i);
+            int index1 = r.nextInt(lastNameList.size());
+            int index2 = r.nextInt(maleNameList.size());
+
+            String name = lastNameList.get(index1) + maleNameList.get(index2);
             if (!tempSet.contains(name)) {
                 tempSet.add(name);
                 result.add(name + "-男-" + (r.nextInt(23) + 18)); // 18-40
@@ -133,8 +135,10 @@ public class Test1 {
 
         // 生成女性名字
         for (int i = 0; i < femaleCount; ) {
-            int index = r.nextInt(lastNameList.size());
-            String name = lastNameList.get(index) + femaleNameList.get(i);
+            int index1 = r.nextInt(lastNameList.size());
+            int index2 = r.nextInt(femaleNameList.size());
+
+            String name = lastNameList.get(index1) + femaleNameList.get(index2);
             if (!tempSet.contains(name)) {
                 tempSet.add(name);
                 result.add(name + "-女-" + (r.nextInt(23) + 18));

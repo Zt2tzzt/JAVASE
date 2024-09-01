@@ -271,8 +271,8 @@ public class Student {
 
 | 方法名                                | 说明                           |
 | ------------------------------------- | ------------------------------ |
-| `Field[] getFields()`                 | 返回所有公共成员变量对象的熟组 |
-| `Field[] getDeclaredFields()`         | 返回所有成员变量对象的熟组     |
+| `Field[] getFields()`                 | 返回所有公共成员变量对象的数组 |
+| `Field[] getDeclaredFields()`         | 返回所有成员变量对象的数组     |
 | `Field getField(String name)`         | 返回单个公共成员变量           |
 | `Field getDeclaredField(String name)` | 返回单个成员变量               |
 
@@ -404,6 +404,7 @@ public class Demo07 {
         Class<?> clazz = Class.forName("com.kkcf.reflect.Student");
 
         Field nameField = clazz.getDeclaredField("name");
+
         nameField.setAccessible(true); // 暴力反射
 
         Student stu = new Student("张三", 23, "男");
@@ -422,6 +423,15 @@ public class Demo07 {
 - `nameField.setAccessible(true);` 用于设置暴力反射。
 
 ## 四、获取成员方法（Method）
+
+`Class` 类中，用于获取成员方法实例对象的方法有：
+
+| 方法名                                                       | 说明                                       |
+| ------------------------------------------------------------ | ------------------------------------------ |
+| `Method[] getMethods()`                                      | 返回所有公共成员方法对象的数组，包括继承的 |
+| `Method[] getDeclaredMethods()`                              | 返回所有成员方法对象的数组，不包括继承的   |
+| `Method getMethod(String name, Class<?>... parameterTypes)`  | 返回单个公共成员方法对象                   |
+| `Method getDeclaredMethod(String name, Class<?>... parameterTypes)` | 返回单个成员方法对象                       |
 
 在 Student 类中，加入 `sleep`，`eat` 方法
 
@@ -452,14 +462,7 @@ public class Student {
 }
 ```
 
-`Class` 类中，用于获取成员方法实例对象的方法有：
-
-| 方法名                                                       | 说明                                       |
-| ------------------------------------------------------------ | ------------------------------------------ |
-| `Method[] getMethods()`                                      | 返回所有公共成员方法对象的数组，包括继承的 |
-| `Method[] getDeclaredMethods()`                              | 返回所有成员方法对象的数组，不包括继承的   |
-| `Method getMethod(String name, Class<?>... parameterTypes)`  | 返回单个公共成员方法对象                   |
-| `Method getDeclaredMethod(String name, Class<?>... parameterTypes)` | 返回单个成员方法对象                       |
+在测试类中，获取 Method 实例对象：
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo08.java
 

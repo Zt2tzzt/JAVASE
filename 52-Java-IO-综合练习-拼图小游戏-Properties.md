@@ -124,6 +124,9 @@ public class RegisterJFrame extends JFrame implements MouseListener {
 demo-project/puzzelgame/src/com/kkcf/ui/RegisterJFrame.java
 
 ```java
+import cn.hutool.core.io.FileUtil;
+// ……
+
 public class RegisterJFrame extends JFrame implements MouseListener {
     ArrayList<User> allUsers = new ArrayList<>();
 
@@ -295,6 +298,8 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
 
     // 记录玩了多少步
     int stepCount = 0;
+  
+    // ……
 }
 ```
 
@@ -334,7 +339,7 @@ public class GameInfo implements Serializable {
 }
 ```
 
-`GameJFrame` 类：
+`GameJFrame` 类中，编写存档逻辑：
 
 demo-project/puzzelgame/src/com/kkcf/ui/GameJFrame.java
 
@@ -374,7 +379,9 @@ public void actionPerformed(ActionEvent e) {
 
 ### 3.读档逻辑
 
-点击”读档“后，将读取存档中的数据。
+GameJFrame 类中，编写读档逻辑：
+
+- 点击”读档“后，将读取存档中的数据。
 
 demo-project/puzzelgame/src/com/kkcf/ui/GameJFrame.java
 
@@ -516,6 +523,7 @@ public class Test1 {
     public static void main(String[] args) {
         Properties prop = new Properties();
 
+        // 添加键值对元素
         prop.put("aaa", "111");
         prop.put("bbb", "222");
         prop.put("ccc", "333");
@@ -523,6 +531,7 @@ public class Test1 {
 
         System.out.println(prop); // {aaa=111, ccc=333, bbb=222, ddd=444}
 
+        // 遍历集合
         for (Object key : prop.keySet()) {
             Object val = prop.get(key);
             System.out.println(key + "=" + val);
@@ -606,6 +615,8 @@ public class Test3 {
 把点击“关于我们”要展示的图片，放到配置文件中。
 
 在项目根目录下 ，创建一个 account.properties 配置文件，在其中配置公众号图片的路径，格式如下：
+
+demo-project/puzzelgame/account.properties
 
 ```properties
 #account=image/damie.jpg

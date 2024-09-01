@@ -44,7 +44,7 @@
 
 1. 自定义一个类，继承 `Thread` 类；
 2. 在自定义类中，重写 `run` 方法；
-3. 创建自定义类对象，并启动线程。
+3. 创建多个自定义类对象，并启动线程。
 
 自定义 `MyThread` 类，继承 `Thread` 类：
 
@@ -91,7 +91,7 @@ public class Demo01 {
 1. 自定义类，实现 `Runable` 接口；
 2. 在自定义类，实现 `run` 方法；
 3. 创建自定义类实例对象；
-4. 传入自定义类的对象，再创建 `Thread` 类对象；
+4. 创建多个 `Thread` 类对象，传入自定义类的实例对象；
 5. 开启线程。
 
 自定义 `MyRun` 类，实现 `Runnable` 接口
@@ -151,8 +151,8 @@ public class Demo01 {
 1. 自定义类，实现 `Callable` 泛型接口，泛型表示返回值的类型。
 2. 在自定义类中，重写 `call` 方法，该方法有返回值，表示多线程运行的结果。
 3. 创建自定义类的实例对象，表示多线程要实现的任务。
-4. 传入任务对象，创建 `Future` 接口实现类 `FutureTask` 类的实例对象，用于管理多线程任务运行的结果。
-5. 创建 `Thread` 类的实例对象，并启动线程。
+4. 创建多个 `Future` 接口实现类 `FutureTask` 类的实例对象，传入任务对象，用于管理多线程任务运行的结果。
+5. 创建多个 `Thread` 类的实例对象，并启动线程。
 
 开启两个线程，求 1-100 的和。
 
@@ -192,15 +192,20 @@ public class Demo01 {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         MyCallable mc = new MyCallable();
 
-        FutureTask<Integer> ft = new FutureTask<Integer>(mc);
+        FutureTask<Integer> ft1 = new FutureTask<>(mc);
+        FutureTask<Integer> ft2 = new FutureTask<>(mc);
 
-        Thread t1 = new Thread(ft);
+        Thread t1 = new Thread(ft1);
+        Thread t2 = new Thread(ft2);
 
         t1.start();
+        t2.start();
 
         // 获取多线程运行的结果
-        Integer result = ft.get();
-        System.out.println(result);
+        Integer result1 = ft1.get();
+        Integer result2 = ft2.get();
+        System.out.println(result1);
+        System.out.println(result2);
     }
 }
 ```
@@ -217,20 +222,20 @@ public class Demo01 {
 
 `Thread` 类常用方法如下：
 
-| 方法名                              | 说明                                 |
-| ----------------------------------- | ------------------------------------ |
-| `String getName)()`                 | 返回此线程的名称                     |
-| `void setName(String name)`         | 设置线程的名称（也可以使用构造方法） |
-| `static Thread currentThread()`     | 获取当前线程的对象                   |
-| `static void sleep(long time)`      | 让线程休眠指定的时间（单位：毫秒）   |
-| `void setPriority(int newPriority)` | 设置线程优先级                       |
-| `final int getPriority`             | 获取线程的优先级                     |
-| `final void setDaemon(boolean on)`  | 设置守护进程                         |
-| `static void yield()`               | 设置礼让线程（出让线程）             |
-| `void join()`                       | 设置插入线程（插队线程）             |
+| 方法名                              | 说明                                     |
+| ----------------------------------- | ---------------------------------------- |
+| `String getName)()`                 | 返回此线程的名称                         |
+| `void setName(String name)`         | 设置线程的名称（也为构造方法传参来设置） |
+| `static Thread currentThread()`     | 获取当前线程的对象                       |
+| `static void sleep(long time)`      | 让线程休眠指定的时间（单位：毫秒）       |
+| `void setPriority(int newPriority)` | 设置线程优先级                           |
+| `final int getPriority`             | 获取线程的优先级                         |
+| `final void setDaemon(boolean on)`  | 设置守护进程                             |
+| `static void yield()`               | 设置礼让线程（出让线程）                 |
+| `void join()`                       | 设置插入线程（插队线程）                 |
 
 - 线程优先级越高，抢占到 CPU 执行权的概率越高。
-- 线程有默认名字，格式 `Thread-xxx`，`xxx` 是以 0 开始的序号
+- 线程有默认名字，格式 `Thread-xxx`，`xxx` 是以 0 开始的序号。
 
 ### 1.getName、setName 方法
 
@@ -863,8 +868,8 @@ public class MovieTicketSaleThread1 extends Thread {
 ```
 
 - 细节 1：在继承 `Thread` 类的自定义类中，`Lock` 锁的实例对象，要加 `static final` 关键字修饰，表示唯一的一把锁。
-- 细节 2：如果执行 break 语句跳出循环代码的线程，正处于上锁状态，那么其它线程会卡在上锁处，等待上锁线程锁的释放，然而跳出循环（上锁）的线程，不会执行释放锁的代码。这会导致程序不能停止；
-  - 解决上面的问题，就要利用 `try…catch…finally` 代码块的 `finally` 代码块必会执行的特性，把解锁的代码 `lock.unlock();` 放入其中执行。
+- 细节 2：如果执行 break 语句跳出循环代码的线程，正处于上锁状态，那么其它线程会卡在上锁处，等待上锁线程锁的释放，然而上锁的线程已跳出循环，不会执行释放锁的代码。这会导致程序不能停止；
+  - 解决上面的问题，就要利用 `try…catch…finally` 代码块中 `finally` 代码块必会执行的特性，把解锁的代码 `lock.unlock();` 放入其中执行。
 
 测试类：
 

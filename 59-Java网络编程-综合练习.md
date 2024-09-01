@@ -25,12 +25,11 @@ public class Client1 {
         OutputStream os = socket.getOutputStream();
 
         Scanner sc = new Scanner(System.in);
-        String data = null;
-
-        // 向服务端发送数据
+        String data;
         do {
             System.out.println("请输入要发送的数据：");
             data = sc.nextLine();
+            // 向服务端发送数据
             os.write(data.getBytes());
         } while (!"886".equals(data));
 
@@ -99,7 +98,7 @@ Accept-Encoding: gzip, deflate
 
 ## 二、练习二：接收并反馈
 
-需求：客户端发送一条数据，接收服务端反馈的消息，并打印；服务端：接收数据并打印，再给客户端反馈消息。
+需求：客户端发送一条数据，接收服务端反馈的消息，并打印；服务端接收数据并打印，再给客户端反馈消息。
 
 客户端 Client2
 
@@ -168,7 +167,7 @@ public class Server2 {
 
         // 接收数据
         InputStream is = socket.getInputStream();
-        InputStreamReader isr = new InputStreamReader(is); 
+        InputStreamReader isr = new InputStreamReader(is);
         char[] chs = new char[1024];
         int len;
         // 细节：read 方法，从连接通道中读取数据，发送的数据需要有一个结束标记，否则会一直停留在 read 方法这里，等待读取下面的数据。
@@ -176,8 +175,9 @@ public class Server2 {
             System.out.print(new String(chs, 0, len));
 
         // 返回数据
-        String str = "见到你我也很高心";
-        socket.getOutputStream().write(str.getBytes());
+        String str = "见到你我也很高兴";
+        OutputStream os = socket.getOutputStream();
+        os.write(str.getBytes());
 
         socket.close();
         serverSocket.close();
@@ -187,7 +187,7 @@ public class Server2 {
 
 ## 三、练习三：上传文件
 
-需求：客户端：将本地文件上传到服务器，接收服务器的反馈；服务端：接收客户端上传的文件保存到本地，上传完毕之后给出反馈。
+需求：客户端：将本地图片文件（jpg）上传到服务器，接收服务器的反馈；服务端：接收客户端上传的图片文件（jpg）保存到本地，上传完毕之后给出反馈。
 
 思路：客户端，使用 `FileInputSream` 字节输入流，读取本地文件的内容到内存中，再将文件数据发送（写出）给服务器端；服务器端接收到文件数据后，使用 `FileOutputStream` 字节输出流，保存文件到本地，并向客户端返回消息。
 
@@ -354,7 +354,7 @@ public class Sever3 {
 }
 ```
 
-自定义 `UploadRunnable` 类，实现 `Runnable` 接口
+自定义 `UploadRunnable` 类，实现 `Runnable` 接口，用于服务端接收文件并保存到本地。
 
 - 然后使用构造函数，初始化 socket 对象。这种方式，对于要共享的 socket 对象，更加灵活。
 

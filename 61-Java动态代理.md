@@ -1,6 +1,6 @@
 # Java 动态代理
 
-往原有的代码中，直接添加代码，称为“侵入式修改”。
+往原有的代码中，直接添加代码，称为“**侵入式修改**”。
 
 动态代理，可以**无侵入式的**为代码增加额外的功能。
 
@@ -64,7 +64,9 @@ public class BigStar implements Star {
 }
 ```
 
-`java.lang.reflect.Proxy` 类，提供了为对象生成代理对象的方法：`public static Object newProxyInstance(ClassLoader loader, Class<?>[] interface, InvocationHandler h)`，其中：
+`java.lang.reflect.Proxy` 类，提供了为对象生成代理对象的方法：
+
+`public static Object newProxyInstance(ClassLoader loader, Class<?>[] interface, InvocationHandler h)`，其中：
 
 - 参数一：`ClassLoader loader` 用于指定用哪个类加载器，去加载生成的代理对象。一般使用当前类的字节码文件对象，获取类加载器。
 - 参数二：`Class<?>[] interface` 以数组的形式指定接口，这些接口用于指定生成的代理有哪些方法。
@@ -104,7 +106,7 @@ public class ProxyUtil {
 }
 ```
 
-- `InvocationHandler` 是函数值接口，其中 `invoke` 方法的参数分析；
+- `InvocationHandler` 是函数式接口，其中 `invoke` 方法的参数分析；
   - 参数一：代理的对象。
   - 参数二：要运行的方法的实例对象（与反射有关）。
   - 参数三：调用方法，传递的实参。

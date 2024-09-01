@@ -28,6 +28,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Test1 {
+
     /**
      * 此方法用于：爬取网页数据
      *
@@ -45,9 +46,10 @@ public class Test1 {
         // 打开 url
         URLConnection urlConnection = url1.openConnection();
 
-        // 获取字节流读取数据，又因为网站上有中文，所以要转成字符流
+        // 获取字节流，又因为网站上有中文，所以要转成字符流
         InputStreamReader isr = new InputStreamReader(urlConnection.getInputStream());
 
+        // 读取数据
         char[] chs = new char[1024 * 1024 * 5];
         int len;
         while ((len = isr.read(chs)) != -1)
@@ -58,7 +60,7 @@ public class Test1 {
     }
 
     /**
-     * 此方法用于：处理数据，正则表达式匹配
+     * 此方法用于：正则表达式匹配
      *
      * @param str   网站数据
      * @param regex 正则表达式
@@ -105,7 +107,7 @@ public class Test1 {
     }
 
     /**
-     * 此方法用于：处理女性名字数据（分割）
+     * 此方法用于：处理女性名字数据
      *
      * @param femaleNameTempList 女性名字数据
      * @return 女性名字
@@ -135,11 +137,12 @@ public class Test1 {
         Random r = new Random();
 
         HashSet<String> tempSet = new HashSet<>();
-
-        // 生成男性名字（姓氏 + 名字）
+        // 生成男性名字
         for (int i = 0; i < maleCount; ) {
-            int index = r.nextInt(lastNameList.size());
-            String name = lastNameList.get(index) + maleNameList.get(i);
+            int index1 = r.nextInt(lastNameList.size());
+            int index2 = r.nextInt(maleNameList.size());
+
+            String name = lastNameList.get(index1) + maleNameList.get(index2);
             if (!tempSet.contains(name)) {
                 tempSet.add(name);
                 result.add(name + "-男-" + (r.nextInt(23) + 18)); // 18-40
@@ -147,10 +150,12 @@ public class Test1 {
             }
         }
 
-        // 生成女性名字（姓氏 + 名字）
+        // 生成女性名字
         for (int i = 0; i < femaleCount; ) {
-            int index = r.nextInt(lastNameList.size());
-            String name = lastNameList.get(index) + femaleNameList.get(i);
+            int index1 = r.nextInt(lastNameList.size());
+            int index2 = r.nextInt(femaleNameList.size());
+
+            String name = lastNameList.get(index1) + femaleNameList.get(index2);
             if (!tempSet.contains(name)) {
                 tempSet.add(name);
                 result.add(name + "-女-" + (r.nextInt(23) + 18));
@@ -184,7 +189,7 @@ public class Test1 {
         ArrayList<String> femaleNameList = getFemaleNameData(femaleNameTempList);
 
         // 姓氏和名字拼接;
-        ArrayList<String> namelist = mockNameList(lastNameList, maleNameList, femaleNameList, 70, 70);
+        ArrayList<String> namelist = mockNameList(lastNameList, maleNameList, femaleNameList, 5, 5);
 
         // 写出数据
         BufferedWriter bw = new BufferedWriter(new FileWriter("Day30/src/com/kkcf/iopractice/name.txt"));
@@ -219,7 +224,7 @@ for (String title : titles) {
 }
 ```
 
-重构上方的代码：
+使用 Hutool 包中的工具类，重构上方的代码：
 
 demo-project/base-code/Day30/src/com/kkcf/iopractice/Test2.java
 
@@ -263,19 +268,19 @@ public class Test2 {
 
 ```
 
-- 细节 1：使用 Hutool 包，指定的相对路径，是相对 .class 编译文件来说的
+- 细节 1：使用 Hutool 包，指定的相对路径，是相对于 .class 编译文件路径的
 
 ## 二、随机点名器
 
 有一个文本文件中，存储了班级里同学的信息，每一个信息占一行；
 
-格式为：张三-男-23-1，分别表示姓名、性别、年龄、权重
+格式为：“张三-男-23-1”，分别表示姓名、性别、年龄、权重
 
 要求，每次被点到的学生，再次被点到的概率，在原先的基础上，降低一半；
 
 举例：80 个学生，点名 5 次，每次都点到小A，概率变化情况如下：
 
-- 第一次点到每人（小 A）概率：1.25%
+- 第一次点到小A（每个人）概率：1.25%
 - 第二次小A概率：0.625%，其它人概率：1.2579%
 - 第三次小A概率：0.3125%，其它人概率：1.261867%
 - ……
@@ -284,8 +289,7 @@ public class Test2 {
 
 思路：带权重的随机。
 
-- 为每一个学生，设置一个**权重**，它的**权重占比**为：`个人权重 / 总权重`。
-- 假设有 10 个学生，那么每个学生的权重占比就是 0.1；
+- 假设有 10 个学生，为每一个学生，设置一个初始权重 1，那么这时每个学生的权重占比为：`个人权重 / 总权重 = 1 / 10 = 0.1`。
 - 在数轴上，可以把 0.0 - 1.0 分成 10 等份，每一个学生占据其中的一份；
 
 ![随机数的权重占比思想](NodeAssets/带权重的随机占比思想.jpg)
@@ -322,6 +326,8 @@ public class Student {
     // toString……
 }
 ```
+
+学生信息，以“姓名-性别-年龄-权重”的格式，存储在了本地 name.txt 文件中
 
 测试类：
 
@@ -391,7 +397,7 @@ public class Test3 {
 }
 ```
 
-- `Arrays.binarySearch` 方法，返回一个 `(-插入点索引 - 1)` 整数
+- `Arrays.binarySearch` 方法，对数组进行二分查找，返回一个 `(-插入点索引 - 1)` 整数
 
 ## 三、登陆注册
 

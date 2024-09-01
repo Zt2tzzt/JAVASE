@@ -3,6 +3,7 @@ package com.kkcf.test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -24,8 +25,9 @@ public class Server2 {
             System.out.print(new String(chs, 0, len));
 
         // 回写数据
-        String str = "见到你我也很高心";
-        socket.getOutputStream().write(str.getBytes());
+        String str = "见到你我也很高兴";
+        OutputStream os = socket.getOutputStream();
+        os.write(str.getBytes());
 
         socket.close();
         serverSocket.close();
