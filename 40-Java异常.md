@@ -10,7 +10,7 @@ Java 异常体系结构，如下图所示：
 
 `Error` 代表系统级错误，属于严重问题；
 
-- 系统一旦出现问题，Sun 公司会把这些错误，封装成 `Error` 对象；
+- 计算机系统一旦出现问题，Sun 公司会把这些错误，封装成 `Error` 对象；
 - `Error` 是给 Sun 公司自己用的，不是给开发者用的，因此开发人员不需要管它。
 
 ## 一、Java 异常分类
@@ -24,7 +24,7 @@ Java 异常体系结构，如下图所示：
 - `RuntimeException` 及其子类，是**运行时异常**，表示程序在运行时出现的异常（编译阶段不会出现）。
   - 比如：数组索引越界异常。
 
-- 其它异常，继承自 `Exception`，是**编译时异常**，表示在程序编译时出现的异常。
+- 其它异常，除 `RuntimeException` 以外，继承自 `Exception` 的都是**编译时异常**，表示在程序编译时出现的异常。
   - 比如：日期解析异常；
 
 ![编译时异常和运行时异常](NodeAssets/编译时异常和运行时异常.png)
@@ -295,7 +295,7 @@ public class Demo05 {
 
 - 只会生成第一个异常的对象，并与 `catch` 小括号里的异常类型进行匹配，后面的代码都不会执行。
 
-处理这种清空，规范的做法是：写多个 `catch` 代码块，与 `try` 代码块中可能会出现的所有异常一一对应。
+处理这种情况，规范的做法是：写多个 `catch` 代码块，与 `try` 代码块中可能会出现的所有异常一一对应。
 
 - 细节 1：多个异常对象中，如果存在父子关系，父类一定要写在下面。
 
@@ -355,7 +355,7 @@ public class Demo06 {
 
 - 那么异常会被交给 JVM 虚拟机进行处理。
 
-#### 4.情况四：异常给后面的代码
+#### 4.情况四：异常后面的代码不再执行
 
 情况四：`try` 代码块中出现了异常，代码块后面的代码，就不会再执行了。
 
@@ -466,7 +466,7 @@ package com.kkcf.exception;
 
 public class Demo08 {
     // NullPointerException, ArrayIndexOutOfBoundsException 都是运行时异常，所以没必要使用 throws
-    //public static int getMax(int[] arr) throws NullPointerException, ArrayIndexOutOfBoundsException {
+    // public static int getMax(int[] arr) throws NullPointerException, ArrayIndexOutOfBoundsException {
     public static int getMax(int[] arr) {
         if (arr == null)
             throw new NullPointerException("数组不能为 null");
@@ -508,7 +508,10 @@ public class Demo08 {
 
 ## 四、Java 异常综合练习
 
-需求：键盘录入自己心仪的女朋友姓名、年龄。姓名的长度在 3~10 之间，年龄的范围为 18-40 岁；超出这个范围是异常数据不能赋值，需要重新录入，一直录到正确为止。
+需求：键盘录入自己心仪的女朋友姓名、年龄。
+
+- 姓名的长度在 3~10 之间，年龄的范围为 18-40 岁；
+- 超出这个范围是异常数据不能赋值，需要重新录入，一直录到正确为止。
 
 提示：需要考虑用户在键盘录入时的所有情况。比如：
 
@@ -622,7 +625,7 @@ Java 自定义异常类，有如下几步：
 3. 写空参构造
 4. 写带参构造
 
-自定义异常类 `NameFormatException`，表示名字格式化异常，继承自 `RuntimeException` 异常，表示运行时异常：
+自定义异常类 `NameFormatException`，继承自 `RuntimeException` 异常，表示名字格式化异常。
 
 demo-project/base-code/Day27/src/com/kkcf/exception/NameFormatException.java
 
@@ -641,7 +644,7 @@ public class NameFormatException extends RuntimeException {
 
 - 一般来说，实现上面两个构造方法即可；
 
-自定义异常类 `AgeOutOfBoundException`，表示年龄格式化异常，继承自 `RuntimeException` 异常：
+自定义异常类 `AgeOutOfBoundException`，继承自 `RuntimeException` 异常：表示年龄格式化异常。
 
 demo-project/base-code/Day27/src/com/kkcf/exception/AgeOutOfBoundException.java
 

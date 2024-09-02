@@ -168,7 +168,7 @@ public class Test06 {
 
 ## 四、练习四：抢红包
 
-抢红包也用到了多线程，假设 100 块，分成了 3 个红包，现在有 5 个人去枪；
+抢红包，也用到了多线程，假设 100 块，分成了 3 个红包，现在有 5 个人去枪；
 
 其中，红包是共享数据。5 个人是 5 条线程。打印结果如下：
 
@@ -237,8 +237,8 @@ public class RedEnvelopeThread extends Thread {
 }
 ```
 
-- `BigDecimal.valueOf` 静态方法，将一个数字，转为 BigDecimal 类型。
-- `BigDecimal` 类的 `doubleValue` 方法，将 BigDemical 类型，转为 double 类型的数字。
+- `BigDecimal.valueOf` 静态方法，用于将一个 double 浮点数，转为 BigDecimal 类型。
+- `BigDecimal` 类的 `doubleValue` 方法，用于将 BigDemical 类型，转为 double 类型的数字。
 - `r.nextDouble` 方法，只有 JDK17 才能用。
 
 测试类：
@@ -280,9 +280,9 @@ public class Test07 {
 - 抽奖箱 1 又产生了一个 10 元大奖
 - ……
 
-思路：抽奖池使用 ArrayList 集合，其中有 `remove` 方法，用于抽奖和去重。
+思路：抽奖池使用 ArrayList 集合，其中有 `remove` 方法，保证不会抽到同一个奖。
 
-- 使用构造方法，来初始化抽奖池集合，保证多线程共享的数据是唯一的
+- 使用构造方法，来初始化抽奖池集合，保证多线程共享的数据是唯一的。
 
 demo-project/base-code/Day31/src/com/kkcf/test/LotteryThread.java
 
@@ -433,8 +433,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class LotteryThread extends Thread {
-    public static ArrayList<Integer> list1 = new ArrayList<>(); // 抽奖箱 1
-    public static ArrayList<Integer> list2 = new ArrayList<>(); // 抽奖箱 2
     public ArrayList<Integer> list;
 
     public LotteryThread(ArrayList<Integer> list) {
@@ -459,6 +457,7 @@ public class LotteryThread extends Thread {
                 Integer price = list.remove(0);
 
                 boxList.add(price);
+                //System.out.println(name + "又产生了一个大 " + price + "元大奖");
             }
 
             try {
@@ -469,6 +468,7 @@ public class LotteryThread extends Thread {
         }
     }
 }
+
 ```
 
 ### 1.多线程内存原题
@@ -492,7 +492,7 @@ Java 多线程内存原理图，如下图所示：
 - ……
 - 在此次抽奖过程中，抽奖箱2产生最大奖项，该奖金额为 800 元。
 
-思路，要等待两个线程都**运行完毕**，才能比较；
+思路，要等待两个线程都**运行完毕**，才能进行最大值的比较；
 
 将线程奖项中的最大值，看作线程运行的结果，进行返回。
 
@@ -544,6 +544,7 @@ public class LotteryCallable implements Callable<Integer> {
 测试类：
 
 - 创建两个 `FutureTask` 对象，用于接收两个线程返回的结果，
+- 将这两个 `FutureTask` 对象，传入 Thread 类中，并执行。
 
 demo-project/base-code/Day31/src/com/kkcf/test/Test09.java
 
