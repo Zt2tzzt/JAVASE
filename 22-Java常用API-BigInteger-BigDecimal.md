@@ -6,7 +6,7 @@
 
 long 类型，能表示的最大的数字是 `01111111 11111111 11111111 11111111 11111111 11111111 11111111 11111111`，转为十进制是 `9223372036854775807`。
 
-超过该数字的**整数**，long 类型也无法正常表示，这时就要使用 `BigInteger` 类（无法表示小数）。
+超过该数字的**整数**，long 类型也无法正常表示，这时就要使用 `BigInteger` 类（它无法表示小数）。
 
 当 `BigInteger` 对象创建后，内部记录的值，不允许发生改变；
 
@@ -22,7 +22,7 @@ long 类型，能表示的最大的数字是 `01111111 11111111 11111111 1111111
 | `public BigInteger(String val)`            | 获取指定的大整数                            |
 | `public BigInteger(String val, int radix)` | 获取指定进制的大整数                        |
 
-获取一个 [0 - 2^4^ - 1] 的随机大整数对象：
+获取一个 [0, 2^4^ - 1] 的随机大整数对象：
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/BigIntegerDemo01.java
 
@@ -137,8 +137,8 @@ public class BigIntegerDemo01 {
 
 细节：
 
-- `valueOf` 静态方法，返回的结果能表示的范围较小，传入的整数参数，只能在 long 数据类型的取值范围之内；
-- `valueOf` 静态方法，在内部对常用数字 `-16-16` 进行了优化，提前创建了这个范围内，数字的 `BigInteger` 实例对象，如果多次获取不会重新创建对象。
+- `valueOf` 静态方法，返回的结果，能表示的范围较小；传入的整数参数，只能在 long 数据类型的取值范围之内；
+- `valueOf` 静态方法，在内部对常用整数 `-16-16` 进行了优化；提前创建了这个范围内，数字的 `BigInteger` 实例对象，如果多次获取不会重新创建对象。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/BigIntegerDemo01.java
 
@@ -408,12 +408,12 @@ public class Test01 {
 
 `BigDecimal` 常用的构造方法有：
 
-| 方法名                          | 说明                                                           |
-| ------------------------------- | -------------------------------------------------------------- |
-| `public BigDecimal(double val)` | 传入 double 类型的小数，创建对象（结果可能不精确，不建议使用） |
-| `public BigDecimal(String val)` | 传入 String 类型的字符串，创建对象，结果精确。                 |
+| 方法名                          | 说明                                                         |
+| ------------------------------- | ------------------------------------------------------------ |
+| `public BigDecimal(double val)` | 传入 double 类型的小数，创建对象（结果可能不精确，不建议使用）。 |
+| `public BigDecimal(String val)` | 传入 String 类型的字符串，创建对象，**结果精确**。           |
 
-`public BigDecimal(double val)` 的使用，结果可能不精确
+`public BigDecimal(double val)` 的使用，结果可能不精确。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/BigDecimalDemo01.java
 
@@ -608,7 +608,9 @@ public class BigDecimalDemo02 {
 
 ![BigDecimal底层原理](NodeAssets/BigDecimal底层原理.jpg)
 
-依此类推，如果是有整数部分的小数，比如 `"123.226"`；或者带负号的小数，比如 `"-1.5"`；都会将字符串中的字符，转为 ASCLL 码，存入一个数组中（正数不会存符号位的 ASCLL 码）。
+依此类推，如果是有整数部分的小数，比如 `"123.226"`；或者带负号的小数，比如 `"-1.5"`；
+
+都会将字符串中的字符，转为 ASCLL 码，存入一个数组中（正数不会存符号位的 ASCLL 码）。
 
 ![BigDecimal底层原理2](NodeAssets/BigDecimal底层原理2.jpg)
 
