@@ -28,7 +28,7 @@ JVM 虚拟机中的栈内存，就是一种栈结构。
 
 ### 3.Java 数组结构
 
-Java 中数组，在内存中是一片连续的空间，
+Java 中数组，在内存中是一片连续的空间。
 
 数组中元素的查询，速度快：
 
@@ -67,7 +67,7 @@ Java 中数组，在内存中是一片连续的空间，
 
 在链表的基础上，还可以拓展双向链表的概念，即一个结点中，存储了
 
-- 数据值;；
+- 数据值；
 - 前结点地址值；
 - 后结点地址值。
 
@@ -189,7 +189,7 @@ public static int newLength(int oldLength, int minGrowth, int prefGrowth) {
 | `public E removeFirst()`    | 从此列表中删除并返回第一个元素   |
 | `public E removeLast()`     | 从此列表中删除并返回最后一个元素 |
 
-`LinkedList` 类中，有一个内部类 `Node`，表示结点
+`LinkedList` 类中，有一个内部类 `Node`，表示结点。
 
 java/util/LinkedList.java
 
