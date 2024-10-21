@@ -23,7 +23,7 @@
 
 ### 3.Serializable 接口
 
-案例理解，使用 `ObjectOutputStream ` 字节序列化输出流，将 Student 对象，写出到文件中。
+案例理解，使用 `ObjectOutputStream` 字节序列化输出流，将 Student 对象，写出到文件中。
 
 要使用字节序列化输出流，写出对象到文件，要先为对象的 JavaBean 类，实现 `Serializable` 接口。否则会抛出 `NotSerializableException` 异常。
 
@@ -98,7 +98,7 @@ public class Demo01 {
 
 - `readObject` 方法，一次只能读取一个对象，读到文件末尾没有对象可读时，会抛出异常。
 
-案例理解，使用 `ObjectInputStream ` 反序列化流，将文件中保存的序列化 Student 对象，读取到程序中。
+案例理解，使用 `ObjectInputStream` 反序列化流，将文件中保存的序列化 Student 对象，读取到程序中。
 
 demo-project/base-code/Day29/src/com/kkcf/serialization/Demo02.java
 
