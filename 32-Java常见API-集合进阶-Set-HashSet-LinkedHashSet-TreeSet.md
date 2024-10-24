@@ -314,7 +314,7 @@ public class SetDemo02 {
         stus.add(stu3);
         stus.add(stu4);
 
-        System.out.println(stus);
+        System.out.println(stus); // [Student{name='wangwu', age=25}, Student{name='lisi', age=24}, Student{name='zhangsan', age=23}]
     }
 }
 ```
@@ -325,7 +325,7 @@ public class SetDemo02 {
 
 `LinkedHashSet` 集合，特点是：**有序**、不重复、无索引；
 
-`LinkedHashSet` 特别的地方在于，它会保证元素的存入、取出（遍历）顺序是一致的。
+- 有序，指的是它会保证元素的存入、取出（遍历）顺序是一致的。
 
 `LinkedHashSet` 底层原理：依然使用哈希表的数据结构存储数据，只是每个元素在存入哈希表时，又额外被添加进了一个双向链表的机制，用于记录数据存储的顺序。如下图所示：
 
@@ -333,7 +333,7 @@ public class SetDemo02 {
 
 `LinkedHashSet` 遍历时，并非遍历哈希表底层数组 table，而是遍历双向链表结构；
 
-所以，遍历时相对于元素的存入顺序，是有序的。
+所以，遍历时，会有序的遍历元素的存入顺序。
 
 demo-project/base-code/Day23/src/com/kkcf/set/SetDemo03.java
 
@@ -371,7 +371,9 @@ public class SetDemo03 {
 
 `TreeSet` 集合，底层基于红黑树的数据结构实现排序；增、删、改、查性能都比较高。
 
-当自定义对象，添加到 `TreeSet` 集合中，不需要重写 `hashCode` 、`equals` 方法。而是需要指定该自定义对象的排序规则，排序规则得到的数值相等，表示是同一个元素，则舍弃；
+当自定义对象，添加到 `TreeSet` 集合中，不需要重写 `hashCode` 、`equals` 方法。而是需要指定该自定义对象的排序规则；
+
+- 根据排序规则，得到的数值如果相等，表示是同一个元素，则舍弃；
 
 案例理解，在 `TreeSet` 集合中，存入一些数字（包装类型），打印集合；
 
@@ -449,7 +451,7 @@ public class Student implements Comparable<Student> {
 - `compareTo` 方法参数 `o`，表示要比较的元素（在这个场景中，表示已经存在于 `TreeSet` 集合底层红黑树中的元素）。
 - `compareTo` 返回值是：
   - 负数，认为要添加的元素是小的，存在 `TreeSet` 集合底层红黑树左边。
-  - 整数，认为要添加的元素是大的，存在 `TreeSet` 集合底层红黑树右边。
+  - 正数，认为要添加的元素是大的，存在 `TreeSet` 集合底层红黑树右边。
   - 0，认为要添加的元素已经存在，舍弃。·
 
 测试类
@@ -488,7 +490,7 @@ public class SetDemo04 {
 
 `TreeSet` 比较器排序指的是：
 
-- 创建 `TreeSet` 集合对象的时候，为构造函数传入一个比较器 `Comparator` 对象，用于指定比较规则；
+- 创建 `TreeSet` 集合对象的时候，为 `TreeSet` 构造函数传入一个比较器 `Comparator` 对象，用于指定比较规则；
 - 即传入一个 `Comparator` 函数式接口的实现类对象。
 
 案例理解：创建 `TreeSet` 集合，在其中存入字符串。要求按照字符串长度，进行排序。
@@ -540,7 +542,7 @@ public class SetDemo05 {
 - `compare` 方法的参数 `o1` 表示当前要添加的元素；`o2` 表示已经在 `TreeSet` 底层红黑树中存在的元素。
 - `compare` 方法，返回值是：
   - 负数，认为要添加的元素是小的，存在 `TreeSet` 底层红黑树左边。
-  - 整数，认为要添加的元素是大的，存在 `TreeSet` 底层红黑树右边。
+  - 正数，认为要添加的元素是大的，存在 `TreeSet` 底层红黑树右边。
   - 0，认为要添加的元素已经存在，舍弃。·
 
 案例理解：学生类中有属性：姓名，年龄，语文成绩，数学成绩，英语成绩；
