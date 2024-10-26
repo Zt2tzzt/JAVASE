@@ -18,7 +18,7 @@
 
 ## 一、Date 类
 
-java.util.Date 类，是一个 JDK 提供的 javaBean 类，用来描述时间，精确到毫秒。
+java.util.Date 类，是一个 JDK 提供的 java Bean 类，用来描述时间，精确到毫秒。
 
 Date 类常用的构造方法如下：
 
@@ -111,7 +111,6 @@ public class DateTest01 {
         Date d1 = new Date(0L);
 
         long time = d1.getTime();
-
         time = time + 1000L * 60 * 60 * 24 * 365;
 
         d1.setTime(time);
@@ -121,7 +120,7 @@ public class DateTest01 {
 }
 ```
 
-- `1000L` 表示使用 long 类型的数字参与计算，得到的结果会隐式转换位 long 类型。
+- `1000L` 表示使用 long 类型的数字参与计算，得到的结果会隐式转换为 long 类型。
 
 案例理解：定义任意两个 Date 对象，比较一下哪个时间在前，哪个时间在后。
 
@@ -240,8 +239,8 @@ public class SimpleDateFormatDemo01 {
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        String format2 = sdf2.format(d1); // 1970-01-01 08:00:00
-        System.out.println(format2);
+        String format2 = sdf2.format(d1);
+        System.out.println(format2); // 1970-01-01 08:00:00
 
         SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒 EE");
 
@@ -384,7 +383,7 @@ public class CalendarDemo01 {
 
 - 封装一个方法 `getWeekDay`，使用查表法，获取对应的星期数。
 
-> 查表法中的“表”，指的是容器，上方案例中的容器就是数组
+> 查表法中的“表”，指的是容器，上方案例中的容器就是数组。
 
 案例理解：`public void set(int field, int value)` 方法的使用，设置日历对象中的年、月
 

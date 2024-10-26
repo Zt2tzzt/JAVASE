@@ -74,7 +74,7 @@ public class ZoneIdDemo01 {
 
 ### 2.systemDefault 静态方法
 
-案例理解：`static ZoneId systemDefault()` 静态方法的使用，获取当前计算机系统中的默认时区
+案例理解：`static ZoneId systemDefault()` 静态方法的使用，获取当前计算机系统中的默认时区。
 
 demo-project/base-code/Day20/src/com/kkcf/zoneid/ZoneIdDemo01.java
 
@@ -94,7 +94,7 @@ public class ZoneIdDemo01 {
 
 ### 3.of 静态方法
 
-案例理解：`static ZoneId of(String zoneId)` 静态方法的使用，获取一个指定时区
+案例理解：`static ZoneId of(String zoneId)` 静态方法的使用，获取一个指定时区。
 
 demo-project/base-code/Day20/src/com/kkcf/zoneid/ZoneIdDemo01.java
 
@@ -154,7 +154,7 @@ public class InstantDemo01 {
 
 - `static Instant ofEpochMilli(long epochMilli)` 方法；
 - `static Instant ofEpochSecond(long epochSecond)`  方法；
-- `static Instant ofEpochSecond(long epochSecond, long nanoAdjustment)` 方法
+- `static Instant ofEpochSecond(long epochSecond, long nanoAdjustment)` 方法。
 
 demo-project/base-code/Day20/src/com/kkcf/instant/InstantDemo01.java
 
@@ -290,7 +290,7 @@ public class ZoneDateTimeDemo01 {
 
 ### 2.of 开头的静态方法（ZoneDateTime）
 
-案例理解：获取指定的带时区的时间对象，有两种种方式：
+案例理解：获取指定的带时区的时间对象，有两种方式：
 
 - 方式一：使用 `static ZonedDateTime
   of(int year, int month, int dayOfMonth, int hour, int minute, int second, int nanoOfSecond, ZoneId zone)` 方法获取。
@@ -346,7 +346,7 @@ public class ZoneDateTimeDemo01 {
 ```
 
 - `minusXxx`、`plusXxx` 的其它方法用法类似。
-- 注意：JDK8 新增的时间类，对应的时间对象都是不可变的，使用的方法返回的时间对象都是新创建的对象。
+- 注意：JDK8 新增的时间类，对应的时间对象，都是不可变的；调用方法返回的时间对象，都是新创建的对象。
 
 ### 4.with 开头的方法
 
@@ -405,7 +405,7 @@ public class DateTimeFormatterDemo01 {
         // 解析 / 格式化器
         DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss EE a");
 
-        String format = dtf1.format(zdt1);
+        String format = dtf1.format(zdt1); // 2024-10-21 09:56:34 周一 上午
 
         System.out.println(format);
     }
@@ -461,7 +461,7 @@ public class LocalDateTimeDemo01 {
 
 ### 2.of 静态方法（JDK8 日历类）
 
-`of` 方法的使用，用于创建一个指定时间的日历对象。
+`of` 静态方法，用于创建一个指定时间的日历对象。
 
 案例理解：判断用户今天是否过生日。
 
@@ -604,7 +604,7 @@ Duration 类，用于计算两个时间间隔（秒、纳秒）
 
 ### 1.between 静态方法（Duration 类）
 
-案例理解：使用 Duration 获取两个 LocalDateTime 对象的时间间隔。
+案例理解：使用 Duration 类获取两个 LocalDateTime 对象的时间间隔。
 
 demo-project/base-code/Day20/src/com/kkcf/duration/DurationDemo01.java
 
@@ -639,7 +639,7 @@ Period 类，用于计算两个日期间隔（年、月、日）
 
 ### 1.between 静态方法（Period 类）
 
-案例理解：使用 Period 获取两个 LocalDate 对象的时间间隔
+案例理解：使用 Period 类获取两个 LocalDate 对象的时间间隔
 
 demo-project/base-code/Day20/src/com/kkcf/period/PeriodDemo01.java
 
