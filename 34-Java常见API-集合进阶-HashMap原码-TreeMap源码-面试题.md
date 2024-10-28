@@ -485,7 +485,7 @@ private void fixAfterInsertion(Entry<K,V> x) {
 
 面试题一：`TreeMap` 添加元素的时候，键是否需要重写 `hashCode` 和 `equals` 方法？
 
-答：不需要，`TreeMap` 底层红黑树，会对元素键进行比较，如果比较结果是值相同，则会覆盖。
+答：不需要，`TreeMap` 底层的红黑树，会对元素键进行比较，如果比较结果是值相同，则会覆盖。
 
 ### 2.面试题二
 
