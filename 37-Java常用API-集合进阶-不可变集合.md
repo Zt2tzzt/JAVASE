@@ -288,4 +288,4 @@ public class Main {
 ```
 
 - 在这个示例中，我们使用 `Map.of` 方法来创建一个不可变的 `Map`。
-- 如果需要一个可变的 `HashMap`，你可以使用 `new HashMap<>(Map.of(...))`。
+- 如果需要一个可变的 `HashMap` 集合，你可以使用 `new HashMap<>(Map.of(...))` 来初始化。
