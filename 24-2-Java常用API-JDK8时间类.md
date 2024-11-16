@@ -115,9 +115,7 @@ public class ZoneIdDemo01 {
 
 ## 二、Instant 类
 
-Instant 类，表示时间戳，只能表示世界标准时间（0 时区）的时间。
-
-Instant 类，常用的方法有如下：
+Instant 类，表示时间戳，只能表示世界标准时间（0 时区）的时间。常用的方法有如下：
 
 | 方法名                                         | 说明                                    |
 | ---------------------------------------------- | --------------------------------------- |
@@ -256,9 +254,7 @@ public class InstantDemo03 {
 
 ## 三、ZoneDateTime 类
 
-ZoneDateTime 类，用于表示带有时区的时间对象。
-
-ZoneDateTime 类，常用的方法如下：
+ZoneDateTime 类，用于表示带有时区的时间对象。常用的方法如下：
 
 | 方法名                         | 说明                               |
 | ------------------------------ | ---------------------------------- |
@@ -374,18 +370,18 @@ public class ZoneDateTimeDemo01 {
 
 ## 四、DateTimeFormatter 类
 
-DateTimeFormatter 类，用于时间格式化和解析。
+### 4.1.DateTimeFormatter 类常用方法
 
-DateTimeFormatter 类，常用的方法有如下：
+DateTimeFormatter 类，用于时间格式化和解析。常用的方法如下：
 
 | 方法名                                     | 说明                              |
 | ------------------------------------------ | --------------------------------- |
 | `static DateTimeFormatter ofPattern(格式)` | 获取 DateTimeFormatter 解析器对象 |
 | `String format(TemporalAccessor temporal)` | 按照指定方式格式化                |
 
-### 1.ofPattern 静态方法、format 方法
+### 4.2.ZonedDateTime 对象序列化和反序列化
 
-案例理解：创建 DateTimeFormatter 解析器，并按照指定格式，格式化 ZonedDateTime 对象。
+序列化
 
 demo-project/base-code/Day20/src/com/kkcf/datetimeformatter/DateTimeFormatterDemo01.java
 
@@ -404,10 +400,89 @@ public class DateTimeFormatterDemo01 {
 
         // 解析 / 格式化器
         DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss EE a");
+        String res = dtf1.format(zdt1);
+        System.out.print(res); // 2024-11-16 16:31:30 周六 下午
+    }
+}
+```
 
-        String format = dtf1.format(zdt1); // 2024-10-21 09:56:34 周一 上午
+反序列化
 
-        System.out.println(format);
+demo-project/base-code/Day20/src/com/kkcf/datetimeformatter/StringToZonedDateTimeExample.java
+
+```java
+package com.kkcf.datetimeformatter;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class StringToZonedDateTimeExample {
+    public static void main(String[] args) {
+        // 要解析的时间字符串，带时区信息
+        String dateTimeString = "2024-11-16T15:30:45+08:00[Asia/Shanghai]";
+
+        // 定义与字符串匹配的格式
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX'['VV']'");
+
+        // 使用 ZonedDateTime 的 parse 方法解析字符串
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTimeString, formatter);
+
+        // 输出解析后的 ZonedDateTime 对象
+        System.out.println(zonedDateTime); // 2024-11-16T15:30:45+08:00[Asia/Shanghai]
+    }
+}
+```
+
+### 4.3.LocalDateTime 对象序列化和反序列化
+
+序列化
+
+demo-project/base-code/Day20/src/com/kkcf/datetimeformatter/DateTimeFormatterDemo02.java
+
+```java
+package com.kkcf.datetimeformatter;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class DateTimeFormatterDemo02 {
+    public static void main(String[] args) {
+        // 创建一个 LocalDateTime 对象
+        LocalDateTime cdt1 = LocalDateTime.now();
+
+        // 解析 / 格式化器
+        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss EE a");
+
+        // 格式化 LocalDateTime 为字符串
+        String res2 = cdt1.format(dtf1);
+        System.out.print(res2); // 2024-11-16 16:32:06 周六 下午
+    }
+}
+```
+
+反序列化
+
+demo-project/base-code/Day20/src/com/kkcf/datetimeformatter/StringToLocalDateTimeExample.java
+
+```java
+package com.kkcf.datetimeformatter;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class StringToLocalDateTimeExample {
+    public static void main(String[] args) {
+        // 定义时间字符串
+        String dateTimeString = "2024-11-16 15:30:45";
+
+        // 定义解析的格式
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // 将字符串解析为 LocalDateTime
+        LocalDateTime parsedDateTime = LocalDateTime.parse(dateTimeString, formatter);
+
+        // 输出结果
+        System.out.println(parsedDateTime); // 2024-11-16T15:30:45
     }
 }
 ```
