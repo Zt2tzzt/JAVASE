@@ -1,11 +1,14 @@
 # Java File
 
-在 Java 中用 `File` 类表示计算机文件保存的位置（路径）。
+在 Java 中用 `File` 类，表示计算机文件保存的位置（路径）。
 
-- 绝对路径：Windows 系统：带盘符；Linux 系统：带 `/` 根目录。
+- 绝对路径：
+  - Windows 系统：带盘符；
+  - Linux 系统：带 `/` 根目录。
+
 - 相对路径：不带盘符，默认在当前项目（project）目录下查找。
 
-File 对象，可以表示一个**文件**，或**文件夹**；它可以是**存在**，或**不存在**的；
+`File` 对象，可以表示一个**文件**，或**文件夹**；它可以是**存在**，或**不存在**的；
 
 把一个字符串表示的路径，转成 File 对象，就是为了使用其中的方法。
 
@@ -18,6 +21,8 @@ File 对象，可以表示一个**文件**，或**文件夹**；它可以是**�
 | `public File(String pathname)`             | 根据文件路径字符串，创建文件对象                 |
 | `public File(String parentm String child)` | 根据父路径字符串，和子路径字符串，创建文件对象   |
 | `public File(File parent, String child)`   | 根据父路径文件对象，和子路径字符串，创建文件对象 |
+
+### 1.1.File(String pathname)
 
 `public File(String pathname)` 构造方法使用：
 
@@ -35,6 +40,8 @@ public class Demo01 {
     }
 }
 ```
+
+### 1.2.File(String parentm String child)
 
 `public File(String parentm String child)` 构造方法使用：
 
@@ -55,9 +62,11 @@ public class Demo01 {
 
 - 父级路径：`D:\workshop\tutorial\JAVA\demo-project\base-code\Day27\src\com\kkcf\file`
 - 子级路径：`a.txt`
-- 一般使用这种方式，进行路径拼接。因为不同操作系统，路径分隔符是不同的：
+- 一般使用这种方式，进行路径拼接。因为不同操作系统，路径分隔符是不同的，比如：
   - Windows：`\`
   - Linux：`/`
+
+### 1.3.File(File parent, String child)
 
 `public File(File parent, String child)` 构造方法使用：
 
@@ -81,21 +90,45 @@ public class Demo01 {
 
 ## 二、File 成员方法
 
-### 1.判断、获取文件信息
+### 2.1.判断、获取文件信息
 
-`File` 类常见的成员方法，用于判断、获取文件信息：
+`File` 类常见的成员方法，用于判断、获取文件信息：、
 
-| 方法名                            | 说明                                                     |
-| --------------------------------- | -------------------------------------------------------- |
-| `public boolean isDirectory()`    | 判断此路径名表示的 file 是否为文件夹                     |
-| `public boolean isFile()`         | 判断此路径名表示的 file 是否为文件                       |
-| `public boolean exists()`         | 判断此路径名表示的 file 是否存在                         |
-| `public long length()`            | 返回 file 对象的大小（单位：字节），无法获取文件夹大小。 |
-| `public String getAbsolutePath()` | 返回 file 对象的绝对路径                                 |
-| `public String getPath()`         | 返回定义 file 对象时，使用的路径                         |
-| `public String getName()`         | 返回 file 对象的名称（带后缀）                           |
-| `public File getParentFile()`     | 返回 file 对象的父级路径的绝对路径                       |
-| `public long lastModified()`      | 返回 file 对象最后修改时间（时间毫秒值）                 |
+#### 2.1.1.boolean isDirectory() 方法
+
+`public boolean isDirectory()`，判断此路径名表示的 file 是否为文件夹
+
+#### 2.1.2.boolean isFile() 方法
+
+`public boolean isFile()`，判断此路径名表示的 file 是否为文件
+
+#### 2.1.3.boolean exists() 方法
+
+`public boolean exists()`，判断此路径名表示的 file 是否存在
+
+#### 2.1.4.long length() 方法
+
+`public long length()`，返回 file 对象（文件）的大小（单位：字节），无法获取文件夹大小。
+
+#### 2.1.5.String getAbsolutePath() 方法
+
+`public String getAbsolutePath()`，返回 file 对象的绝对路径
+
+#### 2.1.6.String getPath() 方法
+
+`public String getPath()`，返回定义 file 对象时，使用的路径
+
+#### 2.1.7.String getName() 方法
+
+`public String getName()`，返回 file 对象的名称（带后缀）
+
+#### 2.1.8.File getParentFile() 方法
+
+`public File getParentFile()`，返回 file 对象的父级路径的绝对路径
+
+#### 2.1.9.long lastModified() 方法
+
+`public long lastModified()`，返回 file 对象最后修改时间（时间毫秒值）
 
 demo-project/base-code/Day27/src/com/kkcf/file/Demo02.java
 
@@ -131,7 +164,7 @@ public class Demo02 {
 }
 ```
 
-### 2.创建、删除文件
+### 2.2.创建、删除文件
 
 `File` 类常见的成员方法，用于创建、删除文件、文件夹：
 
@@ -142,7 +175,7 @@ public class Demo02 {
 | `public boolean mkdirs()`        | 创建多级文件夹         |
 | `public boolean delete()`        | 删除文件，删除空文件夹 |
 
-#### 1.createNewFile 方法
+#### 2.2.1.boolean createNewFile 方法
 
 `public boolean createNewFile()` 方法，用于创建一个新的文件：
 
@@ -167,7 +200,7 @@ public class Demo03 {
 }
 ```
 
-#### 2.mkdir 方法
+#### 2.2.2.boolean mkdir 方法
 
 `public boolean mkdir()` 方法，用于创建单级文件夹。
 
@@ -191,7 +224,7 @@ public class Demo03 {
 }
 ```
 
-#### 3.mkdirs 方法
+#### 2.2.3.boolean mkdirs 方法
 
 `public boolean mkdirs()` 方法，用于创建多级文件夹。
 
@@ -216,13 +249,13 @@ public class Demo03 {
 }
 ```
 
-#### 4.delete 方法
+#### 2.2.4.boolean delete 方法
 
 `public boolean delete()` 方法
 
-- 细节 1：删除的是文件，不放入回收站。
-- 细节 2：删除的是空文件夹，不放入回收站；
-- 细节 3：删除的是有内容的文件夹，则删除失败。
+- 细节 1：删除的是文件，则不放入回收站。
+- 细节 2：删除的是空文件夹，则不放入回收站；
+- 细节 3：删除的是有内容的文件夹，则则删除失败。
 
 demo-project/base-code/Day27/src/com/kkcf/file/Demo03.java
 
@@ -241,7 +274,7 @@ public class Demo03 {
 }
 ```
 
-### 3.获取并遍历
+### 2.3.获取并遍历
 
 `File` 类，用于获取并遍历文件，常用的成员方法：
 
@@ -249,7 +282,7 @@ public class Demo03 {
 | --------------------------- | -------------------------------- |
 | `public File[] listFiles()` | 获取当前该 File 对象下所有内容。 |
 
-#### 1.listFiles 方法
+#### 2.3.1.File[] listFiles() 方法
 
 `public File[] listFiles()` 方法，用于获取 File 对象下所有内容的 File 对象。
 
@@ -277,7 +310,7 @@ public class Demo03 {
 - 当调用者 File 对象表示的路径：是文件，则返回 `null`；
 - 当调用者 File 对象表示的路径：需要权限才能访问，则返回 `null`。
 - 当调用者 File 对象表示的路径：是空文件夹，则返回一个长度为 `0` 的数组；
-- 当调用者 File 对象表示的路径：是有内容的文件夹（包含隐藏文件、文件夹），则返回里面所有内容组成的 File 数组。
+- 当调用者 File 对象表示的路径：是有内容的文件夹（包含隐藏文件、文件夹），则返回里面所有内容组成的 File 对象数组。
 
 其它相似的方法，了解即可：
 
@@ -289,7 +322,7 @@ public class Demo03 {
 | `public File[] listFiles(FileFilter filter)`     | 利用文件过滤器，获取 File 对象下所有内容               |
 | `public File[] listFiles(FilenameFilter filter)` | 利用文件名过滤器，获取 File 对象下所有内容             |
 
-#### 2.listRoots 静态方法
+#### 2.3.2.File[] listRoots() 静态方法
 
 `public static File[] listRoots()` 静态方法，用于获取系统中所有的盘符：
 
@@ -310,7 +343,7 @@ public class Demo04 {
 }
 ```
 
-#### 3.list 方法
+#### 2.3.3.String[] list() 方法
 
 `public String[] list()` 方法，用于获取 File 对象下的所有内容的名字字符串数组：
 
@@ -331,6 +364,8 @@ public class Demo04 {
     }
 }
 ```
+
+#### 2.3.4.String[] list(FilenameFilter filter) 方法
 
 `public String[] list(FilenameFilter filter)` 方法，使用文件名过略器，获取 File 对象下以 .txt 结尾的文件名字符串数组。
 
@@ -365,7 +400,7 @@ public class Demo04 {
 - 参数二：`String name`，依次表示 File 对象下，所有内容的名称字符串。
 - 返回值： `true`，表示当前路径保留；`false`，表示当前路径不保留；
 
-#### 4.listFiles 方法
+#### 2.3.5.File[] listFiles(FileFilter filter) 方法
 
 `public File[] listFiles(FileFilter filter)` 方法，使用文件过滤器，获取 File 对象下，所有的内容的 File 对象数组：
 
@@ -395,6 +430,8 @@ public class Demo04 {
     }
 }
 ```
+
+#### 2.3.6.File[] listFiles(FilenameFilter filter) 方法
 
 `public File[] listFiles(FilenameFilter filter)` 方法，使用文件名过滤器，获取 File 对象下所有的内容的 File 对象数组：
 
@@ -428,7 +465,7 @@ public class Demo04 {
 
 ## 三、File 综合练习
 
-### 1.练习一
+### 1.练习一：在文件夹下创建文件
 
 需求：在当前文件夹下的 aaa 文件夹中，创建一个 a.txt 文件。
 
@@ -457,7 +494,7 @@ public class Test2 {
 }
 ```
 
-### 2.练习二
+### 2.练习二：找文件夹下的文件
 
 需求：定义一个方法，找某一个文件下，是否有以 avi 结尾的文件（不考虑子文件夹）
 
@@ -491,7 +528,7 @@ public class Test3 {
 }
 ```
 
-### 3.练习三
+### 3.练习三：找电脑中的文件
 
 需求：找到电脑中所有以 .avi 结尾的文件。
 
@@ -541,7 +578,7 @@ public class Test4 {
 3. 进入文件夹；
 4. 遍历文件夹下的内容（File 数组）；
 
-### 4.练习四
+### 4.练习四：删除一个多级文件夹
 
 需求：删除一个多级文件夹：要分为两步：
 
@@ -580,7 +617,7 @@ public class Test5 {
 }
 ```
 
-### 5.练习五
+### 5.练习五：统计文件夹总大小
 
 需求：统计一个文件夹的总大小：
 
@@ -617,9 +654,9 @@ public class Test6 {
 }
 ```
 
-### 6.练习六
+### 6.练习六：统计文件夹中各种文件的个数
 
-需求：统计一个文件中，每种文件的个数，并打印（考虑子文件夹）
+需求：统计一个文件夹中，每种文件的个数，并打印（考虑子文件夹）
 
 打印格式如下：
 

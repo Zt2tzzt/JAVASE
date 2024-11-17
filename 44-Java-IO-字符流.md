@@ -9,7 +9,7 @@
 字符流的特点：
 
 - 输入流：默认一次读一个字节，遇到汉字这样的特殊字符时，根据字符集编码规则，一次读多个字节；
-- 输出流：底层会把数据，按照指定的字符集编码规则进行编码，转变成字节，再写到文件中。
+- 输出流：底层会把数据，按照指定的字符集和编码规则进行编码，转变成字节，再写到文件中。
 
 字符流，非常适合**纯文本文件**的读、写操作。
 
@@ -31,28 +31,29 @@ Java IO 字符流的体系结构，如下图所示：
 2. 读取数据；
 3. 释放资源。
 
-### 1.FileReader 构造方法
+### 1.1.FileReader 构造方法
 
 `FileReader` 构造方法，用于创建字符输入流对象。
 
-| 方法名                               | 说明                                                     |
-| ------------------------------------ | -------------------------------------------------------- |
-| `public FileReader(File file)`       | 根据 File 对象，创建字符输入流并关联本地文件。           |
-| `public FileReader(String pathname)` | 根据字符串表示的文件路径，创建字符输入流并关联本地文件。 |
+- 细节：如果文件不存在，直接报错。
 
-- 细节 1：如果文件不存在，直接报错。
+#### 1.1.1.FileReader(File file) 构造方法
 
-### 2.FileReader 成员方法
+`public FileReader(File file)`，根据 File 对象，创建字符输入流并关联本地文件。
+
+#### 1.1.2.FileReader(String pathname) 构造方法
+
+`public FileReader(String pathname)`，根据字符串表示的文件路径，创建字符输入流并关联本地文件。
+
+### 1.2.FileReader 成员方法
 
 `FileReader` 成员方法，用于读取数据：
 
-| 方法名                           | 说明                          |
-| -------------------------------- | ----------------------------- |
-| `public int read()`              | 读取数据，读到末尾返回 -1     |
-| `public int read(char[] buffer)` | 读取多个数据，读到末尾返回 -1 |
-| `public int close()`             | 释放资源/关流                 |
+#### 1.2.1.int read() 方法
 
-`public int read()` 方法，会**挨个**读取字节，遇到汉字这样的特殊字符，会根据字符集编码规则读取多个字节：然后返回一个按照该字符集解码后的二进制对应的**十进制整数**。它也表示在字符集上字符对应的数字。
+`public int read()`，读取数据，读到末尾返回 -1；
+
+会**挨个**读取字节，遇到汉字这样的特殊字符，会根据字符集编码规则读取多个字节：然后返回一个按照该字符集解码后的二进制对应的**十进制整数**。它也表示在字符集上字符对应的数字。
 
 比如在 Unicode 字符集的 UTF-8 编码规则下：
 
@@ -108,7 +109,11 @@ public class Demo07 {
 }
 ```
 
-`public int read(char[] buffer)` 方法，用于一次读取多个字符，读取的字符数量，会尽量填满传入的 char 数组。
+#### 1.2.2.int read(char[] buffer) 方法
+
+`public int read(char[] buffer)`，读取多个数据，读到末尾返回 -1
+
+用于一次读取多个字符，读取的字符数量，会尽量填满传入的 char 数组。
 
 - 该方法，将读取字节，解码，强转三步操作合并了，并把最终得到的字符放到了数组中。
 - 该方法，返回读取到的字符数组长度。
@@ -138,6 +143,10 @@ public class Demo08 {
 }
 ```
 
+#### 1.2.3.int close() 方法
+
+`public int close()`，释放资源/关流
+
 ## 二、FileWriter 子类
 
 `FileWriter` 是用于操作本地文件的字符输出流，它可以把程序中的数据，写入到文件中。使用步骤：
@@ -146,33 +155,36 @@ public class Demo08 {
 2. 写入数据；
 3. 释放资源。
 
-### 1.FileWriter 构造方法
+### 2.1.FileWriter 构造方法
 
 `FileWriter` 构造方法，用于创建字符输出流对象。
-
-| 方法名                                               | 说明                                               |
-| ---------------------------------------------------- | -------------------------------------------------- |
-| `public FileWriter(File file)`                       | 根据 File 对象，创建字符输出流                     |
-| `public FileWriter(String pathname)`                 | 根据文件路径字符串，创建字符输出流                 |
-| `public FileWriter(File file, boolean append)`       | 根据 File 对象，创建字符输出流，并决定是否续写     |
-| `public FileWriter(String pathname, boolean append)` | 根据文件路径字符串，创建字符输出流，并决定是否续写 |
 
 - 细节 1：如果文件不存在，会创建一个新的文件，但是要保证父级路径是存在的。
 - 细节 2：如果文件已存在，则会清空文件再写入，除非开启续写。
 
-### 2.FileWriter 成员方法
+#### 2.1.1.FileWriter(File file) 构造方法
+
+`public FileWriter(File file)`，根据 File 对象，创建字符输出流。
+
+#### 2.1.2.FileWriter(String pathname) 构造方法
+
+`public FileWriter(String pathname)`，根据文件路径字符串，创建字符输出流。
+
+#### 2.1.3.FileWriter(File file, boolean append) 构造方法
+
+`public FileWriter(File file, boolean append)`，根据 File 对象，创建字符输出流，并决定是否续写。
+
+#### 2.1.4.FileWriter(String pathname, boolean append) 构造方法
+
+`public FileWriter(String pathname, boolean append)`，根据文件路径字符串，创建字符输出流，。
+
+### 2.2.FileWriter 成员方法
 
 `FileWriter` 成员方法，用于写入数据：
 
-| 方法名                                      | 说明                     |
-| ------------------------------------------- | ------------------------ |
-| `void write(int c)`                         | 写出一个字符             |
-| `void write(String str)`                    | 写出一个字符串           |
-| `void write(String str, int off, int len)`  | 写出一个字符串的一部分   |
-| `void write(char[] cbuf)`                   | 写出一个字符数组         |
-| `void write(char[] cbuf, int off, int len)` | 写出一个字符数组的一部分 |
+#### 2.2.1.void write(int c) 方法
 
-`void write(int c)` 方法，写入一个字符：
+`void write(int c)`，写出一个字符
 
 - 细节 1：如果 `write` 方法的参数是 int 类型的整数，实际写入到文件中的，是 int 整数在字符集中对应的字符。
 
@@ -195,7 +207,9 @@ public class Demo09 {
 }
 ```
 
-`void write(String str)` 方法，写入一个字符串：
+#### 2.2.2.void write(String str) 方法
+
+`void write(String str)`，写出一个字符串
 
 demo-project/base-code/Day28/src/com/kkcf/io/Demo09.java
 
@@ -216,7 +230,13 @@ public class Demo09 {
 }
 ```
 
-`void write(char[] cbuf)` 方法，写入一个字符数组：
+#### 2.2.3.void write(String str, int off, int len) 方法
+
+`void write(String str, int off, int len)`，写出一个字符串的一部分
+
+#### 2.2.4.void write(char[] cbuf) 方法
+
+`void write(char[] cbuf)`，写出一个字符数组
 
 - 本质上，还是按照字符集的编码规则，写入字节。
 
@@ -240,11 +260,15 @@ public class Demo09 {
 }
 ```
 
+#### 2.2.5.void write(char[] cbuf, int off, int len) 方法
+
+`void write(char[] cbuf, int off, int len)`，写出一个字符数组的一部分
+
 ## 三、字符流原理分析
 
 ### 1.Reader 字符输入流底层原理
 
-创建字符输入流（Reader）对象时，底层会关联文件，并创建**缓冲区**（长度为 `8192` 的**字节数组**）
+创建字符输入流（Reader）对象时，底层会关联文件，并创建**缓冲区**，一个长度为 `8192` 的**字节数组**。
 
 1. 每次读取（read）操作时，会判断缓冲区中，是否有数据可以被读取；
 2. 如果没有，就会从文件中读取数据，尽可能的装满缓冲区。
@@ -252,7 +276,7 @@ public class Demo09 {
 
 ![字符输入流底层原理一](NodeAssets/字符输入流底层原理一.jpg)
 
-> 字节输入流（InputSream 没有缓冲区的特性
+> 字节输入流（InputSream）没有缓冲区的特性
 
 理解下方代码：
 
@@ -276,7 +300,7 @@ public class Test1 {
 
         int ch;
         while ((ch = fr.read()) != -1)
-            fw.write(ch); // 只能读取到缓冲区中的字节
+            fw.write(ch); // 只能读取到缓冲区中的字节了
 
         fw.close();
         fr.close();
@@ -286,7 +310,7 @@ public class Test1 {
 
 ### 2.Writer 字符输出流底层原理
 
-创建字符输出流（Writer）对象时，底层也会关联文件，并创建**缓冲区**（长度为 `8192` 的字节数组）
+创建字符输出流（Writer）对象时，底层也会关联文件，并创建**缓冲区**，一个长度为 `8192` 的字节数组。
 
 1. 每次写入（write）操作时，会判断缓冲区中，是否已经被填满；
 2. 如果没有，就会将字节数据，写入到缓冲区中。
@@ -332,9 +356,9 @@ public class Test2 {
 
 ## 四、字节流、字符流如何选择
 
-字节流：拷贝任意类型的文件。
+字节流一般用于：拷贝任意类型的文件。
 
-字符流：1.读取纯文本文件中的数据；2.往纯文本文件中写入数据。
+字符流一般用于：1.读取纯文本文件中的数据；2.往纯文本文件中写入数据。
 
 ## 五、综合练习
 
@@ -424,11 +448,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Test4 {
-
     private static void encryption(File src, File dest) throws IOException {
         FileInputStream fis = new FileInputStream(src);
         FileOutputStream fos = new FileOutputStream(dest);
-        
+
         int b;
         while((b = fis.read()) != -1)
             fos.write(b ^ 2);
