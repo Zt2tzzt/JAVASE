@@ -8,7 +8,7 @@
 压缩流、解压缩流都属于**字节流**，它的实现类主要有两个：
 
 - 字节解压缩输入流 `ZipInputStream`；
-- 字节压缩输出流`ZipOutputStream`。
+- 字节压缩输出流 `ZipOutputStream`。
 
 ## 一、ZipInputStream 字节解压缩输入流的使用
 
@@ -22,7 +22,7 @@
 
 案例理解：将 aaa.zip 压缩包，解压到同目录下同名的文件夹中：
 
-- `ZipEntry getNextEntry()` 方法，用于读取下一个 ZIP 文件条目并将流定位在条目数据的开头。
+- `ZipEntry getNextEntry()` 方法，用于读取下一个 ZIP 文件条目，并将流定位在条目数据的开头。
 
 demo-project/base-code/Day29/src/com/kkcf/compression/Demo01.java
 
