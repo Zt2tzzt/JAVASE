@@ -13,10 +13,10 @@ public class Foodie extends Thread {
     public void run() {
         while (true) {
             // 不断从队列中，取出咖啡
-            String food = null;
+            String food;
             try {
                 food = queue.take();
-                System.out.println("顾客拿到一个" + food);
+                System.out.println("顾客拿到一杯" + food);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

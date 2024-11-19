@@ -272,7 +272,6 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
         loadItem4.addActionListener(this);
 
     }
-
 }
 ```
 
@@ -379,7 +378,7 @@ public void actionPerformed(ActionEvent e) {
 
 ### 3.读档逻辑
 
-GameJFrame 类中，编写读档逻辑：
+`GameJFrame` 类中，编写读档逻辑：
 
 - 点击”读档“后，将读取存档中的数据。
 
@@ -511,6 +510,8 @@ wechat=about.png
 `Properties` 不是一个泛型类，原则上可以添加任意类型的键和值，但在实际开发中，一般只添加 String 类型的键和值。
 
 ### 1.Map 中的方法
+
+`put` 方法、`keySet` 方法、`get` 方法等等，都是 Map 双列集合中有的方法。
 
 demo-project/base-code/Day24/src/com/kkcf/properties/Test1.java
 

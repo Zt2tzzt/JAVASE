@@ -9,7 +9,7 @@
 - 其中一个线程，被视为生产者，用于生产数据；
 - 另一个线程，被视为消费者，用于消费数据。
 
-将生产者消费者模式，抽象为“顾客-厨师”模型后：顾客作为消费者，厨师作为生产者：
+将生产者消费者模式，抽象为“顾客-厨师”模型：顾客作为消费者，厨师作为生产者：
 
 - 消费者顾客：
   1. 判断桌子上是否有食物；
@@ -26,13 +26,15 @@
 
 - 控制生产者和消费者执行的第三者是：桌子。
 
-其中涉及到的锁对象（任意且唯一的对象，`Object` 类）中的方法有
+其中涉及到的锁对象（任意且唯一的对象）中的方法有
 
 | 方法名             | 声明                             |
 | ------------------ | -------------------------------- |
 | `void wait()`      | 当前线程等待，直到被其它线程唤醒 |
 | `void notify()`    | 随机唤醒单个线程（不常用）       |
 | `void notifyAll()` | 唤醒所有线程                     |
+
+这些方法也是 `Object` 类中的方法。
 
 > 回顾：编写多线程代码，遵循 4 步操作：
 >
@@ -84,7 +86,7 @@ public class Cook extends Thread {
                         try {
                             Desk.lock.wait(); // 锁对象，与线程绑定
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            System.out.println(e.getMessage());
                         }
                     } else {
                         // 桌子上没有咖啡，则做咖啡；
@@ -96,7 +98,6 @@ public class Cook extends Thread {
                         // 咖啡做完，唤醒顾客，喝咖啡
                         Desk.lock.notifyAll();
                     }
-
                 } else {
                     break;
                 }
@@ -108,8 +109,8 @@ public class Cook extends Thread {
 ```
 
 - `Desk.lock` 时 Desk 类里面的一个静态常量，表示唯一锁对象。
-- `Desk.lock.wait()` 表示使用锁对象唤醒。
-- `Desk.lock.notifyAll()` 表示同唤醒锁对象锁住的所有线程。
+- `Desk.lock.wait()` 表示使用锁对象让当前线程等待。
+- `Desk.lock.notifyAll()` 表示唤醒锁对象锁住的所有线程。
 
 顾客类 `Foodie`，继承自 `Thread`：
 
@@ -130,7 +131,7 @@ public class Foodie extends Thread {
                         try {
                             Desk.lock.wait(); // 锁对象，与线程绑定
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            System.out.println(e.getMessage());
                             throw new RuntimeException(e);
                         }
                     } else {
@@ -182,7 +183,7 @@ public class Test {
 
 如果队列中有多个元素，那么：
 
-- 厨师会将做好的面条，放入（`put`）队列中，直到队列放满后，会等待，也称为**阻塞**。
+- 厨师会将做好的咖啡，放入（`put`）队列中，直到队列放满后，会等待，也称为**阻塞**。
 - 顾客从队列中取（`take`）一杯咖啡，直到队列为空后，会等待，也称为**阻塞**。
 
 阻塞队列，实现了 `Iterable`、`Collection`、`Queue`、`BlockingQueue` 接口；
@@ -255,7 +256,7 @@ public class Foodie extends Thread {
             String food = null;
             try {
                 food = queue.take();
-                System.out.println("顾客拿到一个" + food);
+                System.out.println("顾客拿到一杯" + food);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

@@ -1,4 +1,4 @@
-# Java 多线程之并发并行、实现方式、Thread类和方法、生命周期、线程安全、锁和死锁
+# Java 多线程之并发并行、实现方式、Thread 类和方法、生命周期、线程安全、锁和死锁
 
 **线程**是操作系统，能够进行运算调度的**最小单位**；
 
@@ -36,9 +36,11 @@
 
 ## 二、Java 多线程实现方式
 
+JVM 虚拟机允许应用程序，**并行**地运行多个线程。
+
 ### 1.继承 Thread 类
 
-在 Java 中，`Thread` 类，表示线程，JVM 虚拟机允许应用程序，**并行**地运行多个线程。
+在 Java 中，`Thread` 类，表示线程。
 
 使用 `Thread` 类，实现多线程的步骤：
 
@@ -142,7 +144,7 @@ public class Demo01 {
 
 ### 3.实现 Callable 接口、使用 Future 接口
 
-继承 `Thread` 类、实现 `Runnable` 接口这两种多线程的实现方式，在 `run` 方法中都没有返回值。
+继承 `Thread` 类、实现 `Runnable` 接口，这两种多线程的实现方式，在 `run` 方法中都没有返回值。
 
 如果想要获取多线程运行的结果，就要使用实现 `Callable` 接口、使用 `Futrure` 接口的方式。
 
@@ -388,7 +390,9 @@ public class Demo02 {
 
 计算机中，线程的调度分为两种：
 
-- **抢占式调度**，指的是多个线程，在抢夺 CPU 的执行权，CPU 在什么时候，执行哪个线程，执行多长时间，都是不确定的；所以线程执行具有**随机性**。
+- **抢占式调度**，默认的方式，指的是多个线程，在抢夺 CPU 的执行权；
+  - CPU 在什么时候，执行哪个线程，执行多长时间，都是不确定的；所以默认线程执行具有**随机性**。
+
 - **非抢占式调度**，指的是多个线程，轮流被 CPU 执行。
 
 在 Java 中，线程执行采用的是**抢占式调度**的方式，
@@ -513,7 +517,7 @@ public class Demo05 {
 
 `yield` 方法，用于设置礼让（出让）线程；
 
-礼让线程，会交还 CPU 执行权，给多个线程抢夺；这会尽可能的让多个线程执行的更加均匀。
+礼让线程，会交还 CPU 执行权，给多个线程抢夺；这会尽可能的**让多个线程执行的更加均匀**。
 
 自定义类 `MyThread3`，在 `run` 方法中，设置礼让线程。
 
@@ -592,7 +596,7 @@ public class Demo07 {
 - 执行资格，表示抢夺 CPU 执行权的资格；
 - 执行权，表示被 CPU 执行。
 
-注意：`sleep` 静态方法设置的睡眠时间到时后，不会立即执行线程中的代码，而是要先抢夺 CPU 的执行权。
+注意：`sleep` 静态方法，设置的睡眠时间到时后，不会立即执行线程中的代码，而是要先抢夺 CPU 的执行权。
 
 ## 五、线程安全问题
 
@@ -656,7 +660,7 @@ public class Test01 {
 - 问题 1：两个不同窗口，会卖出同一张票；
 - 问题 2：卖出的总票数，会超出 100 张。
 
-这是因为，线程在执行**每行代码**的时候，CPU 的使用权，随时都有可能被其它线程抢走。这体现了线程执行的**随机性**。
+这是因为，线程在执行**每行代码**的时候，CPU 的使用权，随时都有可能被其它线程抢走。这体现了线程**抢占式调度**执行的**随机性**。
 
 ### 1.同步代码块和锁
 
@@ -702,13 +706,13 @@ public class MovieTicketSaleThread extends Thread {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage());
                 }
-                if (ticketCount < 100) {
+
+                if (ticketCount < 100)
                     System.out.println(Thread.currentThread().getName() + "正在卖第" + (++ticketCount) + "张票");
-                } else {
+                else
                     break;
-                }
             }
         }
     }
@@ -716,7 +720,7 @@ public class MovieTicketSaleThread extends Thread {
 ```
 
 - 细节 1：同步代码块，不能写在循环的外面，否则循环体会被一个进程执行完毕，锁才会开放。
-- 细节 2：锁对象，一般会用当前类的字节码文件对象，即 `MovieTicketSaleThread.class`，因为它是唯一的。
+- 细节 2：锁对象，一般会使用当前类的字节码文件对象，即 `MovieTicketSaleThread.class`，因为它是唯一的。
 
 ### 2.同步方法
 
@@ -749,14 +753,14 @@ public class MovieTicketSaleRunable implements Runnable {
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
+
         if (ticketCount < 100) {
             System.out.println(Thread.currentThread().getName() + "正在卖第" + (++ticketCount) + "张票");
-        } else {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -856,7 +860,7 @@ public class MovieTicketSaleThread1 extends Thread {
                     break;
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             } finally {
                 lock.unlock();

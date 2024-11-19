@@ -29,6 +29,5 @@ public class Test09 {
         String maxNo = flag ? "1" : "2";
 
         System.out.println("在此次抽奖过程中，抽奖箱" + maxNo + "产生最大奖项，该奖金额为 " + max + " 元。");
-
     }
 }

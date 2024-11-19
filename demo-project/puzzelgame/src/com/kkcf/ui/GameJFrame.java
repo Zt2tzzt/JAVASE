@@ -9,7 +9,6 @@ import java.io.*;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Random;
-import java.util.Set;
 
 public class GameJFrame extends JFrame implements KeyListener, ActionListener, MouseListener {
     // 用于存放图片的随即索引
@@ -76,6 +75,17 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
         this.setVisible(true);
     }
 
+    public static void shuffleArr(Random r, int[] arr) {
+        int len = arr.length;
+        for (int i = 0; i < len; i++) {
+            int randomIndex = r.nextInt(len);
+
+            int temp = arr[i];
+            arr[i] = arr[randomIndex];
+            arr[randomIndex] = temp;
+        }
+    }
+
     /**
      * 此方法用于，初始化游戏窗口
      */
@@ -121,25 +131,8 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
         animalItem.addMouseListener(this);
         sportItem.addMouseListener(this);
 
-        saveJMenu.add(saveItem0);
-        saveJMenu.add(saveItem1);
-        saveJMenu.add(saveItem2);
-        saveJMenu.add(saveItem3);
-        saveJMenu.add(saveItem4);
-
-        loadJMenu.add(loadItem0);
-        loadJMenu.add(loadItem1);
-        loadJMenu.add(loadItem2);
-        loadJMenu.add(loadItem3);
-        loadJMenu.add(loadItem4);
-
-        // 将菜单条目，添加到惨选项中
-        functionMenu.add(moreMenu);
-        functionMenu.add(replayItem);
-        functionMenu.add(reLoginItem);
-        functionMenu.add(closeItem);
-        functionMenu.add(saveJMenu);
-        functionMenu.add(loadJMenu);
+        jMenuAddJMenuItem(saveJMenu, saveItem0, saveItem1, saveJMenu, saveItem2, saveItem3, saveItem4, loadJMenu, loadItem0, loadItem1, loadItem2);
+        jMenuAddJMenuItem(loadJMenu, loadItem3, loadItem4, functionMenu, moreMenu, replayItem, reLoginItem, functionMenu, closeItem, saveJMenu, loadJMenu);
         aboutMenu.add(accountItem);
 
         // 给条目绑定事件
@@ -169,6 +162,18 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
         this.setJMenuBar(jMenuBar);
     }
 
+    private void jMenuAddJMenuItem(JMenu jmenu0, JMenuItem jmenuItem0, JMenuItem jmenuItem1, JMenu jmenu1, JMenuItem jmenuItem2, JMenuItem jmenuItem3, JMenuItem jmenuItem4, JMenu jmenu2, JMenuItem loadItem0, JMenuItem loadItem1, JMenuItem loadItem2) {
+        jmenu0.add(jmenuItem0);
+        jmenu0.add(jmenuItem1);
+        jmenu1.add(jmenuItem2);
+        jmenu1.add(jmenuItem3);
+        jmenu1.add(jmenuItem4);
+
+        jmenu2.add(loadItem0);
+        jmenu2.add(loadItem1);
+        jmenu2.add(loadItem2);
+    }
+
     /**
      * 此方法用于，加载存档，取每一个存档中，记录的步数
      */
@@ -176,16 +181,13 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
         File file = new File("save\\");
 
         for (File f : Objects.requireNonNull(file.listFiles())) {
-            GameInfo gi = null;
+            GameInfo gi;
             try {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
                 gi = (GameInfo) ois.readObject();
                 ois.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             }
 
@@ -206,16 +208,9 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
 
         int[] arr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
-        int len = arr.length;
-        for (int i = 0; i < len; i++) {
-            int randomIndex = r.nextInt(len);
+        shuffleArr(r, arr);
 
-            int temp = arr[i];
-            arr[i] = arr[randomIndex];
-            arr[randomIndex] = temp;
-        }
-
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < arr.length; i++) {
             if (arr[i] == 0) {
                 this.x = i / 4;
                 this.y = i % 4;
@@ -453,7 +448,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
                 oos.writeObject(gi);
                 oos.close();
             } catch (IOException ex) {
-                ex.printStackTrace();
+                System.out.println(ex.getMessage());
             }
 
             // 修改存档的展示信息
@@ -472,12 +467,11 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream("save\\save" + index + ".data"));
                 gi = (GameInfo) ois.readObject();
                 ois.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (ClassNotFoundException ex) {
-                ex.printStackTrace();
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println(ex.getMessage());
             }
 
+            assert gi != null;
             this.data = gi.getData();
             this.x = gi.getX();
             this.y = gi.getY();
@@ -490,7 +484,8 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
 
     /**
      * 此方法用于，从 account.properties 配置文件中，加载公众号图片路径
-     * @return
+     *
+     * @return 公众
      */
     public String loadAccountPath() {
         Properties p = new Properties();
@@ -500,7 +495,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
             p.load(fis);
             fis.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
 

@@ -15,9 +15,10 @@ public class SendGiftsThread extends Thread {
         while (true) {
             synchronized (SendGiftsThread.class) {
 
-                if (--giftCount < 9) break;
+                if (--giftCount < 10) break;
 
                 System.out.println(Thread.currentThread().getName() + "送出了一份礼物，还剩" + giftCount + "个礼物");
+                Thread.yield();
             }
         }
     }

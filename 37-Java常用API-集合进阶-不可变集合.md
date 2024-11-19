@@ -41,6 +41,20 @@ public class Test1 {
 }
 ```
 
+## 2.1.List 集合初始化
+
+方案一：使用 `List.of` 静态方法
+
+```java
+List<String> list = new ArrayList(List.of("张三", "李四", "王五", "赵六"))
+```
+
+方案二：使用 `Arrays.asList` 静态方法
+
+```java
+ArrayList<Integer> list = new ArrayList<>(Arrays.asList(10, 5, 20, 50, 100, 200, 500, 800, 2, 80, 300, 700));
+```
+
 ## 三、Set 不可变集合
 
 创建一个不可变的 `Set` 集合：

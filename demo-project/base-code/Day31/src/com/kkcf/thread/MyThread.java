@@ -14,7 +14,7 @@ public class MyThread extends Thread {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("线程" + super.getName() + "被中断，错误信息：" + e.getMessage());
                 throw new RuntimeException(e);
             }
             System.out.println(super.getName() + "Hello frog");
