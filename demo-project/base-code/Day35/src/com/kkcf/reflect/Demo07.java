@@ -7,10 +7,9 @@ public class Demo07 {
         Class<?> clazz = Class.forName("com.kkcf.reflect.Student");
 
         Field nameField = clazz.getDeclaredField("name");
+        nameField.setAccessible(true); // 暴力反射
 
         Student stu = new Student("张三", 23, "男");
-
-        nameField.setAccessible(true); // 暴力反射
 
         // 获取 private 修饰的属性记录的值
         String nameVal = (String) nameField.get(stu);

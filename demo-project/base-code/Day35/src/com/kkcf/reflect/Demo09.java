@@ -19,13 +19,11 @@ public class Demo09 {
         Parameter[] params = eatMethod.getParameters();
         for (Parameter param : params)
             System.out.println(param);
-
         // java.lang.String arg0
 
         Class<?>[] execpts = eatMethod.getExceptionTypes();
         for (Class<?> execpt : execpts)
             System.out.println(execpt);
-
         /*class java.io.IOException
         class java.lang.NullPointerException*/
 

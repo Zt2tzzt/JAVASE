@@ -16,7 +16,6 @@ public class Demo03 {
         Parameter[] params = con.getParameters();
         for (Parameter param : params)
             System.out.println(param);
-
         /*java.lang.String arg0
         int arg1*/
     }

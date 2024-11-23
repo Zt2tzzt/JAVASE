@@ -1,16 +1,16 @@
 # Java 反射
 
-反射，允许对类中的成员方法，成员变量，构造方法的信息，进行编程访问。可以获取到它们的所有信息。比如：
+反射，允许对类中的**成员方法**，**成员变量**，**构造方法**的信息，进行编程访问。可以获取到它们的所有信息。比如：
 
-- 类中的成员变量，可以获取它本身实例对象，它的修饰符，它的名字，它的类型。取值或赋值……。
-- 类中的构造方法：可以获取它本身实例对象，它的修饰符，它的名字，它的形参列表，用它创建对象……。
-- 类中的成员方法，可以获取它的本身实例对象，它的修饰符，它的名字，它的形参列表，它的返回值，抛出的异常，获取注解，运行的方法……。
+- 类中的**成员变量**，可以获取它本身**实例对象**，它的**修饰符**，它的**名字**，它的**类型**。**取值或赋值方法**……。
+- 类中的**构造方法**：可以获取它本身**实例对象**，它的**修饰符**，它的**名字**，它的**形参列表**，用它**创建对象的方法**……。
+- 类中的**成员方法**，可以获取它的本身**实例对象**，它的**修饰符**，它的**名字**，它的**形参列表**，它的**返回值**，**抛出的异常**，获取**注解**，**运行的方法**……。
 
-IDEA 中的语法提示，实际上就是利用反射实现的。
+> IDEA 开发工具中的语法提示，实际上就是利用反射实现的。
 
-上面的操作，分为“获取”和“解刨”两部分：
+上面的操作，分为“**获取**”和“**解刨**”两部分：
 
-1. 先从 .class 文件中“获取”到成员变量（`Field`）、成员方法（`Method`）、构造方法（`Constructor`）的实例对象；
+1. 先从 .class 文件中“获取”到**成员变量**（`Field`）、**成员方法**（`Method`）、**构造方法**（`Constructor`）的实例对象；
 2. 再对它们进行解刨。
 
 ## 一、获取 Class 对象
@@ -19,7 +19,7 @@ IDEA 中的语法提示，实际上就是利用反射实现的。
 
 - 方式一：`Class.forName("全类名")`，最常使用。
 - 方式二：`类名.class`，通常作为参数传递。
-- 方式三：`对象.getClass()`
+- 方式三：`对象.getClass()`。
 
 这三种方式，要根据编写代码的时机，来选择。
 
@@ -31,7 +31,7 @@ IDEA 中的语法提示，实际上就是利用反射实现的。
 
 创建一个学生类 `Student`
 
-- 其中有 `private`、`protected` 修饰的构造方法。
+- 其中分别有 `private`、`protected` 修饰的构造方法。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Student.java
 
@@ -50,12 +50,12 @@ public class Student {
         this.age = age;
     }
 
-    protected Student(String name) {
-        this.name = name;
-    }
-
     private Student(int age) {
         this.age = age;
+    }
+
+    protected Student(String name) {
+        this.name = name;
     }
   
     // getter、setter……
@@ -80,7 +80,7 @@ package com.kkcf.reflect;
 public class Demo01 {
     public static void main(String[] args) throws ClassNotFoundException {
         // 第一种方式
-        Class clazz1 = Class.forName("com.kkcf.reflect.Student");
+        Class<?> clazz1 = Class.forName("com.kkcf.reflect.Student");
         System.out.println(clazz1); // class com.kkcf.reflect.Student
 
         // 第二种方式
@@ -98,18 +98,20 @@ public class Demo01 {
 
 在 Java 中，万物皆对象：
 
-- `Constructors`、`Filed`、`Method` 三个类，分别表示构造方法，成员变量，成员方法。
+除了 `Class` 类，表示 .class 字节码文件外；
+
+`Constructors`、`Filed`、`Method` 三个类，分别表示 .class 字节码文件中的构造方法，成员变量，成员方法。
 
 ## 二、获取构造方法（Constructor）
 
 `Class` 类中，用于获取构造方法实例对象的方法有：
 
-| 方法名                                                       | 说明                           |
-| ------------------------------------------------------------ | ------------------------------ |
-| `Constructor<?>[] getConstructors()`                         | 返回所有公共构造方法对象的数组 |
-| `Constructor<?>[] getDeclaredConstructors()`                 | 返回所有构造方法对象的数组。   |
-| `Constructor<T> getConstructor(Class<?>... parameterTypes)`  | 返回单个公共构造方法对象       |
-| `Constructor<T> getDeclaredConstructor(Class<?>... parameterTypes)` | 返回单个构造方法对象           |
+| 方法名                                                       | 说明                                     |
+| ------------------------------------------------------------ | ---------------------------------------- |
+| `Constructor<?>[] getConstructors()`                         | 返回所有 public 修饰的构造方法对象的数组 |
+| `Constructor<?>[] getDeclaredConstructors()`                 | 返回所有构造方法对象的数组。             |
+| `Constructor<T> getConstructor(Class<?>... parameterTypes)`  | 返回单个 public 修饰的构造方法对象       |
+| `Constructor<T> getDeclaredConstructor(Class<?>... parameterTypes)` | 返回单个构造方法对象                     |
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo02.java
 
@@ -126,7 +128,6 @@ public class Demo02 {
         Constructor<?>[] cons = clazz.getConstructors();
         for (Constructor<?> con : cons)
             System.out.println(con);
-
         /*public com.kkcf.reflect.Student()
         public com.kkcf.reflect.Student(java.lang.String,int)*/
 
@@ -134,7 +135,6 @@ public class Demo02 {
         Constructor<?>[] allCons = clazz.getDeclaredConstructors();
         for (Constructor<?> con : allCons)
             System.out.println(con);
-
         /*public com.kkcf.reflect.Student()
         private com.kkcf.reflect.Student(int)
         protected com.kkcf.reflect.Student(java.lang.String)
@@ -205,7 +205,6 @@ public class Demo03 {
         Parameter[] params = con.getParameters();
         for (Parameter param : params)
             System.out.println(param);
-
         /*java.lang.String arg0
         int arg1*/
     }
@@ -249,7 +248,7 @@ public class Demo04 {
 
 ## 三、获取成员变量（Field）
 
-在 Student 类中，添加使用 `public` 修饰的成员变量 `gender`。
+在 `Student` 类中，添加使用 `public` 修饰的成员变量 `gender`。
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Student.java
 
@@ -269,12 +268,12 @@ public class Student {
 
 `Class` 类中，用于获取成员变量实例对象的方法有：
 
-| 方法名                                | 说明                           |
-| ------------------------------------- | ------------------------------ |
-| `Field[] getFields()`                 | 返回所有公共成员变量对象的数组 |
-| `Field[] getDeclaredFields()`         | 返回所有成员变量对象的数组     |
-| `Field getField(String name)`         | 返回单个公共成员变量           |
-| `Field getDeclaredField(String name)` | 返回单个成员变量               |
+| 方法名                                | 说明                                     |
+| ------------------------------------- | ---------------------------------------- |
+| `Field[] getFields()`                 | 返回所有 public 修饰的成员变量对象的数组 |
+| `Field[] getDeclaredFields()`         | 返回所有成员变量对象的数组               |
+| `Field getField(String name)`         | 返回单个 public 修饰的 成员变量          |
+| `Field getDeclaredField(String name)` | 返回单个成员变量                         |
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo05.java
 
@@ -291,7 +290,6 @@ public class Demo05 {
         Field[] fields1 = clazz.getDeclaredFields();
         for (Field field : fields1)
             System.out.println(field);
-
         /*public java.lang.String com.kkcf.reflect.Student.gender
         private java.lang.String com.kkcf.reflect.Student.name
         private int com.kkcf.reflect.Student.age*/
@@ -300,7 +298,6 @@ public class Demo05 {
         Field[] fields2 = clazz.getFields();
         for (Field field : fields2)
             System.out.println(field);
-
         //public java.lang.String com.kkcf.reflect.Student.gender
 
         // 获取单个成员变量
@@ -388,7 +385,7 @@ public class Demo06 {
 
 ### 4.get、set 方法取值和设值成员变量
 
-使用 `Field` 类的 `Object get(Object obj)`、`void set(Object obj, Object value)` 方法，用于获取、设置成员变量的值。
+使用 `Field` 类的 `Object get(Object obj)` 和 `void set(Object obj, Object value)` 方法，分别用于获取、设置成员变量的值。
 
 通过反射获取到的 private 修饰的成员变量，不能直接获取它记录的值，需要设置**暴力反射**。
 
@@ -404,11 +401,10 @@ public class Demo07 {
         Class<?> clazz = Class.forName("com.kkcf.reflect.Student");
 
         Field nameField = clazz.getDeclaredField("name");
-
         nameField.setAccessible(true); // 暴力反射
 
         Student stu = new Student("张三", 23, "男");
-
+        
         // 获取 private 修饰的属性记录的值
         String nameVal = (String) nameField.get(stu);
         System.out.println(nameVal); // 张三
@@ -426,12 +422,12 @@ public class Demo07 {
 
 `Class` 类中，用于获取成员方法实例对象的方法有：
 
-| 方法名                                                       | 说明                                       |
-| ------------------------------------------------------------ | ------------------------------------------ |
-| `Method[] getMethods()`                                      | 返回所有公共成员方法对象的数组，包括继承的 |
-| `Method[] getDeclaredMethods()`                              | 返回所有成员方法对象的数组，不包括继承的   |
-| `Method getMethod(String name, Class<?>... parameterTypes)`  | 返回单个公共成员方法对象                   |
-| `Method getDeclaredMethod(String name, Class<?>... parameterTypes)` | 返回单个成员方法对象                       |
+| 方法名                                                       | 说明                                                 |
+| ------------------------------------------------------------ | ---------------------------------------------------- |
+| `Method[] getMethods()`                                      | 返回所有 public 修饰的成员方法对象的数组，包括继承的 |
+| `Method[] getDeclaredMethods()`                              | 返回所有成员方法对象的数组，不包括继承的             |
+| `Method getMethod(String name, Class<?>... parameterTypes)`  | 返回单个 public 修饰的成员方法对象                   |
+| `Method getDeclaredMethod(String name, Class<?>... parameterTypes)` | 返回单个成员方法对象                                 |
 
 在 Student 类中，加入 `sleep`，`eat` 方法
 
@@ -566,7 +562,6 @@ public class Demo09 {
         Parameter[] params = eatMethod.getParameters();
         for (Parameter param : params)
             System.out.println(param);
-
         // java.lang.String arg0
     }
 }
@@ -593,7 +588,6 @@ public class Demo09 {
         Class<?>[] execpts = eatMethod.getExceptionTypes();
         for (Class<?> execpt : execpts)
             System.out.println(execpt);
-
         /*class java.io.IOException
         class java.lang.NullPointerException*/
     }
@@ -686,7 +680,7 @@ public class Test1 {
     }
 
     public static void main(String[] args) throws IllegalAccessException, IOException {
-        Student stu = new Student("zzt", 18, "男", 1.88, "咖啡");
+        Student stu = new Student("zzt", 18, "男", 1.88, "喝咖啡");
 
         saveObj(stu);
     }
