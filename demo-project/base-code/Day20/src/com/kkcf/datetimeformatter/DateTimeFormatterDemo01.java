@@ -12,9 +12,7 @@ public class DateTimeFormatterDemo01 {
 
         // 解析 / 格式化器
         DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss EE a");
-
-        String format = dtf1.format(zdt1);
-
-        System.out.println(format);
+        String res = dtf1.format(zdt1);
+        System.out.print(res); // 2024-11-16 16:31:30 周六 下午
     }
 }

@@ -23,7 +23,7 @@
 
 ### 3.Serializable 接口
 
-案例理解，使用 `ObjectOutputStream ` 字节序列化输出流，将 Student 对象，写出到文件中。
+案例理解，使用 `ObjectOutputStream` 字节序列化输出流，将 Student 对象，写出到文件中。
 
 要使用字节序列化输出流，写出对象到文件，要先为对象的 JavaBean 类，实现 `Serializable` 接口。否则会抛出 `NotSerializableException` 异常。
 
@@ -98,7 +98,7 @@ public class Demo01 {
 
 - `readObject` 方法，一次只能读取一个对象，读到文件末尾没有对象可读时，会抛出异常。
 
-案例理解，使用 `ObjectInputStream ` 反序列化流，将文件中保存的序列化 Student 对象，读取到程序中。
+案例理解，使用 `ObjectInputStream` 反序列化流，将文件中保存的序列化 Student 对象，读取到程序中。
 
 demo-project/base-code/Day29/src/com/kkcf/serialization/Demo02.java
 
@@ -128,7 +128,9 @@ public class Demo02 {
 
 如果一个 JavaBean 类，实现了 `Serializable` 接口，就表示这个类是可被序列化的。
 
-Java 底层，会根据这个类的成员变量、静态变量，构造方法、成员方法，计算出一个 long 类型的**序列号**。这个序列号，也称为这个类的**版本号**。
+Java 底层，会根据这个类的成员变量、静态变量，构造方法、成员方法，计算出一个 long 类型的**序列号**。
+
+这个序列号，也称为这个类的**版本号**。
 
 该类的对象，被序列化写出到文件中时，版本号也会被写入到文件中。
 

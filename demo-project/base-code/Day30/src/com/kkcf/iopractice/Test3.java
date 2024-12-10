@@ -26,8 +26,9 @@ public class Test3 {
             weightSum += stu.getWeight();
 
         // 计算每一个人的权重占比
-        double[] arr = new double[stus.size()];
-        for (int i = 0; i < stus.size(); i++)
+        int len = stus.size();
+        double[] arr = new double[len];
+        for (int i = 0; i < len; i++)
             arr[i] = stus.get(i).getWeight() / weightSum;
 
         // 计算每一个人的权重占比范围
@@ -36,7 +37,7 @@ public class Test3 {
 
         // System.out.println(Arrays.toString(arr)); // [0.1, 0.2, 0.30000000000000004, 0.4, 0.5, 0.6, 0.7, 0.7999999999999999, 0.8999999999999999, 0.9999999999999999]
 
-        // 随机抽取
+        // 在权重范围内，随机抽取一个数字，将它与权占比数组映射得到学生对象集合索引
         double random = Math.random(); // 0.0 - 1.0 之间的小数
         int i = Arrays.binarySearch(arr, random); // 返回一个 (-插入点 - 1) 整数
         int index = -i - 1;

@@ -35,7 +35,7 @@ public class Test1 {
     }
 
     public static void main(String[] args) throws IllegalAccessException, IOException {
-        Student stu = new Student("zzt", 18, "男", 1.88, "咖啡");
+        Student stu = new Student("zzt", 18, "男", 1.88, "喝咖啡");
 
         saveObj(stu);
     }

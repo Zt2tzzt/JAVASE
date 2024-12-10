@@ -20,13 +20,13 @@ public class MovieTicketSaleThread extends Thread {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage());
                 }
-                if (ticketCount < 100) {
+
+                if (ticketCount < 100)
                     System.out.println(Thread.currentThread().getName() + "正在卖第" + (++ticketCount) + "张票");
-                } else {
+                else
                     break;
-                }
             }
         }
     }

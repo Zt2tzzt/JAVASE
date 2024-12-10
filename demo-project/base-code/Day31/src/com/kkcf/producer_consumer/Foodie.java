@@ -7,22 +7,22 @@ public class Foodie extends Thread {
             synchronized (Desk.lock) {
                 if (Desk.count > 0) {
                     // 核心逻辑
-                    if (Desk.foodFlag == 0) {
-                        // 桌子上没有面条，则等待
+                    if (!Desk.coffeFlag) {
+                        // 桌子上没有咖啡，则等待
                         try {
                             Desk.lock.wait(); // 锁对象，与线程绑定
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            System.out.println(e.getMessage());
                             throw new RuntimeException(e);
                         }
                     } else {
-                        // 桌子上有面条，则吃
-                        System.out.println("顾客正在吃面条，还嫩再吃" + (--Desk.count) + "碗面条");
+                        // 桌子上有咖啡，则喝
+                        System.out.println("顾客正在喝咖啡，还能再喝" + (--Desk.count) + "杯咖啡");
 
-                        // 桌上的面条被吃完了，修改桌子的状态
-                        Desk.foodFlag = 0;
+                        // 桌上的咖啡被喝完了，修改桌子的状态
+                        Desk.coffeFlag = false;
 
-                        // 吃完后，唤醒厨师，做面条
+                        // 喝完后，唤醒厨师，做咖啡
                         Desk.lock.notifyAll();
                     }
                 } else {

@@ -315,7 +315,7 @@ public class MapDemo02 {
 
 使用 `Map` 接口中的默认方法 `default void forEach(BiConsumer<? super K, ? super V> action)` 结合 Lambda 表达式，来遍历双列集合。
 
-- 底层使用的是 `entrySet` 方法得到键值对对象集合，
+- 底层使用的是 `entrySet` 方法得到键值对对象集合；
 - 再调用传入的 `BiComsumer` 函数式接口实现类对象中的 `accept` 方法，向其中传入键值对（Entry）对象，进行遍历的。
 
 demo-project/base-code/Day24/src/com/kkcf/map/MapDemo02.java

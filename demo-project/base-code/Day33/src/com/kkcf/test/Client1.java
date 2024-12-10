@@ -14,12 +14,11 @@ public class Client1 {
         OutputStream os = socket.getOutputStream();
 
         Scanner sc = new Scanner(System.in);
-        String data = null;
-
-        // 向服务端发送数据
+        String data;
         do {
             System.out.println("请输入要发送的数据：");
             data = sc.nextLine();
+            // 向服务端发送数据
             os.write(data.getBytes());
         } while (!"886".equals(data));
 

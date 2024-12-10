@@ -23,7 +23,7 @@ public class RedEnvelopeThread extends Thread {
             }
 
             // 判断共享数据，是否到末尾
-            BigDecimal price = BigDecimal.valueOf(0);
+            BigDecimal price;
 
             if (count == 1) {
                 // 最后一个红包，剩余所有的钱，都是中奖金额

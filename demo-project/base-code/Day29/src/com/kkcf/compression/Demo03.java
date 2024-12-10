@@ -14,6 +14,7 @@ public class Demo03 {
     public static void toZip(File src, ZipOutputStream zos, String name) throws IOException {
         File[] files = src.listFiles();
 
+        assert files != null;
         for (File file : files) {
             if (file.isFile()) {
                 ZipEntry zipEntry = new ZipEntry((name == null ? file.getName() : name + "/") + file.getName()); // 难点

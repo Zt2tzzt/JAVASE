@@ -18,6 +18,8 @@ public class OddThread extends Thread {
 
                 if (num % 2 == 1)
                     System.out.println(Thread.currentThread().getName() + "获取到奇数：" + num);
+
+                Thread.yield();
             }
         }
     }

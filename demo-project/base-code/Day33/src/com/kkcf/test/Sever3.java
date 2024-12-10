@@ -1,6 +1,6 @@
 package com.kkcf.test;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -22,14 +22,15 @@ public class Sever3 {
         );
 
         // 创建 socket 对象，并绑定端口
-        ServerSocket serverSocket = new ServerSocket(10086);
+        try (ServerSocket serverSocket = new ServerSocket(10086)) {
+            while (true) {
+                // 等待用户端到连接
+                Socket socket = serverSocket.accept();
 
-        while (true) {
-            // 等待用户端到连接
-            Socket socket = serverSocket.accept();
-
-            //new Thread(new UploadRunnable(socket)).start();
-            pool.submit(new UploadRunnable(socket));
+                //new Thread(new UploadRunnable(socket)).start();
+                pool.submit(new UploadRunnable(socket));
+            }
         }
+
     }
 }

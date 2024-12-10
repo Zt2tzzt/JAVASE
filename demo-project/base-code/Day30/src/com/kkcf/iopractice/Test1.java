@@ -110,20 +110,20 @@ public class Test1 {
      * @param lastNameList   姓氏列表
      * @param maleNameList   男性名称列表
      * @param femaleNameList 女性名称列表
-     * @param maleCount      女性名称个数
-     * @param femaleCount    男性名称个数
      * @return 姓名列表
      */
-    private static ArrayList<String> mockNameList(ArrayList<Character> lastNameList, ArrayList<String> maleNameList, ArrayList<String> femaleNameList, int maleCount, int femaleCount) {
+    private static ArrayList<String> mockNameList(ArrayList<Character> lastNameList, ArrayList<String> maleNameList, ArrayList<String> femaleNameList) {
         ArrayList<String> result = new ArrayList<>();
 
         Random r = new Random();
 
         HashSet<String> tempSet = new HashSet<>();
         // 生成男性名字
-        for (int i = 0; i < maleCount; ) {
-            int index = r.nextInt(lastNameList.size());
-            String name = lastNameList.get(index) + maleNameList.get(i);
+        for (int i = 0; i < 5; ) {
+            int index1 = r.nextInt(lastNameList.size());
+            int index2 = r.nextInt(maleNameList.size());
+
+            String name = lastNameList.get(index1) + maleNameList.get(index2);
             if (!tempSet.contains(name)) {
                 tempSet.add(name);
                 result.add(name + "-男-" + (r.nextInt(23) + 18)); // 18-40
@@ -132,9 +132,11 @@ public class Test1 {
         }
 
         // 生成女性名字
-        for (int i = 0; i < femaleCount; ) {
-            int index = r.nextInt(lastNameList.size());
-            String name = lastNameList.get(index) + femaleNameList.get(i);
+        for (int i = 0; i < 5; ) {
+            int index1 = r.nextInt(lastNameList.size());
+            int index2 = r.nextInt(femaleNameList.size());
+
+            String name = lastNameList.get(index1) + femaleNameList.get(index2);
             if (!tempSet.contains(name)) {
                 tempSet.add(name);
                 result.add(name + "-女-" + (r.nextInt(23) + 18));
@@ -168,7 +170,7 @@ public class Test1 {
         ArrayList<String> femaleNameList = getFemaleNameData(femaleNameTempList);
 
         // 姓氏和名字拼接;
-        ArrayList<String> namelist = mockNameList(lastNameList, maleNameList, femaleNameList, 5, 5);
+        ArrayList<String> namelist = mockNameList(lastNameList, maleNameList, femaleNameList);
 
         // 写出数据
         BufferedWriter bw = new BufferedWriter(new FileWriter("Day30/src/com/kkcf/iopractice/name.txt"));

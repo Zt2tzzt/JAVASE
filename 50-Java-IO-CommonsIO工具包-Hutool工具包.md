@@ -54,7 +54,9 @@ Commons 工具包中，有很多工具，比如：
 | `static void readFileToString(File fil, Charset encoding)`   | 读取文件中的数据变为字符串   |
 | `static void write(File file, CharSequence data, String encoding)` | 写出数据                     |
 
-`copyFile` 静态方法的使用：
+#### 1.copyFile 静态方法
+
+`static void copyFile(File srcFile, File destFile)` 用于复制文件
 
 demo-project/base-code/Day29/src/com/kkcf/commonsio/Demo01.java
 
@@ -87,7 +89,7 @@ public class Demo01 {
 | `static String readLine(Reader r)`               | 读取数据   |
 | `static void write(String data, OutputStream o)` | 写出数据   |
 
-Commons-io 更多用法，参考[commons-io整理的文档](doc\commons-io整理的文档.md)
+Commons-io 更多用法，参考 [commons-io 整理的文档](doc\commons-io整理的文档.md)
 
 ## 二、Hutool 工具包
 
@@ -96,15 +98,15 @@ Commons-io 更多用法，参考[commons-io整理的文档](doc\commons-io整理
 Hutool 工具包中，有很多工具类：
 
 - `DateUtil`，日期时间工具类；
-- `TimeInterval`，计时器工具类
+- `TimeInterval`，计时器工具类；
 - `StrUtil`，字符串工具类；
 - `HexUtil`，十六进制工具类；
 - `HashUtil`，哈希工具类；
-- `ObjectUtil`，对象工具类
+- `ObjectUtil`，对象工具类；
 - `ReflectUtil`，反射工具类；
 - `TypeUtil`，泛型工具类；
 - `PageUtil`，分页工具类；
-- `NumberUtil`，数字工具类
+- `NumberUtil`，数字工具类；
 - ……
 
 其中与 [IO 相关](https://doc.hutool.cn/pages/io/)的，有 7 个工具类；它们在 hutool.core.io 包中。
@@ -116,7 +118,7 @@ Hutool 工具包中，有很多工具类：
 | FileTypeUtil      | 为念类型判断工具类            |
 | WatchMonitor      | 目录、文件监听工具类          |
 | ClassPathResource | 针对 ClassPath 资源的访问封装 |
-| FileReader        | 封装为念读取                  |
+| FileReader        | 封装文件读取                  |
 | FileWriter        | 封装文件写入                  |
 
 ### 1.FileUtil 工具类
@@ -131,9 +133,9 @@ Hutool 工具包中，有很多工具类：
 | `static <T> File appendLines(Collection<T> list, File file, String charset)` | 将列表写入文件，追加模式 |
 | `static List<String> readLines(File file, Charset charset)`  | 从文件中读取每一行数据   |
 
-`file` 静态方法的使用：
+#### 1.file 静态方法
 
-- 通过多层目录创建文件
+`static File file(String... names)` 静态方法，用于通过多层目录创建文件。
 
 demo-project/base-code/Day29/src/com/kkcf/hutool/Demo01.java
 
@@ -155,9 +157,9 @@ public class Demo01 {
 }
 ```
 
-`touch` 静态方法的使用：
+#### 2.touch 静态方法
 
-- 创建文件及其父目录
+`static File touch(File file)` 静态方法，用于创建文件及其父目录。
 
 demo-project/base-code/Day29/src/com/kkcf/hutool/Demo01.java
 
@@ -177,9 +179,11 @@ public class Demo01 {
 }
 ```
 
-`writeLines` 静态方法的使用：
+#### 3.writeLines 静态方法
 
-- 将列表写入文件，覆盖模式
+`static <T> File writeLines(Collection<T> list, File file, Charset charset)` 静态方法；
+
+将列表写入文件，覆盖模式。
 
 demo-project/base-code/Day29/src/com/kkcf/hutool/Demo01.java
 
@@ -203,9 +207,11 @@ public class Demo01 {
 }
 ```
 
-`appendLines` 静态方法的使用：
+#### 4.appendLines 静态方法
 
-- 将列表写入文件，追加模式
+`static <T> File appendLines(Collection<T> list, File file, String charset)` 静态方法；
+
+使用追加模式将列表写入文件，
 
 demo-project/base-code/Day29/src/com/kkcf/hutool/Demo01.java
 
@@ -229,9 +235,11 @@ public class Demo01 {
 }
 ```
 
-`readLines` 静态方法的使用
+#### 4.readLines 静态方法
 
-- 从文件中读取每一行数据
+`static List<String> readLines(File file, Charset charset)` 方法
+
+用于从文件中读取每一行数据
 
 demo-project/base-code/Day29/src/com/kkcf/hutool/Demo01.java
 

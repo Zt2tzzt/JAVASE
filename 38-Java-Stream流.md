@@ -88,7 +88,7 @@ Stream 流的使用步骤：
 | 数组           | `public static <T> Stream<T> stream(T[] array)` | `Arrays` 工具类中的静态方法   |
 | 一堆零散的数据 | `public static <T> Stream<T> of(T...values)`    | `Stream` 接口中的静态方法     |
 
-双列集合，要使用 `keySet` 或者 `entrySet` 方法，转为单列集合后，再获取 Stream 流。
+双列集合，要使用 `keySet` 或者 `entrySet` 方法，转为键的单列集合后，再获取 Stream 流。
 
 ### 1.单列集合获取 Stream 流
 
@@ -620,7 +620,7 @@ public class Demo13 {
 
 #### 2.Set 集合收集
 
-为 `collect()` 方法，传入 `Collectors.toSet` 的返回值；
+为 `collect()` 方法，传入 `Collectors.toSet` 方法的返回值；
 
 案例理解：收集集合中的所有带“女”的元素，到一个新的 `HashSet` 集合中。
 
@@ -698,11 +698,11 @@ public class Demo13 {
 `Collectors` 工具类中的 `toMap` 方法：
 
 - 参数一：表示键的生成规则；
-  - `Function` 接口泛型一：表示流中数据的类型；泛型二：表示 `Map` 集合中键的类型。
+  - `Function` 接口泛型一：表示流中数据的类型；泛型二：表示 `Map` 集合中**键**的类型。
   - `apply` 方法形参，依次表示流里面的每一个数据；
   - `apply` 方法体，是生成键的代码。
 - 参数二：表示值的生成规则。
-  - `Function` 接口泛型一：表示流中数据的类型；泛型二：表示 `Map` 集合中值的类型。
+  - `Function` 接口泛型一：表示流中数据的类型；泛型二：表示 `Map` 集合中**值**的类型。
   - `apply` 方法形参，依次表示流里面的每一个数据；
   - `apply` 方法体，是生成值的代码。
 

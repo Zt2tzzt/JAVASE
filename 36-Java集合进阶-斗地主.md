@@ -8,6 +8,8 @@
 
 创建一个 `App`· 类，作为程序的启动入口：
 
+demo-project/landlord/src/com/kkcf/app/App.java
+
 ```java
 package com.kkcf.app;
 
@@ -216,7 +218,7 @@ public class PokerGame {
 
 需要使用到 `Map` 集合，将序号与牌面一一对应起来
 
-这里选择使用 `HashMap` 集合，因为不需要对序号进行排序。
+这里选择使用 `HashMap` 集合，将序号作为键存入其中，因为不需要对序号进行排序。
 
 然后，再创建一个存放牌盒的 `ArrayList` 集合，里面存放着扑克牌的序号。
 

@@ -15,11 +15,11 @@
 | 数据链路层   | 物理链路层      | 硬件设备：01010010101……     | 转换成二进制利用物理设备传输。                     |
 | 物理层       |                 |                             |                                                    |
 
-> HTTP, FTP, Telnet, DNS, ……协议，基于 TCP, UDP, ……协议封装；
+> HTTP、FTP、Telnet、DNS、 ……协议，基于 TCP、UDP、 ……协议封装；
 >
-> TCP、UDP, ……协议又基于 IP, ICMP, ARP, …… 协议封装。
+> TCP、UDP、 ……协议又基于 IP、ICMP、ARP、 …… 协议封装。
 >
-> TCP 协议中的三次握手、四次挥手，就是基于 ICMP 协议的。
+> - TCP 协议中的三次握手、四次挥手，就是基于 ICMP 协议的。
 
 计算机网络中，连接和通信的规则，被称为网络通信协议。
 
@@ -29,7 +29,11 @@ UDP（User Datagram Protocol）用户数据报协议。是面向**无连接的�
 
 - 它指的是两个通信的计算机之间，不论发送方是否与接收方成功建立连接，发送方都会发送数据。
 
-UDP 协议，特点是通信速度快，但有大小限制（64k），数据不安全、易丢失。
+UDP 协议，特点是
+
+- 通信速度快；
+- 有大小限制（64k）；
+- 数据易丢失，不安全。
 
 UDP 协议，适用于丢失一点数据，不会有很大影响的场景。
 
@@ -43,6 +47,8 @@ UDP 通信程序，发送数据的过程，就好比寄快递，有如下几步�
 2. 打包礼物 --> 数据打包 `DatagramPacked`。
 3. 快递公司发送包裹 --> 发送数据。
 4. 付钱走人 --> 释放资源。
+
+客户端 `SendMessage`：
 
 demo-project/base-code/Day33/src/com/kkcf/udp/SendMessage.java
 
@@ -82,6 +88,8 @@ UDP 通信程序，接受数据的过程，就好比取快递，有如下几步�
 2. 接收快递箱子 --> 接收打包好的数据。
 3. 从箱子里面获取礼物 --> 解析数据包。
 4. 签收走人 --> 释放资源。
+
+服务端 `ReciveMessage`：
 
 demo-project/base-code/Day33/src/com/kkcf/udp/ReciveMessage.java
 
@@ -224,7 +232,7 @@ UDP 的三种通信方式：
   - 以上代码，都是单播的案例。
 - 组播：给一组主机发送信息。
   - 组播地址：224.0.0.0 ~ 239.255.255.255；
-  - 其中：224.0.0.0 ~ 224.0.0.255 为预留的组播地址
+  - 其中：224.0.0.0 ~ 224.0.0.255 为预留的组播地址。
 - 广播：给局域网中所有主机发送数据。
   - 广播地址：255.255.255.255
 
@@ -356,7 +364,11 @@ TCP（Transmission Control Protocol）传输控制协议，是**面向连接的�
 
 - 面向连接的通信协议，指的是两个通信的主机之间，确保连接成功后，才能发送数据。
 
-TCP 协议，特点是通讯速度慢，但没有大小限制，数据安全。
+TCP 协议特点：
+
+- 通讯速度慢；
+- 没有大小限制；
+- 数据安全。
 
 TCP 协议，适用于不能有数据丢失的应用场景，比如：下载软件，文字聊天、发送邮件。
 
@@ -374,6 +386,8 @@ TCP 协议，发送数据的步骤：
 1. 创建客户端的 Socket 对象（`Socket`），与指定服务器连接。
 2. 从 socket 对象中，获取输出流，写出数据；
 3. 释放资源
+
+客户端 Client：
 
 demo-project/base-code/Day33/src/com/kkcf/tcp/Client.java
 
@@ -412,6 +426,8 @@ TCP 协议，接收数据的步骤：
 3. 从 socket 对象中，获取输入流，读数据，并把数据显示在控制台。
 4. 释放资源。
 
+服务端 Server：
+
 demo-project/base-code/Day33/src/com/kkcf/tcp/Server.java
 
 ```java
@@ -427,7 +443,7 @@ public class Server {
         // 创建对象 ServerSocket
         ServerSocket serverSocket = new ServerSocket(10086); // 指定端口号
 
-        // 监听客户端端 socket 连接
+        // 监听客户端 socket 连接
         Socket socket = serverSocket.accept(); // 阻塞
 
         // 从连接通道中，获取字节输入流，读取数据
@@ -444,7 +460,7 @@ public class Server {
 }
 ```
 
-上面的做法，不能处理汉字这样的特殊字符。使用字符转换输入流和字符缓冲输入流，优化上面的代码：
+上面的做法，不能处理汉字这样的特殊字符。使用**字符转换输入流**和**字符缓冲输入流**，优化上面的代码：
 
 demo-project/base-code/Day33/src/com/kkcf/tcp/Server.java
 
@@ -488,7 +504,7 @@ TCP 通信协议中，客户端与服务端建立连接，会经过三次握手�
 
 如下图所示：
 
-![三次握手](/Users/zetian/workshop/tutorial/JAVASE/NodeAssets/三次握手.png)
+![三次握手](NodeAssets/三次握手.png)
 
 三次握手，就是一个为了建立连接，反复确认的过程。
 
@@ -496,4 +512,4 @@ TCP 通信协议中，客户端与服务端建立连接，会经过三次握手�
 
 TCP 通信协议中，客户端与服务端断开，会经过四次挥手，这是为了确保连接断开，并保证数据处理完毕。。
 
-![四次挥手](/Users/zetian/workshop/tutorial/JAVASE/NodeAssets/四次挥手.png)
+![四次挥手](NodeAssets/四次挥手.png)

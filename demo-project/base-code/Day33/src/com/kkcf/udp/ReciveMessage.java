@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
 
 public class ReciveMessage {
     public static void main(String[] args) throws IOException {
@@ -26,7 +25,6 @@ public class ReciveMessage {
         System.out.println("接受到数据" + new String(data, 0, len));
         System.out.println("发送方ip" + ip);
         System.out.println("发送方端口" + port);
-
 
         // 释放资源
         ds.close();

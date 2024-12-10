@@ -9,7 +9,7 @@
 ## 一、线程池的核心逻辑
 
 1. 创建一个池子，里面是空的。
-2. 往池子里提交任务时，池子会创建新的线程对象用于执行任务，任务执行完毕，线程归还给池子。
+2. 往池子里提交任务时，池子会创建新的线程对象，用于执行任务，任务执行完毕，线程归还给池子。
 3. 下次再提交任务时，池子不需要再创建新的线程，直接复用已有的线程即可。
 4. 如果提交任务时，池子中没有空闲的线程，也无法创建新的线程，任务就会排队等待。
 
@@ -30,7 +30,7 @@
 | `public static ExecutorService newCachedThreadPool()`        | 创建一个没有上限的线程池（上限是 int 类型的最大值） |
 | `public static ExecutorService newFixedThreadPool(int nThreads)` | 创建一个有上限的线程池                              |
 
-### 1.newCachedThreadPool 方法使用
+### 1.Executor.newCachedThreadPool 方法使用
 
 创建自定义类，继承 `Runnable` 类。
 
@@ -82,7 +82,7 @@ public class Demo01 {
 }
 ```
 
-每次提交前，让 main 程睡眠 1s，这样线程池中的线程就可以看到**复用**的效果。
+每次提交前，让 main 线程睡眠 1s，这样线程池中的线程就可以看到**复用**的效果。
 
 demo-project/base-code/Day31/src/com/kkcf/threadpoll/Demo01.java
 
@@ -117,7 +117,7 @@ public class Demo01 {
 }
 ```
 
-### 2.newFixedThreadPool 方法使用
+### 2.Executor.newFixedThreadPool 方法使用
 
 测试类：
 
@@ -153,7 +153,7 @@ public class Demo01 {
 - 提交 5 个 Runnable 实例对象作为任务，但只会运行在 3 个线程上。因为线程池的容量就是 3 个。
 - 前 3 个任务在提交时，分别会创建 1 个线程，后 2 个任务在提交时，会进入阻塞排队状态。
 
-## 三、自定义线程池
+## 三、ThreadPoolExecutor 类自定义线程池
 
 使用工具类 `Executor` 创建的线程池，不够灵活：线程池的大小，被固定住了。
 
@@ -231,7 +231,7 @@ public class Demo02 {
 }
 ```
 
-### 1.最大并行数
+### 1.最大并行数获取
 
 以 4 核 8 线程的 CPU 为例：最大并行数，就是线程数，即 8；
 
@@ -252,7 +252,7 @@ public class Demo03 {
 }
 ```
 
-### 2.线程池的大小
+### 2.线程池的大小计算
 
 任务的类型，分为两种：
 

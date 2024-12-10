@@ -330,7 +330,7 @@ public class MyCollectionDemo02 {
 
 在 JDK5 出现了增强 for 遍历，底层是用迭代器遍历实现的。
 
-增强 for 遍历，可用于 `Collection` 单列集合、数组（双列集合不行）。
+增强 for 遍历，可用于 `Collection` 单列集合、数组；双列集合不行。
 
 增强 for 遍历，书写格式如下：
 
@@ -472,14 +472,14 @@ public class MyCollectionDemo03 {
 
 `List` 接口，继承了 `Collection` 接口，它其中的方法都有。
 
-`List` 集合，有索引，多了很多用索引操作的方法，如下方所示：
+`List` 集合，有索引，所以多了很多用索引操作的方法，如下方所示：
 
 | 方法名                        | 描述                                   |
 | ----------------------------- | -------------------------------------- |
 | `void add(int index, E element)` | 在此集合中的指定位置插入指定的元素。    |
 | `E remove(int index)`           | 删除指定索引处的元素，返回被删除的元素。 |
 | `E set(int index, E element)`   | 修改指定索引处的元素，返回被修改的元素。 |
-| `E get(int index)`              | 返回指定索引处的元素                   |
+| `E get(int index)`              | 返回指定索引处的元素。                  |
 
 #### 1.add(int i, E e) 方法
 
@@ -510,9 +510,11 @@ public class MyCollectionDemo03 {
 
 - 插入位置及后面的所有元素，都会往后移一位。
 
-#### 2.remove 方法
+#### 2.remove(int index) 方法
 
 `E remove(int index)` 方法的使用，用于删除集合中指定索引位置的元素。
+
+demo-project/base-code/Day22/src/com/kkcf/collection/MyCollectionDemo04.java
 
 ```java
 package com.kkcf.collection;
@@ -566,7 +568,7 @@ public class MyCollectionDemo04 {
 
 > Java 中，在调用方法的时候，如果该方法与其它方法有重载关系，那么优先调用与形参类型一致的那个方法。
 
-#### 3.set 方法
+#### 3.set(int index, E element) 方法
 
 `E set(int index, E element)` 方法，用于修改指定索引处的元素，返回被修改的元素。
 
@@ -594,7 +596,7 @@ public class MyCollectionDemo04 {
 }
 ```
 
-#### 3.get 方法
+#### 3.get(int index) 方法
 
 `E get(int index)` 方法，用于返回指定索引处的元素。
 

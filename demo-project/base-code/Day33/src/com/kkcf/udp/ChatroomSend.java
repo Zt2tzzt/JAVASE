@@ -14,7 +14,7 @@ public class ChatroomSend {
         // 打包数据
         Scanner sc = new Scanner(System.in);
 
-        String data = null;
+        String data;
         do {
             System.out.println("请输入要发送到数据：");
             data = sc.nextLine();

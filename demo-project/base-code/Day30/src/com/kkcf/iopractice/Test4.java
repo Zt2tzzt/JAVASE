@@ -14,6 +14,7 @@ public class Test4 {
         String[] arr1 = split[0].split("=");
         String[] arr2 = split[1].split("=");
         String[] arr3 = split[2].split("=");
+
         String accurateUsername = arr1[1];
         String accuratePassword = arr2[1];
         int count = Integer.parseInt(arr3[1]);

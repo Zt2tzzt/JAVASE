@@ -17,8 +17,6 @@ public class Demo05 {
             int len;
             while ((len = fis.read(bytes)) != -1) fos.write(bytes, 0, len);
 
-            fos.close();
-            fis.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

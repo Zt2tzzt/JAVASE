@@ -25,12 +25,11 @@ public class Client1 {
         OutputStream os = socket.getOutputStream();
 
         Scanner sc = new Scanner(System.in);
-        String data = null;
-
-        // 向服务端发送数据
+        String data;
         do {
             System.out.println("请输入要发送的数据：");
             data = sc.nextLine();
+            // 向服务端发送数据
             os.write(data.getBytes());
         } while (!"886".equals(data));
 
@@ -78,6 +77,7 @@ public class Server1 {
 
 - 如果客户端不发送**结束标记**，上方的 `while` 循环会一直进行下去。
 - `read` 方法，从连接通道中读取数据，发送的数据需要有一个结束标记，否则会一直停留在 `read` 方法这里，等待读取下面的数据。
+- 后面的案例中，会介绍如何发送结束标记。
 
 在浏览器地址栏，输入 `127.0.0.1:10086` 查看控制台输出：
 
@@ -99,7 +99,7 @@ Accept-Encoding: gzip, deflate
 
 ## 二、练习二：接收并反馈
 
-需求：客户端发送一条数据，接收服务端反馈的消息，并打印；服务端：接收数据并打印，再给客户端反馈消息。
+需求：客户端发送一条数据，接收服务端反馈的消息，并打印；服务端接收数据并打印，再给客户端反馈消息。
 
 客户端 Client2
 
@@ -168,7 +168,7 @@ public class Server2 {
 
         // 接收数据
         InputStream is = socket.getInputStream();
-        InputStreamReader isr = new InputStreamReader(is); 
+        InputStreamReader isr = new InputStreamReader(is);
         char[] chs = new char[1024];
         int len;
         // 细节：read 方法，从连接通道中读取数据，发送的数据需要有一个结束标记，否则会一直停留在 read 方法这里，等待读取下面的数据。
@@ -176,8 +176,9 @@ public class Server2 {
             System.out.print(new String(chs, 0, len));
 
         // 返回数据
-        String str = "见到你我也很高心";
-        socket.getOutputStream().write(str.getBytes());
+        String str = "见到你我也很高兴";
+        OutputStream os = socket.getOutputStream();
+        os.write(str.getBytes());
 
         socket.close();
         serverSocket.close();
@@ -187,9 +188,15 @@ public class Server2 {
 
 ## 三、练习三：上传文件
 
-需求：客户端：将本地文件上传到服务器，接收服务器的反馈；服务端：接收客户端上传的文件保存到本地，上传完毕之后给出反馈。
+需求：
 
-思路：客户端，使用 `FileInputSream` 字节输入流，读取本地文件的内容到内存中，再将文件数据发送（写出）给服务器端；服务器端接收到文件数据后，使用 `FileOutputStream` 字节输出流，保存文件到本地，并向客户端返回消息。
+- 客户端：将本地图片文件（jpg）上传到服务器，接收服务器的反馈；
+- 服务端：接收客户端上传的图片文件（jpg）保存到本地，上传完毕之后给出反馈。
+
+思路：
+
+- 客户端，使用 `FileInputSream` 字节输入流，读取本地文件的内容到内存中，再将文件数据发送（写出）给服务器端；
+- 服务器，端接收到文件数据后，使用 `FileOutputStream` 字节输出流，保存文件到本地，并向客户端返回消息。
 
 客户端：Client3
 
@@ -273,13 +280,13 @@ public class Sever3 {
 }
 ```
 
-### 1.UUID 类
+### 3.1.UUID 类
 
-为了使服务端保存本地文件的时候，文件不重名，需要使用到 `UUID` 类
+为了使服务端保存本地文件的时候，文件不重名，需要使用到 `UUID` 类。
 
 `UUID` 可以生成一个随机的字符串，字符串的内容是唯一的。
 
-使用静态方法 `randomUUID`，可以返回一个 uuid 对象。
+使用 `UUID.randomUUID` 静态方法，可以返回一个 uuid 对象。
 
 demo-project/base-code/Day33/src/com/kkcf/test/UUIDTest.java
 
@@ -326,7 +333,10 @@ public class Sever3 {
 
 需求：服务器不停止，接收很多用户上传的图片。
 
-思路：可以使用循环，或者多线程；最优解：循环 + 多线程。
+思路：
+
+- 可以使用循环，或者多线程；
+- 最优解：循环 + 多线程。
 
 重构上方服务端代码 `Sever3`，在其中开启多线程。
 
@@ -354,7 +364,7 @@ public class Sever3 {
 }
 ```
 
-自定义 `UploadRunnable` 类，实现 `Runnable` 接口
+自定义 `UploadRunnable` 类，实现 `Runnable` 接口，用于服务端接收文件并保存到本地。
 
 - 然后使用构造函数，初始化 socket 对象。这种方式，对于要共享的 socket 对象，更加灵活。
 

@@ -39,7 +39,7 @@ public class UploadRunnable implements Runnable {
                 try {
                     socket.close();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.err.println("关闭资源失败；err：" + e.getMessage());
                 }
             }
 

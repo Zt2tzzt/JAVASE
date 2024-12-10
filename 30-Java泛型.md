@@ -59,7 +59,7 @@ Java 泛型，可以写在类、方法、接口上，它们分别称为**泛型�
 
 Java 泛型类，使用场景：当一个类中，某个变量的数据类型不确定时，就可以定义带有泛型的类。
 
-#### 1.泛型类书写格式
+#### 1.泛型类格式
 
 Java 泛型类，书写格式为：
 
@@ -69,7 +69,7 @@ Java 泛型类，书写格式为：
 }
 ```
 
-#### 2.泛型类书写使用
+#### 2.泛型类使用
 
 案例理解：使用泛型类，实现一个自己的 `ArrayList`。
 
@@ -131,10 +131,10 @@ public class Test02 {
 
 在 Java 中，当方法形参类型不确定时，可以使用泛型，有两种方案：
 
-- 方案一：为方法所在的类，定义泛型；该泛型在类中都可以使用。
+- 方案一：为方法所在的类，定义泛型；该泛型在类中的成员都可以使用。
 - 方案二：在方法声明上，定义泛型。该泛型只有在本方法中使用。
 
-#### 1.泛型方法书写格式
+#### 1.泛型方法格式
 
 Java 泛型方法，书写格式为：
 
@@ -207,7 +207,7 @@ public class Test01 {
 
 在 Java 中，当接口里用到的类型不确定时，可以用泛型接口。
 
-#### 1.泛型接口书写格式
+#### 1.泛型接口格式
 
 Java 泛型接口，书写格式如下：
 
@@ -224,7 +224,7 @@ Java 泛型接口的两种使用方式：
 - 方式一：实现类给出具体的泛型。
 - 方式二：实现类也是泛型类，延续泛型接口的泛型，创建实现类对象时，再确定泛型。
 
-方式一理解：定义一个 `MyArrayList02` 类，实现 `List` 接口，并指定 `List` 接口中的泛型。
+方式一，理解：定义一个 `MyArrayList02` 类，实现 `List` 接口，并指定 `List` 接口中的泛型。
 
 demo-project/base-code/Day23/src/com/kkcf/generics/MyArrayList02.java
 
@@ -263,7 +263,7 @@ public class Test03 {
 }
 ```
 
-方式二理解：定义一个 `MyArrayList03` 泛型类，实现 `List` 接口，并延续 `List` 泛型接口的泛型。
+方式二，理解：定义一个 `MyArrayList03` 泛型类，实现 `List` 接口，并延续 `List` 泛型接口的泛型。
 
 ```java
 package com.kkcf.generics;
@@ -284,7 +284,7 @@ public class MyArrayList03<E> implements List<E> {
 
 - `add` 方法，传参的类型，还未确定下来。
 
-此时，创建 `MyArrayList03` 的实例，需要指定泛型了。
+此时，创建 `MyArrayList03` 的实例，就需要指定泛型了。
 
 demo-project/base-code/Day23/src/com/kkcf/test/Test03.java
 
@@ -432,7 +432,7 @@ class Zi extends Fu {}
 
 `Animal` 类：
 
-- 将 `Animal` 类设为抽象类，不让外界创建它的实力对象。这样做没有意义。
+- 将 `Animal` 类设为抽象类，不让外界创建它的实力对象。因为这样做没有意义。
 
 demo-project/base-code/Day23/src/com/kkcf/javabean/Animal.java
 

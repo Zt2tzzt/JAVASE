@@ -1,5 +1,7 @@
 package com.kkcf.test;
 
+import com.kkcf.ui.GameJFrame;
+
 import java.util.Random;
 
 public class Test {
@@ -8,15 +10,7 @@ public class Test {
 
         int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
-        int len = arr.length;
-
-        for (int i = 0; i < len; i++) {
-            int randomIndex = r.nextInt(len);
-
-            int temp = arr[i];
-            arr[i] = arr[randomIndex];
-            arr[randomIndex] = temp;
-        }
+        GameJFrame.shuffleArr(r, arr);
 
         // 打印数组 arr
 

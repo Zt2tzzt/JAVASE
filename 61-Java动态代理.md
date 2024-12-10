@@ -1,8 +1,8 @@
 # Java 动态代理
 
-往原有的代码中，直接添加代码，称为“侵入式修改”。
+往原有的代码中，直接添加代码，称为“**侵入式修改**”。
 
-动态代理，可以无侵入式的为代码增加额外的功能。
+动态代理，可以**无侵入式的**为代码增加额外的功能。
 
 如果一个对象，认为自己身上干的事情太多，就可以通过代理，转移部分职责。
 
@@ -23,7 +23,7 @@ A[调用者] --> B[代理]
     B --> C[对象]
 ```
 
-创建一个接口 `Star`
+创建一个接口 `Star`，表示对象要代理的方法。
 
 demo-project/base-code/Day35/src/com/kkcf/dynamicproxy/Star.java
 
@@ -64,11 +64,13 @@ public class BigStar implements Star {
 }
 ```
 
-`java.lang.reflect.Proxy` 类，提供了为对象生成代理对象的方法：`public static Object newProxyInstance(ClassLoader loader, Class<?>[] interface, InvocationHandler h)`，其中：
+`java.lang.reflect.Proxy` 类，提供了为对象生成代理对象的方法：
 
-- 参数一：用于指定用哪个类加载器，去加载生成的代理对象。一般使用当前类的字节码文件对象，获取类加载器。
-- 参数二：以数组的形式指定接口，这些接口用于指定生成的代理有哪些方法。
-- 参数三：用来指定生成的代理对象要干什么事情。一般使用实现了 `InvocationHandler` 接口的匿名内部类对象实例。
+`public static Object newProxyInstance(ClassLoader loader, Class<?>[] interface, InvocationHandler h)`，其中：
+
+- 参数一：`ClassLoader loader` 用于指定用哪个类加载器，去加载生成的代理对象。一般使用当前类的字节码文件对象，获取类加载器。
+- 参数二：`Class<?>[] interface` 以数组的形式指定接口，这些接口用于指定生成的代理有哪些方法。
+- 参数三：`InvocationHandler h` 用来指定生成的代理对象要干什么事情。一般使用实现了 `InvocationHandler` 接口的匿名内部类对象实例。
 
 > 类加载器，用于把字节码文件，加载到内存中。
 
@@ -104,7 +106,7 @@ public class ProxyUtil {
 }
 ```
 
-- `InvocationHandler` 是函数值接口，其中 `invoke` 方法的参数分析；
+- `InvocationHandler` 是函数式接口，其中 `invoke` 方法的参数分析；
   - 参数一：代理的对象。
   - 参数二：要运行的方法的实例对象（与反射有关）。
   - 参数三：调用方法，传递的实参。
@@ -122,14 +124,12 @@ public class Test {
         Star proxy = ProxyUtil.createProxy(new BigStar("坤坤"));
 
         String result = proxy.sing("只因你太美");
-
         /*准备话筒，收钱
         坤坤正在唱只因你太美*/
 
         System.out.println(result); // 谢谢
 
         proxy.dance();
-
         /*准备场地，收钱
         坤坤正在跳舞*/
     }

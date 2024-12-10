@@ -1,4 +1,4 @@
-# Java 多线程之并发并行、实现方式、Thread类和方法、生命周期、线程安全、锁和死锁
+# Java 多线程之并发并行、实现方式、Thread 类和方法、生命周期、线程安全、锁和死锁
 
 **线程**是操作系统，能够进行运算调度的**最小单位**；
 
@@ -36,15 +36,17 @@
 
 ## 二、Java 多线程实现方式
 
+JVM 虚拟机允许应用程序，**并行**地运行多个线程。
+
 ### 1.继承 Thread 类
 
-在 Java 中，`Thread` 类，表示线程，JVM 虚拟机允许应用程序，**并行**地运行多个线程。
+在 Java 中，`Thread` 类，表示线程。
 
 使用 `Thread` 类，实现多线程的步骤：
 
 1. 自定义一个类，继承 `Thread` 类；
 2. 在自定义类中，重写 `run` 方法；
-3. 创建自定义类对象，并启动线程。
+3. 创建多个自定义类对象，并启动线程。
 
 自定义 `MyThread` 类，继承 `Thread` 类：
 
@@ -91,7 +93,7 @@ public class Demo01 {
 1. 自定义类，实现 `Runable` 接口；
 2. 在自定义类，实现 `run` 方法；
 3. 创建自定义类实例对象；
-4. 传入自定义类的对象，再创建 `Thread` 类对象；
+4. 创建多个 `Thread` 类对象，传入自定义类的实例对象；
 5. 开启线程。
 
 自定义 `MyRun` 类，实现 `Runnable` 接口
@@ -142,7 +144,7 @@ public class Demo01 {
 
 ### 3.实现 Callable 接口、使用 Future 接口
 
-继承 `Thread` 类、实现 `Runnable` 接口这两种多线程的实现方式，在 `run` 方法中都没有返回值。
+继承 `Thread` 类、实现 `Runnable` 接口，这两种多线程的实现方式，在 `run` 方法中都没有返回值。
 
 如果想要获取多线程运行的结果，就要使用实现 `Callable` 接口、使用 `Futrure` 接口的方式。
 
@@ -151,8 +153,8 @@ public class Demo01 {
 1. 自定义类，实现 `Callable` 泛型接口，泛型表示返回值的类型。
 2. 在自定义类中，重写 `call` 方法，该方法有返回值，表示多线程运行的结果。
 3. 创建自定义类的实例对象，表示多线程要实现的任务。
-4. 传入任务对象，创建 `Future` 接口实现类 `FutureTask` 类的实例对象，用于管理多线程任务运行的结果。
-5. 创建 `Thread` 类的实例对象，并启动线程。
+4. 创建多个 `Future` 接口实现类 `FutureTask` 类的实例对象，传入任务对象，用于管理多线程任务运行的结果。
+5. 创建多个 `Thread` 类的实例对象，并启动线程。
 
 开启两个线程，求 1-100 的和。
 
@@ -192,15 +194,20 @@ public class Demo01 {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         MyCallable mc = new MyCallable();
 
-        FutureTask<Integer> ft = new FutureTask<Integer>(mc);
+        FutureTask<Integer> ft1 = new FutureTask<>(mc);
+        FutureTask<Integer> ft2 = new FutureTask<>(mc);
 
-        Thread t1 = new Thread(ft);
+        Thread t1 = new Thread(ft1);
+        Thread t2 = new Thread(ft2);
 
         t1.start();
+        t2.start();
 
         // 获取多线程运行的结果
-        Integer result = ft.get();
-        System.out.println(result);
+        Integer result1 = ft1.get();
+        Integer result2 = ft2.get();
+        System.out.println(result1);
+        System.out.println(result2);
     }
 }
 ```
@@ -217,20 +224,20 @@ public class Demo01 {
 
 `Thread` 类常用方法如下：
 
-| 方法名                              | 说明                                 |
-| ----------------------------------- | ------------------------------------ |
-| `String getName)()`                 | 返回此线程的名称                     |
-| `void setName(String name)`         | 设置线程的名称（也可以使用构造方法） |
-| `static Thread currentThread()`     | 获取当前线程的对象                   |
-| `static void sleep(long time)`      | 让线程休眠指定的时间（单位：毫秒）   |
-| `void setPriority(int newPriority)` | 设置线程优先级                       |
-| `final int getPriority`             | 获取线程的优先级                     |
-| `final void setDaemon(boolean on)`  | 设置守护进程                         |
-| `static void yield()`               | 设置礼让线程（出让线程）             |
-| `void join()`                       | 设置插入线程（插队线程）             |
+| 方法名                              | 说明                                     |
+| ----------------------------------- | ---------------------------------------- |
+| `String getName)()`                 | 返回此线程的名称                         |
+| `void setName(String name)`         | 设置线程的名称（也为构造方法传参来设置） |
+| `static Thread currentThread()`     | 获取当前线程的对象                       |
+| `static void sleep(long time)`      | 让线程休眠指定的时间（单位：毫秒）       |
+| `void setPriority(int newPriority)` | 设置线程优先级                           |
+| `final int getPriority`             | 获取线程的优先级                         |
+| `final void setDaemon(boolean on)`  | 设置守护进程                             |
+| `static void yield()`               | 设置礼让线程（出让线程）                 |
+| `void join()`                       | 设置插入线程（插队线程）                 |
 
 - 线程优先级越高，抢占到 CPU 执行权的概率越高。
-- 线程有默认名字，格式 `Thread-xxx`，`xxx` 是以 0 开始的序号
+- 线程有默认名字，格式 `Thread-xxx`，`xxx` 是以 0 开始的序号。
 
 ### 1.getName、setName 方法
 
@@ -383,7 +390,9 @@ public class Demo02 {
 
 计算机中，线程的调度分为两种：
 
-- **抢占式调度**，指的是多个线程，在抢夺 CPU 的执行权，CPU 在什么时候，执行哪个线程，执行多长时间，都是不确定的；所以线程执行具有**随机性**。
+- **抢占式调度**，默认的方式，指的是多个线程，在抢夺 CPU 的执行权；
+  - CPU 在什么时候，执行哪个线程，执行多长时间，都是不确定的；所以默认线程执行具有**随机性**。
+
 - **非抢占式调度**，指的是多个线程，轮流被 CPU 执行。
 
 在 Java 中，线程执行采用的是**抢占式调度**的方式，
@@ -508,7 +517,7 @@ public class Demo05 {
 
 `yield` 方法，用于设置礼让（出让）线程；
 
-礼让线程，会交还 CPU 执行权，给多个线程抢夺；这会尽可能的让多个线程执行的更加均匀。
+礼让线程，会交还 CPU 执行权，给多个线程抢夺；这会尽可能的**让多个线程执行的更加均匀**。
 
 自定义类 `MyThread3`，在 `run` 方法中，设置礼让线程。
 
@@ -587,7 +596,7 @@ public class Demo07 {
 - 执行资格，表示抢夺 CPU 执行权的资格；
 - 执行权，表示被 CPU 执行。
 
-注意：`sleep` 静态方法设置的睡眠时间到时后，不会立即执行线程中的代码，而是要先抢夺 CPU 的执行权。
+注意：`sleep` 静态方法，设置的睡眠时间到时后，不会立即执行线程中的代码，而是要先抢夺 CPU 的执行权。
 
 ## 五、线程安全问题
 
@@ -651,7 +660,7 @@ public class Test01 {
 - 问题 1：两个不同窗口，会卖出同一张票；
 - 问题 2：卖出的总票数，会超出 100 张。
 
-这是因为，线程在执行**每行代码**的时候，CPU 的使用权，随时都有可能被其它线程抢走。这体现了线程执行的**随机性**。
+这是因为，线程在执行**每行代码**的时候，CPU 的使用权，随时都有可能被其它线程抢走。这体现了线程**抢占式调度**执行的**随机性**。
 
 ### 1.同步代码块和锁
 
@@ -697,13 +706,13 @@ public class MovieTicketSaleThread extends Thread {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage());
                 }
-                if (ticketCount < 100) {
+
+                if (ticketCount < 100)
                     System.out.println(Thread.currentThread().getName() + "正在卖第" + (++ticketCount) + "张票");
-                } else {
+                else
                     break;
-                }
             }
         }
     }
@@ -711,7 +720,7 @@ public class MovieTicketSaleThread extends Thread {
 ```
 
 - 细节 1：同步代码块，不能写在循环的外面，否则循环体会被一个进程执行完毕，锁才会开放。
-- 细节 2：锁对象，一般会用当前类的字节码文件对象，即 `MovieTicketSaleThread.class`，因为它是唯一的。
+- 细节 2：锁对象，一般会使用当前类的字节码文件对象，即 `MovieTicketSaleThread.class`，因为它是唯一的。
 
 ### 2.同步方法
 
@@ -744,14 +753,14 @@ public class MovieTicketSaleRunable implements Runnable {
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
+
         if (ticketCount < 100) {
             System.out.println(Thread.currentThread().getName() + "正在卖第" + (++ticketCount) + "张票");
-        } else {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -851,7 +860,7 @@ public class MovieTicketSaleThread1 extends Thread {
                     break;
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             } finally {
                 lock.unlock();
@@ -863,8 +872,8 @@ public class MovieTicketSaleThread1 extends Thread {
 ```
 
 - 细节 1：在继承 `Thread` 类的自定义类中，`Lock` 锁的实例对象，要加 `static final` 关键字修饰，表示唯一的一把锁。
-- 细节 2：如果执行 break 语句跳出循环代码的线程，正处于上锁状态，那么其它线程会卡在上锁处，等待上锁线程锁的释放，然而跳出循环（上锁）的线程，不会执行释放锁的代码。这会导致程序不能停止；
-  - 解决上面的问题，就要利用 `try…catch…finally` 代码块的 `finally` 代码块必会执行的特性，把解锁的代码 `lock.unlock();` 放入其中执行。
+- 细节 2：如果执行 break 语句跳出循环代码的线程，正处于上锁状态，那么其它线程会卡在上锁处，等待上锁线程锁的释放，然而上锁的线程已跳出循环，不会执行释放锁的代码。这会导致程序不能停止；
+  - 解决上面的问题，就要利用 `try…catch…finally` 代码块中 `finally` 代码块必会执行的特性，把解锁的代码 `lock.unlock();` 放入其中执行。
 
 测试类：
 

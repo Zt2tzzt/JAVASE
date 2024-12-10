@@ -74,7 +74,7 @@ public class ZoneIdDemo01 {
 
 ### 2.systemDefault 静态方法
 
-案例理解：`static ZoneId systemDefault()` 静态方法的使用，获取当前计算机系统中的默认时区
+案例理解：`static ZoneId systemDefault()` 静态方法的使用，获取当前计算机系统中的默认时区。
 
 demo-project/base-code/Day20/src/com/kkcf/zoneid/ZoneIdDemo01.java
 
@@ -94,7 +94,7 @@ public class ZoneIdDemo01 {
 
 ### 3.of 静态方法
 
-案例理解：`static ZoneId of(String zoneId)` 静态方法的使用，获取一个指定时区
+案例理解：`static ZoneId of(String zoneId)` 静态方法的使用，获取一个指定时区。
 
 demo-project/base-code/Day20/src/com/kkcf/zoneid/ZoneIdDemo01.java
 
@@ -115,9 +115,7 @@ public class ZoneIdDemo01 {
 
 ## 二、Instant 类
 
-Instant 类，表示时间戳，只能表示世界标准时间（0 时区）的时间。
-
-Instant 类，常用的方法有如下：
+Instant 类，表示时间戳，只能表示世界标准时间（0 时区）的时间。常用的方法有如下：
 
 | 方法名                                         | 说明                                    |
 | ---------------------------------------------- | --------------------------------------- |
@@ -154,7 +152,7 @@ public class InstantDemo01 {
 
 - `static Instant ofEpochMilli(long epochMilli)` 方法；
 - `static Instant ofEpochSecond(long epochSecond)`  方法；
-- `static Instant ofEpochSecond(long epochSecond, long nanoAdjustment)` 方法
+- `static Instant ofEpochSecond(long epochSecond, long nanoAdjustment)` 方法。
 
 demo-project/base-code/Day20/src/com/kkcf/instant/InstantDemo01.java
 
@@ -256,9 +254,7 @@ public class InstantDemo03 {
 
 ## 三、ZoneDateTime 类
 
-ZoneDateTime 类，用于表示带有时区的时间对象。
-
-ZoneDateTime 类，常用的方法如下：
+ZoneDateTime 类，用于表示带有时区的时间对象。常用的方法如下：
 
 | 方法名                         | 说明                               |
 | ------------------------------ | ---------------------------------- |
@@ -290,7 +286,7 @@ public class ZoneDateTimeDemo01 {
 
 ### 2.of 开头的静态方法（ZoneDateTime）
 
-案例理解：获取指定的带时区的时间对象，有两种种方式：
+案例理解：获取指定的带时区的时间对象，有两种方式：
 
 - 方式一：使用 `static ZonedDateTime
   of(int year, int month, int dayOfMonth, int hour, int minute, int second, int nanoOfSecond, ZoneId zone)` 方法获取。
@@ -346,7 +342,7 @@ public class ZoneDateTimeDemo01 {
 ```
 
 - `minusXxx`、`plusXxx` 的其它方法用法类似。
-- 注意：JDK8 新增的时间类，对应的时间对象都是不可变的，使用的方法返回的时间对象都是新创建的对象。
+- 注意：JDK8 新增的时间类，对应的时间对象，都是不可变的；调用方法返回的时间对象，都是新创建的对象。
 
 ### 4.with 开头的方法
 
@@ -374,18 +370,18 @@ public class ZoneDateTimeDemo01 {
 
 ## 四、DateTimeFormatter 类
 
-DateTimeFormatter 类，用于时间格式化和解析。
+### 4.1.DateTimeFormatter 类常用方法
 
-DateTimeFormatter 类，常用的方法有如下：
+DateTimeFormatter 类，用于时间格式化和解析。常用的方法如下：
 
 | 方法名                                     | 说明                              |
 | ------------------------------------------ | --------------------------------- |
 | `static DateTimeFormatter ofPattern(格式)` | 获取 DateTimeFormatter 解析器对象 |
 | `String format(TemporalAccessor temporal)` | 按照指定方式格式化                |
 
-### 1.ofPattern 静态方法、format 方法
+### 4.2.ZonedDateTime 对象序列化和反序列化
 
-案例理解：创建 DateTimeFormatter 解析器，并按照指定格式，格式化 ZonedDateTime 对象。
+序列化
 
 demo-project/base-code/Day20/src/com/kkcf/datetimeformatter/DateTimeFormatterDemo01.java
 
@@ -404,10 +400,89 @@ public class DateTimeFormatterDemo01 {
 
         // 解析 / 格式化器
         DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss EE a");
+        String res = dtf1.format(zdt1);
+        System.out.print(res); // 2024-11-16 16:31:30 周六 下午
+    }
+}
+```
 
-        String format = dtf1.format(zdt1);
+反序列化
 
-        System.out.println(format);
+demo-project/base-code/Day20/src/com/kkcf/datetimeformatter/StringToZonedDateTimeExample.java
+
+```java
+package com.kkcf.datetimeformatter;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class StringToZonedDateTimeExample {
+    public static void main(String[] args) {
+        // 要解析的时间字符串，带时区信息
+        String dateTimeString = "2024-11-16T15:30:45+08:00[Asia/Shanghai]";
+
+        // 定义与字符串匹配的格式
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX'['VV']'");
+
+        // 使用 ZonedDateTime 的 parse 方法解析字符串
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTimeString, formatter);
+
+        // 输出解析后的 ZonedDateTime 对象
+        System.out.println(zonedDateTime); // 2024-11-16T15:30:45+08:00[Asia/Shanghai]
+    }
+}
+```
+
+### 4.3.LocalDateTime 对象序列化和反序列化
+
+序列化
+
+demo-project/base-code/Day20/src/com/kkcf/datetimeformatter/DateTimeFormatterDemo02.java
+
+```java
+package com.kkcf.datetimeformatter;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class DateTimeFormatterDemo02 {
+    public static void main(String[] args) {
+        // 创建一个 LocalDateTime 对象
+        LocalDateTime cdt1 = LocalDateTime.now();
+
+        // 解析 / 格式化器
+        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss EE a");
+
+        // 格式化 LocalDateTime 为字符串
+        String res2 = cdt1.format(dtf1);
+        System.out.print(res2); // 2024-11-16 16:32:06 周六 下午
+    }
+}
+```
+
+反序列化
+
+demo-project/base-code/Day20/src/com/kkcf/datetimeformatter/StringToLocalDateTimeExample.java
+
+```java
+package com.kkcf.datetimeformatter;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class StringToLocalDateTimeExample {
+    public static void main(String[] args) {
+        // 定义时间字符串
+        String dateTimeString = "2024-11-16 15:30:45";
+
+        // 定义解析的格式
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // 将字符串解析为 LocalDateTime
+        LocalDateTime parsedDateTime = LocalDateTime.parse(dateTimeString, formatter);
+
+        // 输出结果
+        System.out.println(parsedDateTime); // 2024-11-16T15:30:45
     }
 }
 ```
@@ -461,7 +536,7 @@ public class LocalDateTimeDemo01 {
 
 ### 2.of 静态方法（JDK8 日历类）
 
-`of` 方法的使用，用于创建一个指定时间的日历对象。
+`of` 静态方法，用于创建一个指定时间的日历对象。
 
 案例理解：判断用户今天是否过生日。
 
@@ -604,7 +679,7 @@ Duration 类，用于计算两个时间间隔（秒、纳秒）
 
 ### 1.between 静态方法（Duration 类）
 
-案例理解：使用 Duration 获取两个 LocalDateTime 对象的时间间隔。
+案例理解：使用 Duration 类获取两个 LocalDateTime 对象的时间间隔。
 
 demo-project/base-code/Day20/src/com/kkcf/duration/DurationDemo01.java
 
@@ -639,7 +714,7 @@ Period 类，用于计算两个日期间隔（年、月、日）
 
 ### 1.between 静态方法（Period 类）
 
-案例理解：使用 Period 获取两个 LocalDate 对象的时间间隔
+案例理解：使用 Period 类获取两个 LocalDate 对象的时间间隔
 
 demo-project/base-code/Day20/src/com/kkcf/period/PeriodDemo01.java
 

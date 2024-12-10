@@ -35,7 +35,7 @@ public class RegexpDemo01 {
 
 语法示例：
 
-1. `[abc]`：代表 a 或者 b 或者 c 字符中的一个。
+1. `[abc]`：代表 a 或 b 或 c 字符中的一个。
 2. `[^abc]`：代表除 a, b, c 以外的任何字符。
 3. `[a-z]`：代表 a-z 的所有小写字符中的一个。
 4. `[A-Z]`：代表 A-Z 的所有大写字符中的一个。
@@ -212,9 +212,11 @@ public class Demo {
 
 案例理解：
 
-需求：请编写正则表达式验证用户名是否满足要求。要求：大小写字母，数字，下划线一共 4-16 位；
+需求：请编写正则表达式，验证用户名是否满足要求。
 
-请编写正则表达式验证身份证号码是否满足要求。
+要求：大小写字母，数字，下划线一共 4-16 位；
+
+请编写正则表达式，验证身份证号码是否满足要求。
 
 - 简单要求：18 位，前 17 位任意数字，最后一位可以是数字可以是大写或小写的 x
 - 复杂要求：按照身份证号码的格式严格要求。
@@ -270,7 +272,7 @@ Pattern pattern = Pattern.compile("^[a-zA-Z0-9_]{4,16}$");
 
 #### 2.Pattern 类 matcher 方法
 
-在 Java 中，获取一个文本匹配器对象，可以使用 `Pattern` 类实例对象，调用 `matcher` 方法：
+在 Java 中，获取一个文本匹配器对象，可以调用 `Pattern` 实例对象的 `matcher` 方法：
 
 ```java
 package com.kkcf.regexp;
@@ -391,14 +393,14 @@ public class RegexDemo04 {
                 "|(0\\d{2,3}-?[1-9]\\d{4,9})" +
                 "|(400-?[1-9]\\d{2}-?[1-9]\\d{3})";
 
-        //1.获取正则表达式的对象
+        // 1.获取正则表达式的对象
         Pattern p = Pattern.compile(regex);
 
-        //2.获取文本匹配器的对象
-        //利用 m 去读取 s，会按照 p 的规则找里面的子字符串
+        // 2.获取文本匹配器的对象
+        // 利用 m 去读取 s，会按照 p 的规则找里面的子字符串
         Matcher m = p.matcher(s);
 
-        //3.利用循环获取每一个数据
+        // 3.利用循环获取每一个数据
         while (m.find()) {
             String str = m.group();
             System.out.println(str);
@@ -551,7 +553,7 @@ public class RegexDemo06 {
         Matcher m = p.matcher(s);
 
         while (m.find()) {
-            System.out.println(m.group());
+            System.out.println(m.group()); // abbbbbbbbbbbb
         }
     }
 }
@@ -576,7 +578,7 @@ public class RegexDemo06 {
         Matcher m = p.matcher(s);
 
         while (m.find()) {
-            System.out.println(m.group());
+            System.out.println(m.group()); // ab
         }
     }
 }
@@ -588,7 +590,7 @@ public class RegexDemo06 {
 
 | 方法名                                                  | 说明                                                         |
 | ------------------------------------------------------- | ------------------------------------------------------------ |
-| `public boolean matches(String regex)`                  | 判断字符串是否满足正则表达式的规则                           |
+| `public boolean matches(String regex)`                  | 判断字符串是否满足正则表达式的规则。                         |
 | `public String[] split(String regex)`                   | 将当前字符串中匹配 regex 正则表达式的符号作为"分隔符"，来切割字符串。 |
 | `public String replaceAll(String regex, String newStr)` | 可以将当前字符串中匹配 regex 正则表达式的字符串替换为 newStr。 |
 
@@ -747,13 +749,13 @@ public class RegexDemo09 {
 ```
 
 - `(.)`，表示把重复内容的第一个字符看做一组；
-- `\\1`，表示第 1 组（第一个字符）再次出现
-- `+`，表示出现至少一次
+- `\\1`，表示第 1 组（第一个字符）再次出现；
+- `+`，表示出现至少一次；
 - `$1`，表示把正则表达式中第一组的内容，再拿出来用。
 
 ### 2.Java 非捕获分组
 
-正则表达式中，分组后，不需要再用本组数据，仅仅是把数据括起来，称为非捕获分组，它不占用组号
+正则表达式中，分组后，不需要再用本组数据，仅仅是把数据括起来，称为非捕获分组，它**不占用组号**。
 
 非捕获分组，有如下表示形式：
 
@@ -810,7 +812,7 @@ Java 创建正则表达式：
 ### 4.替换
 
 - JavaScript 使用 `string.replace(/pattern/, replacement)` 方法进行替换，其中 `replacement` 可以是一个字符串或一个函数。
-- Java 使用 `Matcher.replaceAll(replacement)` 或 `Matcher.replaceFirst(replacement)` 方法，其中 `replacement` 是一个字符串。
+- Java 使用 `Matcher.replaceAll(pattern, replacement)` 或 `Matcher.replaceFirst(replacement)` 方法，其中 `replacement` 是一个字符串。
 
 ### 5.匹配和搜索
 

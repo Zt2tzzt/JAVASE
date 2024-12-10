@@ -14,13 +14,13 @@ public class MovieTicketSaleRunable implements Runnable {
         try {
             Thread.sleep(10);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
+
         if (ticketCount < 100) {
             System.out.println(Thread.currentThread().getName() + "正在卖第" + (++ticketCount) + "张票");
-        } else {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 }

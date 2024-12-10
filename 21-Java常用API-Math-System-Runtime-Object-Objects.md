@@ -6,7 +6,7 @@
 
 `Math` 类被 `final` 修饰了，因此该类是不能被继承的。
 
-`Math` 类是一个帮助我们进行数学计算的**工具类**，包含执行基本数学运算的方法。
+`Math` 类是一个进行数学计算的**工具类**，包含执行基本数学运算的方法。
 
 - `Math` 类里面所有的方法都是静态的。
 - `Math` 类私有化了构造方法，外界不能创建它的实例对象。
@@ -50,7 +50,7 @@ public class MathDemo01 {
 }
 ```
 
-### 2.ceil 静态方法
+### 2.cell 静态方法
 
 `Math.cell` 方法，是往数轴的正方向取整。
 
@@ -122,9 +122,9 @@ public class MathDemo01 {
 
 ### 6.random 静态方法
 
-使用 `Math.random` 方法，返回一个 `[0.0,1.0)` 的随机值
+使用 `Math.random` 方法，返回一个 `[0.0, 1.0)` 的随机值；
 
-利用  `Math.random`  方法，获取一个范围在 [1, 100] 的随机数。
+利用  `Math.random`  方法，获取一个范围在 `[1, 100]` 的随机数。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/MathDemo01.java
 
@@ -185,18 +185,18 @@ public class MathDemo02 {
 }
 ```
 
-案例理解：自幂数，表示一个 n 位自然数，等于自身各个数位上数字的 n 次幂之和。
+案例理解：**自幂数**，表示一个 n 位自然数，等于自身各个数位上数字的 n 次幂之和。
 
 - 比如：三位数：1^3^ + 5^3^ + 3^3^ = 153。
 - 比如：四位数：1^4^ + 6^4^ + 3^4^ + 4^4^ = 1634
 
 如果自幂数是
 
-- 一位数：也称为独身数；
+- 一位数：也称为**独身数**；
 - 二位数：没有二位的自幂数
-- 三位自幂数：也称为水仙花数；
-- 四位自幂数：也称为四叶玫瑰数；
-- 五位数：也称为五角星数；
+- 三位自幂数：也称为**水仙花数**；
+- 四位自幂数：也称为**四叶玫瑰数**；
+- 五位数：也称为**五角星数**；
 - ……
 
 要求 1：统计一共有多少个水仙花数。
@@ -310,7 +310,7 @@ public class MathDemo03 {
 
 ## 二、System 工具类
 
-`System` 类也是一个**工具类**，它提供了一些与系统相关的方法。
+`System` 类，也是一个**工具类**，它提供了一些与系统相关的方法。
 
 `System` 类中常用的方法有：
 
@@ -380,8 +380,8 @@ public class SystemDemo01 {
 
 使用该方法时，应注意：
 
-- 如果数据源数组，和目的地数组都是基本数据类型，那么两者的**数据类型必须保持一致**，否则会报错。
-- 如果数据源数组，和目的地数组都是引用数据类型，那么子类数据类型，可以赋值给父类数据类型。
+- 如果数据源数组，和目的地数组，都是基本数据类型，那么两者的**数据类型必须保持一致**，否则会报错。
+- 如果数据源数组，和目的地数组，都是引用数据类型，那么子类数据类型，可以赋值给父类数据类型。
 - 在拷贝的时候，需要考虑数组的长度，如果超出范围也会报错。
 
 ## 三、Runtime 类
@@ -391,7 +391,7 @@ public class SystemDemo01 {
 `Runtime` 类，里面的方法不是静态的，需要先获取它的实例对象，才能调用其中的方法。
 
 - 不能使用 `new` 操作符创建实例对象，而是要使用类中提供的静态方法 `getRuntime` 获取实例对象；
-- 因为 `Runtime` 类，表示的是 Java 虚拟机的运行环菌，而在一台计算机中，只能有一个 Java 虚拟机运行环菌。所以 `Runtime` 类在程序运行时，只能创建一个对象。
+- 因为 `Runtime` 类，表示的是 Java 虚拟机的运行环菌；在一台计算机中，只能有一个 Java 虚拟机运行环菌。所以 `Runtime` 类在程序运行时，只能创建一个对象。
 
 `Runtime` 类常用方法如下：
 
@@ -409,7 +409,7 @@ public class SystemDemo01 {
 
 ### 1.getRuntime 静态方法
 
-`Runtime.getRuntime` 方法的使用，获取系统的运行环菌实例对象。
+`Runtime.getRuntime` 静态方法的使用，获取系统的运行环菌实例对象。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/RuntimeDemo01.java
 
@@ -446,7 +446,7 @@ public class RuntimeDemo01 {
 
 ### 3.availableProcessors 方法
 
-`availableProcessors` 方法的使用
+`availableProcessors` 方法的使用：
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/RuntimeDemo01.java
 
@@ -494,7 +494,7 @@ public class RuntimeDemo01 {
 
 ### 6.freeMemory 方法
 
-`freeMemory` 方法的使用
+`freeMemory` 方法的使用：
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/RuntimeDemo01.java
 
@@ -550,11 +550,11 @@ public class RuntimeDemo01 {
 
 `Object` 类，一共有 11 个成员方法，这里先介绍 3 个：
 
-| 方法名                              | 说明                                                        |
-| ----------------------------------- | ----------------------------------------------------------- |
-| `public String toString()`          | 返回该对象的字符串表示形式（可以看做是对象的内存地址值）    |
-| `public boolean equals(Object obj)` | 比较两个对象地址值是否相等；true 表示相同，false 表示不相同 |
-| `protected Object clone()`          | 对象克隆                                                    |
+| 方法名                              | 说明                                                         |
+| ----------------------------------- | ------------------------------------------------------------ |
+| `public String toString()`          | 返回该对象的字符串表示形式（可以看做是对象的内存地址值）     |
+| `public boolean equals(Object obj)` | 比较两个对象地址值是否相等；`true` 表示相同，`false` 表示不相同 |
+| `protected Object clone()`          | 对象克隆                                                     |
 
 ### 1.toString 方法
 
@@ -627,7 +627,7 @@ public class Student {
 
 ### 2.equals 方法
 
-`equals` 方法的使用
+`equals` 方法的使用：
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/ObjectDemo02.java
 
@@ -729,7 +729,7 @@ public boolean equals(Object anObject) {
 
 `clone` 方法，用于把 A 对象的属性值，完全拷贝给 B 对象，也称为对象拷贝，对象复制。
 
-案例理解：创建一个 JavaBean 类 `User`，在代码中克隆它的实例对象。
+案例理解：创建一个 Java Bean 类 `User`，在代码中克隆它的实例对象。
 
 - 在 `User` 类中，先要重写 `Object` 类中的 `clone` 方法；
 - 然后，为 `User` 类实现 `Cloneable` 接口。
@@ -738,7 +738,7 @@ public boolean equals(Object anObject) {
 >
 > - 实现该接口的类，它的实例对象，就可以被克隆；没有实现该接口，那么这个类的实例对象，就不可以被克隆。
 > 
->如果一个接口，里面没有抽象方法，表示这个接口是一个标记性的接口，
+>如果一个接口，里面没有抽象方法，表示这个接口是一个**标记性的接口**，
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/User.java
 
@@ -810,7 +810,7 @@ public class ObjectDemo02 {
   2. 再为这个类实现 `Cloneable` 标记性的接口。
   3. 创建类的实例对象，并调用重写的 `clone` 方法。
 
-> Java 中的浅拷贝、深拷贝
+> Java 中的浅拷贝、深拷贝：
 >
 > - Java 中的浅拷贝：不管对象内部的属性，是基本数据类型，还是引用数据类型，都完全拷贝过来。
 > - Java 中的深拷贝：对象中的基本数据类型，会直接拷贝过来；字符串会复用 StringTable 串池中已存在的地址值；引用数据类型会创建一个新对象。
@@ -915,7 +915,9 @@ public class ObjectDemo02 {
 
 ### 1.equals 静态方法
 
-当使用 `实例对象.equals` 方法时，经常会出现 `NullPointException` 空指针异常的错误，原因是比较的两个对象，其中至少有一个是 `null`；
+当使用 `实例对象.equals` 方法时，经常会出现 `NullPointException` 空指针异常的错误，
+
+原因是比较的两个对象，其中至少有一个是 `null`；
 
 为了避免这类错误，可以使用 `Objects.equals` 静态方法。
 

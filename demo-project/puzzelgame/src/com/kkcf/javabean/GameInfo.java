@@ -4,18 +4,15 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 public class GameInfo implements Serializable {
+    // 记录玩了多少步
+    int stepCount = 0;
     // 用于存放图片的随即索引
     private int[][] data = new int[4][4];
-
     // 记录空白方块，在二维数组中的位置
     private int x = 0;
     private int y = 0;
-
     // 记录图片路径
     private String path = "image/animal/animal3/";
-
-    // 记录玩了多少步
-    int stepCount = 0;
 
     public GameInfo() {
     }

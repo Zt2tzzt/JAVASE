@@ -2,7 +2,7 @@
 
 IO 流：是存储、读取数据的解决方案。
 
-IO 流，指的是以（运行在内存中的）程序为参照物，读（Output）、写（Input）本地文件，或网络中的数据。
+IO 流，指的是以（运行在内存中的）程序为参照物，读（Input）、写（Output）本地文件，或网络中的数据。
 
 ## 一、Java IO 流向
 
@@ -15,8 +15,8 @@ IO 流的方向：
 
 IO 流操作文件的类型：
 
-- 字节流：可以操作所有类型的文件；
-- 字符流：只能操作纯文本文件。
+- 字节流：可以操作**所有类型**的文件；
+- 字符流：只能操作**纯文本**文件。
 
 ![IO流流向和分类](NodeAssets/IO流流向和分类.jpg)
 
@@ -44,7 +44,7 @@ Java IO 字节流的体系结构，如下图所示：
 
 由上图可知，Java IO 字节流的命名规则是：Xxx + InputStream / OutputStream；比如：`FileInputStream`
 
-### 1.FileOutputStream 子类
+### 4.1.FileOutputStream 子类
 
 `FileOutputStream` 类，是用于操作本地文件的字节输出流，可以把程序中的数据，写入到文件中。使用步骤：
 
@@ -52,16 +52,25 @@ Java IO 字节流的体系结构，如下图所示：
 2. 写数据；
 3. 释放资源。
 
-#### 1.FileOutputStream 构造方法
+#### 4.1.1.FileOutputStream 构造方法
 
 `FileOutputStream` 构造方法，用于创建字节输出流对象。
 
-| 方法名                                          | 说明                                                     |
-| ----------------------------------------------- | -------------------------------------------------------- |
-| `FileOutputStream(File file)`                   | 根据 File 对象，创建字节输出流对象。                     |
-| `FileOutputStream(String name)`                 | 根据字符串表示的路径，创建字节输出流对象。               |
-| `FileOutputStream(File file, boolean append)`   | 根据 File 对象，创建字节输出流对象，并决定是否续写       |
-| `FileOutputStream(String name, boolean append)` | 根据字符串表示的路径，创建字节输出流对象。并决定是否续写 |
+##### 4.1.1.1.FileOutputStream(File file) 方法
+
+`FileOutputStream(File file)`，根据 File 对象，创建字节输出流对象。
+
+##### 4.1.1.2.FileOutputStream(String name) 方法
+
+`FileOutputStream(String name)`，根据字符串表示的路径，创建字节输出流对象。
+
+##### 4.1.1.3.FileOutputStream(File file, boolean append) 方法
+
+`FileOutputStream(File file, boolean append)`，根据 File 对象，创建字节输出流对象，并决定**是否续写**
+
+##### 4.1.1.4.FileOutputStream(String name, boolean append) 方法
+
+`FileOutputStream(String name, boolean append)`，根据字符串表示的路径，创建字节输出流对象。并决定**是否续写**
 
 创建字节输出流，并往文件中写入“a”字符。
 
@@ -92,17 +101,17 @@ public class Demo01 {
 - 细节 3：每次使用完流后，都要释放资源。否则文件会处于被占用的状态。
 - 细节 4：`write` 方法的参数是整数，表示写入字符对应的 ASCLL 码。
 
-#### 1.FileOutputStream 成员方法
+#### 4.1.2.FileOutputStream 成员方法
 
 `FileOutputStream` 成员方法，用于往文件中，写入数据。常用的方法如下：
 
-| 方法名                                   | 说明                         |
-| ---------------------------------------- | ---------------------------- |
-| `void write(int b)`                      | 一次写一个字节数据           |
-| `void write(byte[] b)`                   | 一次写一个字节数组数据       |
-| `void write(byte[] b, int off, int len)` | 一次写一个字节数组的部分数据 |
+##### 4.1.2.1.void write(int b) 方法
 
-`void write(byte[] b)` 方法的使用：
+`void write(int b)`，一次写一个字节数据
+
+##### 4.1.2.2.void write(byte[] b) 方法
+
+`void write(byte[] b)`，一次写一个字节数组数据
 
 demo-project/base-code/Day28/src/com/kkcf/io/Demo01.java
 
@@ -125,32 +134,6 @@ public class Demo01 {
     }
 }
 ```
-
-`void write(byte[] b, int off, int len)` 方法的使用：
-
-demo-project/base-code/Day28/src/com/kkcf/io/Demo01.java
-
-```java
-package com.kkcf.io;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-public class Demo01 {
-    public static void main(String[] args) throws IOException {
-        // 1.创建字节输出对象；
-        FileOutputStream fos = new FileOutputStream("Day28/src/com/kkcf/io/a.txt");
-
-        // 2.写数据；
-        fos.write(new byte[]{97, 98, 99, 100, 101}, 1, 2); // 写入 bc
-
-        // 3.释放资源。
-        fos.close();
-    }
-}
-```
-
-使用字节输出流，写出换行符，进行换行：
 
 > String 字符串对象，获取字节数组的方法：`byte[] getBytes()`
 
@@ -192,6 +175,34 @@ public class Demo01 {
 >
 > Java 会针对不同的操作系统，进行换行符补全；
 
+##### 4.1.2.3.void write(byte[] b, int off, int len) 方法
+
+`void write(byte[] b, int off, int len)`，一次写一个字节数组的部分数据
+
+demo-project/base-code/Day28/src/com/kkcf/io/Demo01.java
+
+```java
+package com.kkcf.io;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Demo01 {
+    public static void main(String[] args) throws IOException {
+        // 1.创建字节输出对象；
+        FileOutputStream fos = new FileOutputStream("Day28/src/com/kkcf/io/a.txt");
+
+        // 2.写数据；
+        fos.write(new byte[]{97, 98, 99, 100, 101}, 1, 2); // 写入 bc
+
+        // 3.释放资源。
+        fos.close();
+    }
+}
+```
+
+使用字节输出流，写出换行符，进行换行：
+
 字节输出流，续写：
 
 创建一个可以续写的输出流对象：
@@ -215,7 +226,7 @@ public class Demo02 {
 }
 ```
 
-### 2.FileInputStream 子类
+### 4.2.FileInputStream 子类
 
 `FileInputStream` 是用于操作本地文件的字节输入流，可以把文件中的数据，读取到程序中。使用步骤：
 
@@ -223,22 +234,25 @@ public class Demo02 {
 2. 读数据；
 3. 释放资源。
 
-#### 1.FileInputStream 构造方法
+#### 4.2.1.FileInputStream 构造方法
 
 `FileInputStream` 常用的构造方法如下：
 
-| 方法名                          | 说明                                       |
-| ------------------------------- | ------------------------------------------ |
-| `FileInputStream)(String name)` | 根据字符串表示的路径，创建字节输入流对象。 |
-| `FileInputStream)(File file)`   | 根据 File 对象，创建字节输入流对象。       |
+##### 4.2.1.1.FileInputStream)(String name) 狗崽哦方法
 
-#### 1.FileInputStream 成员方法
+`FileInputStream(String name)`，根据字符串表示的路径，创建字节输入流对象。
+
+##### 4.2.1.2.FileInputStream)(File file) 构造方法
+
+`FileInputStream(File file)`，根据 File 对象，创建字节输入流对象。
+
+#### 4.2.2.FileInputStream 成员方法
 
 `FileInputStream` 常用的成员方法如下；
 
-| 方法名       | 说明                         |
-| ------------ | ---------------------------- |
-| `int read()` | 从输入流读取一个字节的数据。 |
+##### 4.2.2.1.int read() 方法
+
+`int read()`，从输入流读取一个字节的数据。
 
 利用 `FileInputStream` 输入流，读取文件中的数据，返回的是二进制字节数据，在 ASCLL 码表中对应的十进制整数。
 
@@ -364,7 +378,7 @@ public class Demo06 {
 
 - 细节 1：读到的字节数组，会覆盖传入的原数组中对应位置的元素。
 
-> String 的构造方法 `String(byte[] bytes, int offset, int length)` 可以使用字节子数组，来构造一个新的 String。
+> String 的构造方法 `String(byte[] bytes, int offset, int length)` 可以使用字节子数组，来构造一个新的 String 字符串。
 
 重构文件拷贝的代码，并记录拷贝使用的时间（毫秒）：
 
@@ -402,9 +416,9 @@ public class Demo05 {
 
 ### 1.try…catch…finally 代码块（了解）
 
-try…catch…finally 代码块，其中 finally 代码块中的代码，一定会被执行，除非 JVM 虚拟机停止。
+`try…catch…finally` 代码块，其中 finally 代码块中的代码，一定会被执行，除非 JVM 虚拟机停止。
 
-所有，可以使用 try…catch…finally 代码块，重构上方的代码，来进行关流操作；
+所以，可以使用 try…catch…finally 代码块，重构上方的代码，来进行关流操作；
 
 这也是 Java IO 流异常捕获的完整写法：
 

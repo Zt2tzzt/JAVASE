@@ -3,8 +3,8 @@ package com.kkcf.test;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MovieTicketSaleThread1 extends Thread {
-    static int ticketCount = 0;
     static final ReentrantLock lock = new ReentrantLock();
+    static int ticketCount = 0;
 
     public MovieTicketSaleThread1() {
     }
@@ -26,7 +26,7 @@ public class MovieTicketSaleThread1 extends Thread {
                     break;
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
                 throw new RuntimeException(e);
             } finally {
                 lock.unlock();

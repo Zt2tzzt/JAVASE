@@ -748,10 +748,12 @@ public class Test09 {
 
 > 在 Java 中，`CharSequence` 是一个接口，表示一个可读的字符序列。它是字符串类（如 `String`、`StringBuilder`、`StringBuffer`）的父接口，提供了字符序列的一般化表示。主要特点有：
 >
-> - 它定义了几个方法允许访问和操作字符序列：比如 
+> - 它定义了几个方法允许访问和操作字符序列：比如：
+>
 >   - `length()`
 >   - `charAt(int index)`
 >   - subSequence(int start, int end)` 和 `toString()`，
+>
 > - `CharSequence` 接口的实现类包括 `String`、`StringBuilder`、`StringBuffer`、`CharBuffer`……。
 
 ### 2.StringJoiner 成员方法

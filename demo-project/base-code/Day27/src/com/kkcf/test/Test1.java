@@ -28,13 +28,13 @@ public class Test1 {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("年龄的格式有误，请输入数字");
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             } catch (NameFormatException e) {
                 System.out.println("姓名的长度范围有误");
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             } catch (AgeOutOfBoundException e) {
                 System.out.println("年龄的范围有误");
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         } while (true);
 
