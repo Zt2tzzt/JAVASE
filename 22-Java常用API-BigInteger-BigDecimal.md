@@ -528,13 +528,14 @@ public static BigDecimal valueOf(double val) {
 
 `BigDecimal` 常用的成员方法如下：
 
-| 方法名                                                           | 说明     |
-| ---------------------------------------------------------------- | -------- |
-| `public BigDecimal add(BigDecimal value)`                        | 加法运算 |
-| `public BigDecimal subtract(BigDecimal value)`                   | 减法运算 |
-| `public BigDecimal multiply(BigDecimal value)`                   | 乘法运算 |
-| `public BigDecimal divide(BigDecimal value)`                     | 除法运算 |
+| 方法名                                                       | 说明     |
+| ------------------------------------------------------------ | -------- |
+| `public BigDecimal add(BigDecimal value)`                    | 加法运算 |
+| `public BigDecimal subtract(BigDecimal value)`               | 减法运算 |
+| `public BigDecimal multiply(BigDecimal value)`               | 乘法运算 |
+| `public BigDecimal divide(BigDecimal value)`                 | 除法运算 |
 | `public BigDecimal divide(BigDecimal value, 精确几位, 舍入模式)` | 除法运算 |
+| `public int compareTo(BigDecimal bg)`                        | 比较     |
 
 #### 1.add、subtract、multiply 方法
 
@@ -597,6 +598,29 @@ public class BigDecimalDemo02 {
         BigDecimal bd7 = bd1.divide(bd3, 2, RoundingMode.HALF_UP); // RoundingMode.HALF_UP 表示四舍五入模式
         System.out.println(bd7);
     }
+}
+```
+
+#### 3.compareTo 方法
+
+`BigDecimal` 提供了 `compareTo()` 方法来进行数值比较。这个方法不会考虑小数点后多余的零，而是比较数字的大小。它返回：
+
+- `0`：如果两个 `BigDecimal` 数值相等。
+- `-1`：如果第一个 `BigDecimal` 小于第二个。
+- `1`：如果第一个 `BigDecimal` 大于第二个。
+
+```java
+BigDecimal val1 = new BigDecimal("5500.00");
+BigDecimal val2 = new BigDecimal("5500");
+
+int result = val1.compareTo(val2);
+
+if (result == 0) {
+    System.out.println("两者相等");
+} else if (result < 0) {
+    System.out.println("val1 小于 val2");
+} else {
+    System.out.println("val1 大于 val2");
 }
 ```
 
