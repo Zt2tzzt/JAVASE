@@ -173,10 +173,8 @@ public class Test1 {
     public static void main(String[] args) {
         // 键盘输入
         System.out.println("请输入一个三位数：");
-
         Scanner sc = new Scanner(System.in);
         int num = sc.nextInt();
-
         sc.close();
 
         // 获取数值的个、十、百位
@@ -425,7 +423,7 @@ public class ArithmeticOperatorsDemo05 {
 
 - 结论：`char` 字符类型与数字相加，`char` 字符类型的数值，会隐式转为 `int` 类型，并根据码表映射数字。
 
-案例二：将数字 `'a'` 与字符串 `"abc"` 相加。
+案例二：将字符 `'a'` 与字符串 `"abc"` 相加。
 
 demo-project/base-code/day03/src/com/kkcf/arithmetic_operators/ArithmeticOperatorsDemo05.java
 
@@ -889,7 +887,7 @@ Java 中，运算符的优先级，从高到低，如下表所示。
 
 十进制数字 `56`，转为二进制为 `0011 1000`，其中：
 
-- 第一个 `0` 为符号位，表示正数（如果是 `1`，则表示正数）；
+- 第一个 `0` 为符号位，表示正数（如果是 `1`，则表示负数）；
 - 后面的 `011 1000` 为数值。
 
 > **比特**：在计算机中，一个 `0`，或者 `1`，表示一个比特（bit），它能表示的信息非常少。
@@ -975,7 +973,7 @@ Java 中，运算符的优先级，从高到低，如下表所示。
 
 计算机中存储数字，都是以补码的形式来存储的，由上表可知，一个字节的取值范围就是 `-128 - 127`。
 
-在一个字节的取值范围中，`-128` 没有原码和反码。
+在**一个字节**的取值范围中，`-128` 没有原码和反码。
 
 #### 1.基本数据类型的补码
 

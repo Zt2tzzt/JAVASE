@@ -53,7 +53,7 @@ Java 中的关键字，表示被 Java 赋予了特定含义的英文单词。
 
 - 关键字的字母，全部是小写的；
 
-> 常见的代码编辑器，针对关键字有特殊标记，非常直观。
+> 常见的代码编辑器，针对关键字有特殊颜色、字体标记，非常直观。
 
 Java 中有五十多个关键字，不用刻意去记。
 
@@ -72,9 +72,9 @@ Java 中有五十多个关键字，不用刻意去记。
 
 ### 1.class 关键字
 
-`class` 关键字，表示定义一个类。
+`class` 关键字，表示定义一个「类」。
 
-类是 Java 项目最基本的组成单元，一个完整的 Java 项目有可能会有成千上万个类来组成。
+「类」是 Java 项目最基本的组成单元，一个完整的 Java 项目有可能会有成千上万个类来组成。
 
 `class` 关键字后面，跟随的就是这个类的名字（类名）。
 
@@ -96,14 +96,14 @@ public class HelloWorld {
 
 Java 中的字面量类型，有以下几种：
 
-| **字面量类型** | **说明**                               | **程序中的写法**               |
-| -------------- | -------------------------------------- | ------------------------------ |
-| 整数           | 不带小数的数字                         | `666`，`-88`                   |
-| 小数           | 带小数的数字                           | `13.14`，`-5.21`               |
-| 字符           | 必须使用单引号包裹，有且仅能有一个字符 | `‘A’`，`‘0’`，`‘我’`           |
-| 字符串         | 必须使用双引号包裹，内容可有可无       | `“HelloWorld”`，`“你是程序员”` |
-| 布尔值         | 布尔值，表示真假，只有两个值：         | `true`、`false`                |
-| 空值           | 一个特殊的值，表示空值                 | `null`                         |
+| **字面量类型** | **说明**                                   | **程序中的写法**               |
+| -------------- | ------------------------------------------ | ------------------------------ |
+| 整数           | 不带小数的数字                             | `666`，`-88`                   |
+| 小数           | 带小数的数字                               | `13.14`，`-5.21`               |
+| 字符           | 必须使用**单引号**包裹，有且仅能有一个字符 | `‘A’`，`‘0’`，`‘我’`           |
+| 字符串         | 必须使用**双引号**包裹，内容可有可无       | `“HelloWorld”`，`“你是程序员”` |
+| 布尔值         | 布尔值，表示真假，只有两个值：             | `true`、`false`                |
+| 空值           | 一个特殊的值，表示空值                     | `null`                         |
 
 常见的字面量类型的值，在代码中的书写：
 
@@ -308,7 +308,7 @@ public class VariableDemo2 {
 }
 ```
 
-应改为：
+应该改为：
 
 demo-project/demo/src/VariableDemo2.java
 
@@ -473,7 +473,7 @@ public class VariableDemo3 {
 
 计算机在存储声音的时候，会对声波进行采样，声波波形图上的每一个点，都会有相应的数字标记：
 
-- 在音乐软件中氪金的高品质音源，采样的声波图，记录的点就比较多，可以最大程度的还原音乐。
+- 在音乐软件中高品质音源，采样的声波图，记录的点就比较多，可以最大程度的还原音乐。
 - 在音乐软件中的低品质音源，采样的声波图，记录的点就比较少。
 
 ## 六、Java 数据类型
@@ -509,22 +509,22 @@ demo-project/demo/src/VariableDemo4.java
 ```java
 public class VariableDemo4 {
     public static void main(String[] args) {
-        //1.定义 byte 类型的变量
+        // 1.定义 byte 类型的变量
         byte a = 10;
 
         System.out.println(a);
 
-        //2.定义 short 类型的变量
+        // 2.定义 short 类型的变量
         short b = 20;
 
         System.out.println(b);
 
-        //3.定义 int 类型的变量
+        // 3.定义 int 类型的变量
         int c = 30;
 
         System.out.println(c);
 
-        //4.定义 long 类型的变量
+        // 4.定义 long 类型的变量
         long d = 123456789123456789L;
 
         System.out.println(d);
@@ -532,7 +532,7 @@ public class VariableDemo4 {
 }
 ```
 
-- long 类型的变量，在定义时，需要在数值后加“L”（推荐，易区分）或者“l”。
+- long 类型的变量，在定义时，需要在数值后加“L”（大写）或者“l”（小写）。
 
 #### 2.浮点数类型的使用
 
@@ -541,12 +541,12 @@ demo-project/demo/src/VariableDemo4.java
 ```java
 public class VariableDemo4 {
     public static void main(String[] args) {
-        //5.定义 float 类型的变量
+        // 5.定义 float 类型的变量
         float e = 10.1F;
 
         System.out.println(e);
 
-        //6.定义 double 类型的变量
+        // 6.定义 double 类型的变量
         double f = 20.3;
 
         System.out.println(f);
@@ -554,7 +554,7 @@ public class VariableDemo4 {
 }
 ```
 
-- float 类型的变量，在定义时，需要在数值后加“F”（推荐，易区分）或者“f”。
+- float 类型的变量，在定义时，需要在数值后加“F”（大写）或者“f”（小写）。
 
 #### 3.字符类型的使用
 
@@ -563,7 +563,7 @@ demo-project/demo/src/VariableDemo4.java
 ```java
 public class VariableDemo4 {
     public static void main(String[] args) {
-        //7.定义 char 类型的变量
+        // 7.定义 char 类型的变量
         char g = 'a';
 
         System.out.println(g);

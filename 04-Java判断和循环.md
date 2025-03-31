@@ -905,7 +905,7 @@ public class WhileDemo02 {
 
 案例理解：给定两个整数，被除数和除数（都是正数，且不超过 int 类型范围），将两数相除，要求不使用 `*`、`/`、`%` 运算符。得到商和余数。
 
-demo-project/base-code/Day04/src/com/kkcf/process_control/WhileDemo02.java
+demo-project/base-code/Day04/src/com/kkcf/process_control/WhileDemo03.java
 
 ```java
 package com.kkcf.process_control;

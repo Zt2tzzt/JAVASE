@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day04/Day04.iml" filepath="$PROJECT_DIR$/base-code/Day04/Day04.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day05/Day05.iml" filepath="$PROJECT_DIR$/base-code/Day05/Day05.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day06/Day06.iml" filepath="$PROJECT_DIR$/base-code/Day06/Day06.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day07/Day07.iml" filepath="$PROJECT_DIR$/base-code/Day07/Day07.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day08/Day08.iml" filepath="$PROJECT_DIR$/base-code/Day08/Day08.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day09/Day09.iml" filepath="$PROJECT_DIR$/base-code/Day09/Day09.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day10/Day10.iml" filepath="$PROJECT_DIR$/base-code/Day10/Day10.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day11/Day11.iml" filepath="$PROJECT_DIR$/base-code/Day11/Day11.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day11-StudentSystem/Day11-StudentSystem.iml" filepath="$PROJECT_DIR$/base-code/Day11-StudentSystem/Day11-StudentSystem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day12/Day12.iml" filepath="$PROJECT_DIR$/base-code/Day12/Day12.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day13-14/Day13-14.iml" filepath="$PROJECT_DIR$/base-code/Day13-14/Day13-14.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day15/Day15.iml" filepath="$PROJECT_DIR$/base-code/Day15/Day15.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day16/Day16.iml" filepath="$PROJECT_DIR$/base-code/Day16/Day16.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day18/Day18.iml" filepath="$PROJECT_DIR$/base-code/Day18/Day18.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day20/Day20.iml" filepath="$PROJECT_DIR$/base-code/Day20/Day20.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day21/Day21.iml" filepath="$PROJECT_DIR$/base-code/Day21/Day21.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day22/Day22.iml" filepath="$PROJECT_DIR$/base-code/Day22/Day22.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day23/Day23.iml" filepath="$PROJECT_DIR$/base-code/Day23/Day23.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day24/Day24.iml" filepath="$PROJECT_DIR$/base-code/Day24/Day24.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day26/Day26.iml" filepath="$PROJECT_DIR$/base-code/Day26/Day26.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day27/Day27.iml" filepath="$PROJECT_DIR$/base-code/Day27/Day27.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day28/Day28.iml" filepath="$PROJECT_DIR$/base-code/Day28/Day28.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day29/Day29.iml" filepath="$PROJECT_DIR$/base-code/Day29/Day29.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day30/Day30.iml" filepath="$PROJECT_DIR$/base-code/Day30/Day30.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day31/Day31.iml" filepath="$PROJECT_DIR$/base-code/Day31/Day31.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day33/Day33.iml" filepath="$PROJECT_DIR$/base-code/Day33/Day33.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/Day35/Day35.iml" filepath="$PROJECT_DIR$/base-code/Day35/Day35.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/day02/day02.iml" filepath="$PROJECT_DIR$/base-code/day02/day02.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-code/day03/day03.iml" filepath="$PROJECT_DIR$/base-code/day03/day03.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/demo-project.iml" filepath="$PROJECT_DIR$/.idea/demo-project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/landlord/landlord.iml" filepath="$PROJECT_DIR$/landlord/landlord.iml" />
+      <module fileurl="file://$PROJECT_DIR$/puzzelgame/puzzelgame.iml" filepath="$PROJECT_DIR$/puzzelgame/puzzelgame.iml" />
+    </modules>
+  </component>
+</project>
