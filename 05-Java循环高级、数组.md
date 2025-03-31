@@ -302,7 +302,7 @@ public class Test03 {
             } else if (guessNum < num) {
                 System.out.println("猜小了");
             } else {
-                System.out.println("猜对了，数字是 " + guessNum);
+                System.out.println("猜对了，数字是 " + num);
                 break;
             }
 
