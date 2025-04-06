@@ -15,9 +15,9 @@ public class StudentTest {
 
         // 唯一性判断，学号重复，不用添加进数组
         boolean flag1 = isOnly(stus, stu4.getNo());
-        if (!flag1)
+        if (!flag1) {
             System.out.println("学号重复，添加失败");
-        else {
+        } else {
             // 判断数组是否已满，不满，则添加；已满，则创建一个新数组，并将原数组中的元素复制到新数组中
             int count = getCount(stus);
             boolean flag2 = count == stus.length;
@@ -31,9 +31,9 @@ public class StudentTest {
 
         // 4.通过 id 删除学生信息；如果存在，则删除，如果不存在，则提示删除失败。
         int index1 = getIndex(stus, 4);
-        if (index1 == -1)
+        if (index1 == -1) {
             System.out.println("删除失败");
-        else {
+        } else {
             stus[index1] = null;
             // 5.删除完毕之后，遍历所有学生信息。
             printStudents(stus);
@@ -41,9 +41,9 @@ public class StudentTest {
 
         // 6.查询数组 id 为“2”的学生，如果存在，则将他的年龄 +1 岁
         int index2 = getIndex(stus, 2);
-        if (index2 == -1)
+        if (index2 == -1) {
             System.out.println("查询失败");
-        else {
+        } else {
             stus[index2].setAge(stus[index2].getAge() + 1);
             printStudents(stus);
         }
