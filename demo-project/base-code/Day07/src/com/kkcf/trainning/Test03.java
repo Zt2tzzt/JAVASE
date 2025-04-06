@@ -24,11 +24,13 @@ public class Test03 {
 
         String code = "";
 
+        // 前四位大写或小写字母
         for (int i = 0; i < 4; i++) {
             int index = r.nextInt(chars.length);
             code += chars[index];
         }
 
+        // 后一位数字
         int randomNum = r.nextInt(10);
         code += randomNum;
 
