@@ -33,7 +33,6 @@ public class Test13 {
         // 将最后一位数字，与前面随机一位字母对调。
         int randomIndex = r.nextInt(len);
         char temp = resChars[randomIndex];
-
         resChars[randomIndex] = resChars[len - 1];
         resChars[len - 1] = temp;
 

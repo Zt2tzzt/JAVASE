@@ -33,7 +33,7 @@ Java 程序中的所有字符串（例如`“abc”`）都被实现为此类的�
 
 `String` 类创建的字符串对象，有以下特点：
 
-特点一：`String` 类创建的字符串对象不可变，它们的值在创建后不能被更改。比如说：
+特点一：`String` 类创建的字符串对象**不可变**，它们的值在创建后不能被更改。比如说：
 
 下方代码，一共产生了三个 `String` 类创建的对象。
 
@@ -54,7 +54,7 @@ abc = "cba";
 
 特点二：虽然 `String` 类的实例对象的值是不可变的，但是它们可以被共享。
 
-特点三：字符串效果上相当于字符数组（`char[]`），但是底层原理是字节数组（`byte[]`）根据字符集编码进行转换。
+特点三：字符串效果上相当于字符数组（`char[]`），但是底层原理是**字节数组**（`byte[]`）根据字符集编码进行转换。
 
 ### 2.String 类创建对象
 
@@ -167,7 +167,7 @@ public class Demo01 {
 `==` 号在比较数据的时候：
 
 - 比较两个基本数据类型，比较的是值。
-- 比较两个引用数据类型，比较的是地址值。
+- 比较两个引用数据类型，比较的是内存的地址值。
 
 下方代码，比较了 String 类的字符串对象。结合上文【String 类创建对象的内存表现】来理解比较结果。
 
@@ -242,7 +242,7 @@ public class Demo01 {
 }
 ```
 
-案例理解：已知正确的用户名和密码，请用程序实现模拟用户登录。总共给三次机会，登录之后给出相应的提示。
+案例理解：已知正确的用户名和密码，请用程序实现：模拟用户登录。总共给三次机会，登录之后给出相应的提示。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test01.java
 
@@ -283,7 +283,7 @@ public class Test01 {
 - `public int length()`，用于返回此字符串的长度。
 - `public char[] toCharArray()`，方法将字符串转换为字符数组。
 
-> 数组对象的 `length` 是属性，String 类的字符串对象的 `length` 是方法。
+> 数组对象有 `length` 属性，String 类的字符串对象有 `length` 方法。
 
 案例理解：键盘录入一个字符串，遍历其中的每一个字符。
 
@@ -349,7 +349,7 @@ public class Test02 {
 
 ### 7.String 类字符串对象的拼接
 
-案例理解：定义一个方法，把 int 数组中的数据，按照指定的格式拼接成一个字符串返回，调用该方法，并在控制台输出结果。
+案例理解：定义一个方法，把 int 数组中的数据，按照指定的格式，拼接成一个字符串返回，调用该方法，并在控制台输出结果。
 
 数组为：`int[] arr = {1, 2, 3}`；执行方法后的输出结果为 `[1, 2, 3]`
 
@@ -429,7 +429,7 @@ public class Test04 {
 
 案例理解，将一个数字表示的金额，转为中文大写的金额描述。
 
-- 思路：使用”查表法“的思想，将数组索引，和中文数字大写字符对应起来。
+- 思路：使用**”查表法“**的思想，将数组索引，和中文数字大写字符对应起来。
 
 demo-project/base-code/Day10/src/com/kkcf/string/Test05.java
 
@@ -494,7 +494,7 @@ public class Test05 {
 截取 `String` 类字符串对象中的字符串，需要用到 `String` 类中封装的方法
 
 - `public String substring(int beginIndex, int endIndex)`，返回一个新字符串，它是此字符串的一个子字符串。
-  - 该子字符串从指定的 `beginIndex` 处开始，直到索引 `endIndex - 1` 处的字符（包头不包尾，包左不包右）。
+  - 该子字符串从指定的 `beginIndex` 处开始，直到索引 `endIndex - 1` 处的字符（**包头不包尾，包左不包右**）。
   - 因此，该子字符串的长度为 `endIndex-beginIndex`。
 
 - `public String substring(int beginIndex)`，返回一个新的字符串，它是此字符串的一个子字符串。
@@ -558,7 +558,7 @@ public class Test06 {
 
 替换 String 类字符串对象中的子字符串，需要用到 String 类中封装的方法:
 
-- `public String replace(CharSequence target, CharSequence replacement)`，使用指定的字面值替换序列替换此字符串所有匹配字面值目标序列的子字符串。该替换从字符串的开头朝末尾执行，例如，用 "b" 替换字符串 "aaa" 中的 "aa" 将生成 "ba" 而不是 "ab"。
+- `public String replace(CharSequence target, CharSequence replacement)`，使用指定的字面值替换序列，替换此字符串所有匹配字面值目标序列的子字符串。该替换从字符串的开头朝末尾执行，例如，用 "b" 替换字符串 "aaa" 中的 "aa" 将生成 "ba" 而不是 "ab"。
 
 案例理解：将一些敏感词，替换为 `***`
 
@@ -583,7 +583,7 @@ public class Test07 {
 
 ## 三、StringBuilder 类
 
-`StringBuilder` 类创建的字符串对象，可以看成是一个容器，要操作的字符串可放入其中，对象创建之后里面的内容是可变的。
+`StringBuilder` 类创建的字符串对象，可以看成是一个容器，要操作的字符串，可放入其中，该对象创建之后里面的内容是可变的。
 
 当我们在拼接字符串，和反转字符串的时候会使用到。
 
@@ -603,7 +603,7 @@ public class Test07 {
 - `public int length()`，返回长度（字符出现的个数）。
 - `public String toString()`，把 StringBuilder 类型的字符串对象，转为 String 类型的字符串对象。
 
-StringBuilder 是 Java 已经写好的类，Java 在底层对它做了一些特殊处理，使得打印对象时，输出的不是地址值，而是属性值。
+`StringBuilder` 是 Java 已经写好的类，Java 在底层对它做了一些特殊处理，使得打印对象时，输出的不是地址值，而是属性值。
 
 ```java
 package com.kkcf.string;
@@ -617,7 +617,7 @@ public class Demo05 {
 }
 ```
 
-StringBuilder 类的基本使用：
+`StringBuilder` 类的基本使用：
 
 demo-project/base-code/Day10/src/com/kkcf/string/Demo05.java
 
@@ -733,7 +733,7 @@ public class Test09 {
 
 ## 四、StringJoiner 类
 
-`StringJoiner` 类是 JDK8 之后出现的新特性。
+`StringJoiner` 类是 JDK 8 之后出现的新特性。
 
 `StringJoiner` 类与 `StringBuilder` 类相似，也可以看成是一个容器，创建之后里面的内容是可变的。
 
@@ -744,7 +744,7 @@ public class Test09 {
 `StringJoiner` 类常用的构造方法有两个（它没有空参构造方法）：
 
 - `public StringJoiner(CharSequence delimiter)`，创建一个 StringJoiner 对象，指定间隔符号。
-- `public StringJoiner(CharSequence delimiter, CharSequence prefix, CharSequence suffix)`，创建一个 StringJonier 对象，指定拼接时的间隔符号，开始符号，结束符号。
+- `public StringJoiner(CharSequence delimiter, CharSequence prefix, CharSequence suffix)`，创建一个 StringJonier 对象，指定间隔符号，开始符号，结束符号。
 
 > 在 Java 中，`CharSequence` 是一个接口，表示一个可读的字符序列。它是字符串类（如 `String`、`StringBuilder`、`StringBuffer`）的父接口，提供了字符序列的一般化表示。主要特点有：
 >
@@ -752,7 +752,8 @@ public class Test09 {
 >
 >   - `length()`
 >   - `charAt(int index)`
->   - subSequence(int start, int end)` 和 `toString()`，
+>   - `subSequence(int start, int end)`
+>   - `toString()`，
 >
 > - `CharSequence` 接口的实现类包括 `String`、`StringBuilder`、`StringBuffer`、`CharBuffer`……。
 
@@ -813,15 +814,15 @@ public class Demo06 {
 
 前面已详细介绍过，这里做总结：
 
-- 字符串字面量直接赋值给变量，会使用 StringTable（串池）中的地址值。
+- 字符串字面量，直接赋值给变量，会使用 StringTable（串池）中的地址值。
 - 使用 `new` 操作符，创建一个 String 类的对象，会在堆内存中开辟一块新的空间。
 
 ### 2.字符串 == 号的比较
 
 前面已详细介绍过，这里做总结：
 
-- Java 中的字符串，是引用数据类型，== 号只能用于字符串的地址值的比较。
-- Java 中的字符串，要比较其值是否相同，就要使用 `equals` 方法。
+- Java 中的字符串，是引用类型，`==` 号只能用于字符串的地址值比较。
+- Java 中的字符串，要比较其属性值是否相同，就要使用 `equals` 方法。
 
 ### 3.字符串拼接的底层原理
 
@@ -921,7 +922,7 @@ StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼
 - 字节数组中，实际存储的是：字符对应的 ASCLL 码表数值。
 - 此时字节数组的长度为 `3`，容量为 `16`.
 
-Ⅲ、如果把"a"-"z"，26 个英文字母组成的字符串，添加到 StringBuilder 对象中；
+Ⅲ、如果把 a-z，26 个英文字母组成的字符串，添加到 StringBuilder 对象中；
 
 这时超出了 StringBuilder 字符串对象原来 `16` 的容量，那么它会自动扩容，即 `老容量(16) * 2 + 2 = 34`。
 
@@ -929,7 +930,7 @@ StringBuilder 创建的对象，是一个可变的容器，当字符串进行拼
 
 - 此时字节数组的长度为 `26`，容量为 `34`.
 
-Ⅳ、如果把"a"-"z"，"0"-"9" 共 36 个字符组成的字符串，添加到空参构造方法创建的 StringBuilder 容器中，这时超出了 StringBuilder 容器自动扩容的最大容量 `16`，那么他会按照实际要存储的字符串长度，来创建字节数组的容量。
+Ⅳ、如果把 a-z，0-9 共 36 个字符组成的字符串，添加到空参构造方法创建的 StringBuilder 容器中，这时超出了 StringBuilder 容器自动扩容的最大容量 `16 * 2 + 2 = 34`，那么他会按照实际要存储的字符串长度，来创建字节数组的容量。
 
 ![StringBuilder容器3](NodeAssets/StringBuilder容器3.jpg)
 
@@ -1224,7 +1225,6 @@ public class Test13 {
 
         // 将最后一位数字，与前面随机一位字母对调。
         int randomIndex = r.nextInt(len);
-
         char temp = resChars[randomIndex];
         resChars[randomIndex] = resChars[len - 1];
         resChars[len - 1] = temp;
