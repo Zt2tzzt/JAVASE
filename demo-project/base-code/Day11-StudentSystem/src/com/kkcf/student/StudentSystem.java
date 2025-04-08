@@ -10,7 +10,6 @@ public class StudentSystem {
     private static final String SHOW_STU = "4";
     private static final String EXIT = "5";
 
-
     public static void startStudentSystem() {
         Scanner sc = new Scanner(System.in);
 
@@ -41,6 +40,8 @@ public class StudentSystem {
                 default -> System.out.println("”输入错误“");
             }
         }
+
+        sc.close();
     }
 
     /**
@@ -85,6 +86,8 @@ public class StudentSystem {
         // 添加学生
         stus.add(new Student(id, name, age, address));
         System.out.println("添加学生成功");
+
+        sc.close();
     }
 
     /**
@@ -123,7 +126,7 @@ public class StudentSystem {
             return;
         }
 
-        // 输入要修改的学生姓
+        // 输入要修改的学生姓名
         System.out.print("请输入要修改的学生姓名:");
         String newName = sc.next();
 
@@ -151,6 +154,8 @@ public class StudentSystem {
         stu.setAddress(newAddress);
 
         System.out.println("修改学生信息成功");
+
+        sc.close();
     }
 
     /**

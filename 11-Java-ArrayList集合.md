@@ -6,8 +6,8 @@ ArrayList 集合，也是容器，也可用来存储多个数据。
 
 ArrayList 集合，与数组的区别有两个：
 
-- ArrayList 集合的长度是可变的，当添加元素时，会自动扩容；数组的长度是固定的。
-- ArrayList 集合不能存储基本数据类型，必须要把它们变成对应的包装类；数组可以存储基本数据类型。
+- ArrayList 集合的**长度是可变的**，当添加元素时，会自动扩容；数组的长度是固定的。
+- ArrayList 集合**不能存储基本类型**，必须要把它们变成对应的包装类；数组可以存储基本数据类型。
 
 ## 二、ArrayList 的使用
 
@@ -21,13 +21,13 @@ ArrayList 集合，与数组的区别有两个：
 
 - `public ArrayList()`，构造一个初始容量为 10 的空列表。
 
-JDK7 以前，创建 ArrayList 集合列表对象的方式：
+JDK 7 以前，创建 ArrayList 集合列表对象的方式：
 
 ```java
 ArrayList<String> strings = new ArrayList<String>();
 ```
 
-JDK7 及以后，创建 ArrayList 集合列表对象的方式：
+JDK 7 及以后，创建 ArrayList 集合列表对象的方式：
 
 ```java
 ArrayList<String> strings = new ArrayList<>();
@@ -41,7 +41,7 @@ ArrayList<String> strings = new ArrayList<>();
 System.out.println(strings); // []
 ```
 
-- 直接打印熟组对象时，会输出它在内存中的地址值。
+- 直接打印数组对象时，会输出它在内存中的地址值。
 
 ### 2.ArraylList 成员方法
 
@@ -150,7 +150,7 @@ public class Demo02 {
 
 案例理解：定义一个集合，添加数字，并进行遍历。遍历格式参照：[元素1, 元素2, 元素3]
 
-> JDK5 及以后，`int` 基本数据类型和 `Integer` 包装类型之间，可以自动相互转换。
+> JDK5 及以后，`int` 基本数据类型和 `Integer` 包装类型之间，可以自动**相互转换**。
 
 demo-project/base-code/Day11/src/com/kkcf/ArrayList/Demo03.java
 
@@ -183,7 +183,7 @@ public class Demo03 {
 
 案例理解：定义一个集合列表，添加一些学生对象，并进行遍历。学生类的属性为：姓名，年龄。
 
-创建 JavaBean 类 Student。
+创建 JavaBean 类 `Student`。
 
 demo-project/base-code/Day11/src/com/kkcf/ArrayList/Student.java
 
@@ -296,7 +296,7 @@ public class Demo04 {
 要求：定义一个方法，根据 id 查找对应的用户信息。
 
 - 如果存在，返回索引
-- 如果不存在，返回-1
+- 如果不存在，返回 `-1`
 
 demo-project/base-code/Day11/src/com/kkcf/ArrayList/Demo05.java
 
