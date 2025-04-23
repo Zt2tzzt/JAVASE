@@ -2,7 +2,7 @@ package com.kkcf.a01polymorphismdemo1;
 
 public class Test {
     public static void main(String[] args) {
-        Teacher t = new Teacher("易爱平", 30);;
+        Teacher t = new Teacher("易爱平", 30);
         Student s = new Student("张三", 20);
         Administator a = new Administator("李四", 40);
 
