@@ -12,6 +12,7 @@ public abstract class Animal {
         this.age = age;
     }
 
+    // 成员方法
     public void drink() {
         System.out.println("动物在喝水");
     }

@@ -12,6 +12,7 @@ public class Animal {
         this.color = color;
     }
 
+    // getter、setter
     public int getAge() {
         return age;
     }

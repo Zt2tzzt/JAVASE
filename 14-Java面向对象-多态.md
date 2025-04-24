@@ -168,7 +168,7 @@ public class Test {
 
 理解上面的规律：
 
-子类会继承父类中的所有成员变量。
+子类会继承父类中的所有成员变量：
 
 - 如果用父类型的变量引用，访问子类中的成员变量，那么访问的就是子类继承下来的父类中的成员变量。
 
@@ -365,6 +365,7 @@ public class Animal {
         this.color = color;
     }
 
+    // getter、setter
     public int getAge() {
         return age;
     }
@@ -461,6 +462,7 @@ public class Person {
         this.age = age;
     }
 
+    // getter、setter
     public String getName() {
         return name;
     }
@@ -477,6 +479,7 @@ public class Person {
         this.age = age;
     }
 
+    // 成员方法
     public void keepPet(Dog d, String something) {
         System.out.println("年龄为" + age + "岁的" + name + "养了一只" + d.getColor() + "颜色的" + d.getAge() + "岁的狗");
         d.eat(something);;

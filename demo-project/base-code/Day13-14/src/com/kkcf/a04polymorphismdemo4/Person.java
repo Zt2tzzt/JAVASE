@@ -12,6 +12,7 @@ public class Person {
         this.age = age;
     }
 
+    // getter、setter
     public String getName() {
         return name;
     }
