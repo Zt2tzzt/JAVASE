@@ -913,8 +913,8 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
 
 3. 点击登录按钮之后的逻辑：
 
-   - 按下登录不松，切换登录按钮的背景图片
-   - 松开登录按钮，逻辑较为复杂
+   - 按下登录不松，切换登录按钮的背景图片。
+   - 松开登录按钮，逻辑较为复杂：
      - 获取用户输入的用户名，密码，验证码。
      - 先比较验证码（正确 错误）
      - 判断用户名和密码是否为空，只要有一个为空就不行
