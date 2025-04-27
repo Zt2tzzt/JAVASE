@@ -124,7 +124,7 @@ public class MathDemo01 {
 
 使用 `Math.random` 方法，返回一个 `[0.0, 1.0)` 的随机值；
 
-利用  `Math.random`  方法，获取一个范围在 `[1, 100]` 的随机数。
+利用 `Math.random` 方法，获取一个范围在 `[1, 100]` 的随机数。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/MathDemo01.java
 
@@ -193,7 +193,7 @@ public class MathDemo02 {
 如果自幂数是
 
 - 一位数：也称为**独身数**；
-- 二位数：没有二位的自幂数
+- 二位数：没有二位的自幂数；
 - 三位自幂数：也称为**水仙花数**；
 - 四位自幂数：也称为**四叶玫瑰数**；
 - 五位数：也称为**五角星数**；
@@ -314,10 +314,10 @@ public class MathDemo03 {
 
 `System` 类中常用的方法有：
 
-| 方法名                                                       | 说明                                   |
-| ------------------------------------------------------------ | -------------------------------------- |
-| `public static void exit(int status)`                        | 终止当前运行的 Java 虚拟机             |
-| `public static long currentTimeMillis()`                     | 返回时间原点到当前系统的时间毫秒值形式 |
+| 方法名                                                                               | 说明                                   |
+| ------------------------------------------------------------------------------------ | -------------------------------------- |
+| `public static void exit(int status)`                                                | 终止当前运行的 Java 虚拟机             |
+| `public static long currentTimeMillis()`                                             | 返回时间原点到当前系统的时间毫秒值形式 |
 | `public static void arraycopy(数据源数组, 起始索引, 目的地数组, 起始索引, 拷贝个数)` | 拷贝数组（浅拷贝）                     |
 
 > 计算机中的时间原点：
@@ -386,12 +386,12 @@ public class SystemDemo01 {
 
 ## 三、Runtime 类
 
-`Runtime` 类，表示当前虚拟机的运行环菌。
+`Runtime` 类，表示当前虚拟机的运行环境。
 
 `Runtime` 类，里面的方法不是静态的，需要先获取它的实例对象，才能调用其中的方法。
 
-- 不能使用 `new` 操作符创建实例对象，而是要使用类中提供的静态方法 `getRuntime` 获取实例对象；
-- 因为 `Runtime` 类，表示的是 Java 虚拟机的运行环菌；在一台计算机中，只能有一个 Java 虚拟机运行环菌。所以 `Runtime` 类在程序运行时，只能创建一个对象。
+- 不能使用 `new` 操作符创建 `Runtime` 类的实例对象，而是要使用它的静态方法 `getRuntime` 获取实例对象；
+- 因为 `Runtime` 类，表示的是 Java 虚拟机的运行环境；在一台计算机中，只能有一个 Java 虚拟机运行环境。所以 `Runtime` 类在程序运行时，只能创建一个对象。
 
 `Runtime` 类常用方法如下：
 
@@ -409,7 +409,7 @@ public class SystemDemo01 {
 
 ### 1.getRuntime 静态方法
 
-`Runtime.getRuntime` 静态方法的使用，获取系统的运行环菌实例对象。
+`Runtime.getRuntime` 静态方法的使用，获取系统的运行环境实例对象。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/RuntimeDemo01.java
 
@@ -526,7 +526,7 @@ public class RuntimeDemo01 {
 }
 ```
 
-> cmd 命令补充：
+> Windows 的 cmd 命令补充：
 >
 > - `shutdown`，表示关机。
 > - `shutdown -s`，默认在一分钟后关机。
@@ -550,15 +550,15 @@ public class RuntimeDemo01 {
 
 `Object` 类，一共有 11 个成员方法，这里先介绍 3 个：
 
-| 方法名                              | 说明                                                         |
-| ----------------------------------- | ------------------------------------------------------------ |
-| `public String toString()`          | 返回该对象的字符串表示形式（可以看做是对象的内存地址值）     |
+| 方法名                              | 说明                                                            |
+| ----------------------------------- | --------------------------------------------------------------- |
+| `public String toString()`          | 返回该对象的字符串表示形式（可以看做是对象的内存地址值）        |
 | `public boolean equals(Object obj)` | 比较两个对象地址值是否相等；`true` 表示相同，`false` 表示不相同 |
-| `protected Object clone()`          | 对象克隆                                                     |
+| `protected Object clone()`          | 对象克隆                                                        |
 
 ### 1.toString 方法
 
-`toString`  方法的使用，默认返回的是对象地址值。
+`toString` 方法的使用，默认返回的是对象**地址值**。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/ObjecDemo01.java
 
@@ -644,7 +644,7 @@ public class ObjectDemo02 {
 }
 ```
 
-在 `Object` 类中，`equals` 方法，默认比较的，是对象的地址值。
+在 `Object` 类中，`equals` 方法，默认比较的，是对象的**地址值**。
 
 所以，如果要比较一个对象中的属性值，那么重写这个对象所对应的类中的 `equals` 方法即可。
 
@@ -712,7 +712,7 @@ public boolean equals(Object anObject) {
 }
 ```
 
-1. 先判断比较的两个 `String` 对象的地址值，是否相等；
+1. 先比较两个 `String` 对象的地址值，是否相等；
 
 2. 再判断参数是否为 `String` 类的实例（源码如下）：
 
@@ -720,10 +720,11 @@ public boolean equals(Object anObject) {
 
    - 如果不是，直接返回 `false`。
 
-`StringBuilder` 类中，没有重写 `equals` 方法，
-
-- 因此使用 `sb` 调用 `equals` 方法时，会默认使用 `Object` 类里的 `equals` 方法。
-- 又因为 `Object` 类里的 `equals` 方法，比较的是对象的地址值，所以返回的也是 `false`。
+> `StringBuilder` 类中，没有重写 `equals` 方法，
+>
+> - 所以使用 `sb` 调用 `equals` 方法时，会默认使用 `Object` 类里的 `equals` 方法。
+>
+> `StringBuilder` 没有重写 `equals()`，是因为它是一个**可变对象**，不适合基于内容定义相等性，设计上就是只用**引用相等**来判断。想比内容？用 `toString()`！
 
 ### 3.clone 方法
 
@@ -734,11 +735,12 @@ public boolean equals(Object anObject) {
 - 在 `User` 类中，先要重写 `Object` 类中的 `clone` 方法；
 - 然后，为 `User` 类实现 `Cloneable` 接口。
 
-> `Cloneable` 接口里面没有任何抽象方法。
+> `Cloneable` 接口里，没有任何抽象方法。
 >
-> - 实现该接口的类，它的实例对象，就可以被克隆；没有实现该接口，那么这个类的实例对象，就不可以被克隆。
-> 
->如果一个接口，里面没有抽象方法，表示这个接口是一个**标记性的接口**，
+> - 实现该接口的类，它的实例对象，就可以被克隆；
+> - 没有实现该接口，那么这个类的实例对象，就不可以被克隆。
+>
+> 如果一个接口，里面没有抽象方法，表示这个接口是一个**标记性的接口**，
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/User.java
 

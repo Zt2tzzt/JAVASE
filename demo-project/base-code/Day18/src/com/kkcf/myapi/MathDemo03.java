@@ -12,7 +12,7 @@ public class MathDemo03 {
     }
 
     /**
-     * 此芳芳用于，统计两位自幂数的个数
+     * 此方法用于，统计两位自幂数的个数
      * @return 两位自幂数的个数
      */
     public static int twoDigitExponentiation() {
@@ -32,7 +32,7 @@ public class MathDemo03 {
     }
 
     /**
-     * 此芳芳用于，统计水仙花数的个数
+     * 此方法用于，统计水仙花数的个数
      * @return 水仙花数的个数
      */
     public static int daffodils() {
@@ -52,7 +52,7 @@ public class MathDemo03 {
     }
 
     /**
-     * 此芳芳用于，统计四叶玫瑰数的个数
+     * 此方法用于，统计四叶玫瑰数的个数
      * @return 四叶玫瑰数的个数
      */
     public static int fourleafRose() {
@@ -74,7 +74,7 @@ public class MathDemo03 {
     }
 
     /**
-     * 此芳芳用于，统计五角星数的个数
+     * 此方法用于，统计五角星数的个数
      * @return 五角星数的个数
      */
     public static int pentagram() {
