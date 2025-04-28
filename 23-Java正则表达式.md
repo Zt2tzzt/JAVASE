@@ -72,7 +72,6 @@ public class RegexDemo2 {
         System.out.println("0".matches("[a-zA-Z]")); // false
         System.out.println("0".matches("[a-zA-Z0-9]")); // true
 
-
         // [a-d[m-p]] a 到 d，或 m 到 p
         System.out.println("-----------4-------------");
         System.out.println("a".matches("[a-d[m-p]]")); // true
@@ -84,7 +83,7 @@ public class RegexDemo2 {
 
         // [a-z&&[def]] a-z 和 def 的交集为: d，e，f
         System.out.println("----------5------------");
-        System.out.println("a".matches("[a-z&[def]]")); // false（一个 & 号再正则表达式中没有任何含义）
+        System.out.println("a".matches("[a-z&[def]]")); // false（一个 & 号在正则表达式中没有任何含义）
         System.out.println("d".matches("[a-z&&[def]]")); // true
         System.out.println("0".matches("[a-z&&[def]]")); // false
 
@@ -134,7 +133,7 @@ public class Demo {
 
 语法示例：
 
-1. `.`： 匹配任何字符（不能匹配 `\n` 回车符号）；
+1. `.`： 任何字符（不能匹配 `\n` 回车符号）；
 2. `\d`：任何数字 `[0-9]` 的简写；
 3. `\D`：任何非数字 `[^0-9]` 的简写；
 4. `\s`： 空白字符：`[\t\n\x0B\f\r]` 的简写
@@ -181,7 +180,7 @@ public class Demo {
 }
 ```
 
-> Java 中，`\\` 就表示 `\`，前面的 `\` 用来转义。
+> Java 中，`\\` 就表示 `\`，第一个的 `\` 用来转义。
 
 ## 四、正则表达式-数量词
 
@@ -253,16 +252,18 @@ String regex = "a((?i)b)c";
 
 ## 七、正则表达式-爬虫
 
-使用正则表达式爬虫在一段文本中，匹配（查找）满足要求的内容的功能，实现爬虫。爬虫分为本地爬虫、网络爬虫。
+使用正则表达式，在一段文本中，匹配（查找）满足要求的内容的功能；
 
-### 1.Java Pattern 类、Matcher 类
+实现爬虫。爬虫分为本地爬虫、网络爬虫。
 
 在 Java 中：
 
 - `Pattern` 类，表示正则表达式；
 - `Matcher` 类，表示文本匹配器，利用正则表达式的规则，从头读取字符串，并获取子字符串。
 
-#### 1.Pattern 类 complie 静态方法
+### 7.1.Pattern 类
+
+#### 7.1.1.complie 静态方法
 
 在 Java 中，获取一个正则表达式的对象，要调用 `Pattern` 类的静态方法 `compile`
 
@@ -270,7 +271,7 @@ String regex = "a((?i)b)c";
 Pattern pattern = Pattern.compile("^[a-zA-Z0-9_]{4,16}$");
 ```
 
-#### 2.Pattern 类 matcher 方法
+#### 7.2.2.matcher 方法
 
 在 Java 中，获取一个文本匹配器对象，可以调用 `Pattern` 实例对象的 `matcher` 方法：
 
@@ -299,18 +300,20 @@ public class RegexDemo02 {
 - `str` 是字符串。
 - `pattern` 是正则表达式对象。
 
-#### 3.Matcher 类 find 方法
+### 7.2.Matcher 类
+
+#### 7.2.1.find 方法
 
 `matcher.find()` 表示使用文本匹配器，从头开始读取，寻找是否有满足规则的子字符串。
 
 - 如果有，返回 `true`，并在底层，记录子字符串的`起始索引`，以及`结束索引 + 1`。
 - 如果没有，返回 `false`。
 
-#### 4.Matcher 类 group 方法
+#### 7.2.2.group 方法
 
 `matcher.group()` 表示根据 `find` 方法记录的索引，返回截取的子字符串。
 
-`matcher` 实例对象要在 `str` 字符串中找符合 `pattern` 规则的子字符串。
+`matcher` 实例对象，要在 `str` 字符串中找符合 `pattern` 规则的子字符串。
 
 ### 1.Java 网络爬虫模拟
 
@@ -450,8 +453,8 @@ public class RegexDemo05 {
 
 正则表达式中 `?=` 说明
 
-- `?` 表示为前面的数据 Java
-- `=` 表示在 Java 后面要跟随的数据，但是在获取的时候，只获取 `?` 代表的前半部分。
+- `?` 表示前面的数据 `Java`
+- `=` 表示在 `Java` 后面，要跟随的数据，但是在获取的时候，只获取 `?` 代表的前半部分。
 
 需求2：爬取版本号为 8，11，17 的 Java 文本。正确爬取结果为：Java8、Java11、Java17、Java17
 
@@ -487,7 +490,7 @@ public class RegexDemo05 {
 
 正则表达式中 `?:` 说明：
 
-- `?` 理解为前面的数据 `Java`
+- `?` 表示前面的数据 `Java`
 - `:` 表示在 `Java` 后面要跟随的数据。  
 
 需求3：爬取除了版本号为 8，11，17 的 Java 文本。
@@ -651,7 +654,7 @@ public class RegexDemo07 {
 
 正则表达式中，`()` 表示分组。
 
-正则表达式中，每个分组，是有组号的，也就是序号。
+正则表达式中，每个分组，是有组号，也就是序号。
 
 - 组号从 1 开始，连续不间断。
 - 以左括号为基准（嵌套关系不影响组号的顺序），最左边的是第 1 组；其次是第 2 组；依此类推……
@@ -806,8 +809,8 @@ Java 创建正则表达式：
 
 ### 3.分组引用
 
-- JavaScript 中，分组捕获的结果可以通过 `RegExp` 对象的 `exec()` 方法返回的数组的索引访问，或者通过 `$1`, `$2` 等在字符串替换中引用。
-- Java 中，分组捕获的结果通过 `Matcher` 类的 `group(n)` 方法获取，其中 `n` 是组编号。
+- JavaScript 中，分组捕获的结果，可以通过 `RegExp` 对象的 `exec()` 方法返回的数组的索引访问，或者通过 `$1`, `$2` 等在字符串替换中引用。
+- Java 中，分组捕获的结果，可以通过 `Matcher` 类的 `group(n)` 方法获取，其中 `n` 是组编号。
 
 ### 4.替换
 

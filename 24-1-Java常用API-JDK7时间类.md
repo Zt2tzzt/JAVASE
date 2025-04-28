@@ -1,8 +1,10 @@
 # Java 常用 API 之 JDK7 前时间类
 
-早期的世界标准时间，称为格林威治时间（GreenWich Mean Time）简称 GMT。这种方式根据地球自转计算时间，有误差。
+早期的世界标准时间，称为格林威治时间（GreenWich Mean Time）简称 GMT。
 
-现在世界标准时间，已被原子钟时间（简称 UTC）替代。
+这种方式根据地球自转计算时间，有误差。
+
+现在世界标准时间，是原子钟时间（简称 UTC）。
 
 > 原子钟时间，是利用铯原子的震动频率，计算出来的时间。
 >
@@ -22,7 +24,7 @@ java.util.Date 类，是一个 JDK 提供的 java Bean 类，用来描述时间�
 
 Date 类常用的构造方法如下：
 
-- `public Date()`：从运行程序的此时此刻到时间原点（1970 年 1 月 1 日）经历的毫秒值，转换成 Date 对象（精确到毫秒）。
+- `public Date()`：从运行程序的此时此刻，到时间原点（1970年1月1日）经历的毫秒值，转换成 Date 对象（精确到毫秒）。
 - `public Date(long date)`：将指定参数的毫秒值，转换成 Date 对象。
 
 Date 类原码分析：
@@ -45,7 +47,7 @@ public class Date {
 
 ### 1.Date 类构造方法
 
-案例理解：使用 Date 类，创建对象，表示当前的时间和指定的时间。
+案例理解：使用 Date 类，创建日期对象，用于表示当前时间、指定时间。
 
 demo-project/base-code/Day20/src/com/kkcf/date/DateDemo01.java
 
@@ -58,20 +60,18 @@ public class DateDemo01 {
     public static void main(String[] args) {
         // 当前时间
         Date d1 = new Date();
-
         System.out.println(d1); // Wed Jul 17 15:46:04 CST 2024
 
         // 指定时间
         Date d2 = new Date(0L);
-
         System.out.println(d2); // Thu Jan 01 08:00:00 CST 1970
     }
 }
 ```
 
-### 2.getTime、setTime 成员方法
+### 2.getTime、setTime 方法
 
-案例理解：使用 Date 实例对象的 `getTime`、`setTime` 方法，获取和设置实例对象的时间。
+案例理解：使用 Date 实例对象的 `getTime`、`setTime` 方法，获取、设置实例对象的时间。
 
 demo-project/base-code/Day20/src/com/kkcf/date/DateDemo01.java
 
@@ -83,13 +83,10 @@ import java.util.Date;
 public class DateDemo01 {
     public static void main(String[] args) {
         Date d2 = new Date(0L);
-
         d2.setTime(1000L);
-
         System.out.println(d2); // Thu Jan 01 08:00:01 CST 1970
 
         long d2Time = d2.getTime();
-
         System.out.println(d2Time); // 1000
     }
 }
@@ -109,18 +106,16 @@ import java.util.Date;
 public class DateTest01 {
     public static void main(String[] args) {
         Date d1 = new Date(0L);
-
         long time = d1.getTime();
         time = time + 1000L * 60 * 60 * 24 * 365;
 
         d1.setTime(time);
-
         System.out.println(d1); // Fri Jan 01 08:00:00 CST 1971
     }
 }
 ```
 
-- `1000L` 表示使用 long 类型的数字参与计算，得到的结果会隐式转换为 long 类型。
+- `1000L` 表示使用 long 类型的数字参与计算，得到的结果会隐式转为 long 类型。
 
 案例理解：定义任意两个 Date 对象，比较一下哪个时间在前，哪个时间在后。
 
@@ -136,10 +131,8 @@ public class DateTest01 {
     public static void main(String[] args) {
         // 随机获取两个时间对象
         Random r = new Random();
-
         Date d1 = new Date(Math.abs(r.nextInt()));
         Date d2 = new Date(Math.abs(r.nextInt()));
-
         System.out.println(d1 + " " + d2);
 
         // 比较两个时间
@@ -147,7 +140,6 @@ public class DateTest01 {
         long time2 = d2.getTime();
 
         System.out.println(time1 + " " + time2);
-
         System.out.println(time1 > time2 ? "第一个时间，大于第二个时间"
                 : time1 < time2 ? "第二个时间，大于第一个时间"
                 : "第一个时间，等于第二个时间");
@@ -159,21 +151,21 @@ public class DateTest01 {
 
 ## 二、SimpleDateFormat 类
 
-SimpleDateFormat 类，主要有两个作用：
+`SimpleDateFormat` 类，主要有两个作用：
 
-- 作用一：用于格式化时间，即按照固定的格式，展示时间。
-- 作用二：解析把字符串表示的时间，转为 Date 对象。
+- 作用一：格式化时间；即按照固定的格式，展示时间。
+- 作用二：把字符串表示的时间，转为 `Date` 对象。
 
-SimpleDateFormat 类继承自 DateFormat 抽象类。
+`SimpleDateFormat` 类继承自 `DateFormat` 抽象类。
 
 ### 1.SimpleDateFormat 类构造方法
 
-SimpleDateFormat 类，常用的构造方法有：
+`SimpleDateFormat` 类，常用的构造方法有：
 
-| 构造方法                                  | 说明                                             |
-| ----------------------------------------- | ------------------------------------------------ |
-| `public SimpleDateFormat`                 | 构造一个 SimpleDateFormat 对象，使用默认格式     |
-| `public SimpleDateFormat(String pattern)` | 构造一个 SimpleDateFormat 对象，使用指定的格式。 |
+| 构造方法                                  | 说明                                               |
+| ----------------------------------------- | -------------------------------------------------- |
+| `public SimpleDateFormat`                 | 构造一个 `SimpleDateFormat` 对象，使用默认格式     |
+| `public SimpleDateFormat(String pattern)` | 构造一个 `SimpleDateFormat` 对象，使用指定的格式。 |
 
 常用的格式规则有：
 
@@ -189,16 +181,18 @@ SimpleDateFormat 类，常用的构造方法有：
 | EE                     | 中文星期几   |
 | a                      | 上午还是下午 |
 
-SimpleDateFormat 类，常用的成员方法有：
+`SimpleDateFormat` 类，常用的成员方法有：
 
-| 方法名                                  | 说明                          |
-| --------------------------------------- | ----------------------------- |
-| `public final String format(Date date)` | 格式化（Date 对象 -> 字符串） |
-| `public Date parse(String source)`      | 解析（字符串 -> Date 对象）   |
+| 方法名                                  | 说明                            |
+| --------------------------------------- | ------------------------------- |
+| `public final String format(Date date)` | 格式化（`Date` 对象 -> 字符串） |
+| `public Date parse(String source)`      | 解析（字符串 -> Date 对象）     |
 
-### 2.format 成员方法
+### 2.format 方法
 
-案例理解：利用空参构造，构造一个 SimpleDateFormat 对象，并使用默认格式，格式化时间原点的 Date 对象。
+案例理解：利用空参构造，构造一个 `SimpleDateFormat` 对象，
+
+使用默认格式，格式化时间原点的 `Date` 对象。
 
 demo-project/base-code/Day20/src/com/kkcf/date/SimpleDateFormatDemo01.java
 
@@ -211,9 +205,7 @@ import java.util.Date;
 public class SimpleDateFormatDemo01 {
     public static void main(String[] args) {
         SimpleDateFormat sdf1 = new SimpleDateFormat();
-
         Date d1 = new Date(0L);
-
         String format = sdf1.format(d1);
 
         System.out.println(format); // 1970/1/1 上午8:00
@@ -221,7 +213,7 @@ public class SimpleDateFormatDemo01 {
 }
 ```
 
-案例理解：利用带参构造方法，构造一个 SimpleDateFormat 对象，指定格式化的模式。
+案例理解：使用指定格式，构造一个 `SimpleDateFormat` 对象：
 
 demo-project/base-code/Day20/src/com/kkcf/date/SimpleDateFormatDemo01.java
 
@@ -234,7 +226,6 @@ import java.util.Date;
 public class SimpleDateFormatDemo01 {
     public static void main(String[] args) {
         SimpleDateFormat sdf1 = new SimpleDateFormat();
-
         Date d1 = new Date(0L);
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -250,9 +241,9 @@ public class SimpleDateFormatDemo01 {
 }
 ```
 
-### 3.parse 成员方法
+### 3.parse 方法
 
-案例理解：将一个字符串表示的时间，解析成 Date 对象。
+案例理解：将一个字符串表示的时间，解析成 `Date` 对象。
 
 demo-project/base-code/Day20/src/com/kkcf/date/SimpleDateFormatDemo02.java
 
@@ -269,7 +260,6 @@ public class SimpleDateFormatDemo02 {
 
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date d1 = sdf1.parse(dateStr);
-
         System.out.println(d1); // Sat Nov 11 11:11:11 CST 2023
     }
 }
@@ -277,13 +267,13 @@ public class SimpleDateFormatDemo02 {
 
 ## 三、Calendar 类
 
-Calendar 类，代表了系统当前时间的日历对象，可以单独修改，获取时间中的年、月、日。
+`Calendar` 类，代表了系统当前时间的日历对象，可以单独修改，获取时间中的年、月、日。
 
-Calendar 类，是一个抽象类，不能直接创建对象。应使用它的静态方法 `getInstance` 获取它的实例对象。
+`Calendar` 类，是一个抽象类，不能直接创建对象。应使用它的静态方法 `getInstance` 获取它的实例对象。
 
 ### 1.getInstance 静态方法
 
-Calendar 类常用的静态方法有：
+`Calendar` 类常用的静态方法有：
 
 | 方法名                                 | 说明                     |
 | -------------------------------------- | ------------------------ |
@@ -301,7 +291,6 @@ import java.util.Calendar;
 public class CalendarDemo01 {
     public static void main(String[] args) {
         Calendar c = Calendar.getInstance();
-
         System.out.println(c);
     }
 }
@@ -312,7 +301,7 @@ public class CalendarDemo01 {
   - 其中月的范围是 0-11。0 代表 1 月，11 代表 12 月（反人类）；
   - 其中星期的范围是1-7。1 代表星期日，7 代表星期六。
 
-Calendar 类中常用的成员方法有：
+`Calendar` 类中常用的成员方法有：
 
 | 方法名                                     | 说明                                      |
 | ------------------------------------------ | ----------------------------------------- |
@@ -324,7 +313,7 @@ Calendar 类中常用的成员方法有：
 | `public void set(int field, int value)`    | 修改日历的某个字段信息                    |
 | `public void add(int field, int amount)`   | 为某个日历对象的某个字段增加/减少指定的值 |
 
-### 2.setTime 成员方法
+### 2.setTime 方法
 
 案例理解，`public final void setTime(Date date)` 方法的使用，为日历对象，设置一个日期对象。
 
@@ -339,7 +328,6 @@ import java.util.Date;
 public class CalendarDemo01 {
     public static void main(String[] args) {
         Calendar c = Calendar.getInstance();
-
         c.setTime(new Date(0L));
 
         System.out.println(c);
@@ -347,7 +335,7 @@ public class CalendarDemo01 {
 }
 ```
 
-### 3.get、set 成员方法
+### 3.get、set 方法
 
 案例理解：`public int get(int field)` 方法的使用，获取日历对象中的年、月、日、星期。
 
@@ -381,7 +369,7 @@ public class CalendarDemo01 {
 }
 ```
 
-- 封装一个方法 `getWeekDay`，使用查表法，获取对应的星期数。
+- 封装一个方法 `getWeekDay`，使用**查表法**，获取对应的星期数。
 
 > 查表法中的“表”，指的是容器，上方案例中的容器就是数组。
 
@@ -433,7 +421,7 @@ public class CalendarDemo01 {
 - `6`：一年中的第几天；对应 Calendar 类中的常量 `Calendar.DAY_OF_YEAR`
 - `7`：一星期中的第几天；对应 Calendar 类中的常量 `Calendar.DAY_OF_WEEK`
 
-### 4.add 成员方法
+### 4.add 方法
 
 案例理解：`public void add(int field, int amount)` 方法的使用，设置日历对象，往后加一个月，往前减一个月
 

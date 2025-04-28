@@ -815,7 +815,10 @@ public class ObjectDemo02 {
 > Java 中的浅拷贝、深拷贝：
 >
 > - Java 中的浅拷贝：不管对象内部的属性，是基本数据类型，还是引用数据类型，都完全拷贝过来。
-> - Java 中的深拷贝：对象中的基本数据类型，会直接拷贝过来；字符串会复用 StringTable 串池中已存在的地址值；引用数据类型会创建一个新对象。
+> - Java 中的深拷贝：
+>   - 对象中的基本数据类型，会直接拷贝过来；
+>   - 字符串会复用 StringTable 串池中已存在的地址值；
+>   - 引用数据类型会创建一个新对象。
 
 `Object` 类中的 `clone` 方法，属于浅拷贝。
 
@@ -942,7 +945,7 @@ public class ObjectsDemo01 {
 
 `Objects.equals` 静态方法细节分析：
 
-1. 该方法的底层， 会先判断 `s1` 是否为 `null`，如果为 `null`，直接返回 `false`；
+1. 该方法底层， 先判断 `s1` 是否为 `null`，如果为 `null`，直接返回 `false`；
 2. 如果 `s1` 不为 `null`，那么就通过 `s1` 调用该对象中的 `equals` 方法，即执行 `Student` 类中重写的 `equals` 方法。
 
 `Objects.equals` 静态方法源码如下：

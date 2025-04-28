@@ -12,7 +12,7 @@ long 类型，能表示的最大的数字是 `01111111 11111111 11111111 1111111
 
 - 只要用 `BigInteger` 对象进行计算，那么都会产生一个新的对象。
 
-### 1.BigInteger 构造方法有
+### 1.BigInteger 构造方法
 
 `BigInteger` 的构造方法有：
 
@@ -42,7 +42,7 @@ public class BigIntegerDemo01 {
 }
 ```
 
-获取一个指定的大整数对象（在实际开发中，用的较多）：
+使用字符串，获取一个指定的大整数对象（在实际开发中，用的较多）：
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/BigIntegerDemo01.java
 
@@ -116,9 +116,9 @@ public class BigIntegerDemo01 {
 
 `BigInteger` 常用的静态方法如下，用于获取 `BigInteger` 的对象。
 
-| 方法名                                       | 说明                                       |
-| -------------------------------------------- | ------------------------------------------ |
-| `public static BigInteger valueOf(long val)` | 静态方法获取 BigInteger 的对象，内部有优化 |
+| 方法名                                       | 说明                                             |
+| -------------------------------------------- | ------------------------------------------------ |
+| `public static BigInteger valueOf(long val)` | 静态方法获取 BigInteger 的对象，该方法内部有优化 |
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/BigIntegerDemo01.java
 
@@ -137,8 +137,11 @@ public class BigIntegerDemo01 {
 
 细节：
 
-- `valueOf` 静态方法，返回的结果，能表示的范围较小；传入的整数参数，只能在 long 数据类型的取值范围之内；
-- `valueOf` 静态方法，在内部对常用整数 `-16-16` 进行了优化；提前创建了这个范围内，数字的 `BigInteger` 实例对象，如果多次获取不会重新创建对象。
+- `valueOf` 静态方法，返回的结果，能表示的范围较小；
+  - 传入的整数参数，只能在 long 数据类型的取值范围之内；
+
+- `valueOf` 静态方法，在内部对常用整数 `-16-16` 进行了优化；
+  - 提前创建了这个范围内，数字的 `BigInteger` 实例对象，如果多次获取不会重新创建对象。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/BigIntegerDemo01.java
 
@@ -318,7 +321,7 @@ public class BigIntegerDemo02 {
 }
 ```
 
-#### 6.intValue 方法
+#### 6.intValue、longValue、doubleValue 方法
 
 `intValue`、`longValue`、`doubleValue` 方法的使用。
 
@@ -383,8 +386,8 @@ public class Test01 {
 
 计算机中的小数，以十进制的 `69.875` 为例，转为二进制后：
 
-- 整数部分表示为：`0100 0101`；
-- 小数部分表示为：`111`，即 1 \* 2^-1^ + 1 \* 2^-2^ + 1 \* 2^-3^ -> 0.5 + 0.25 + 0.125 = 0.875
+- 整数部分 `69` 表示为：`0100 0101`；
+- 小数部分.`0.875` 表示为：`111`，即 1 \* 2^-1^ + 1 \* 2^-2^ + 1 \* 2^-3^ -> 0.5 + 0.25 + 0.125 = 0.875
 
 依此类推：`0.9` 转为二进制，就是一个 45 比特位的二进制数字；`0.226` 转为二进制，就是一个 55 比特位的二进制数。
 
@@ -486,7 +489,9 @@ public class BigDecimalDemo01 {
 }
 ```
 
-类似于 `BigInteger` 类中的 `valueOf` 方法，为了节约内存，为该方法传递 `[0, 10]` 范围内的**整数**，作为参数，那么方法会返回已经创建好的对象。
+类似于 `BigInteger` 类中的 `valueOf` 方法；
+
+为了节约内存，如果为该方法传递 `[0, 10]` 范围内的**整数**，作为参数，那么方法会返回已经创建好的对象。
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/BigDecimalDemo01.java
 
@@ -569,9 +574,9 @@ public class BigDecimalDemo02 {
 
 `divide` 方法的使用：
 
-使用法 `public BigDecimal divide(BigDecimal value)` ，被除数，与除数进行除法运算，如果除不尽会报错；
+使用方法 `public BigDecimal divide(BigDecimal value)` ，进行除法运算，如果除不尽会报错；
 
-应该使用该方法 `public BigDecimal divide(BigDecimal value, 精确几位, 舍入模式)`
+应该使用方法 `public BigDecimal divide(BigDecimal value, 精确几位, 舍入模式)`
 
 demo-project/base-code/Day18/src/com/kkcf/myapi/BigDecimalDemo02.java
 

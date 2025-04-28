@@ -4,20 +4,20 @@ JDK7 和 JDK8 中的时间相关类，有如下的不同：
 
 代码层面：
 
-- JDK7 的时间类，Date 对象，在比较、计算时间间隔时，要转为毫秒值，非常麻烦；
-- JDK8 的时间类，比较、计算时间间隔的方法，都非常简单。
+- JDK7 的 `Date` 类，在**比较时间**、**计算时间间隔**时，要转为毫秒值，非常麻烦；
+- JDK8 的时间类，比较时间、计算时间间隔的方法，非常简单。
 
 安全层面：
 
-- JDK7 的时间类，在多线程环境下，会有数据安全的问题。
-- JDK8 的时间类，时间日期对象都是不可变的，解决了多线程的安全性问题。
+- JDK7 的时间类，在**多线程**环境下，会有数据安全的问题。
+- JDK8 的时间类，时间日期对象都是**不可变**的，解决了多线程的数据安全性问题。
 
 JDK8 中常用的时间类有：
 
 **日期类**（类似于 JDK7 的 `Date` 类）
 
 - `ZoneId` 类，表示时区；
-- `Instant` 类，表示时间戳，只能表示世界标准时间（0 时区）的时间。
+- `Instant` 类，表示**时间戳**，只能表示世界标准时间（0 时区）的时间。
 - `ZoneDateTime` 类，表示带时区的时间。
 
 **日期格式化类**（类似于 JDK7 的 `SimpleDateFormat` 类）
@@ -86,7 +86,6 @@ import java.time.ZoneId;
 public class ZoneIdDemo01 {
     public static void main(String[] args) {
         ZoneId zoneId1 = ZoneId.systemDefault();
-
         System.out.println(zoneId1); // Asia/Shanghai
     }
 }
@@ -107,7 +106,6 @@ import java.util.Set;
 public class ZoneIdDemo01 {
     public static void main(String[] args) {
         ZoneId zoneId2 = ZoneId.of("Asia/Pontianak");
-
         System.out.println(zoneId2); // Asia/Pontianak
     }
 }
@@ -115,7 +113,7 @@ public class ZoneIdDemo01 {
 
 ## 二、Instant 类
 
-Instant 类，表示时间戳，只能表示世界标准时间（0 时区）的时间。常用的方法有如下：
+Instant 类，表示**时间戳**，只能表示世界标准时间（0 时区）的时间。常用的方法有如下：
 
 | 方法名                                         | 说明                                    |
 | ---------------------------------------------- | --------------------------------------- |
@@ -140,7 +138,6 @@ import java.time.Instant;
 public class InstantDemo01 {
     public static void main(String[] args) {
         Instant now = Instant.now();
-
         System.out.println(now); // 2024-07-18T08:29:14.733176600Z（世界标准时间（0 时区））
     }
 }
@@ -148,7 +145,7 @@ public class InstantDemo01 {
 
 ### 2.ofEpochMilli 静态方法
 
-根据秒、毫秒、纳秒，获取 Instant 时间戳对象。
+根据秒、毫秒、纳秒，获取 `Instant` 时间戳对象。
 
 - `static Instant ofEpochMilli(long epochMilli)` 方法；
 - `static Instant ofEpochSecond(long epochSecond)`  方法；
@@ -165,17 +162,14 @@ public class InstantDemo01 {
     public static void main(String[] args) {
         // 获取时间原点 Instant 对象
         Instant i1 = Instant.ofEpochMilli(0L);
-
         System.out.println(i1); // 1970-01-01T00:00:00Z
 
         // 获取时间原点后 1s Instant 对象
         Instant i2 = Instant.ofEpochSecond(1L);
-
         System.out.println(i2); // 1970-01-01T00:00:01Z
 
         // 获取时间原点后 2s Instant 对象第一个参数；秒；第二个参数：纳秒
         Instant i3 = Instant.ofEpochSecond(1L, 1000000000L);
-
         System.out.println(i3); // 1970-01-01T00:00:02Z
     }
 }
@@ -183,7 +177,7 @@ public class InstantDemo01 {
 
 ### 3.atZone 方法
 
-`ZonedDateTime atZone(ZoneId zone)` 方法，为 Instant 时间戳对象，指定时区；
+`ZonedDateTime atZone(ZoneId zone)` 方法，为 `Instant` 时间戳对象，指定时区；
 
 demo-project/base-code/Day20/src/com/kkcf/instant/InstantDemo02.java
 
@@ -197,7 +191,6 @@ import java.time.ZonedDateTime;
 public class InstantDemo02 {
     public static void main(String[] args) {
         ZonedDateTime zonedDateTime = Instant.now().atZone(ZoneId.of("Asia/Shanghai"));
-
         System.out.println(zonedDateTime); // 2024-07-18T16:51:07.222483900+08:00[Asia/Shanghai]
     }
 }
@@ -205,7 +198,7 @@ public class InstantDemo02 {
 
 ### 4.isAfter、isBefore 方法
 
-案例理解：`boolean isAfter([Instant otherInstant)`、`boolean isBefore(Instant otherInstant)` 方法的使用，用于判断 Instant 对象的时间前后顺序。
+案例理解：`boolean isAfter([Instant otherInstant)`、`boolean isBefore(Instant otherInstant)` 方法的使用，用于判断 `Instant` 对象的时间前后顺序。
 
 demo-project/base-code/Day20/src/com/kkcf/instant/InstantDemo02.java
 
@@ -217,7 +210,6 @@ import java.time.Instant;
 public class InstantDemo02 {
     public static void main(String[] args) {
         Instant now = Instant.now();
-
         Instant i1 = Instant.ofEpochMilli(0L);
 
         System.out.println(now.isAfter(i1)); // true
@@ -228,7 +220,7 @@ public class InstantDemo02 {
 
 ### 5.minus、plus 开头的方法
 
-`Instant minusMillis(long millisToSubtract)` 方法的使用，将 Instant 对象，往后减 1s。
+`Instant minusMillis(long millisToSubtract)` 方法的使用，将 `Instant` 对象，往后减 1s。
 
 demo-project/base-code/Day20/src/com/kkcf/instant/InstantDemo03.java
 
@@ -240,11 +232,9 @@ import java.time.Instant;
 public class InstantDemo03 {
     public static void main(String[] args) {
         Instant i1 = Instant.ofEpochMilli(3000L);
-
         System.out.println(i1); // 1970-01-01T00:00:03Z
 
         Instant i2 = i1.minusMillis(1000L);
-
         System.out.println(i2); // 1970-01-01T00:00:02Z
     }
 }
@@ -254,15 +244,15 @@ public class InstantDemo03 {
 
 ## 三、ZoneDateTime 类
 
-ZoneDateTime 类，用于表示带有时区的时间对象。常用的方法如下：
+`ZoneDateTime` 类，用于表示带有时区的时间对象。常用的方法如下：
 
 | 方法名                         | 说明                               |
 | ------------------------------ | ---------------------------------- |
-| `static ZonedDateTime now()`   | 获取当前时间的 ZoneDateTime 对象。 |
-| `static ZonedDateTime of(xxx)` | 获取指定时间的 ZoneDateTime 对象。 |
-| `ZonedDateTime withXxx(时间)`  | 修改时间系列的方法                 |
-| `ZonedDateTime minusXxx(时间)` | 减少时间系列的方法                 |
-| `ZonedDateTime plusXxx(时间)`  | 增加时间系列的方法                 |
+| `static ZonedDateTime now()`   | 获取当前时区的 ZoneDateTime 对象。 |
+| `static ZonedDateTime of(xxx)` | 获取指定时区的 ZoneDateTime 对象。 |
+| `ZonedDateTime withXxx(时间)`  | 修改时间系列方法                   |
+| `ZonedDateTime minusXxx(时间)` | 减少时间系列方法                   |
+| `ZonedDateTime plusXxx(时间)`  | 增加时间系列方法                   |
 
 ### 1.now 静态方法（ZoneDateTime）
 
@@ -278,7 +268,6 @@ import java.time.ZonedDateTime;
 public class ZoneDateTimeDemo01 {
     public static void main(String[] args) {
         ZonedDateTime now = ZonedDateTime.now();
-
         System.out.println(now); // 2024-07-18T17:40:33.619900600+08:00[Asia/Shanghai]
     }
 }
@@ -290,7 +279,7 @@ public class ZoneDateTimeDemo01 {
 
 - 方式一：使用 `static ZonedDateTime
   of(int year, int month, int dayOfMonth, int hour, int minute, int second, int nanoOfSecond, ZoneId zone)` 方法获取。
-- 方式二：结合使用 Instant 类，ZoneId 类和 `static ZoneDateTime ofInstant` 静态方法。
+- 方式二：结合使用 `Instant` 类，`ZoneId` 类和 `static ZoneDateTime ofInstant` 静态方法。
 
 ```java
 package com.kkcf.zonedatetime;
@@ -304,14 +293,12 @@ public class ZoneDateTimeDemo01 {
         // 方式一
         ZoneId zoneId1 = ZoneId.of("Asia/Shanghai");
         ZonedDateTime zdt1 = ZonedDateTime.of(2024, 7, 18, 17, 40, 33, 619900600, zoneId1);
-
         System.out.println(zdt1); // 2024-07-18T17:40:33.619900600+08:00[Asia/Shanghai]
 
         // 方式二
         Instant i1 = Instant.ofEpochMilli(0L);
         ZoneId zoneId2 = ZoneId.of("Asia/Shanghai");
         ZonedDateTime zdt2 = ZonedDateTime.ofInstant(i1, zoneId2);
-
         System.out.println(zdt2); // 1970-01-01T08:00+08:00[Asia/Shanghai]
     }
 }
@@ -319,7 +306,7 @@ public class ZoneDateTimeDemo01 {
 
 ### 3.minus、plus 开头的方法
 
-案例理解，给 ZoneDateTime 对象表示的时间，减 1 年；
+案例理解，给 `ZoneDateTime` 对象表示的时间，减 1 年；
 
 demo-project/base-code/Day20/src/com/kkcf/zonedatetime/ZoneDateTimeDemo01.java
 
@@ -333,7 +320,6 @@ public class ZoneDateTimeDemo01 {
     public static void main(String[] args) {
         ZoneId zoneId1 = ZoneId.of("Asia/Shanghai");
         ZonedDateTime zdt1 = ZonedDateTime.of(2024, 7, 18, 17, 40, 33, 619900600, zoneId1);
-
         ZonedDateTime zdt3 = zdt1.minusYears(1L);
 
         System.out.println(zdt3); // 2023-07-18T17:40:33.619900600+08:00[Asia/Shanghai]
@@ -346,7 +332,7 @@ public class ZoneDateTimeDemo01 {
 
 ### 4.with 开头的方法
 
-案例理解：将 ZoneDatTime 对象的年份，修改为 2015.
+案例理解：将 `ZoneDatTime` 对象的年份，修改为 2015.
 
 demo-project/base-code/Day20/src/com/kkcf/zonedatetime/ZoneDateTimeDemo01.java
 
@@ -372,12 +358,12 @@ public class ZoneDateTimeDemo01 {
 
 ### 4.1.DateTimeFormatter 类常用方法
 
-DateTimeFormatter 类，用于时间格式化和解析。常用的方法如下：
+`DateTimeFormatter` 类，用于时间格式化和解析。常用的方法如下：
 
-| 方法名                                     | 说明                              |
-| ------------------------------------------ | --------------------------------- |
-| `static DateTimeFormatter ofPattern(格式)` | 获取 DateTimeFormatter 解析器对象 |
-| `String format(TemporalAccessor temporal)` | 按照指定方式格式化                |
+| 方法名                                     | 说明                                |
+| ------------------------------------------ | ----------------------------------- |
+| `static DateTimeFormatter ofPattern(格式)` | 获取 `DateTimeFormatter` 解析器对象 |
+| `String format(TemporalAccessor temporal)` | 按照指定方式格式化                  |
 
 ### 4.2.ZonedDateTime 对象序列化和反序列化
 
@@ -489,11 +475,11 @@ public class StringToLocalDateTimeExample {
 
 ## 五、LocalDate、LocalTime、LocalDateTime 类
 
-日历类 LocalDate 类，用于表示年、月、日的日历对象。
+日历类 `LocalDate` 类，用于表示年、月、日的日历对象。
 
-日历类 LocalTime 类，用于表示时、分、秒的日历对象。
+日历类 `LocalTime` 类，用于表示时、分、秒的日历对象。
 
-日历类 LocalDateTime  类，用于表示年、月、日、时、分、秒的日历对象。
+日历类 `LocalDateTime`  类，用于表示年、月、日、时、分、秒的日历对象。
 
 它们的常用方法如下：
 
@@ -505,18 +491,18 @@ public class StringToLocalDateTimeExample {
 | `isBefore`、`isAfter` | 比较两个日历对象                               |
 | `with` 开头的方法     | 修改时间系列的方法                             |
 | `minus` 开头的方法    | 减少时间系列的方法                             |
-| `plus` 开头的方法     | 增加时间系列的方法。                           |
+| `plus` 开头的方法     | 增加时间系列的方法                             |
 
-LocalDateTime  类，可以转换成 LocalDate 类或者 LocalTime 类，用到的方法如下：
+`LocalDateTime`  类，可以转换成 `LocalDate` 类或者 `LocalTime` 类，用到的方法如下：
 
-| 方法名                    | 说明                                     |
-| ------------------------- | ---------------------------------------- |
-| `LocalDate toLocalDate()` | LocalDateTime  对象，转成 LocalDate 对象 |
-| `LocalTime toLocalTime()` | LocalDateTime  对象，转成 LocalTime 对象 |
+| 方法名                    | 说明                                         |
+| ------------------------- | -------------------------------------------- |
+| `LocalDate toLocalDate()` | `LocalDateTime`  对象，转成 `LocalDate` 对象 |
+| `LocalTime toLocalTime()` | `LocalDateTime`  对象，转成 `LocalTime` 对象 |
 
 ### 1.now 静态方法（JDK8 日历类）
 
-案例理解：使用 `now` 静态方法，获取一个当前时间的 LocalDate 日历对象
+案例理解：使用 `now` 静态方法，获取一个当前时间的 `LocalDate` 日历对象
 
 demo-project/base-code/Day20/src/com/kkcf/localdatetime/LocalDateTimeDemo01.java
 
@@ -528,7 +514,6 @@ import java.time.LocalDate;
 public class LocalDateTimeDemo01 {
     public static void main(String[] args) {
         LocalDate ld1 = LocalDate.now();
-
         System.out.println(ld1); // 2024-07-18
     }
 }
@@ -563,11 +548,11 @@ public class LocalDateTimeDemo02 {
 
 - `MonthDay` 是 Java 中封装的用于表示月、日的类。
 
-> LocalTime 类，专注于时间（秒、毫秒、纳秒）的表示，可用于“秒杀”等业务场景。
+> `LocalTime` 类，专注于时间（秒、毫秒、纳秒）的表示，可用于“秒杀”等业务场景。
 
 ### 3.getXxx 方法
 
-案例理解：使用 `getXxx` 方法，获取一个 LocalDate 日历对象中的年、月
+案例理解：使用 `getXxx` 方法，获取一个 `LocalDate` 日历对象中的年、月
 
 demo-project/base-code/Day20/src/com/kkcf/localdatetime/LocalDateTimeDemo01.java
 
@@ -580,7 +565,6 @@ import java.time.Month;
 public class LocalDateTimeDemo01 {
     public static void main(String[] args) {
         LocalDate ld1 = LocalDate.now();
-
         System.out.println(ld1); // 2024-07-18
 
         int year = ld1.getYear();
@@ -616,7 +600,6 @@ public class LocalDateTimeDemo01 {
         LocalDate ld1 = LocalDate.now();
 
         System.out.println(ld1); // 2024-07-18
-
         System.out.println(ld1.isBefore(ld1)); // false
         System.out.println(ld1.isAfter(ld1)); // false
     }
@@ -639,11 +622,9 @@ import java.time.LocalDate;
 public class LocalDateTimeDemo01 {
     public static void main(String[] args) {
         LocalDate ld1 = LocalDate.now();
-
         System.out.println(ld1); // 2024-07-18
 
         LocalDate ld2 = ld1.withYear(2015);
-
         System.out.println(ld2); // 2015-07-18
     }
 }
@@ -665,7 +646,6 @@ import java.time.LocalDate;
 public class LocalDateTimeDemo01 {
     public static void main(String[] args) {
         LocalDate ld1 = LocalDate.now();
-
         LocalDate ld2 = ld1.minusYears(1);
 
         System.out.println(ld3); // 2023-07-18
@@ -675,11 +655,11 @@ public class LocalDateTimeDemo01 {
 
 ## 六、Duration 类
 
-Duration 类，用于计算两个时间间隔（秒、纳秒）
+`Duration` 类，用于计算两个时间间隔（秒、纳秒）
 
 ### 1.between 静态方法（Duration 类）
 
-案例理解：使用 Duration 类获取两个 LocalDateTime 对象的时间间隔。
+案例理解：使用 `Duration` 类获取两个 `LocalDateTime` 对象的时间间隔。
 
 demo-project/base-code/Day20/src/com/kkcf/duration/DurationDemo01.java
 
@@ -692,11 +672,9 @@ import java.time.LocalDateTime;
 public class DurationDemo01 {
     public static void main(String[] args) {
         LocalDateTime today = LocalDateTime.now();
-
         LocalDateTime birthday = LocalDateTime.of(2000, 1, 1, 0, 00, 00);
 
         Duration duration = Duration.between(birthday, today);
-
         System.out.println("相差的时间间隔：" + duration); // 相差的时间间隔：PT215191H36M51.4040646S
 
         System.out.println(duration.toDays()); // 8966
@@ -710,11 +688,11 @@ public class DurationDemo01 {
 
 ## 七、Period 类
 
-Period 类，用于计算两个日期间隔（年、月、日）
+`Period` 类，用于计算两个日期间隔（年、月、日）
 
 ### 1.between 静态方法（Period 类）
 
-案例理解：使用 Period 类获取两个 LocalDate 对象的时间间隔
+案例理解：使用 `Period` 类获取两个 `LocalDate` 对象的时间间隔。
 
 demo-project/base-code/Day20/src/com/kkcf/period/PeriodDemo01.java
 
@@ -730,7 +708,6 @@ public class PeriodDemo01 {
         LocalDate birthday = LocalDate.of(2000, 1, 1);
 
         Period period = Period.between(birthday, today);
-
         System.out.println(period); // P24Y6M18D
         System.out.println("相隔" + period.getYears() + "年" + period.getMonths() + "月" + period.getDays() + "天"); // 相隔24年6月18天
 
@@ -742,9 +719,9 @@ public class PeriodDemo01 {
 
 ## 八、ChronoUnit 类（重点）
 
-ChronoUnit 类，用于计算两个日期间隔（所有单位）。
+`ChronoUnit` 类，用于计算两个日期间隔（所有单位）。
 
-案例理解：使用 ChronoUnit 获取两个 LocalDateTime 对象的时间间隔
+案例理解：使用 `ChronoUnit` 获取两个 `LocalDateTime` 对象的时间间隔。
 
 demo-project/base-code/Day20/src/com/kkcf/chronounit/ChronoUnitDemo01.java
 
@@ -757,7 +734,6 @@ import java.time.temporal.ChronoUnit;
 public class ChronoUnitDemo01 {
     public static void main(String[] args) {
         LocalDateTime today = LocalDateTime.now();
-
         LocalDateTime birthday = LocalDateTime.of(2000, 1, 1, 0, 00, 00);
 
         System.out.println("间隔的年数：" + ChronoUnit.YEARS.between(birthday, today)); // 间隔的年数：24
