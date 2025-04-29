@@ -23,8 +23,6 @@ public class BasicSearchDemo01 {
      */
     private static ArrayList<Integer> findIndex(int[] arr, int i) {
         ArrayList<Integer> list = new ArrayList();
-
         return list;
     }
-
 }

@@ -5,7 +5,6 @@ import java.time.LocalDate;
 public class LocalDateTimeDemo01 {
     public static void main(String[] args) {
         LocalDate ld1 = LocalDate.now();
-
         System.out.println(ld1); // 2024-07-18
 
         //int year = ld1.getYear();
@@ -24,12 +23,9 @@ public class LocalDateTimeDemo01 {
         //System.out.println(ld1.isAfter(ld1)); // false
 
         LocalDate ld2 = ld1.withYear(2015);
-
         System.out.println(ld2); // 2015-07-18
 
         LocalDate ld3 = ld2.minusYears(1); // 2014-07-18
-
         System.out.println(ld3);
-
     }
 }

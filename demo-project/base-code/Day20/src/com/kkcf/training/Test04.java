@@ -22,7 +22,6 @@ public class Test04 {
     private static long jdk8Calc() {
         LocalDate birthLd = LocalDate.of(1997, 10, 16);
         LocalDate nowLd = LocalDate.now();
-
         return ChronoUnit.DAYS.between(birthLd, nowLd);
     }
 
@@ -40,11 +39,7 @@ public class Test04 {
 
         // 当前时间 Date 对象
         long nowTime = System.currentTimeMillis();
-
         long intervalTime = nowTime - birthTime;
-
         return intervalTime / (1000 * 60 * 60 * 24);
     }
-
-
 }

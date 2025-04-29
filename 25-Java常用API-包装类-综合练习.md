@@ -1,6 +1,6 @@
 # Java 常用 API 之包装类、综合练习
 
-包装类，就是基本数据类型，对应的引用数据类型；它将基本数据类型，变成了一个对象。
+包装类，就是基本数据类型，对应的引用数据类型；它可以将基本数据类型，变成了一个对象。
 
 包装类，在内存中的表现，如下图所示：
 
@@ -69,7 +69,7 @@ public class IntegerDemo01 {
 }
 ```
 
-`valueOf` 静态方法，与构造方法，获取 Integer 对象的区别：
+Integer 的 `valueOf` 静态方法，与 Integer 的构造方法，获取 Integer 对象的区别：
 
 理解下方代码：
 
@@ -99,17 +99,18 @@ public class IntegerDemo02 {
 }
 ```
 
-- `valueOf` 静态方法，会将 -128-127 之间的数字，先创建好 Integer 对象，放入一个 cache 数组中。
-- 当为该方法传入 -128-127 之间的数字时，会使用创建好的 Integer 对象。
-- 这种做法本质上是为了优化性能，节约内存。
+- `valueOf` 静态方法：
+  - Integer 类会将 `-128~127` 之间的数字，先创建好 Integer 对象，放入一个 cache 数组中。
+  - 当为 `valueOf` 静态方传入 `-128~127` 之间的数字时，会使用创建好的 Integer 对象。
+  - 这种做法本质上是为了优化性能，节约内存。
 
 对象之间，不能直接进行计算，如果要进行计算，应执行如下步骤：
 
-1. 把对象进行拆箱，变成基本数据类型；
+1. 把对象进行**拆箱**，变成基本数据类型；
 2. 计算；
-3. 将计算的结果进行装箱，再变回包装类。
+3. 将计算的结果进行**装箱**，再变回包装类。
 
-> Integer 包赚类拆箱，要用到 `intvalue` 实例方法。
+> Integer 包装类拆箱，要用到 `intvalue` 实例方法。
 
 demo-project/base-code/Day20/src/com/kkcf/integer/IntegerDemo03.java
 
@@ -124,10 +125,8 @@ public class IntegerDemo03 {
 
         // 拆箱，并计算
         int result = i1.intValue() + i2.intValue();
-      
         // 装箱
         Integer i3 = new Integer(result);
-
         System.out.println(i3); // 3
     }
 }
@@ -163,9 +162,7 @@ public class IntegerDemo04 {
     public static void main(String[] args) {
         // 自动装箱
         Integer i1 = 10;
-
         Integer i2 = Integer.valueOf(10);
-
         System.out.println(i1 == i2); // true
 
         // 自动拆箱
@@ -235,7 +232,6 @@ public class IntegerDemo05 {
 
   ```java
   boolean flag = Boolean.parseBoolean("true");
-  
   System.out.println(flag); // true
   ```
 
@@ -270,7 +266,7 @@ public class Test01 {
 
 练习一：键盘录入一些 1~100 之间的整数，并添加到集合中。直到集合中所有数据和超过 200 为止。
 
-demo-project/base-code/Day20/src/com/kkcf/test/Test01.java
+demo-project/base-code/Day20/src/com/kkcf/training/Test01.java
 
 ```java
 package com.kkcf.test;
@@ -313,11 +309,11 @@ public class Test01 {
 
 ### 2.练习二
 
-练习二：自己实现 `Integer.parseInt` 方法的效果，将由数字组成的字符串，转成整数。
+练习二：自行实现 `Integer.parseInt` 方法的效果，将由数字组成的字符串，转成整数。
 
 要求：最少 1 位，最多 10 位，且不能以 0 开头。
 
-demo-project/base-code/Day20/src/com/kkcf/test/Test02.java
+demo-project/base-code/Day20/src/com/kkcf/training/Test02.java
 
 ```java
 package com.kkcf.test;
@@ -349,9 +345,9 @@ public class Test02 {
 
 ### 3.练习三
 
-练习三：定义一个方法自己实现 `Integer.toBinaryString` 方法的效果，将一个十进制整数转成字符串表示的二进制。
+练习三：自行实现 `Integer.toBinaryString` 方法的效果，将一个十进制整数，转成字符串表示的二进制。
 
-demo-project/base-code/Day20/src/com/kkcf/test/Test3.java
+demo-project/base-code/Day20/src/com/kkcf/training/Test3.java
 
 ```java
 package com.kkcf.test;
@@ -381,7 +377,7 @@ public class Test3 {
 
 请计算你活了多少天，用 JDK7 和 JDK8 两种方式完成：
 
-demo-project/base-code/Day20/src/com/kkcf/test/Test04.java
+demo-project/base-code/Day20/src/com/kkcf/training/Test04.java
 
 ```java
 package com.kkcf.test;
@@ -420,17 +416,13 @@ public class Test04 {
     private static long jdk7Calc() throws ParseException {
         // 生日时间 Date 对象
         String birthStr = "1997-10-16";
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date birthDate = sdf.parse(birthStr);
-
         long birthTime = birthDate.getTime();
 
         // 当前时间 Date 对象
         long nowTime = System.currentTimeMillis();
-
         long intervalTime = nowTime - birthTime;
-
         return intervalTime / (1000 * 60 * 60 * 24);
     }
 }
@@ -442,7 +434,7 @@ public class Test04 {
 
 判断任意的一个年份，是闰年还是平年？
 
-要求：用 JDK7 和 JDK8 两种方式判断。
+要求：使用 JDK7 和 JDK8 两种方式判断。
 
 提示：二月有 29 天是闰年，一年有 366 天是闰年
 
@@ -450,8 +442,8 @@ JDK7 前的解法：
 
 - 思路 1：计算每一年的 1 月 1 日 0 时 0 分，到 12 月 31 日 23 时 59 分间隔的毫秒数，再转为天数，看是否是 365 天。
 - 思路 2：计算每一年的 2 月 1 日 0 时 0 分，到 3 月 1 日 0 时 0 分间隔的毫秒数，再转为天数，看是否是 29 天。
-- 思路 3，利用 `Calendar` 类，将每一年的 3 月 1 日减去一天，如果结果的日期是 2 月 29 日，说明是闰年。
-- 思路 4：利用 `Calendar` 类，将每一年的 1 月 1 日减去一天，如果结果的日期是一年中的第 366 天，说明前一年是闰年。
+- 思路 3，利用 `Calendar` 类，将每一年的 3 月 1 日减去一天，如果得到的日期是 2 月 29 日，说明是闰年。
+- 思路 4：利用 `Calendar` 类，将每一年的 1 月 1 日减去一天，如果得到的日期是一年中的第 366 天，说明前一年是闰年。
 
 思路 3、思路 4 更加简洁：下方代码用思路 3 实现：
 
@@ -460,7 +452,7 @@ JDK8 的解法，
 - 思路 1：与上方思路 3 类似，只不过使用的是 JDK8 中的日历类 `LocalDate`。
 - 思路 2：直接使用 `LocalDate` 类的方法 `isLeapYear`，判断当前日历对象所在年份是否是闰年。
 
-demo-project/base-code/Day20/src/com/kkcf/test/Test05.java
+demo-project/base-code/Day20/src/com/kkcf/training/Test05.java
 
 ```java
 package com.kkcf.test;
@@ -471,11 +463,8 @@ import java.util.Calendar;
 public class Test05 {
     public static void main(String[] args) {
         int year = 2001;
-
         jdk7Method(year);
-
         jdk8Method1(year);
-
         jdk8Method2(year);
     }
 
@@ -486,13 +475,10 @@ public class Test05 {
     private static void jdk7Method(int year) {
         Calendar c = Calendar.getInstance();
         c.set(year, Calendar.MARCH, 1); // 这里 Calendar.MARCH 是常量 2 表示 3 月。
-
         c.add(Calendar.DAY_OF_MONTH, -1);
-
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         System.out.println(day);
-
         System.out.println(year + (day == 29 ? "是" : "不是") + "闰年");
     }
 
@@ -503,11 +489,9 @@ public class Test05 {
     private static void jdk8Method1(int year) {
         LocalDate date = LocalDate.of(year, 3, 1); // 这里的 3，就表示 3 月。
         date = date.minusDays(1);
-
         int dayOfMonth = date.getDayOfMonth();
 
         System.out.println(dayOfMonth);
-
         System.out.println(year + (dayOfMonth == 29 ? "是" : "不是") + "闰年");
     }
 
@@ -517,7 +501,6 @@ public class Test05 {
      */
     private static void jdk8Method2(int year) {
         LocalDate ld1 = LocalDate.of(year, 2, 1);
-
         boolean flag = ld1.isLeapYear();
 
         System.out.println(year + (flag ? "是" : "不是") + "闰年");
