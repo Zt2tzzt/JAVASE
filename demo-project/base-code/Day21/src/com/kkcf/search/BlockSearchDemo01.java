@@ -40,6 +40,7 @@ public class BlockSearchDemo01 {
             this.endIndex = endIndex;
         }
     }
+
     /**
      * 此方法用于，在索引表中，查找元素所在块的索引
      *
@@ -57,9 +58,10 @@ public class BlockSearchDemo01 {
 
     /**
      * 此方法用于，在数组中，找到目标元素的索引
+     *
      * @param blockArr 索引表
-     * @param arr 数组
-     * @param target 目标元素
+     * @param arr      数组
+     * @param target   目标元素
      * @return 目标元素的索引
      */
     private static int getIndex(Block[] blockArr, int[] arr, int target) {

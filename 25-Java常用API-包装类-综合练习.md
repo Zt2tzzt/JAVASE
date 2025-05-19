@@ -1,6 +1,6 @@
 # Java 常用 API 之包装类、综合练习
 
-包装类，就是基本数据类型，对应的引用数据类型；它可以将基本数据类型，变成了一个对象。
+包装类，就是基本数据类型，对应的引用数据类型；它可以将基本数据类型，变成一个对象。
 
 包装类，在内存中的表现，如下图所示：
 
@@ -9,7 +9,7 @@
 包装类的使用场景：
 
 - 在 Java 中，万物皆对象，又因为有多态的特性，所有对象都可以被 Object 类型的变量引用，包装类也不例外。
-- 集合中不能存储基本数据类型，只能存包装类的对象。
+- 集合中不能存储基本数据类型，只能存储包装类的实例对象。
 
 在 Java 中，基本数据类型，对应的包装类如下：
 
@@ -32,8 +32,8 @@ Integer 包装类中，常用方法如下：
 
 | 方法名                                    | 说明                                      |
 | ----------------------------------------- | ----------------------------------------- |
-| `public Integer(int value)`               | 根据 int 值创建 Integer 对象（已过时）    |
-| `public Integer(String s)`                | 根据 String 值创建 Integer 对象（已过时） |
+| ~~`public Integer(int value)`~~           | 根据 int 值创建 Integer 对象（已过时）    |
+| ~~`public Integer(String s)`~~            | 根据 String 值创建 Integer 对象（已过时） |
 | `public static Integer valueOf(int i)`    | 返回表示指定的 int 值的 Integer 实例      |
 | `public static Integer valueOf(String s)` | 返回保存指定 String 值的 Integer 对象     |
 
@@ -100,9 +100,9 @@ public class IntegerDemo02 {
 ```
 
 - `valueOf` 静态方法：
-  - Integer 类会将 `-128~127` 之间的数字，先创建好 Integer 对象，放入一个 cache 数组中。
-  - 当为 `valueOf` 静态方传入 `-128~127` 之间的数字时，会使用创建好的 Integer 对象。
-  - 这种做法本质上是为了优化性能，节约内存。
+  1. Integer 类会将 `-128~127` 之间的数字，先创建好 Integer 对象，放入一个 cache 数组中。
+  2. 当为 `valueOf` 静态方法传入 `-128~127` 之间的数字时，会使用创建好的 Integer 对象。
+  3. 这种做法本质上是为了优化性能，节约内存。
 
 对象之间，不能直接进行计算，如果要进行计算，应执行如下步骤：
 
@@ -125,6 +125,7 @@ public class IntegerDemo03 {
 
         // 拆箱，并计算
         int result = i1.intValue() + i2.intValue();
+
         // 装箱
         Integer i3 = new Integer(result);
         System.out.println(i3); // 3
@@ -134,7 +135,7 @@ public class IntegerDemo03 {
 
 #### 2.JDK5 及以后 Integer 对象创建
 
-在 JDK5，提出了自动装箱、自动拆箱的机制。
+在 JDK5，提出了**自动装箱、自动拆箱**的机制。
 
 - 自动装箱：表示把基本数据类型，自动变为包装类型。
 - 自动拆箱：表示把包装类型，自动变为基本数据类型。
@@ -151,7 +152,7 @@ public class IntegerDemo04 {
 }
 ```
 
-上面代码是自动装箱的体现，本质上也是调用 `Integer.valueOf` 静态方法，得到一个 Integer 对象。
+- 上面代码是自动装箱的体现，本质上也是调用 `Integer.valueOf` 静态方法，得到一个 Integer 对象。
 
 demo-project/base-code/Day20/src/com/kkcf/integer/IntegerDemo04.java
 
@@ -171,7 +172,7 @@ public class IntegerDemo04 {
 }
 ```
 
-上面代码是自动装箱、自动拆箱的体现，
+- 上面代码是自动装箱、自动拆箱的体现，
 
 在 JDK5 以后，int 类型和 Integer 包装类型，在代码执行时会自动转化。
 
@@ -282,7 +283,6 @@ public class Test01 {
         do {
             System.out.println("请输入一个整数：");
             String str = sc.nextLine();
-
             int i = Integer.parseInt(str);
 
             // 边界判断
@@ -324,7 +324,6 @@ public class Test02 {
 
         // 正则表达式，验证字符串格式
         boolean flag = str.matches("[0-9]\\d{0,9}");
-
         if (!flag) {
             System.out.println("数据格式错误");
             return;
@@ -333,7 +332,6 @@ public class Test02 {
         int result = 0;
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
-
             int num = c - '0';
             result = result * 10 + num;
         }
@@ -404,7 +402,6 @@ public class Test04 {
     private static long jdk8Calc() {
         LocalDate birthLd = LocalDate.of(1997, 10, 16);
         LocalDate nowLd = LocalDate.now();
-
         return ChronoUnit.DAYS.between(birthLd, nowLd);
     }
 

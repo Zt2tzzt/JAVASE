@@ -51,10 +51,10 @@ public class BasicSearchDemo01 {
 
 ### 2.Java 二分查找
 
-二分查找，前提条件是数组中的数据，必须是有序的。
+二分查找，前提条件是数组中的数据，必须是**有序的**。
 
 - 如果是无序的数组，要先排序，再进行二分查找；
-- 所以，二分查找不能查找元素索引，只能用于证明元素是否存在（排序的过程可能会打乱元素顺序）。
+- 在无序序列中，二分查找不能查找元素索引，只能用于**证明元素是否存在**，因为排序的过程可能会打乱元素顺序。
 - 在有序序列中，二分查找可以用于查找元素索引。
 
 二分查找，核心思路是每次排除一半的查找范围。
@@ -66,7 +66,7 @@ public class BasicSearchDemo01 {
 3. 如果要查找的元素，在 `mid` 的左边，缩小范围时 `min` 不变，`max` 等于 `mid - 1`；反之，`max` 不变，`min` 等于 `mid + 1`。
 4. 当 `min > max` 时，如果还未找到，则表示要查询的元素不存在，结束查询。
 
-案例理解：在一个有序数组中，使用二分查找，查找指定的元素
+案例理解：在一个**有序数组**中，使用二分查找，查找指定的元素
 
 demo-project/base-code/Day21/src/com/kkcf/search/BinarySearchDemo01.java
 
@@ -76,7 +76,6 @@ package com.kkcf.search;
 public class BinarySearchDemo01 {
     public static void main(String[] args) {
         int[] arr = {7, 23, 79, 81, 103, 127, 131, 147};
-
         System.out.println(binarySearch(arr, 131));
     }
 
@@ -171,6 +170,7 @@ public class BlockSearchDemo01 {
 
     /**
      * 此方法用于，在索引表中，查找元素所在块的索引
+     *
      * @param blockArr 索引表
      * @param target   目标元素
      * @return 所在块的索引
@@ -185,6 +185,7 @@ public class BlockSearchDemo01 {
 
     /**
      * 此方法用于，在序列中，找到目标元素的索引
+     *
      * @param blockArr 索引表
      * @param arr 数组
      * @param target 目标元素
@@ -292,6 +293,7 @@ public class BlockSearchDemo02 {
 
     /**
      * 此方法用于，在索引表中，查找元素所在块的索引
+     
      * @param blockArr 索引表
      * @param target   目标元素
      * @return 所在块的索引
@@ -366,7 +368,7 @@ public class BlockSearchDemo02 {
 
 ### 3.Java 插值查找
 
-插值查找，同样也只能用于有序序列中元素的查找；且有序序列中的元素要分布均匀，不然效率很低。
+插值查找，同样也只能用于**有序序列**中元素的查找；且有序序列中的元素要分布均匀，不然效率很低。
 
 插值查找，在二分查找的基础上，优化了 `mid` 索引的初始值，使它更加贴近要查找的元素索引。
 
@@ -425,7 +427,7 @@ public class InterpolationSearchDemo01 {
 
 斐波那契查找（Fibonacci Search）是一种基于斐波那契数列的查找算法，同样仅适用于已排序的数组。
 
-它利用斐波那契数列来确定查找范围，从而逐步缩小搜索区间。
+它利用斐波那契数列，来确定查找范围，从而逐步缩小搜索区间。
 
 demo-project/base-code/Day21/src/com/kkcf/search/FibonacciSearchDemo01.java
 
@@ -527,7 +529,7 @@ public class FibonacciSearchDemo01 {
 1. 第一轮比较，会将序列中的最大值，放在最右边；
 2. 第二轮比较，会将序列中的次大值，放在最大值的左边；
 3. 依此类推……
-4. 如果容器中有 n 个数据，总共执行 n-1 轮比较。
+4. 如果容器中有 n 个数据，总共执行 `n-1` 轮比较。
 
 demo-project/base-code/Day21/src/com/kkcf/sort/BubbleDemoSortDemo01.java
 
@@ -574,7 +576,7 @@ public class BubbleDemoSortDemo01 {
 1. 第一轮比较结束后，容器中最小的元素，放在了容器的最左边。
 2. 第二轮比较结束后，容器中第二小的元素，放在了容最小元素的右边。
 3. 依此类推……
-4. 如果容器中有 n 个数据，总共执行 n-1 轮比较。
+4. 如果容器中有 n 个数据，总共执行 `n-1` 轮比较。
 
 如下图所示：
 
@@ -621,7 +623,7 @@ public class SelectionSortDemo01 {
 
 插值排序核心思路：将 0 索引的元素，到 n 索引（0-最大索引）的元素，看作是有序的；
 
-把 n + 1 索引的元素，到最后一个元素，看作是无序的。
+把 `n + 1` 索引的元素，到最后一个元素，看作是无序的。
 
 遍历无序的元素，将遍历到的元素，挨个与有序序列中的元素比较，小的就交换位置，大的不变；相同的插在该元素后面。
 
