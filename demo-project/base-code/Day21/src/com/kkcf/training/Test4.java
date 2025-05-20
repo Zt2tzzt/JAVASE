@@ -9,6 +9,7 @@ public class Test4 {
 
     /**
      * 此方芳用于，递归计算爬楼梯的方式
+     *
      * @param stairs 楼梯的台阶数
      * @return 爬楼梯有的方式有几种
      */

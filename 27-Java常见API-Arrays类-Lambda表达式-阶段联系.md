@@ -32,10 +32,8 @@ import java.util.Arrays;
 public class MyArraysDemo01 {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
-
         String str = Arrays.toString(arr);
-
-        System.out.println(str);
+        System.out.println(str); // [1, 2, 3, 4, 5]
     }
 }
 ```
@@ -46,7 +44,7 @@ public class MyArraysDemo01 {
 
 前提条件：
 
-- 数组中的元素必须是有序的，且必须是升序的。
+- 数组中的元素必须是**有序**的，且必须是**升序**的。
 - 如果要找的元素存在，则返回真实索引；否则，返回该元素 (`-插入点索引 - 1`) 位置的索引；之所以要减 `1`，是为了避免 `-0 = 0` 的情况。
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo01.java
@@ -59,9 +57,7 @@ import java.util.Arrays;
 public class MyArraysDemo01 {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
-
         int index = Arrays.binarySearch(arr, 10);
-
         System.out.println(index); // -6
     }
 }
@@ -87,9 +83,7 @@ import java.util.Arrays;
 public class MyArraysDemo01 {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
-
         int[] copyArr = Arrays.copyOf(arr, 2);
-
         System.out.println(Arrays.toString(copyArr)); // [1, 2]
     }
 }
@@ -111,9 +105,7 @@ import java.util.Arrays;
 public class MyArraysDemo01 {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
-
         int[] copyArr = Arrays.copyOfRange(arr, 2, 4);
-
         System.out.println(Arrays.toString(copyArr)); // [3, 4]
     }
 }
@@ -133,9 +125,7 @@ import java.util.Arrays;
 public class MyArraysDemo01 {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
-
         Arrays.fill(arr, 100);
-
         System.out.println(Arrays.toString(arr)); // [100, 100, 100, 100, 100]
     }
 }
@@ -143,7 +133,7 @@ public class MyArraysDemo01 {
 
 ### 5.sort 方法
 
-`public static void sort(数组)` 方法，用于为数组排序。默认使用快速排序的算法，进行升序排序。
+`public static void sort(数组)` 方法，用于为数组排序。默认使用**快速排序**的算法，进行升序排序。
 
 demo-project/base-code/Day20/src/com/kkcf/arrays/MyArraysDemo01.java
 
@@ -344,7 +334,7 @@ public class Test01 {
 
 定义数组，并存储一些女朋友对象，利用 `Arrays` 工具类中的 `sort` 方法，进行排序。
 
-要求 1：属性有姓名、年龄、身高
+要求 1：对象属性有姓名、年龄、身高
 
 要求 2：按照年龄大小进行排序；如果年龄一样，则按照身高排序；如果身高一样，则按照姓名的字母进行排序。
 
@@ -453,7 +443,7 @@ public class Test06 {
 - 第六个月：8 对
 - ……
 
-我们发现，这个问题，本质上是斐波那契数列。使用 Java 解题的两个思路：
+我们发现，这个问题，本质上是**斐波那契数列**。使用 Java 解题的两个思路：
 
 思路一：循环求解；定义一个长度为 12 的数组，并初始化第一、二个元素为 1，然后利用循环求解。
 
@@ -517,7 +507,7 @@ public class Test02 {
 
 使用递归的方式解题，这里要使用反向递归的思路：
 
-demo-project/base-code/Day21/src/com/kkcf/test/Test03.java
+demo-project/base-code/Day21/src/com/kkcf/training/Test03.java
 
 ```java
 package com.kkcf.test;
@@ -525,16 +515,15 @@ package com.kkcf.test;
 public class Test03 {
     public static void main(String[] args) {
         int result1 = recursion1(10, 1);
-
         System.out.println(result1); // 1534
 
         int result2 = recursion2(1);
-
         System.out.println(result2); // 1534
     }
 
     /**
      * 此方芳用于，递归计算
+     *
      * @param day 最后一天的天数
      * @param count 最后一天剩下的桃子数
      * @return 第一天的桃子数
@@ -547,6 +536,7 @@ public class Test03 {
 
     /**
      * 此方法用于，递归计算
+     *
      * @param day 第一天的天数
      * @return 第一天的桃子数
      */
@@ -564,9 +554,9 @@ public class Test03 {
 
 如果这个楼梯有 20 个台阶，小明一共有多少种爬法呢？
 
-本质上，也是一个斐波那契数列。
+本质上，也是一个**斐波那契数列**。
 
-demo-project/base-code/Day21/src/com/kkcf/test/Test4.java
+demo-project/base-code/Day21/src/com/kkcf/training/Test4.java
 
 ```java
 package com.kkcf.test;
@@ -580,6 +570,7 @@ public class Test4 {
 
     /**
      * 此方芳用于，递归计算爬楼梯的方式
+     * 
      * @param stairs 楼梯的台阶数
      * @return 爬楼梯有的方式有几种
      */
