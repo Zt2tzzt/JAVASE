@@ -20,7 +20,6 @@ public class MyCollectionDemo03 {
         });
 
         coll.forEach(s -> System.out.println(s));
-
         //System.out.println(coll); // [aaa, ccc, ddd]
     }
 }

@@ -11,11 +11,11 @@ Java 中的集合，可分为两类：
 
 ## 二、Java Collection 单列集合
 
-`Collection` 接口，的继承体系结构，如下图所示：
+`Collection` 接口的继承体系结构，如下图所示：
 
 ![Java集合体系结构Collection](NodeAssets/Java集合体系结构.jpg)
 
-`Collection` 是所有单列集合的祖宗接口，它的功能是全部单列集合都可以继承使用的。
+`Collection` 是所有单列集合的父接口，它的功能是全部单列集合都可以继承使用的。
 
 `List` 系列集合实现了 `Collection` 接口。
 
@@ -25,11 +25,11 @@ Java 中的集合，可分为两类：
 - **可重复**：表示集合中存储的元素，是可重复的。
 - **有索引**，表示可以通过索引，获取集合中存放的元素。
 
-> `Vector` 再 JDK1.2 时就已经弃用。
+> `Vector` 在 JDK1.2 就已弃用。
 
 `Set` 系列集合也实现了 `Collection` 接口；
 
-与 `List` 系列集合相反，实现 `Set` 接口的集合类，其中元素要求：
+与 `List` 集合相反，实现 `Set` 接口的集合类，其中元素要求：
 
 - **无序**：指的是存、取的元素（遍历）顺序是不一致的。
 - **不重复**：表示集合中存储的元素，是不可重复的（可用于做去重）。
@@ -71,7 +71,6 @@ public class MyCollectionDemo01 {
         Collection<String> coll = new ArrayList<>();
 
         boolean flag = coll.add("aaa");
-
         System.out.println(flag);
     }
 }
@@ -96,11 +95,9 @@ public class MyCollectionDemo01 {
         coll.add("aaa");
         coll.add("bbb");
         coll.add("ccc");
-
         System.out.println(coll); // [aaa, bbb, ccc]
 
         coll.clear();
-
         System.out.println(coll); // []
     }
 }
@@ -110,7 +107,7 @@ public class MyCollectionDemo01 {
 
 `public boolean remove(Object o)` 方法，用于删除集合中的元素，返回一个布尔值，表示删除是否成功。
 
-- 细节 1：`Collection` 接口里定义的是共性的方法，所以其中没有 `remmove(int index)` 的方法（因为 `Set` 系列集合没有索引）；
+- 细节 1：`Collection` 接口里，定义的是共性的方法，所以其中没有 `remmove(int index)` 的方法（因为 `Set` 系列集合没有索引）；
 - 细节 2：如果要删除的元素存在，返回 `true`；否则，返回 `false`。
 
 demo-project/base-code/Day22/src/com/kkcf/collection/MyCollectionDemo01.java
@@ -128,12 +125,10 @@ public class MyCollectionDemo01 {
         coll.add("aaa");
         coll.add("bbb");
         coll.add("ccc");
-
         System.out.println(coll); // [aaa, bbb, ccc]
 
         boolean flag = coll.remove("aaa");
         System.out.println(flag); // true
-
         System.out.println(coll); // [bbb, ccc]
     }
 }
@@ -163,7 +158,6 @@ public class MyCollectionDemo01 {
 
         boolean flag = coll.contains("ddd");
         System.out.println(flag); // false
-
         System.out.println(coll); // [bbb, ccc]
     }
 }
@@ -273,7 +267,6 @@ public class MyCollectionDemo02 {
 
         // 获取迭代器对象
         Iterator<String> it = coll.iterator();
-
         // 迭代器遍历
         while (it.hasNext()){
             String str = it.next();
@@ -285,8 +278,8 @@ public class MyCollectionDemo02 {
 
 迭代器遍历的细节：
 
-- 当迭代器指针，指向没有元素的位置时，再调用 `next` 方法，会报错 `NoSuchElementException`。
-- 在遍历时，每个循环体，最好只调用一次 `next` 方法。不然也容易报错 `NoSuchElementException`
+- 当迭代器指针，指向没有元素的位置时，再调用 `next` 方法，会抛出异常 `NoSuchElementException`。
+- 在遍历时，每个循环体，最好只调用一次 `next` 方法。不然也容易抛出异常 `NoSuchElementException`
 - 迭代器遍历完毕，指针不会复位；如果要重头遍历，那么要重新创建一个迭代器对象。
 - 迭代器遍历的过程中，不能用集合的 `add`、`remove` 方法，进行增加、删除操作，否则会报错 `ConcurrentModificationException` 表示并发修改异常。
   - 如果要删除元素，应使用迭代器中的 `remove` 方法，删除元素。
@@ -313,11 +306,9 @@ public class MyCollectionDemo02 {
 
         // 获取迭代器对象
         Iterator<String> it = coll.iterator();
-
         // 迭代器遍历
         while (it.hasNext()) {
             String str = it.next();
-
             if ("bbb".equals(str)) it.remove();
         }
 
@@ -330,7 +321,7 @@ public class MyCollectionDemo02 {
 
 在 JDK5 出现了增强 for 遍历，底层是用迭代器遍历实现的。
 
-增强 for 遍历，可用于 `Collection` 单列集合、数组；双列集合不行。
+增强 for 遍历，可用于 `Collection` 单列集合、数组；双列集合不可用。
 
 增强 for 遍历，书写格式如下：
 
@@ -363,7 +354,7 @@ public class MyCollectionDemo03 {
 }
 ```
 
-增强 for 循环中，变量名指的是一个第三方变量，修改它不会改变集合中的原数据。
+增强 for 循环中，变量名是一个**临时引用**，理解如下：
 
 demo-project/base-code/Day22/src/com/kkcf/collection/MyCollectionDemo03.java
 
@@ -390,9 +381,46 @@ public class MyCollectionDemo03 {
 }
 ```
 
+这段代码，这等价于：
+
+```java
+Iterator<String> it = coll.iterator();
+while (it.hasNext()) {
+    String s = it.next();
+    // …
+}
+```
+
+每次循环，`s` 都只是拿到集合中当前元素的**一个拷贝引用**。
+
+`s = "xxx"` 只是改变了局部变量 `s` 的指向
+
+- 当执行 `s = "xxx";`，你只是让局部变量 `s` 从指向原来集合里的那个字符串（比如 `"aaa"`）改为指向新字符串 `"xxx"`。
+- 这并不会修改集合本身，也不会改变集合中原来那几个元素所指向的对象。集合里仍然存着最初插入的 `"aaa"`、`"ccc"`、`"ddd"`。
+
+字符串（`String`）是不可变对象
+
+- 即便你能通过引用改变对象的内部状态（比如 `StringBuilder`），这里也做不到，因为引用没更新回集合，更不可能修改字符串内容。
+
+如果真的想替换集合里的元素
+
+- 对于 `List<String>`，可以用 `ListIterator` 或者下标来做：
+
+  ```java
+  List<String> list = new ArrayList<>(coll);
+  ListIterator<String> it = list.listIterator();
+  while (it.hasNext()) {
+      it.next();
+      it.set("xxx");
+  }
+  System.out.println(list); // [xxx, xxx, xxx]
+  ```
+
+- 或者直接创建一个新集合来存放你想要的值。
+
 #### 3.Collection forEach 方法结合 Lambda 表达式遍历
 
-JDK8 以后，出现了 Lambda 表达式，可用于书写更简单，更直接的遍历集合的方式：
+JDK 8 以后，出现了 Lambda 表达式，可用于书写更简单，更直接的遍历集合的方式：
 
 底层使用的是 `Collection` 接口（继承自 `Iterable` 接口）中的 `forEach` 方法：
 
@@ -502,7 +530,6 @@ public class MyCollectionDemo03 {
         coll.add("ddd");
 
         coll.add(1, "xxx");
-
         System.out.println(coll); // [aaa, xxx, ccc, ddd]
     }
 }
@@ -532,7 +559,6 @@ public class MyCollectionDemo04 {
 
         String remove = list.remove(0);
         System.out.println(remove); // aaa
-
         System.out.println(list); // [bbb, ccc]
     }
 }
@@ -540,7 +566,9 @@ public class MyCollectionDemo04 {
 
 特别注意：如果 `List` 系列集合中，存储的是 `Integer` 包装类型的数据。
 
-- 那么调用集合对象的 `remove` 方法，传入一个 `int` 类型的数字，不会调用 `public boolean removeIf(Object o)` 将参数自动装箱为 `Integer` 类型；而是会调用 `E remove(int index)` 方法，表示删除指定索引位置的元素。
+- 那么调用集合对象的 `remove` 方法，传入一个 `int` 类型的数字：
+  - 不会调用 `public boolean removeIf(Object o)` 将参数自动装箱为 `Integer` 类型；
+  - 而是会调用 `E remove(int index)` 方法，表示删除指定索引位置的元素。
 
 demo-project/base-code/Day22/src/com/kkcf/collection/MyCollectionDemo04.java
 
@@ -560,7 +588,6 @@ public class MyCollectionDemo04 {
 
         Integer remove = list.remove(1);
         System.out.println(remove); // 2
-
         System.out.println(list); // [1, 3]
     }
 }
@@ -590,7 +617,6 @@ public class MyCollectionDemo04 {
 
         String str = list.set(1, "qqq");
         System.out.println(str); // bbb
-
         System.out.println(list); // [aaa, qqq, ccc]
     }
 }
@@ -681,11 +707,9 @@ public class MyCollectionDemo04 {
 
         // 获取列表迭代器
         ListIterator<String> lit = list.listIterator();
-
         // 使用迭代器遍历
         while (lit.hasNext()) {
             String s = lit.next();
-
             if ("bbb".equals(s)) lit.add("qqq");
         }
 
