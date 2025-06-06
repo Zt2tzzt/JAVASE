@@ -16,7 +16,11 @@
 
 案例理解；使用 `Set` 系列集合，添加字符串；
 
-并使用多种方式遍历（迭代器、增强 for 遍历、forEach 方法结合 Lambda 表达式）。
+并使用多种方式遍历：
+
+1. 迭代器遍历；
+2. 增强 for 遍历；
+3. forEach 方法结合 Lambda 表达式。
 
 demo-project/base-code/Day23/src/com/kkcf/set/SetDemo01.java
 
@@ -70,7 +74,7 @@ public class SetDemo01 {
 
 ## 一、HashSet 集合
 
-`HashSet` 特点：无序、不重复、无索引
+`HashSet` 特点：无序、不重复、无索引。
 
 ### 1.哈希表
 
@@ -80,10 +84,10 @@ public class SetDemo01 {
 
 哈希表中，有一个重要的概念：**哈希值**。
 
-- Java 中的哈希值，是实例对象调用 `hashCode` 方法，计算出来的 int 类型的整数；
-- `hashCode` 方法，定义在 `Object` 类中，默认返回实例对象的地址值；
+- Java 中的哈希值，是实例对象调用它的 `hashCode` 方法，计算出来的 int 类型的整数；
+- `hashCode` 方法，定义在 `Object` 类中，默认**返回实例对象的地址值**；
 - 如果自定义类中，不重写 `hashCode` 方法，那么不同实例对象，计算出来的哈希值，都是不一样的。
-- 如果自定义类中，重写 `hashCode` 方法，利用对象内部的属性值，计算哈希值。那么不同的实例对象只要属性值相同，计算出的哈希值就是一样的。
+- 如果自定义类中，重写 `hashCode` 方法，利用对象内部的属性值，计算哈希值。那么不同的实例对象，只要属性值相同，计算出的哈希值就是一样的。
 
 案例理解：创建一个 JavaBean 类 `Student`，并使用它创建两个实例对象，比较它俩的哈希值。
 
@@ -188,9 +192,9 @@ public class SetDemo02 {
 
 ### 3.哈希碰撞
 
-在哈希值计算时，有可能发生**哈希碰撞**
+在哈希值计算时，有可能发生**哈希碰撞**。
 
-- Java 中哈希值是 int 类型的数字，该类型取值范围是 -21 亿多-21 亿多，一共 42 亿多数字；
+- Java 中哈希值是 int 类型的数字，该类型取值范围是 -21 亿多～21 亿多，一共 42 亿多数字；
 - 假设创建了 50 亿个对象，那么必会有 8 亿多对象的哈希值是重复的。
 - 在小部分情况下，不同属性值，或者不同地址值，计算出来的哈希值也有可能是一样的，称为哈希碰撞。
 
@@ -237,13 +241,13 @@ public int hashCode() {
 }
 ```
 
-> `String`、`Integer` 等等 Java 提供的类中，已经重写好了 `hashCode`、`equals` 方法。
+> `String`、`Integer`……Java 提供的包装类中，已经重写好了 `hashCode`、`equals` 方法。
 
 ### 4.重写 hashCode、equals 方法的意义
 
 当在 `HashSet` 中，存储自定义对象时，必须重写该对象类中的 `hashCode`、`equals` 方法。
 
-- 重写 `hashCode` 方法，是为了计算元素的哈希值，将元素存入哈希表底层数组 table 的正确位置。
+- 重写 `hashCode` 方法，是为了计算元素的哈希值，将元素存入哈希表底层**数组 table** 的正确位置。
 - 重写 `equals` 方法，是为了在进行元素之间的比较时，比较元素内的属性值。用于维持 `Set` 系列集合中元素的唯一性。
 
 ### 5.哈希表实现
@@ -282,8 +286,8 @@ Java 中，哈希表的实现：
 
 综上所述：
 
-- `HashSet` 之所以是无序的、无索引的、是因为当遍历哈希表底层数组 table 时，是按照数组 table 的索引进行遍历的，这个顺序与元素添加顺序无关。
-- `HashSet` 之所以是不重复的，是因为元素插入时，会使用该元素的 `equals` 方法进行比较，相同元素会被舍弃。
+- `HashSet` 之所以是**无序的**、无索引的、是因为当遍历哈希表底层数组 table 时，是按照数组 table 的索引进行遍历的，这个顺序与元素添加顺序无关。
+- `HashSet` 之所以是**不重复的**，是因为元素插入时，会使用该元素的 `equals` 方法进行比较，相同元素会被舍弃。
 
 案例理解：利用 `HashSet` 集合，去除重复元素；
 
@@ -327,7 +331,7 @@ public class SetDemo02 {
 
 - 有序，指的是它会保证元素的存入、取出（遍历）顺序是一致的。
 
-`LinkedHashSet` 底层原理：依然使用哈希表的数据结构存储数据，只是每个元素在存入哈希表时，又额外被添加进了一个双向链表的机制，用于记录数据存储的顺序。如下图所示：
+`LinkedHashSet` 底层原理：依然使用哈希表的数据结构存储数据，只是每个元素在存入哈希表时，又额外被添加进了一个双向链表的数据结构，用于记录数据存储的顺序。如下图所示：
 
 ![LinkedHashSet底层原理](NodeAssets/LinkedHashSet底层原理.jpg)
 
@@ -367,11 +371,11 @@ public class SetDemo03 {
 
 `TreeSet` 的特点：**可排序**、不重复、无索引
 
-- 可排序，指的是元素被存入集合后，默认会按照元素值大小升序排序。
+- 可排序，指的是元素被存入集合后，默认会按照元素值升序排序。
 
-`TreeSet` 集合，底层基于红黑树的数据结构实现排序；增、删、改、查性能都比较高。
+`TreeSet` 集合，底层基于红黑树实现排序；增、删、改、查性能都比较高。
 
-当自定义对象，添加到 `TreeSet` 集合中，不需要重写 `hashCode` 、`equals` 方法。而是需要指定该自定义对象的排序规则；
+当自定义对象，添加到 `TreeSet` 集合中，不需要重写 `hashCode` 、`equals` 方法。而是需要**指定该自定义对象的排序规则**；
 
 - 根据排序规则，得到的数值如果相等，表示是同一个元素，则舍弃；
 
@@ -397,15 +401,17 @@ public class SetDemo04 {
 }
 ```
 
-对于 Java 提供的包装类型 `Integer`、`Double`、……默认都是升序排序的。
+对于 Java 提供的包装类型 `Integer`、`Double`、……默认都是**升序排序**的。
 
-对于字符包装类 `Character`，字符串类 `String`，会按照字符在 ASCLL 码表中的数字，升序排序。
+对于字符包装类 `Character`，字符串类 `String`，会按照字符在 ASCLL 码表中的数值，升序排序。
 
 这是因为，上面这些 Java 提供的包装类，都采用了下方 `TreeSet` 默认排序规则。
 
 ### 1.TreeSet 默认排序
 
-`TreeSet` 的默认排序，又称自然排序：指的是存入 `TreeSet` 集合中的对象，它的类实现了 `Comparable` 接口，用于指定该引用类型对象之间的比较规则。
+`TreeSet` 的默认排序，又称自然排序：
+
+- 指的是存入 `TreeSet` 集合中的对象，它的类实现了 `Comparable` 接口，用于指定该引用类型对象之间的比较规则。
 
 案例理解：创建 `TreeSet` 集合，并添加三个学生 `Student` 对象；
 
@@ -505,7 +511,7 @@ import java.util.TreeSet;
 public class SetDemo05 {
     public static void main(String[] args) {
         // 使用匿名内部类的方式实现
-        /*TreeSet<String> treeSet = new TreeSet<>(new Comparator<String>() {
+        TreeSet<String> treeSet1 = new TreeSet<>(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
                 int i = o1.length() - o2.length();
@@ -515,7 +521,7 @@ public class SetDemo05 {
 
                 return i;
             }
-        });*/
+        });
 
         // 使用 Lambda 表达式进行优化
         TreeSet<String> treeSet = new TreeSet<>((o1, o2) -> {
@@ -539,7 +545,7 @@ public class SetDemo05 {
 
 `Comparator` 函数式接口中：
 
-- `compare` 方法的参数 `o1` 表示当前要添加的元素；`o2` 表示已经在 `TreeSet` 底层红黑树中存在的元素。
+- `compare` 方法的参数 `o1` 表示当前**要添加**的元素；`o2` 表示**已经在** `TreeSet` 底层红黑树中存在的元素。
 - `compare` 方法，返回值是：
   - 负数，认为要添加的元素是小的，存在 `TreeSet` 底层红黑树左边。
   - 正数，认为要添加的元素是大的，存在 `TreeSet` 底层红黑树右边。
