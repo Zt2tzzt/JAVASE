@@ -6,7 +6,7 @@
 
 - 此时，不知道该方法传入的参数，有几个？
 
-Java 在没有可变参数前，做法是将所有的参数，封装成一个数组，再传入这个数组到方法中；如下方所示：
+Java 在没有可变参数前，做法是将所有的参数，封装成一个数组，再将这个数组传入到方法中；如下方所示：
 
 demo-project/base-code/Day24/src/com/kkcf/variableparam/Demo01.java
 
@@ -69,7 +69,7 @@ public class Demo02 {
 
 Java 可变参数的特点：
 
-- 方法的形参列表中，只能有**一个**可变参数，且要写在**最后面**；
+- 方法的形参列表中，只能有**一个可变参数**，且要写在**最后面**；
 
 ## 二、Collections 工具类
 
@@ -175,13 +175,11 @@ import java.util.Random;
 public class Test1 {
     public static void main(String[] args) {
         ArrayList<Student> stuList = new ArrayList<>();
-
         Student stu1 = new Student("张三", 16, '男');
         Student stu2 = new Student("李四", 17, '女');
         Student stu3 = new Student("王五", 18, '男');
         Student stu4 = new Student("赵六", 19, '女');
         Student stu5 = new Student("田七", 20, '男');
-
         Collections.addAll(stuList, stu1, stu2, stu3, stu4, stu5);
 
         // 方式一
@@ -201,7 +199,8 @@ public class Test1 {
 
 自动点名器2：班级里有 N 个学生。要求：70% 的概率随机点名到男生；30% 的概率随机点名到女生；
 
-- 思路：直接使用 `Random` 类，只能随机点；如果要随机面，要定义一个用于获取随机数的数组，把“点”转化为“面”：
+- 思路：直接使用 `Random` 类，只能**随机点**；
+- 如果要**随机面**，要定义一个**用于获取随机数的数组**，把“点”转化为“面”：
 
 demo-project/base-code/Day24/src/com/kkcf/training/Test2.java
 
@@ -223,13 +222,11 @@ public class Test2 {
         Student stu1 = new Student("张三", 16, '男');
         Student stu3 = new Student("王五", 18, '男');
         Student stu5 = new Student("田七", 20, '男');
-
         Collections.addAll(maleStu, stu1, stu3, stu5);
 
         // 女学生列表集合
         Student stu2 = new Student("李四", 17, '女');
         Student stu4 = new Student("赵六", 19, '女');
-
         Collections.addAll(femaleStu, stu2, stu4);
 
         // 随即面
@@ -319,9 +316,9 @@ public class Test3 {
 
 ### 4.练习四
 
-自动点名器4：txt 文本文件中，事先准备好 80 个学生姓名，每个学生的名字，独占一行。
+自动点名器 4：txt 文本文件中，事先准备好 80 个学生姓名，每个学生的名字，独占一行。
 
-要求 1：每次被点到的学生，再次被点到的概率在原型的基础上降低一半。
+要求 1：每次被点到的学生，再次被点到的概率在原来的基础上降低一半。
 
 举例：80 个学生，点名 5 次，每次都点到小 A，概率变化情况如下：
 
@@ -331,23 +328,25 @@ public class Test3 {
 
 要求2：作弊要求，第三次点名一定是张三。
 
-本题要用到集合、IO、权重随机算法；有序补全。
+本题要用到的知识点：集合、IO、权重随机算法；有序补全。
 
-补充：微服务
-
-将大项目，拆分成多个小项目，形成一个服务，每个服务又可以有服务器集群来部署。
-
-当用户访问服务时，会根据网关（反向代理），计算服务器的权重，来确定应该访问哪台服务器。
-
-![微服务架构-服务器权重](NodeAssets/微服务架构-服务器权重.jpg)
-
-完整的微服务架构：
-
-![完整的微服务架构](NodeAssets/完整的微服务架构.jpg)
+> 补充：微服务
+>
+> 将大项目，拆分成多个小项目，形成一个个服务，每个服务又可以有服务器集群来部署。
+>
+> 当用户访问服务时，会根据网关（反向代理），计算服务器的权重，来确定应该访问哪台服务器。
+>
+> ![微服务架构-服务器权重](NodeAssets/微服务架构-服务器权重.jpg)
+>
+> 完整的微服务架构：
+>
+> ![完整的微服务架构](NodeAssets/完整的微服务架构.jpg)
 
 ### 5.练习五
 
-定义一个 Map 集合，键表示省份 province，值表示城市 city；但是市会有多个，添加完毕后，遍历结果格式如下；
+定义一个 Map 集合，键表示省份 province，值表示城市 city；
+
+但 city 会有多个，添加完毕后，遍历结果格式如下；
 
 - 江苏省 = 南京市，扬州市，苏州市，无锡市，常州市
 - 湖北省 = 武汉市，孝感市，十堰市，宜昌市，鄂州市
@@ -372,7 +371,6 @@ public class Test4 {
 
         // 省市集合
         HashMap<String, ArrayList<String>> map = new HashMap<>();
-
         map.put("江苏省", jiangsuCityList);
         map.put("湖北省", hubeiCityList);
         map.put("河北省", hebeiCityList);

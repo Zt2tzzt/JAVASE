@@ -44,6 +44,7 @@ public class PokerGame {
 
         // 发牌
         ArrayList<String> lordList = new ArrayList<>(3); // 底牌
+
         ArrayList<String> player1List = new ArrayList<>(); // 玩家1
         ArrayList<String> player2List = new ArrayList<>(); // 玩家2
         ArrayList<String> player3List = new ArrayList<>(); // 玩家3

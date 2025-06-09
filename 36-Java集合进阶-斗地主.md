@@ -124,6 +124,7 @@ public class PokerGame {
 
         // 发牌
         ArrayList<String> lordList = new ArrayList<>(3); // 底牌
+      
         ArrayList<String> player1 = new ArrayList<>(); // 玩家1
         ArrayList<String> player2 = new ArrayList<>(); // 玩家2
         ArrayList<String> player3 = new ArrayList<>(); // 玩家3
@@ -218,7 +219,7 @@ public class PokerGame {
 
 需要使用到 `Map` 集合，将序号与牌面一一对应起来
 
-这里选择使用 `HashMap` 集合，将序号作为键存入其中，因为不需要对序号进行排序。
+这里选择使用 `HashMap` 集合，将序号作为键，存入其中，因为不需要对序号进行排序。
 
 然后，再创建一个存放牌盒的 `ArrayList` 集合，里面存放着扑克牌的序号。
 

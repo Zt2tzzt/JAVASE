@@ -2,7 +2,7 @@
 
 ## 一、HashMap 源码
 
-`HashMap` 中的 `Node` 内部类，用于表示存储在哈希表 table 数组中的链表结点。
+`HashMap` 中的 `Node` 内部类，用于表示存储在哈希表数组 table 中的链表结点。
 
 `Node` 内部类，实现了 `Entry` 接口，所以 **Node 对象**，也被称为 **Entry 对象**，即**键值对对象**。
 
@@ -49,7 +49,7 @@ static class Node<K,V> implements Map.Entry<K,V> {
 }
 ```
 
-`HashMap` 中的 `TreeNode` 内部类，表示存储在哈希表 table 数组中的红黑树结点。
+`HashMap` 中的 `TreeNode` 内部类，表示存储在哈希表数组 table 中的红黑树结点。
 
 `TreeNode` 内部类，也实现了 `Entry` 接口；
 
@@ -396,8 +396,6 @@ private V put(K key, V value, boolean replaceOld) {
     return null;
 }
 
-
-
 private void addEntry(K key, V value, Entry<K, V> parent, boolean addToLeft) {
       Entry<K,V> e = new Entry<>(key, value, parent);
       if (addToLeft)
@@ -409,8 +407,6 @@ private void addEntry(K key, V value, Entry<K, V> parent, boolean addToLeft) {
       size++;
       modCount++;
   }
-
-
 
 private void fixAfterInsertion(Entry<K,V> x) {
     //因为红黑树的节点默认就是红色的
@@ -485,7 +481,7 @@ private void fixAfterInsertion(Entry<K,V> x) {
 
 面试题一：`TreeMap` 添加元素的时候，键是否需要重写 `hashCode` 和 `equals` 方法？
 
-答：不需要，`TreeMap` 底层的红黑树，会对元素键进行比较，如果比较结果是值相同，则会覆盖。
+答：不需要，`TreeMap` 底层的红黑树，会对元素键值进行比较，如果比较结果是相同，则会覆盖。
 
 ### 2.面试题二
 
@@ -520,3 +516,4 @@ private void fixAfterInsertion(Entry<K,V> x) {
 - 默认：`HashMap`（效率最高）；
 - 如果要保证存、取有序：`LinkedHashMap`；
 - 如果要进行键的大小排序：`TreeMap`。
+

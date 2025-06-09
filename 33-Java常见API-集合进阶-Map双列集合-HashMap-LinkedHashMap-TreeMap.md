@@ -34,8 +34,8 @@
 
 `V put(K key, V value)` 方法，用于往双列集合中，添加元素。如果：
 
-- 键不存在，那么直接把键值对对象，添加到集合中，并返回 `null`；
-- 键存在，那么会把原有的键值对对象覆盖，并返回被覆盖的键值对对象的值。
+- **键不存在**，那么直接把键值对对象，添加到集合中，并返回 `null`；
+- **键存在**，那么会把原有的键值对对象覆盖，并返回被覆盖的键值对对象的值。
 
 demo-project/base-code/Day24/src/com/kkcf/map/MapDemo01.java
 
@@ -250,7 +250,6 @@ public class MapDemo02 {
 
         // Map 集合遍历
         Set<String> keySet = map.keySet();
-
         for (String key : keySet) {
             String value = map.get(key);
             System.out.println(key + "=" + value);
@@ -362,23 +361,25 @@ public class MapDemo02 {
 - **不重复**：在 `HashMap` 集合中，键是唯一的。
 - **无索引**：在 `HashMap` 集合中，键没有索引。
 
-`HashMap` 集合，`HashSet` 集合，底层都是使用哈希表结构（JDK8 前：数组 + 链表；JDK8 后：数组 + 链表 + 红黑树）。
+`HashMap` 集合，`HashSet` 集合，底层都是使用**哈希表结构**：
 
-- 当创建一个 `HashMap` 集合对象后，会创建一个长度为 `16`，加载因子为 `0.75` 的数组（table）。
+JDK8 前：数组 table + 链表；
+
+JDK8 后：数组 table + 链表 + 红黑树。
+
+- 当创建一个 `HashMap` 集合对象后，会创建一个长度为 `16`，加载因子为 `0.75` 的数组 table。
 - 当使用 `put` 方法，添加键值对时：
   1. 先创建一个 **Entry 对象**，用于记录要添加的键值对。
   2. 再调用键对象的 `hashCode` 方法，计算键的哈希值，用于确定 Entry 对象在数组中存入的位置。如果该位置上：
      - 为 `null`，直接将 Entry 对象添加到该索引位置。
      - 不为 `null`，说明该位置已有 Entry 对象，组成的链表（或红黑树），那么会调用键对象的 `equals` 方法，挨个比较 Entry 对象中的键对象，如果：
        - 是重复的键，则**覆盖**原有的 Entry 对象。
-       - 不是重复的键，则添加到链表或红黑树上（JDK8 前，老元素会挂在新元素后；JDK8 后，新元素挂在老元素后）；
+       - 不是重复的键，则将 Entry 对象添加到链表或红黑树上（JDK8 前，老元素会挂在新元素后；JDK8 后，新元素挂在老元素后）；
          - 当链表长度大于 `8`，并且数组长度大于等于 `64`，链表自动转为红黑树。
 
 ![HashSet底层实现原理](NodeAssets/HashSet底层实现原理.jpg)
 
-所以，如果键位置，要存储自定义对象，那么就要重写键自定义类的 `hashCode`、`equals` 方法；
-
-如果值的位置存储自定义对象，则不需要。
+因此，如果键位置，要存储自定义对象，那么就要重写键所属自定义类的 `hashCode`、`equals` 方法；如果值的位置存储自定义对象，则不需要。
 
 案例理解：创建一个 `HashMap` 集合，键是学生对象（`Student`），值是籍贯（`String`）。存储三个键值对元素，并遍历。
 
@@ -401,14 +402,12 @@ public class Test1 {
         Student stu3 = new Student("wangwu", 25);
 
         HashMap<Student, String> map = new HashMap<>();
-
         map.put(stu1, "北京");
         map.put(stu2, "上海");
         map.put(stu3, "广州");
 
         // 遍历方式一：键找值
         Set<Student> keys = map.keySet();
-
         for (Student key : keys) {
             String value = map.get(key);
             System.out.println(key + "=" + value);
@@ -416,7 +415,6 @@ public class Test1 {
 
         // 遍历方式二：键值对
         Set<Map.Entry<Student, String>> entries = map.entrySet();
-
         for (Map.Entry<Student, String> entry : entries) {
             Student key = entry.getKey();
             String value = entry.getValue();
@@ -425,7 +423,6 @@ public class Test1 {
 
         // 遍历方式三：forEach + Lambda
         map.forEach((k, v) -> System.out.println(k + "=" + v));
-
         System.out.println(map);
     }
 }
@@ -458,18 +455,15 @@ public class Test2 {
         ArrayList<String> votes = new ArrayList<>();
 
         Random r = new Random();
-
         for (int i = 0; i < 80; i++) {
             int index = r.nextInt(attractions.length);
             String attraction = attractions[index];
             votes.add(attraction);
         }
-
         System.out.println(votes);
 
         // 统计投票
         HashMap<String, Integer> statistics = new HashMap<>();
-
         for (String vote : votes) {
             if (statistics.containsKey(vote)) {
                 Integer count = statistics.get(vote);
@@ -478,13 +472,11 @@ public class Test2 {
                 statistics.put(vote, 1);
             }
         }
-
         System.out.println(statistics);
 
         // 计算票数最多的景点
         int max = 0;
         String maxAttraction = "";
-
         for (String attraction : attractions) {
             if (statistics.containsKey(attraction)) {
                 int count = statistics.get(attraction);
@@ -511,7 +503,10 @@ public class Test2 {
 - **不重复**：在 `LinkedHashMap` 集合中，键是唯一的。
 - **无索引**：在 `LinkedHashMap` 集合中，键没有索引。
 
-`LinkedHashMap` 集合的原理，与 `LinkedHashSet` 集合的原理类似；底层数据结构也是哈希表，只不过每个键值对对象在存入哈希表时，又额外放入了一个双向链表结构，用于记录存、取顺序。
+`LinkedHashMap` 集合的原理，与 `LinkedHashSet` 集合的原理类似；
+
+- 底层数据结构也是哈希表（数组 table）
+- 只不过每个键值对对象，在存入哈希表时，又额外放入了一个双向链表结构，用于记录存、取顺序。
 
 `LinkedHashMap` 集合中。存储的是键值对对象（**Entry 对象**）
 
@@ -545,7 +540,7 @@ public class MapDemo03 {
 
 `TreeMap` 集合，特点是：
 
-- **可排序**：在 `TreeMap` 集合中，可对键进行大小排序。
+- **可排序**：在 `TreeMap` 集合中，可对键值进行大小排序。
 - **不重复**：在 `TreeMap` 集合中，键是唯一的。
 - **无索引**：在 `TreeMap` 集合中，键没有索引。
 
@@ -681,7 +676,6 @@ public class Test5 {
 
         // 统计
         TreeMap<Character, Integer> map = new TreeMap<>();
-
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
 
@@ -695,7 +689,6 @@ public class Test5 {
 
         // 字符串拼接
         StringBuilder sb = new StringBuilder();
-
         for (Character key : map.keySet()) {
             sb.append(key).append("(").append(map.get(key)).append(")");
         }
