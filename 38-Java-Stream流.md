@@ -66,14 +66,15 @@ public class Demo01 {
 }
 ```
 
-Stream 流，通常结合匿名内部类、Lambda 表达式、或者方法引用使用，用于简化集合、数组操作。
+Stream 流，通常结合**匿名内部类**、**Lambda 表达式**、或者**方法引用**使用，用于简化集合、数组操作。
 
 Stream 流的使用步骤：
 
 1. 先得到一条 Stream 流（流水线），并把数据放上去。
 2. 利用 Stream 流中的 API 进行各种操作。其中分为：
    - **中间方法**：方法调用完毕后，还可以调用其它方法；比如：过滤、类型转换……操作，
-   - **终结方法**：这是流的最后一步，方法调用完毕后，不能调用其它方法；比如：统计、打印……操作。
+   - **终结方法**：这是流的最后一步，终结方法调用完毕后，不能再调用其它方法；
+     - 比如：统计、打印……操作。
 
 ![01_Stream流思想](NodeAssets/01_Stream流思想.png)
 
@@ -88,7 +89,7 @@ Stream 流的使用步骤：
 | 数组           | `public static <T> Stream<T> stream(T[] array)` | `Arrays` 工具类中的静态方法   |
 | 一堆零散的数据 | `public static <T> Stream<T> of(T...values)`    | `Stream` 接口中的静态方法     |
 
-双列集合，要使用 `keySet` 或者 `entrySet` 方法，转为键的单列集合后，再获取 Stream 流。
+双列集合，要使用 `keySet` 或者 `entrySet` 方法，转为键或 entry 的单列集合后，再获取 Stream 流。
 
 ### 1.单列集合获取 Stream 流
 
@@ -166,13 +167,11 @@ public class Demo04 {
     public static void main(String[] args) {
         // 基本数据类型数组
         int[] arr1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-
         IntStream stream1 = Arrays.stream(arr1);
         stream1.forEach(i -> System.out.println(i));
 
         // 引用数据类型数组
         String[] arr2 = {"a", "b", "c", "d", "e"};
-
         Stream<String> stream2 = Arrays.stream(arr2);
         stream2.forEach(s -> System.out.println(s));
     }
@@ -196,11 +195,9 @@ import java.util.stream.Stream;
 public class Demo05 {
     public static void main(String[] args) {
         Stream<String> stream1 = Stream.of("a", "b", "c", "d", "e");
-
         stream1.forEach(s -> System.out.println(s));
 
         Stream<Integer> stream2 = Stream.of(new Integer[]{1, 2, 3, 4, 5});
-
         stream2.forEach(i -> System.out.println(i));
     }
 }
@@ -220,7 +217,7 @@ Stream 流的中间方法，有如下几种：
 | `Stream<R> map(Function<T, R> mapper)`                | 转换流中的数据类型                                           |
 | `Stream<T> sorted()`                                  | 升序排序流中的数据                                           |
 | `Stream<T> sorted(Comparator<? super T> comparator)`  | 自定义排序流中的数据                                         |
-| `T reduce(T identity, BinaryOperator<T> accumulator)` | 使用提供的标识值和关联累积函数对此流的元素执行缩减，并返回缩减后的值 |
+| `T reduce(T identity, BinaryOperator<T> accumulator)` | 使用提供的标识值和关联累积函数，对此流的元素执行缩减，并返回缩减后的值 |
 
 流的中间方法，注意事项：
 
@@ -698,11 +695,11 @@ public class Demo13 {
 `Collectors` 工具类中的 `toMap` 方法：
 
 - 参数一：表示键的生成规则；
-  - `Function` 接口泛型一：表示流中数据的类型；泛型二：表示 `Map` 集合中**键**的类型。
+  - `Function` 接口泛型一：表示**流中数据的类型**；泛型二：表示 `Map` 集合中**键**的类型。
   - `apply` 方法形参，依次表示流里面的每一个数据；
   - `apply` 方法体，是生成键的代码。
 - 参数二：表示值的生成规则。
-  - `Function` 接口泛型一：表示流中数据的类型；泛型二：表示 `Map` 集合中**值**的类型。
+  - `Function` 接口泛型一：表示**流中数据的类型**；泛型二：表示 `Map` 集合中**值**的类型。
   - `apply` 方法形参，依次表示流里面的每一个数据；
   - `apply` 方法体，是生成值的代码。
 

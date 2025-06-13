@@ -1,6 +1,6 @@
 # Java 异常
 
-异常，表示程序运行时，出翔的问题；
+异常，表示程序运行时，出现的问题；
 
 学习异常，就是为了处理程序中出现的异常。
 
@@ -45,11 +45,8 @@ import java.util.Date;
 public class Demo01 {
     public static void main(String[] args) throws ParseException {
         String dateStr = "2024年8月5日";
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年mm月dd日");
-
         Date date = sdf.parse(dateStr);
-
         System.out.println(date);
     }
 }
@@ -73,7 +70,6 @@ package com.kkcf.exception;
 public class Demo02 {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
-
         System.out.println(arr[5]);
     }
 }
@@ -143,7 +139,7 @@ Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 1 out
 
 ### 2.2.作用二：特殊返回值
 
-作用二：异常可以作为方法内部的一种特殊返回值，以便通知调用者底层的执行情况；
+作用二：异常可以作为方法内部的一种**特殊返回值**，以便通知调用者底层的执行情况；
 
 案例理解：为 `Student` 设置年龄，限定一个范围，在 `setAge` 方法中进行限定。
 
@@ -192,9 +188,7 @@ import com.kkcf.javabean.Student;
 public class Demo03 {
     public static void main(String[] args) {
         Student stu = new Student("张三-23");
-
         stu.setAge(66);
-
         System.out.println(stu);
     }
 }
@@ -212,7 +206,7 @@ Exception in thread "main" java.lang.RuntimeException: 年龄必须在18-40之�
 
 ### 3.1.JVM 默认处理方式
 
-在发生异常后，如果代码没有进行任何异常处理，那么 Java 会把异常，交给 JVM 虚拟机进行处理。
+在发生异常后，如果代码没有进行任何异常处理，那么 Java 会把异常，**交给 JVM 虚拟机**进行处理。
 
 - 它会把异常的名称，原因，出现的位置等信息，输出在控制台。
 - 它会停止程序执行（异常下方的代码，不会再执行了）。
@@ -277,8 +271,8 @@ public class Demo05 {
 
 1. 当 `try` 代码块中，出现异常时，程序就会在这里创建一个异常对象（比如：`ArrayIndexOutOfBoundsException` 对象）；
 2. 然后拿着这个对象，与 `catch` 小括号中的参数进行对比，看这个参数是否可以接收对象。
-3. 如果能被接收，表示异常被成功捕获；执行 `catch` 代码块中的代码；
-4. 当 `catch` 代码块中的代码执行完毕，继续执行后面的代码。
+   - 如果能被接收，表示异常被成功捕获；执行 `catch` 代码块中的代码；
+3. 当 `catch` 代码块中的代码执行完毕，继续执行后面的代码。
 
 使用 `try……catch` 代码块，捕获异常，会出现以下几种情况：
 

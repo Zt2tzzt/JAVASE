@@ -10,10 +10,10 @@ Java 方法引用，有如下要求：
 
 - 引用处，必须是要传入**函数式接口**的实现类对象的地方；
 - 被引用的方法，必须**已经存在**；
-- 被引用的方法，它的**形参列表**和**返回值**与函数式接口中抽象方法的保持一致；
+- 被引用的方法，它的**形参列表**和**返回值**与函数式接口中抽象方法保持一致；
 - 被引用的方法，功能要满足当前需求；
 
-案例理解：为一个数组进行升序排序：分别使用匿名内部类、Lambda 表达式、方法引用的写法：
+案例理解：为一个数组进行升序排序：分别使用**匿名内部类**、**Lambda 表达式**、**方法引用**的写法：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Demo01.java
 
@@ -135,7 +135,7 @@ public class Test1 {
 
 案例理解：集合中有一些 String 类型的名字，按照要求过滤数据。
 
-实现方式一：使用 Stream 流的 `filter` 方法，结合匿名内部类的方式实现：
+实现方式一：使用 Stream 流的 `filter` 方法，结合**匿名内部类**的方式实现：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/Test2.java
 
@@ -164,11 +164,11 @@ public class Test2 {
 }
 ```
 
-实现方式二：使用 Stream 流的 `filter` 方法，结合方法引用的方式实现：
+实现方式二：使用 Stream 流的 `filter` 方法，结合**方法引用**的方式实现：
 
 创建一个类 `StringOperator`，里面有一个 `stringOperator` 方法；
 
-StringOperator 类：
+`StringOperator` 类：
 
 demo-project/base-code/Day26/src/com/kkcf/methodref/StringOperator.java
 
@@ -335,7 +335,7 @@ public class LoginJFrame extends MyJFrame implements ActionListener {
 
 范例：`Student::new`；
 
-案例理解：集合里面存储姓名和年龄组成的字符串，要求将它们封装成 `Student` 对象，并收集到 `List` 集合中。
+案例理解：集合里面，存储姓名和年龄组成的字符串，要求将它们封装成 `Student` 对象，并收集到 `List` 集合中。
 
 实现方式一：使用 Stream 流的 `map` 方法，结合匿名内部类的方式：
 
@@ -456,7 +456,7 @@ public class Demo02 {
   - 在 Stream 流当中使用的方法，传入的函数式接口实现类中的抽象方法，第一个参数往往表示流里面的数据；
   - 假设这个数据是字符串类型的，那么就只能引用 `String` 类里的成员方法。
 - **第二个参数到最后一个参数**：跟被引用方法的形参保持一致，
-  - 抽象方法如果没有第二个参数，那么被引用的方法必须是类中的无参成员方法。
+  - 抽象方法如果没有第二个参数，那么被引用的方法，必须是类中的无参成员方法。
 
 案例理解：集合里面添加一些字符串，要求变成大写后再进行输出
 
@@ -742,3 +742,4 @@ Java 方法引用，使用总结：
      - 普通情况：`对象::方法名`；
      - 特殊情况：`类名::方法名`；
    - 构造方法：`类名::new`；
+   - 数组构造方法：`类型[]::new`
