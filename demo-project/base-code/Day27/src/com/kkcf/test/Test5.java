@@ -9,9 +9,7 @@ public class Test5 {
             System.out.println("删除文件" + (flag ? "成功" : "失败") + src.getAbsoluteFile());
         } else {
             File[] files = src.listFiles();
-
             if (files == null) return;
-
             for (File file : files)
                 deleteFile(file);
 

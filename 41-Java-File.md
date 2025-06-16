@@ -3,12 +3,15 @@
 在 Java 中用 `File` 类，表示计算机文件保存的位置（路径）。
 
 - 绝对路径：
-  - Windows 系统：带盘符；
-  - Linux 系统：带 `/` 根目录。
+  - Windows 系统：以盘符开头；
+  - Linux 系统：以 `/` 根目录开头。
 
 - 相对路径：不带盘符，默认在当前项目（project）目录下查找。
 
-`File` 对象，可以表示一个**文件**，或**文件夹**；它可以是**存在**，或**不存在**的；
+`File` 对象，可以
+
+- 表示一个**文件**，或**文件夹**；
+- 是**存在**，或**不存在**的；
 
 把一个字符串表示的路径，转成 File 对象，就是为了使用其中的方法。
 
@@ -16,11 +19,11 @@
 
 `File` 类常见的构造方法有：
 
-| 方法名                                     | 说明                                             |
-| ------------------------------------------ | ------------------------------------------------ |
-| `public File(String pathname)`             | 根据文件路径字符串，创建文件对象                 |
-| `public File(String parentm String child)` | 根据父路径字符串，和子路径字符串，创建文件对象   |
-| `public File(File parent, String child)`   | 根据父路径文件对象，和子路径字符串，创建文件对象 |
+| 方法名                                    | 说明                                             |
+| ----------------------------------------- | ------------------------------------------------ |
+| `public File(String pathname)`            | 根据文件路径字符串，创建文件对象                 |
+| `public File(String parent String child)` | 根据父路径字符串，和子路径字符串，创建文件对象   |
+| `public File(File parent, String child)`  | 根据父路径文件对象，和子路径字符串，创建文件对象 |
 
 ### 1.1.File(String pathname)
 
@@ -80,9 +83,7 @@ import java.io.File;
 public class Demo01 {
     public static void main(String[] args) {
         File f3 = new File("D:\\workshop\\tutorial\\JAVA\\demo-project\\base-code\\Day27\\src\\com\\kkcf\\file");
-
         File f4 = new File(f3, "a.txt"); // D:\workshop\tutorial\JAVA\demo-project\base-code\Day27\src\com\kkcf\file\a.txt
-
         System.out.println(f4);
     }
 }
@@ -92,7 +93,7 @@ public class Demo01 {
 
 ### 2.1.判断、获取文件信息
 
-`File` 类常见的成员方法，用于判断、获取文件信息：、
+`File` 类，常见的成员方法，用于判断、获取文件信息：、
 
 #### 2.1.1.boolean isDirectory() 方法
 
@@ -108,7 +109,7 @@ public class Demo01 {
 
 #### 2.1.4.long length() 方法
 
-`public long length()`，返回 file 对象（文件）的大小（单位：字节），无法获取文件夹大小。
+`public long length()`，返回**文件**的大小（单位：字节），无法获取**文件夹**大小。
 
 #### 2.1.5.String getAbsolutePath() 方法
 
@@ -144,13 +145,10 @@ import java.time.format.DateTimeFormatter;
 public class Demo02 {
     public static void main(String[] args) {
         File f1 = new File("D:\\Workshop\\tutorial\\JAVA\\demo-project\\base-code\\Day27\\src\\com\\kkcf\\file\\a.txt");
-
         System.out.println(f1.isDirectory()); // false
         System.out.println(f1.isFile()); // true
         System.out.println(f1.exists()); // true
-
         System.out.println(f1.length()); // 6
-
         System.out.println(f1.getAbsoluteFile()); // D:\Workshop\tutorial\JAVA\demo-project\base-code\Day27\src\com\kkcf\file\a.txt
         System.out.println(f1.getPath()); // D:\Workshop\tutorial\JAVA\demo-project\base-code\Day27\src\com\kkcf\file\a.txt
         System.out.println(f1.getName()); // a.txt
@@ -181,7 +179,7 @@ public class Demo02 {
 
 - 细节 1：如果文件路径表示的文件已存在，则返回 `false`；否则返回 `true`；
 - 细节 2：如果父级路径不存在，会出现异常 `IOException`。
-- 细节 3：该方法创建的是文件，如果没有后缀名，会创建一个没有后缀名的文件。
+- 细节 3：该方法创建的是文件，如果传入的文件名没有后缀名，会创建一个没有后缀名的文件。
 
 demo-project/base-code/Day27/src/com/kkcf/file/Demo03.java
 
@@ -202,7 +200,7 @@ public class Demo03 {
 
 #### 2.2.2.boolean mkdir 方法
 
-`public boolean mkdir()` 方法，用于创建单级文件夹。
+`public boolean mkdir()` 方法，用于创建**单级文件夹**。
 
 - 细节 1：在 Windows 操作系统中，路径一定是唯一的，如果路径重复会返回 `false`，否则返回 `true`。
 - 细节 2：只能创建单级文件夹，不能创建多级文件夹。
@@ -226,7 +224,7 @@ public class Demo03 {
 
 #### 2.2.3.boolean mkdirs 方法
 
-`public boolean mkdirs()` 方法，用于创建多级文件夹。
+`public boolean mkdirs()` 方法，用于创建**多级文件夹**。
 
 - 细节 1：既可以创建单级文件夹，又可以创建多级文件夹。
 - 斜街 2：如果文件路径已存在，则会创建失败；否则就会创建成功。
@@ -255,7 +253,7 @@ public class Demo03 {
 
 - 细节 1：删除的是文件，则不放入回收站。
 - 细节 2：删除的是空文件夹，则不放入回收站；
-- 细节 3：删除的是有内容的文件夹，则则删除失败。
+- 细节 3：删除的是**有内容的文件夹**，则则**删除失败**。
 
 demo-project/base-code/Day27/src/com/kkcf/file/Demo03.java
 
@@ -299,7 +297,6 @@ public class Demo03 {
         File f1 = new File("D:\\Workshop\\tutorial\\JAVA\\demo-project\\base-code\\Day27\\src\\com\\kkcf\\file");
 
         File[] files = f1.listFiles();
-
         for (File file : files)
             System.out.println(file.getName());
     }
@@ -337,7 +334,6 @@ import java.util.Arrays;
 public class Demo04 {
     public static void main(String[] args) {
         File[] files = File.listRoots();
-
         System.out.println(Arrays.toString(files)); // [C:\, D:\, E:\, F:\]
     }
 }
@@ -359,7 +355,6 @@ public class Demo04 {
     public static void main(String[] args) {
         File f1 = new File("D:\\Workshop\\tutorial\\JAVA\\demo-project\\base-code\\Day27\\src\\com\\kkcf\\file");
         String[] list = f1.list();
-
         System.out.println(Arrays.toString(list)); // [a.txt, aaa, b.txt, Demo01.java, Demo02.java, Demo03.java, Demo04.java]
     }
 }
@@ -367,7 +362,7 @@ public class Demo04 {
 
 #### 2.3.4.String[] list(FilenameFilter filter) 方法
 
-`public String[] list(FilenameFilter filter)` 方法，使用文件名过略器，获取 File 对象下以 .txt 结尾的文件名字符串数组。
+`public String[] list(FilenameFilter filter)` 方法，使用文件名过滤器，获取 File 对象下以 .txt 结尾的文件名字符串数组。
 
 需求：获取目录下所有 ”.txt“ 结尾的文件。
 
@@ -398,7 +393,7 @@ public class Demo04 {
 
 - 参数一：`File dir`，依次表示 File 对象下，所有内容的父级路径对象。
 - 参数二：`String name`，依次表示 File 对象下，所有内容的名称字符串。
-- 返回值： `true`，表示当前路径保留；`false`，表示当前路径不保留；
+- 返回值： `true`，表示过滤器保留当前路径；`false`，表示过滤器不保留当前路径；
 
 #### 2.3.5.File[] listFiles(FileFilter filter) 方法
 
@@ -545,7 +540,6 @@ public class Test4 {
     public static void findAvi(File src) {
         // 1.进入文件夹；
         File[] files = src.listFiles();
-
         if (files == null) return;
 
         // 2.遍历文件夹下的内容（File 数组）；
@@ -599,9 +593,7 @@ public class Test5 {
             System.out.println("删除文件" + (flag ? "成功" : "失败") + src.getAbsoluteFile());
         } else {
             File[] files = src.listFiles();
-
             if (files == null) return;
-
             for (File file : files)
                 deleteFile(file);
 
@@ -635,7 +627,6 @@ public class Test6 {
             return src.length();
         } else {
             File[] files = src.listFiles();
-
             if (files == null) return 0;
 
             long size = 0;
@@ -679,7 +670,6 @@ public class Test7 {
 
         if (src.isDirectory()) {
             File[] files = src.listFiles();
-
             if (files == null) return null;
 
             for (File file : files)

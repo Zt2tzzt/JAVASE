@@ -5,7 +5,6 @@ import java.io.File;
 public class Test4 {
     public static void findAvi(File src) {
         File[] files = src.listFiles();
-
         if (files == null) return;
 
         for (File file : files) {

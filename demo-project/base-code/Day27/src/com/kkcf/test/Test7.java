@@ -8,7 +8,6 @@ public class Test7 {
 
         if (src.isDirectory()) {
             File[] files = src.listFiles();
-
             if (files == null) return null;
 
             for (File file : files)

@@ -11,8 +11,10 @@ public class Test3 {
     public static boolean hasAvi(File file) {
         File[] files = file.listFiles();
 
-        for (File f : files)
-            if (f.getName().endsWith(".avi")) return true;
+        if (files != null) {
+            for (File f : files)
+                if (f.isFile() && f.getName().endsWith(".avi")) return true;
+        }
 
         return false;
     }

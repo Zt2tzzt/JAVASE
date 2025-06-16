@@ -169,7 +169,7 @@ public class Student {
         if (age >= 18 && age <= 40) {
             this.age = age;
         } else {
-            //System.out.println("年龄必须在18-40之间");
+            // System.out.println("年龄必须在18-40之间");
             throw new RuntimeException("年龄必须在18-40之间");
         }
     }

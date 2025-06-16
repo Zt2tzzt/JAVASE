@@ -9,13 +9,12 @@ public class Test6 {
             return src.length();
         } else {
             File[] files = src.listFiles();
-
             if (files == null) return 0;
 
             long size = 0;
-            for(File file : files) {
+            for(File file : files)
                 size += getFileSize(file);
-            }
+
             return size;
         }
     }
