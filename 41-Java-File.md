@@ -638,7 +638,6 @@ public class Test6 {
     }
     public static void main(String[] args) {
         File src = new File("Day27/src/com/kkcf/test/aaa");
-
         long fileSize = getFileSize(src);
         System.out.println("文件大小为：" + fileSize);
     }

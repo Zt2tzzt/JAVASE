@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 public class Test7 {
     public static HashMap<String, Integer> getCountMap(File src, HashMap<String, Integer> map) {
-
         if (src.isDirectory()) {
             File[] files = src.listFiles();
             if (files == null) return null;
@@ -24,12 +23,10 @@ public class Test7 {
     }
 
     public static void main(String[] args) {
-        File src = new File("Day27/src/com/kkcf/test/aaa");
         HashMap<String, Integer> map = new HashMap<>();
-
+        File src = new File("Day27/src/com/kkcf/test/aaa");
         HashMap<String, Integer> result = getCountMap(src, map);
         if (result == null) return;
-
         result.forEach((key, val) -> System.out.println(key + ":" + val + "个"));
     }
 }

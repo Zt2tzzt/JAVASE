@@ -18,8 +18,8 @@ public class Test3 {
         if (flag) System.out.println("新建了文件夹：" + dest.getName());
 
         File[] files = src.listFiles();
-
         if (files == null) return;
+
         for (File file : files) {
             if (file.isFile()) {
                 // 拷贝

@@ -18,7 +18,7 @@ public class Demo05 {
             while ((len = fis.read(bytes)) != -1) fos.write(bytes, 0, len);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         long end = System.currentTimeMillis();

@@ -2,7 +2,7 @@
 
 IO 流：是存储、读取数据的解决方案。
 
-IO 流，指的是以（运行在内存中的）程序为参照物，读（Input）、写（Output）本地文件，或网络中的数据。
+IO 流，指的是以**（运行在内存中的）程序**为参照物，**读（Input）**、**写（Output）**本地文件，或网络中的数据。
 
 ## 一、Java IO 流向
 
@@ -46,7 +46,7 @@ Java IO 字节流的体系结构，如下图所示：
 
 ### 4.1.FileOutputStream 子类
 
-`FileOutputStream` 类，是用于操作本地文件的字节输出流，可以把程序中的数据，写入到文件中。使用步骤：
+`FileOutputStream` 类，是用于操作**本地文件**的字节输出流，可以把程序中的数据，写入到文件中。使用步骤：
 
 1. 创建字节输出流对象；
 2. 写数据；
@@ -98,7 +98,7 @@ public class Demo01 {
 
 - 细节 1：如果文件不存在，会创建一个新的文件，但是要保证**父级路径存在**，否则会报错。
 - 细节 2：如果文件存在，默认会在写入时覆盖文件内容，除非开启续写。
-- 细节 3：每次使用完流后，都要释放资源。否则文件会处于被占用的状态。
+- 细节 3：每次使用完流后，都要**释放资源**。否则文件会处于被占用的状态。
 - 细节 4：`write` 方法的参数是整数，表示写入字符对应的 ASCLL 码。
 
 #### 4.1.2.FileOutputStream 成员方法
@@ -238,7 +238,7 @@ public class Demo02 {
 
 `FileInputStream` 常用的构造方法如下：
 
-##### 4.2.1.1.FileInputStream)(String name) 狗崽哦方法
+##### 4.2.1.1.FileInputStream)(String name) 构造方法
 
 `FileInputStream(String name)`，根据字符串表示的路径，创建字节输入流对象。
 
@@ -338,13 +338,15 @@ public class Demo05 {
 }
 ```
 
-- 释放资源的时候，**先开的流，最后关闭**。
+- 释放资源的时候，**先开的流，后关闭**。
+
+### 5.1.int read(byte[] buffer) 方法
 
 一次读取一个字节，速度太慢。要让 `FileInputStream` 字节输入流，一次读取多个字节，可以使用如下方法：
 
-| 方法名                           | 说明                   |
-| -------------------------------- | ---------------------- |
-| `public int read(byte[] buffer)` | 一次读取一个字节数组数 |
+| 方法名                           | 说明                 |
+| -------------------------------- | -------------------- |
+| `public int read(byte[] buffer)` | 一次读取一个字节数组 |
 
 上面方法，用于一次读取一个字节数组，返回值表示**读到的字节数组长度**。
 
@@ -479,7 +481,7 @@ public class Demo05 {
 
 在 JDK7，Java 推出了 `AutoCloseable` 接口。实现该接口的类，在特定情况下，可以**自动释放资源/关流**。
 
-- 比如：`FileInputStream` 子类，继承自 `InputStream` 抽象类，该抽象类，又实现了 `Closeable` 接口，该接口，又继承自 `AutoCloseable` 接口；
+- 比如：`FileInputStream` 类，继承自 `InputStream` 抽象类，该抽象类，又实现了 `Closeable` 接口，该接口，又继承自 `AutoCloseable` 接口；
 - 所以 `FileInputStream` 、`FileOutputStream` 这些类，适用于特定情况。
 
 特定情况一：JDK7 格式：
