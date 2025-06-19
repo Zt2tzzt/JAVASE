@@ -34,7 +34,7 @@ Java 缓冲流的体系结构，如下图所示：
 | `public BufferInputStream(InputStream ls)` | 把基本流，包装成缓冲流（高级流），提高**读取**数据的性能 |
 | `public BufferOutputStream(OutStream os)`  | 把基本流，包装成缓冲流（高级流），提高**写出**数据的性能 |
 
-### 1.字节缓冲流拷贝文件
+### 1.1.字节缓冲流拷贝文件
 
 使用字节缓冲流，拷贝文件：
 
@@ -88,7 +88,7 @@ public class Demo01 {
 }
 ```
 
-### 2.字节缓冲流的原理
+### 1.2.字节缓冲流的原理
 
 字节缓冲流的原理，如下图所示：
 
@@ -107,7 +107,7 @@ public class Demo01 {
 | `public BufferReader(Reader r)` | 把基本流，包装成缓冲流（高级流），提高读取数据的性能 |
 | `public BufferWriter(Writer w)` | 把基本流，包装成缓冲流（高级流），提高写出数据的性能 |
 
-### 1.字符缓冲流的基本使用
+### 2.1.字符缓冲流的基本使用
 
 字符缓冲流，有两个非常好用的特有方法，如下方所示：
 
@@ -115,7 +115,7 @@ public class Demo01 {
 | -------------------------- | ------------------------------------------- |
 | `public String readLine()` | 读取一行数据，没有数据可读时，则会返回 null |
 
-- 细节 1：该方法，读取到换行符时，会结束读取，但不会读取换行符。
+- 细节 1：该方法，读取到换行符时，会结束读取（不会读取换行符）。
 
 案例理解：读取文件中的数据，打印到控制台：
 
@@ -170,7 +170,7 @@ public class Demo03 {
 }
 ```
 
-创建字节缓冲输出流，并开启续写，应在基本流的构造方法中，开启续写：
+如果要创建字节缓冲输出流，并开启续写，那么应在关联的基本流上，开启续写：
 
 demo-project/base-code/Day29/src/com/kkcf/io/Demo03.java
 
@@ -195,21 +195,21 @@ public class Demo03 {
 }
 ```
 
-### 2.字符缓冲流的原理
+### 2.2.字符缓冲流的原理
 
 字符缓冲流的原理，与字节缓冲流类似：
 
 ![字节缓冲流的原理](NodeAssets/字节缓冲流的原理.jpg)
 
-字符缓冲流的缓冲区，是长度为 8192 的**字符数组**，即 **16k** 的缓冲区；
+**字符缓冲流**的缓冲区，是长度为 8192 的**字符数组**，即 **16k** 的缓冲区；
 
-字节缓冲流的缓冲区，是长度为 8192 的**字节数组**，即 **8k** 的缓冲区；
+**字节缓冲流**的缓冲区，是长度为 8192 的**字节数组**，即 **8k** 的缓冲区；
 
 ## 三、字节缓冲流综合练习
 
-### 1.练习一：读取数据并排序
+### 3.1.练习一：读取数据并排序
 
-读取 csb.txt 文本文件中的数据，并按照每行开头的序号，进行排序；将排序后的数据写入到 result.txt 文本文件中。
+读取 csb.txt 文本文件中的数据，并按照每行开头的序号，进行排序；将排序后的数据，写入到 result.txt 文本文件中。
 
 - 使用字符缓冲输入、输出流，结合 `TreeMap` 来进行排序。
 
@@ -260,7 +260,7 @@ public class Test1 {
 
 - String 类的 `split` 方法中，传入的“`.`” 要加上 `\\`，在 Java 中表示转义字符；否则会被当作正则表达式。
 
-### 2.练习二：统计程序运行次数
+### 3.2.练习二：统计程序运行次数
 
 实现一个验证程序运行次数的程序，要求如下：
 
@@ -279,9 +279,7 @@ public class Test2 {
     public static void main(String[] args) throws IOException {
         // 读取次数
         BufferedReader br = new BufferedReader(new FileReader("Day29/src/com/kkcf/test/count.txt"));
-
         String s = br.readLine();
-
         br.close();
 
         // 判断
@@ -290,9 +288,7 @@ public class Test2 {
 
         // 写入次数
         BufferedWriter bw = new BufferedWriter(new FileWriter("Day29/src/com/kkcf/test/count.txt"));
-
         bw.write(String.valueOf(count));
-
         bw.close();
     }
 }

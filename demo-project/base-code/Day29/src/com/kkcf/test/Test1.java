@@ -29,7 +29,6 @@ public class Test1 {
 
         // 写入
         BufferedWriter bw = new BufferedWriter(new FileWriter("Day29/src/com/kkcf/test/result.txt"));
-
         for (Map.Entry<Integer, String> entry : tm.entrySet()) {
             bw.write(entry.getKey() + "." + entry.getValue());
             bw.newLine();

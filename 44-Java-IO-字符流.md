@@ -264,7 +264,7 @@ public class Demo09 {
 
 ## 三、字符流原理分析
 
-### 1.Reader 字符输入流底层原理
+### 3.1.Reader 字符输入流底层原理
 
 创建字符输入流（Reader）对象时，底层会关联文件，并创建**缓冲区**，一个长度为 `8192` 的**字节数组**。
 
@@ -306,7 +306,7 @@ public class Test1 {
 }
 ```
 
-### 2.Writer 字符输出流底层原理
+### 3.2.Writer 字符输出流底层原理
 
 创建字符输出流（Writer）对象时，底层也会关联文件，并创建**缓冲区**，一个长度为 `8192` 的字节数组。
 
@@ -360,7 +360,7 @@ public class Test2 {
 
 ## 五、综合练习
 
-### 1.练习一：拷贝文件夹
+### 5.1.练习一：拷贝文件夹
 
 拷贝一个文件夹下的所有内容，到另一个文件夹下，考虑子文件夹。
 
@@ -411,20 +411,19 @@ public class Test3 {
     public static void main(String[] args) throws IOException {
         File src = new File("Day28/src/com/kkcf/test/abc");
         File dest = new File("Day28/src/com/kkcf/test/dest");
-
         copy(src, dest);
     }
 }
 ```
 
-### 2.练习二：文件加密
+### 5.2.练习二：文件加密
 
 为了保证文件的安全性，需要对原始文件进行加密存储，在使用的时候，再对其进行解密处理。
 
 - 加密原理：对原始文件中的每一个字节数据，进行更改，然后将更改后的数据存储到新的文件中。
 - 解密原理：读取加密之后的文件，按照加密的规则反向操作，变成原始文件。
 
-> `^` 逻辑异或运算符，可用于计算数字，会将运算元，转为二进制数字进行运算。
+> `^` **逻辑异或运算符**，可用于计算数字，会将运算元，转为二进制数字进行运算。
 >
 > 如果一个数字，^ 异或运算另外一个数字两次，会得到它本身
 >
@@ -462,13 +461,11 @@ public class Test4 {
         // 加密
         File src = new File("Day28/src/com/kkcf/test/secret.txt");
         File dest = new File("Day28/src/com/kkcf/test/encry.txt");
-
         encryption(src, dest);
 
         // 解密
         src = new File("Day28/src/com/kkcf/test/encry.txt");
         dest = new File("Day28/src/com/kkcf/test/decry.txt");
-
         encryption(src, dest);
     }
 }
@@ -478,7 +475,7 @@ public class Test4 {
 >
 > decryption 单词，表示解密。
 
-### 3.练习三：修改文件中的数据
+### 5.3.练习三：修改文件中的数据
 
 文本文件中，有数据：2-1-9-4-7-8；将文件中的数据进行排序，变成：1-2-4-7-8-9。
 

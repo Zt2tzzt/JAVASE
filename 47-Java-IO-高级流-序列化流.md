@@ -136,7 +136,7 @@ Java 底层，会根据这个类的成员变量、静态变量，构造方法、
 
 此时，如果修改 JavaBean 类中的成员，反序列化文件中保存的对象，读取到程序中时，就会抛出异常 `InvalidClassException`：如下方所示：
 
-修改 Student 类，在其中加入成员变量 `address`：
+案例理解：修改 Student 类，在其中加入成员变量 `address`：
 
 demo-project/base-code/Day29/src/com/kkcf/serialization/Student.java
 
@@ -291,9 +291,7 @@ public class Demo03 {
         ));
 
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Day29/src/com/kkcf/serialization/student.txt"));
-
         oos.writeObject(list);
-
         oos.close();
     }
 }

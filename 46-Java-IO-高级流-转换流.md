@@ -16,7 +16,7 @@
 - 作用 1：为字节流，指定字符集，来读、写文本文件的内容（这种做法在 JDK11 已淘汰）
 - 作用 2：为字节流，调用字符流的方法。
 
-### 1.作用一：为字节流指定字符集读写文本内容
+### 1.1.作用一：为字节流指定字符集读写文本内容
 
 案例理解：利用 `InputStreamReader` 字符转换输入流，为字节输入流，指定字符集编码，读取文本文件中的内容。
 
@@ -82,9 +82,7 @@ import java.io.OutputStreamWriter;
 public class Demo02 {
     public static void main(String[] args) throws IOException {
         OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream("Day29/src/com/kkcf/convert/gbkFile.txt"), "GBK");
-
         osw.write("我超级超级喜欢玉子！");
-
         osw.close();
     }
 }
@@ -106,15 +104,13 @@ import java.nio.charset.Charset;
 public class Demo02 {
     public static void main(String[] args) throws IOException {
         FileWriter fw = new FileWriter("Day29/src/com/kkcf/convert/gbkFile.txt", Charset.forName("GBK"));
-
         fw.write("我超级超级喜欢玉子！");
-
         fw.close();
     }
 }
 ```
 
-#### 1.文件编码转换
+#### 1.1.1.文件编码转换
 
 案例理解：将 GBK 编码的文件，转为 UTF-8 编码的文件。
 
@@ -167,9 +163,9 @@ public class Demo03 {
 }
 ```
 
-### 2.作用二：为字节流调用字符流的方法
+### 1.2.作用二：为字节流调用字符流的方法
 
-案例理解：利用字节流，读取文件中的数据，不能出现乱码，并且每次读一整行。分析：
+案例理解：利用字节流，读取文本文件中的数据，不能出现乱码，并且每次读一整行。分析：
 
 - 不能出现乱码，意味着要使用 `Reader` 字符输入流读取；
 - 每次读一整行，意味着要使用 `BufferedReader` 字符缓冲输入流。

@@ -30,7 +30,7 @@
 | `public PrintStream(OutputStream os, boolean autoFlush, String encoding)` | 关联字节输出流，并指定字符集编码和自动刷新 |
 
 - 无论关联的是 File 对象，还是文件路径字符串，底层都会创建一个**字节输出流**。
-- 字节打印输出流底层没有缓冲区，开不开自动刷新，都会直接写出到文件中。
+- 字节打印输出流底层没有缓冲区，不论开不开自动刷新，都会直接写出到文件中。
 
 ### 2.PrintStream 的成员方法
 
@@ -64,7 +64,7 @@ public class Demo01 {
         ps.println(97); // 写入 97
         ps.print(true); // 写入 true
         ps.println();
-        ps.printf("%s爱上了%s", "阿珍", "阿强");
+        ps.printf("%s爱上了%s", "wee", "zzt");
 
         ps.close();
     }
