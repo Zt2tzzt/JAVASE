@@ -11,7 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Test1 {
-
     /**
      * 此方法用于：爬取网页数据
      *
@@ -174,7 +173,6 @@ public class Test1 {
 
         // 写出数据
         BufferedWriter bw = new BufferedWriter(new FileWriter("Day30/src/com/kkcf/iopractice/name.txt"));
-
         for (String s : namelist) {
             bw.write(s);
             bw.newLine();

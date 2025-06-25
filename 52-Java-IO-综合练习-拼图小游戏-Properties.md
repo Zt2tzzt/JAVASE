@@ -11,7 +11,7 @@
 
 加载文件中用户信息的逻辑，可以写在静态代码块，或者构造方法中；
 
-- 静态代码块，随着类的加载而加载，只执行一次；
+- 静态代码块，随着类的加载而加载，**只执行一次**；
 - 构造方法，每次创建登录界面对象（打开登录界面）时，都会执行。
 
 分析可知，如果要加入注册逻辑，那么登录界面加载用户信息的逻辑，就要写在构造方法里。
@@ -474,9 +474,7 @@ private void initGameinfo() {
 
 有了配置文件，就可以把程序的设置，永久化存储。
 
-如果要修改参数，不需要改动代码，直接修改配置文件就可以了。
-
-- 只要修改代码，就要重新打包、重新发布，非常麻烦。
+如果要修改参数，不需要改动代码，直接修改配置文件就可以了。否则只要修改代码，就要重新打包、重新发布，非常麻烦。
 
 > 常见的配置文件有：
 >
@@ -498,7 +496,7 @@ wechat=about.png
 
 在 Java 中，可以使用 `Properties` 类，从 properties 配置文件中，读取、写出数据。
 
-`Properties` 类，属于 Map 双列集合体系结构
+`Properties` 类，属于 Map 双列集合体系结构：
 
 ![Properties类](NodeAssets/Properties类.jpg)
 
@@ -511,7 +509,7 @@ wechat=about.png
 
 ### 1.Map 中的方法
 
-`put` 方法、`keySet` 方法、`get` 方法等等，都是 Map 双列集合中有的方法。
+Map 双列集合中有 `put` 方法、`keySet` 方法、`get` 方法等等。
 
 demo-project/base-code/Day24/src/com/kkcf/properties/Test1.java
 
@@ -601,7 +599,6 @@ public class Test3 {
         Properties p = new Properties();
 
         FileInputStream fis = new FileInputStream("Day24/src/com/kkcf/properties/a.properties");
-      
         // 可传入字节、字符输入流。
         p.load(fis);
         fis.close();

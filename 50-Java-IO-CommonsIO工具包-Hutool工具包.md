@@ -149,9 +149,7 @@ import java.io.File;
 public class Demo01 {
     public static void main(String[] args) {
         File file = FileUtil.file("D:\\Workshop\\tutorial\\JAVASE\\demo-project\\base-code\\Day29\\src\\com\\kkcf\\hutool", "haha", "aaa"); // 必须是绝对路径
-
         boolean flag = file.mkdirs();
-
         System.out.println(file);
     }
 }
@@ -173,7 +171,6 @@ import java.io.File;
 public class Demo01 {
     public static void main(String[] args) {
         File file = FileUtil.file("D:\\Workshop\\tutorial\\JAVASE\\demo-project\\base-code\\Day29\\src\\com\\kkcf\\hutool", "haha", "aaa", "a.txt"); // 必须是绝对路径
-
         FileUtil.touch(file);
     }
 }
@@ -199,9 +196,7 @@ import java.util.List;
 public class Demo01 {
     public static void main(String[] args) {
         File file = FileUtil.file("D:\\Workshop\\tutorial\\JAVASE\\demo-project\\base-code\\Day29\\src\\com\\kkcf\\hutool", "haha", "aaa", "a.txt"); // 必须是绝对路径
-
         ArrayList<String> list = new ArrayList<>(List.of("abc", "cba", "nba"));
-
         FileUtil.writeLines(list, file, "UTF-8");
     }
 }
@@ -227,9 +222,7 @@ import java.util.List;
 public class Demo01 {
     public static void main(String[] args) {
         File file = FileUtil.file("D:\\Workshop\\tutorial\\JAVASE\\demo-project\\base-code\\Day29\\src\\com\\kkcf\\hutool", "haha", "aaa", "a.txt"); // 必须是绝对路径
-
         ArrayList<String> list1 = new ArrayList<>(List.of("wee", "yui", "mio"));
-
         FileUtil.appendLines(list1, file, "UTF-8");
     }
 }
@@ -254,9 +247,7 @@ import java.util.List;
 public class Demo01 {
     public static void main(String[] args) {
         File file = FileUtil.file("D:\\Workshop\\tutorial\\JAVASE\\demo-project\\base-code\\Day29\\src\\com\\kkcf\\hutool", "haha", "aaa", "a.txt"); // 必须是绝对路径
-
         List<String> list = FileUtil.readLines(file, "UTF-8");
-
         System.out.println(list); // [abc, cba, nba, wee, yui, mio]
     }
 }

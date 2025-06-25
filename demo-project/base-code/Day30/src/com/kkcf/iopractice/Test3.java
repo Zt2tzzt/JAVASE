@@ -8,7 +8,6 @@ public class Test3 {
     public static void main(String[] args) throws IOException {
         // 读取学生信息，并初始化学生对象
         ArrayList<Student> stus = new ArrayList<>();
-
         BufferedReader br = new BufferedReader(new FileReader("Day30/src/com/kkcf/iopractice/name.txt"));
 
         String line;

@@ -28,7 +28,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Test1 {
-
     /**
      * 此方法用于：爬取网页数据
      *
@@ -343,7 +342,6 @@ import java.util.Arrays;
 public class Test3 {
     public static void main(String[] args) throws IOException {
         ArrayList<Student> stus = new ArrayList<>();
-
         // 读取学生信息，并初始化学生对象
         BufferedReader br = new BufferedReader(new FileReader("Day30/src/com/kkcf/iopractice/name.txt"));
 
