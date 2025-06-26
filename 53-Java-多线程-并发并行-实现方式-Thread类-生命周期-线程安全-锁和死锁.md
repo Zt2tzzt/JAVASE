@@ -215,7 +215,7 @@ public class Demo01 {
 总结：三种方式，如何选择：
 
 - 要得到返回值，选择：
-  - 实现 `Callable` 接口，使用 Future 接口（优点：使用接口的方式实现，扩展性强，可以继承其它类，编程比较复杂）。
+  - 实现 `Callable` 接口，使用 `Future` 接口（优点：使用接口的方式实现，扩展性强，可以继承其它类，编程比较复杂）。
 - 不需要得到返回值：选择：
   - 继承 `Thread` 类（优点：使用继承的方式实现，编程比较简单；缺点：可扩展性差，不能继承其它类）；
   - 实现 `Runable` 接口（优点：使用接口的方式实现，扩展性强，可以继承其它类，编程比较复杂）；
@@ -243,7 +243,7 @@ public class Demo01 {
 
 上面的示例中，演示了 `getName`、`setName` 方法的使用；
 
-还可以使用 `Thread` 类的构造方法，为线程设置名字。
+还可以使用 `Thread` 类的**构造方法**，为线程设置名字。
 
 自定义类 `MyThread`：
 
@@ -327,9 +327,7 @@ package com.kkcf.thread;
 public class Demo04 {
     public static void main(String[] args) throws InterruptedException {
         System.out.println("哈哈哈哈哈哈哈哈哈哈哈哈");
-
         Thread.sleep(5000);
-
         System.out.println("红红火火恍恍惚惚嘿嘿");
     }
 }
@@ -557,7 +555,7 @@ public class Demo06 {
 }
 ```
 
-### 7.join 静态方法（插队线程）用的少
+### 7.join 方法（插队线程）用的少
 
 `join` 静态方法，用于设置插队线程。
 
@@ -571,14 +569,11 @@ package com.kkcf.thread;
 public class Demo07 {
     public static void main(String[] args) throws InterruptedException {
         MyThread2 t = new MyThread2();
-
         t.setName("土豆");
 
         t.start();
-
         // 设置插入线程，将 t 线程，放在当前线程（main 线程）前执行。
         t.join();
-
         // 当前线程 main
         for (int i = 0; i < 10; i++) {
             System.out.println(Thread.currentThread().getName() + ":" + i);
@@ -672,7 +667,7 @@ synchronized (锁对象) {
 }
 ```
 
-锁对象，可以是任意 Java  对象，但要求必须是唯一的，否则同步代码块无效。
+锁对象，可以是**任意 Java  对象**，但要求必须是唯一的，否则同步代码块无效。
 
 锁有如下特点：
 
@@ -775,6 +770,7 @@ public class MovieTicketSaleRunable implements Runnable {
 - 使用实现 `Runable` 接口的方式实现多线程，在测试类中，只会创建一个 `MovieTicketSaleRunable` 对象，所以
   - `int ticketCount = 0;` 可以不使用 `static` 修饰。
   - 同步方法的锁，被设为 `this`，也是唯一的。
+  - 因此，在多线程场景中，使用同步方法时，应使用“实现 `Runable` 接口“的方案。
 
 测试类：
 
@@ -802,7 +798,7 @@ public class Test02 {
 
 Java 的 `StringBuffer` 类，相比于 `StringBuilder` 类，它们的功能都是一样的，只不过 `StringBuffer` 是线程安全的。
 
-`StringBuffer` 类，里面的所有成员方法，都被 `synchronized` 关键字修饰，它们都是同步方法。
+`StringBuffer` 类，里面的所有成员方法，都被 `synchronized` 关键字修饰，它们都**是同步方法**。
 
 > 总结：编写多线程代码，遵循 3 步操作：
 >
@@ -816,7 +812,7 @@ Java 的 `StringBuffer` 类，相比于 `StringBuilder` 类，它们的功能都
 
 同步代码块，同步方法中的锁，都是自动上锁，自动解锁的。
 
-为了更清晰的表达如何加锁，如何解锁；JDK5 以后，提供了一个锁接口 `Lock`。
+为了更清晰的表达如何上锁，如何解锁；JDK5 以后，提供了一个锁接口 `Lock`。
 
 `Lock` 是一个接口，它相比 `synchronized` 关键字声明的同步代码块、同步方法，可以获得更加广泛的锁定操作。其中有方法：
 
@@ -908,9 +904,8 @@ demo-project/base-code/Day31/src/com/kkcf/test/DeadThread.java
 ```java
 package com.kkcf.test;
 
-public class DeadThread extends Thread{
+public class DeadThread extends Thread {
     static final Object obja = new Object();
-
     static final Object objb = new Object();
 
     @Override
@@ -957,4 +952,4 @@ public class Test03 {
 }
 ```
 
-注意，在开发中，不要让两个锁嵌套。
+注意，在开发中，**不要让两个锁嵌套**。

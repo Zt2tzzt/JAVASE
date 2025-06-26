@@ -4,7 +4,7 @@
 
 频繁的创建线程并销毁，会造成系统资源的浪费。
 
-可以准备一个容器，用于存放创建好的线程，用于以后任务的复用，这个容器就是**线程池**。
+一般会准备一个容器，存放创建好的线程，用于以后任务的复用，这个容器就是**线程池**。
 
 ## 一、线程池的核心逻辑
 
@@ -151,7 +151,7 @@ public class Demo01 {
 ```
 
 - 提交 5 个 Runnable 实例对象作为任务，但只会运行在 3 个线程上。因为线程池的容量就是 3 个。
-- 前 3 个任务在提交时，分别会创建 1 个线程，后 2 个任务在提交时，会进入阻塞排队状态。
+- 前 3 个任务在提交时，分别各会创建 1 个线程，后 2 个任务在提交时，会进入阻塞排队状态。
 
 ## 三、ThreadPoolExecutor 类自定义线程池
 
@@ -177,18 +177,18 @@ public class Demo01 {
 
 如果提交的任务数 > 核心线程数 + 阻塞队列长度 + 临时线程数，那么超过部分的任务，就会触发任务拒绝策略。
 
-- 任务拒绝策略默认就是 `ThreadPoolExecutor.AbortPolicy` 舍弃。
+- 任务拒绝策略默认是 `ThreadPoolExecutor.AbortPolicy`，表示舍弃。
 
 ![自定义线程池触发任务拒绝策略](NodeAssets/自定义线程池触发任务拒绝策略.jpg)
 
 任务拒绝策略有如下几种：
 
-| 任务拒绝策略                           | 说明                                                       |
-| -------------------------------------- | ---------------------------------------------------------- |
-| ThreadPoolExecutor.AbortPolicy         | 默认策略，丢弃任务并抛出 RejectedExecutionException 异常   |
-| ThreadPoolExecutor.CallerRunsPolicy    | 丢弃任务，但是不抛出异常（这是不推荐的做法）               |
-| ThreadPoolExecutor.DiscardOldestPolicy | 抛弃阻塞队列中，等待最久的任务，然后把当前任务加入到队列中 |
-| ThreadPoolExecutor.DiscardPolicy       | 调用任务的 run 方法，绕过线程池直接执行                    |
+| 任务拒绝策略                             | 说明                                                       |
+| ---------------------------------------- | ---------------------------------------------------------- |
+| `ThreadPoolExecutor.AbortPolicy`         | 默认策略，丢弃任务并抛出 `RejectedExecutionException` 异常 |
+| `ThreadPoolExecutor.CallerRunsPolicy`    | 丢弃任务，但是不抛出异常（这是不推荐的做法）               |
+| `ThreadPoolExecutor.DiscardOldestPolicy` | 抛弃阻塞队列中，等待最久的任务，然后把当前任务加入到队列中 |
+| `ThreadPoolExecutor.DiscardPolicy`       | 调用任务的 run 方法，绕过线程池直接执行                    |
 
 在测试类中，创建自定义线程池。
 
@@ -247,7 +247,7 @@ package com.kkcf.threadpoll;
 public class Demo03 {
     public static void main(String[] args) {
         int i = Runtime.getRuntime().availableProcessors();
-        System.out.println(i); // 12（我当前电脑是 6 核 12 线程的）
+        System.out.println(i); // 12（我当前机器是 6 核 12 线程的）
     }
 }
 ```
@@ -265,12 +265,12 @@ public class Demo03 {
 - I/O 密集性：`最大并行数 * 期望 CPU 利用率 * (总时间（CPU 计算时间 + 等待时间）/ CPU 计算时间)`
   - 比如：`12 * 100% * (100% / 50%) = 24`
 
-> CPU 计算时间、等待时间是什么？
+> CPU **计算时间**、**等待时间**是什么？
 >
 > 比如：从本地文件中，读取两个数据，并进行相加的操作，其中：
 >
-> - 读取两个文件中的数据，该操作由硬盘完成，CPU 是空闲的，所以算是 CPU 等待时间；
-> - 两个数据进行相加，由 CPU 完成，算是 CPU 计算时间。
+> - 读取两个文件中的数据，该操作由硬盘完成，CPU 是空闲的，所以算是 CPU **等待时间**；
+> - 两个数据进行相加，由 CPU 完成，算是 CPU **计算时间**。
 >
 > CPU 计算时间、等待时间，可以用 thread dump 工具，测试获得。
 

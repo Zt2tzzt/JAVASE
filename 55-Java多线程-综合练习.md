@@ -308,7 +308,7 @@ public class LotteryThread extends Thread {
                 // 打乱抽奖池，并抽奖
                 Collections.shuffle(list);
                 Integer price = list.remove(0);
-                System.out.println(super.getName() + "又产生了一个大 " + price + "元大奖");
+                System.out.println(super.getName() + "又产生了一个 " + price + "元大奖");
             }
 
             // 让多线程执行更加均匀
@@ -322,7 +322,7 @@ public class LotteryThread extends Thread {
 }
 ```
 
-> 同一个线程，连续执行，通常是因为数据量比较小；
+> 当多线程场景中，同一个线程，连续执行，通常是因为数据量比较小；
 >
 > 为了让多个线程执行的更加均匀，通常会在同步代码块的**外面**。使用 `Thread.sleep()` 方法。
 
@@ -474,7 +474,7 @@ public class LotteryThread extends Thread {
 
 ```
 
-### 1.多线程内存原题
+### 1.多线程内存原理
 
 在 JVM 虚拟机中：
 
