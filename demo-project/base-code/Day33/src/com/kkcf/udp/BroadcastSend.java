@@ -15,7 +15,6 @@ public class BroadcastSend {
         byte[] bytes = data.getBytes();
         InetAddress address = InetAddress.getByName("255.255.255.255"); // 指定组播地址
         int port = 10086;
-
         DatagramPacket dp = new DatagramPacket(bytes, bytes.length, address, port);
 
         // 发送数据

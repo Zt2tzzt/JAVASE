@@ -70,7 +70,6 @@ public class SendMessage {
         byte[] bytes = str.getBytes();
         InetAddress address = InetAddress.getByName("127.0.0.1");
         int port = 10086;
-
         DatagramPacket dp = new DatagramPacket(bytes, bytes.length, address, port);
 
         // 发送数据
@@ -260,7 +259,6 @@ public class MulticastSend {
         byte[] bytes = data.getBytes();
         InetAddress address = InetAddress.getByName("224.0.0.1"); // 指定组播地址
         int port = 10086;
-
         DatagramPacket dp = new DatagramPacket(bytes, bytes.length, address, port);
 
         // 发送数据
@@ -344,7 +342,6 @@ public class BroadcastSend {
         byte[] bytes = data.getBytes();
         InetAddress address = InetAddress.getByName("255.255.255.255"); // 指定组播地址
         int port = 10086;
-
         DatagramPacket dp = new DatagramPacket(bytes, bytes.length, address, port);
 
         // 发送数据
@@ -479,7 +476,7 @@ public class Server {
         // 创建对象 ServerSocket
         ServerSocket serverSocket = new ServerSocket(10086); // 指定端口号
 
-        // 监听客户端端 socket 连接
+        // 监听客户端 socket 连接
         Socket socket = serverSocket.accept(); // 阻塞
 
         // 从连接通道中，获取字节输入流，读取数据

@@ -15,7 +15,6 @@ public class MulticastSend {
         byte[] bytes = data.getBytes();
         InetAddress address = InetAddress.getByName("224.0.0.1"); // 指定组播地址
         int port = 10086;
-
         DatagramPacket dp = new DatagramPacket(bytes, bytes.length, address, port);
 
         // 发送数据
