@@ -5,7 +5,6 @@ import java.lang.reflect.Field;
 public class Demo07 {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
         Class<?> clazz = Class.forName("com.kkcf.reflect.Student");
-
         Field nameField = clazz.getDeclaredField("name");
         nameField.setAccessible(true); // 暴力反射
 

@@ -106,12 +106,12 @@ public class Demo01 {
 
 `Class` 类中，用于获取构造方法实例对象的方法有：
 
-| 方法名                                                       | 说明                                     |
-| ------------------------------------------------------------ | ---------------------------------------- |
-| `Constructor<?>[] getConstructors()`                         | 返回所有 public 修饰的构造方法对象的数组 |
-| `Constructor<?>[] getDeclaredConstructors()`                 | 返回所有构造方法对象的数组。             |
-| `Constructor<T> getConstructor(Class<?>... parameterTypes)`  | 返回单个 public 修饰的构造方法对象       |
-| `Constructor<T> getDeclaredConstructor(Class<?>... parameterTypes)` | 返回单个构造方法对象                     |
+| 方法名                                                       | 说明                                       |
+| ------------------------------------------------------------ | ------------------------------------------ |
+| `Constructor<?>[] getConstructors()`                         | 返回所有 `public` 修饰的构造方法对象的数组 |
+| `Constructor<?>[] getDeclaredConstructors()`                 | 返回所有构造方法对象的数组。               |
+| `Constructor<T> getConstructor(Class<?>... parameterTypes)`  | 返回单个 `public` 修饰的构造方法对象       |
+| `Constructor<T> getDeclaredConstructor(Class<?>... parameterTypes)` | 返回单个构造方法对象                       |
 
 demo-project/base-code/Day35/src/com/kkcf/reflect/Demo02.java
 
@@ -244,7 +244,7 @@ public class Demo04 {
 }
 ```
 
-- `con2.setAccessible(true);` 用于设置暴力反射，表示临时取消权限校验。
+- `con2.setAccessible(true);` 用于设置**暴力反射**，表示临时取消权限校验。
 
 ## 三、获取成员变量（Field）
 
@@ -399,7 +399,6 @@ import java.lang.reflect.Field;
 public class Demo07 {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
         Class<?> clazz = Class.forName("com.kkcf.reflect.Student");
-
         Field nameField = clazz.getDeclaredField("name");
         nameField.setAccessible(true); // 暴力反射
 
@@ -510,8 +509,8 @@ import java.lang.reflect.Method;
 public class Demo09 {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException {
         Class<?> clazz = Class.forName("com.kkcf.reflect.Student");
-
         Method eatMethod = clazz.getDeclaredMethod("eat", String.class);
+
         int modifiers = eatMethod.getModifiers();
         System.out.println(modifiers); // 2
     }
@@ -532,7 +531,6 @@ import java.lang.reflect.Method;
 public class Demo09 {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException {
         Class<?> clazz = Class.forName("com.kkcf.reflect.Student");
-
         Method eatMethod = clazz.getDeclaredMethod("eat", String.class);
 
         String name = eatMethod.getName();
@@ -556,7 +554,6 @@ import java.lang.reflect.Parameter;
 public class Demo09 {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException {
         Class<?> clazz = Class.forName("com.kkcf.reflect.Student");
-
         Method eatMethod = clazz.getDeclaredMethod("eat", String.class);
 
         Parameter[] params = eatMethod.getParameters();
@@ -582,7 +579,6 @@ import java.lang.reflect.Parameter;
 public class Demo09 {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException {
         Class<?> clazz = Class.forName("com.kkcf.reflect.Student");
-
         Method eatMethod = clazz.getDeclaredMethod("eat", String.class);
 
         Class<?>[] execpts = eatMethod.getExceptionTypes();
@@ -613,11 +609,11 @@ import java.lang.reflect.Parameter;
 public class Demo09 {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Class<?> clazz = Class.forName("com.kkcf.reflect.Student");
-
         Method eatMethod = clazz.getDeclaredMethod("eat", String.class);
 
         // 执行成员方法并获取返回值
         eatMethod.setAccessible(true); // 暴力反射
+
         Student stu = new Student("zzt", 18, "男");
         String result = (String) eatMethod.invoke(stu, "牛腩饭");
         System.out.println(result); // 奥利给

@@ -13,7 +13,6 @@ public class Server1 {
 
         // 等待客户端连接
         Socket socket = serverSocket.accept(); // 阻塞
-
         InputStream is = socket.getInputStream();
 
         // 接收数据

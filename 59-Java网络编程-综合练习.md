@@ -59,7 +59,6 @@ public class Server1 {
 
         // 等待客户端连接
         Socket socket = serverSocket.accept(); // 阻塞
-
         InputStream is = socket.getInputStream();
 
         // 接收数据
@@ -119,13 +118,13 @@ public class Client2 {
     public static void main(String[] args) throws IOException {
         // 创建 socket 对象，并连接服务器
         Socket socket = new Socket("127.0.0.1", 10086);
-
         // 获取输出流
         OutputStream os = socket.getOutputStream();
 
         // 向服务端发送数据
         String data = "见到你很高兴！";
         os.write(data.getBytes());
+
         // 写出一个结束标记
         socket.shutdownOutput();
 
@@ -143,7 +142,7 @@ public class Client2 {
 }
 ```
 
-- `socket.shutdownOutput();` 用于给服务端，发送（写出）一个结束标记。
+- `socket.shutdownOutput();` 用于给服务端，发送（写出）一个**结束标记**。
 
 服务端 Server2
 
@@ -162,7 +161,6 @@ public class Server2 {
     public static void main(String[] args) throws IOException {
         // 创建 ServerSocket 对象，绑定 10096 端口
         ServerSocket serverSocket = new ServerSocket(10086);
-
         // 等待客户端连接
         Socket socket = serverSocket.accept(); // 阻塞
 
@@ -213,7 +211,7 @@ public class Client3 {
         // 创建 socket 对象，并连接服务器
         Socket socket = new Socket("127.0.0.1", 10086);
 
-        // 读取本地文件中到数据，边读边发送给服务端
+        // 读取本地文件中的数据，边读边发送给服务端
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream("Day33/src/com/kkcf/test/upload/baja(1).jpg"));
         BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
         byte[] buffer = new byte[1024];
@@ -252,7 +250,6 @@ public class Sever3 {
     public static void main(String[] args) throws IOException {
         // 创建 socket 对象，并绑定端口
         ServerSocket serverSocket = new ServerSocket(10086);
-
         // 等待用户端到连接
         Socket socket = serverSocket.accept();
 
@@ -357,7 +354,6 @@ public class Sever3 {
         while (true) {
             // 等待用户端到连接
             Socket socket = serverSocket.accept();
-
             new Thread(new UploadRunnable(socket)).start();
         }
     }
@@ -459,7 +455,6 @@ public class Sever3 {
         while (true) {
             // 等待用户端的连接
             Socket socket = serverSocket.accept();
-
             //new Thread(new UploadRunnable(socket)).start();
             pool.submit(new UploadRunnable(socket));
         }

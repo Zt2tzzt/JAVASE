@@ -23,7 +23,7 @@ public class UploadRunnable implements Runnable {
             while ((len = bis.read(buffer)) != -1)
                 bos.write(buffer, 0, len);
 
-            // 回血消息
+            // 回写消息
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             bw.write("上传成功");
             bw.newLine();

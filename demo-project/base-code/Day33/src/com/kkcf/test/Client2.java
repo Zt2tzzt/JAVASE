@@ -11,13 +11,13 @@ public class Client2 {
     public static void main(String[] args) throws IOException {
         // 创建 socket 对象，并连接服务器
         Socket socket = new Socket("127.0.0.1", 10086);
-
         // 获取输出流
         OutputStream os = socket.getOutputStream();
 
         // 向服务端发送数据
         String data = "见到你很高兴！";
         os.write(data.getBytes());
+
         // 写出一个结束标记
         socket.shutdownOutput();
 
