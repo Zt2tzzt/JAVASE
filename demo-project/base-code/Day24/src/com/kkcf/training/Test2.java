@@ -34,7 +34,7 @@ public class Test2 {
         }
 
         int i = r.nextInt(arr.length);
-        if (i > 0) {
+        if (arr[i] > 0) {
             System.out.println("点名男学生");
             int i1 = r.nextInt(maleStu.size());
             System.out.println(maleStu.get(i1));
