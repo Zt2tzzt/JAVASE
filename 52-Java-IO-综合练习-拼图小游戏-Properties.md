@@ -297,7 +297,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener, M
 
     // 记录玩了多少步
     int stepCount = 0;
-  
+
     // ……
 }
 ```
@@ -595,7 +595,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class Test3 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {【
         Properties p = new Properties();
 
         FileInputStream fis = new FileInputStream("Day24/src/com/kkcf/properties/a.properties");

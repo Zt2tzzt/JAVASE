@@ -7,7 +7,7 @@ import java.util.Random;
 public class RedEnvelopeThread extends Thread {
     // 最小的中奖金额
     static final BigDecimal MIN = BigDecimal.valueOf(0.01);
-    // 红包金额
+    // 红包总金额
     static BigDecimal money = BigDecimal.valueOf(100);
     // 红包个数
     static int count = 3;

@@ -3,8 +3,7 @@ package com.kkcf.test;
 public class SendGiftsThread extends Thread {
     public static int giftCount = 100;
 
-    public SendGiftsThread() {
-    }
+    public SendGiftsThread() { }
 
     public SendGiftsThread(String name) {
         super(name);
